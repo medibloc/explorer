@@ -1,9 +1,27 @@
+/* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+
+import { GlobalActions } from '../../redux/actionCreators';
+
 
 const pages = ['ABOUT', 'BLOCK', 'HOME', 'TX'];
 
 class NavBar extends Component {
+  componentDidMount() {
+    this.setWindowSize();
+  }
+
+  setWindowSize() {
+    GlobalActions.setWindowSize(window.innerWidth);
+    window.addEventListener(
+      'resize',
+      () => GlobalActions.setWindowSize(window.innerWidth),
+    );
+  }
+
+
   render() {
     return (
       <div>
@@ -23,4 +41,6 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar;
+const mapStateToProps = () => ({});
+
+export default connect(mapStateToProps)(NavBar);

@@ -68,6 +68,10 @@ export const subscriber = (dispatch, actionTypes, ERROR) => {
     }
     return null;
   };
+  req.onerror = () => dispatch({
+    type: ERROR,
+    payload: 'Error occured while subscribing',
+  });
   req.send(JSON.stringify({
     topics: [
       EXECUTED_TX,

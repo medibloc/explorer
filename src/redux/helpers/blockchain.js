@@ -131,6 +131,12 @@ export const medStateGetter = (dispatch, actionType, ERROR) => simpleRequester(d
 });
 
 // get: "/v1/transaction"
-export const txGetter = (dispatch, actionType) => {
-
-};
+// params: "hash"
+export const txGetter = (dispatch, actionType, ERROR, hash) => simpleRequester(dispatch, {
+  url: `${NODE_ENDPOINT}/v1/transaction`,
+  params: {
+    hash,
+  },
+  actionType,
+  ERROR,
+});

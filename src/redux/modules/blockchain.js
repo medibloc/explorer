@@ -6,6 +6,7 @@ import {
   blockGetter,
   medStateGetter,
   subscriber,
+  txGetter,
 } from '../helpers/blockchain';
 
 
@@ -69,7 +70,7 @@ const reducer = handleActions({
 
   [GET_EXECUTED_TX]: (state, action) => state.update('txs', txs => txs.push(action.payload)),
   [GET_PENDING_TX]: (state, action) => state.update('pendingTxs', pendingTxs => pendingTxs.push(action.payload)),
-  // [GET_TX]
+  [GET_TX]: (state, action) => state.set('tx', action.payload),
 
   [SUBSCRIBE]: state => state.set('subscribe', true),
 
@@ -81,6 +82,7 @@ const reducer = handleActions({
 export const getAccount = address => dispatch => accGetter(dispatch, GET_ACCOUNT, ERROR, address);
 export const getBlock = hash => dispatch => blockGetter(dispatch, GET_BLOCK, ERROR, hash);
 export const getMedState = () => dispatch => medStateGetter(dispatch, GET_MED_STATE, ERROR);
+export const getTx = hash => dispatch => txGetter(dispatch, GET_TX, ERROR, hash);
 export const subscribe = () => dispatch => subscriber(dispatch, subsribeTypes, ERROR);
 
 

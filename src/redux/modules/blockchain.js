@@ -2,9 +2,10 @@ import { fromJS } from 'immutable';
 import { handleActions } from 'redux-actions';
 
 import {
-  subscriber,
-  medStateGetter,
   accGetter,
+  blockGetter,
+  medStateGetter,
+  subscriber,
 } from '../helpers/blockchain';
 
 
@@ -78,6 +79,7 @@ const reducer = handleActions({
 
 // ACTION CREATORS
 export const getAccount = address => dispatch => accGetter(dispatch, GET_ACCOUNT, ERROR, address);
+export const getBlock = hash => dispatch => blockGetter(dispatch, GET_BLOCK, ERROR, hash);
 export const getMedState = () => dispatch => medStateGetter(dispatch, GET_MED_STATE, ERROR);
 export const subscribe = () => dispatch => subscriber(dispatch, subsribeTypes, ERROR);
 

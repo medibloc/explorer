@@ -99,14 +99,19 @@ const simpleRequester = (dispatch, {
     }));
 };
 
-
 // get: "/v1/block"
-export const blockGetter = (dispatch, actionType) => {
-
-};
+// params: "hash[hash, 'genesis', 'confirmed', 'tail']"
+export const blockGetter = (dispatch, actionType, ERROR, hash) => simpleRequester(dispatch, {
+  url: `${NODE_ENDPOINT}/v1/block`,
+  params: {
+    hash,
+  },
+  actionType,
+  ERROR,
+});
 
 // get: "/v1/user/accountstate"
-// params: "address / height[number, genesis, confirmed, tail]"
+// params: "address / height[number, 'genesis', 'confirmed', 'tail']"
 export const accGetter = (dispatch, actionType, ERROR, address) => simpleRequester(dispatch, {
   url: `${NODE_ENDPOINT}/v1/user/accountstate`,
   params: {

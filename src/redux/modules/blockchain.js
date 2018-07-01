@@ -1,7 +1,11 @@
 import { fromJS } from 'immutable';
 import { handleActions } from 'redux-actions';
 
-import { subscriber, medStateGetter } from '../helpers/blockchain';
+import {
+  subscriber,
+  medStateGetter,
+  accGetter,
+} from '../helpers/blockchain';
 
 
 // ACTION TYPES
@@ -55,7 +59,7 @@ const initialState = fromJS({
 const reducer = handleActions({
   [GET_MED_STATE]: (state, action) => state.set('medState', action.payload),
 
-  // [GET_ACCOUNT]
+  [GET_ACCOUNT]: (state, action) => state.set('account', action.payload),
 
   [GET_BLOCK]: (state, action) => state.set('block', action.payload),
   [GET_LIB]: (state, action) => state.set('lib', action.payload),
@@ -73,6 +77,7 @@ const reducer = handleActions({
 
 
 // ACTION CREATORS
+export const getAccount = address => dispatch => accGetter(dispatch, GET_ACCOUNT, ERROR, address);
 export const getMedState = () => dispatch => medStateGetter(dispatch, GET_MED_STATE, ERROR);
 export const subscribe = () => dispatch => subscriber(dispatch, subsribeTypes, ERROR);
 

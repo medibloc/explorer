@@ -13,6 +13,7 @@ class NavBar extends Component {
     this.setWindowSize();
     BlockchainActions.subscribe();
     BlockchainActions.getMedState();
+    BlockchainActions.getAccount('02fc22ea22d02fc2469f5ec8fab44bc3de42dda2bf9ebc0c0055a9eb7df579056c');
   }
 
   setWindowSize() {

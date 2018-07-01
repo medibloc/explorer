@@ -79,9 +79,15 @@ export const subscriber = (dispatch, actionTypes, ERROR) => {
   }));
 };
 
-const simpleRequester = (dispatch, { url, actionType, ERROR }) => {
+const simpleRequester = (dispatch, {
+  url,
+  params = null,
+  actionType,
+  ERROR,
+}) => {
   axios({
     url,
+    params,
   })
     .then(res => dispatch({
       type: actionType,
@@ -100,8 +106,17 @@ export const blockGetter = (dispatch, actionType) => {
 };
 
 // get: "/v1/user/accountstate"
-export const accGetter = (dispatch, actionType) => {
-};
+// params: "address / height[number, genesis, confirmed, tail]"
+export const accGetter = (dispatch, actionType, ERROR, address) => simpleRequester(dispatch, {
+  url: `${NODE_ENDPOINT}/v1/user/accountstate`,
+  params: {
+    address,
+    height: 'tail',
+  },
+  actionType,
+  ERROR,
+});
+
 
 // get: "/v1/node/medstate"
 export const medStateGetter = (dispatch, actionType, ERROR) => simpleRequester(dispatch, {

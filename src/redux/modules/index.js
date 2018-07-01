@@ -1,9 +1,12 @@
 import { combineReducers } from 'redux';
 
-import widget from './widget';
+import blockchain from './blockchain';
 import global from './global';
+import widget from './widget';
+
 
 export default combineReducers({
-  widget,
+  blockchain,
   global,
+  widget,
 });

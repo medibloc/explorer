@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-import { GlobalActions } from '../../redux/actionCreators';
+import { GlobalActions, BlockchainActions } from '../../redux/actionCreators';
 
 
 const pages = ['ABOUT', 'BLOCK', 'HOME', 'TX'];
@@ -11,6 +11,7 @@ const pages = ['ABOUT', 'BLOCK', 'HOME', 'TX'];
 class NavBar extends Component {
   componentDidMount() {
     this.setWindowSize();
+    BlockchainActions.subscribe();
   }
 
   setWindowSize() {

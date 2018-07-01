@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import {
   EXECUTED_TX,
   LIB,
@@ -52,7 +54,9 @@ const distributor = (datum, actionTypes) => {
   }
 };
 
-export const subscriber = (dispatch, actionTypes) => {
+// post: "/v1/subscribe"
+// TODO @ggomma add error handler;
+export const subscriber = (dispatch, actionTypes, ERROR) => {
   const req = new XMLHttpRequest();
   req.open('POST', `${NODE_ENDPOINT}/v1/subscribe`);
   req.onprogress = () => {
@@ -73,4 +77,34 @@ export const subscriber = (dispatch, actionTypes) => {
       TAIL_BLOCK,
     ],
   }));
+};
+
+// get: "/v1/block"
+export const blockGetter = (dispatch, actionType) => {
+
+};
+
+// get: "/v1/user/accountstate"
+export const accGetter = (dispatch, actionType) => {
+
+};
+
+// get: "/v1/node/medstate"
+export const medStateGetter = (dispatch, actionType, ERROR) => {
+  axios({
+    url: `${NODE_ENDPOINT}/v1/node/medstate`,
+  })
+    .then(res => dispatch({
+      type: actionType,
+      payload: res.data,
+    }))
+    .catch(err => dispatch({
+      type: ERROR,
+      payload: err.message,
+    }));
+};
+
+// get: "/v1/transaction"
+export const txGetter = (dispatch, actionType) => {
+
 };

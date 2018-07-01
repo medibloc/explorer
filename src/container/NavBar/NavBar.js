@@ -12,6 +12,7 @@ class NavBar extends Component {
   componentDidMount() {
     this.setWindowSize();
     BlockchainActions.subscribe();
+    BlockchainActions.getMedState();
   }
 
   setWindowSize() {

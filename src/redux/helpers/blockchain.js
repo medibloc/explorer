@@ -79,20 +79,9 @@ export const subscriber = (dispatch, actionTypes, ERROR) => {
   }));
 };
 
-// get: "/v1/block"
-export const blockGetter = (dispatch, actionType) => {
-
-};
-
-// get: "/v1/user/accountstate"
-export const accGetter = (dispatch, actionType) => {
-
-};
-
-// get: "/v1/node/medstate"
-export const medStateGetter = (dispatch, actionType, ERROR) => {
+const simpleRequester = (dispatch, { url, actionType, ERROR }) => {
   axios({
-    url: `${NODE_ENDPOINT}/v1/node/medstate`,
+    url,
   })
     .then(res => dispatch({
       type: actionType,
@@ -103,6 +92,23 @@ export const medStateGetter = (dispatch, actionType, ERROR) => {
       payload: err.message,
     }));
 };
+
+
+// get: "/v1/block"
+export const blockGetter = (dispatch, actionType) => {
+
+};
+
+// get: "/v1/user/accountstate"
+export const accGetter = (dispatch, actionType) => {
+};
+
+// get: "/v1/node/medstate"
+export const medStateGetter = (dispatch, actionType, ERROR) => simpleRequester(dispatch, {
+  url: `${NODE_ENDPOINT}/v1/node/medstate`,
+  actionType,
+  ERROR,
+});
 
 // get: "/v1/transaction"
 export const txGetter = (dispatch, actionType) => {

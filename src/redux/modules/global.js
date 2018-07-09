@@ -1,16 +1,15 @@
-import { fromJS } from 'immutable';
 import { createAction, handleActions } from 'redux-actions';
 
 // ACTION TYPES
 const SET_WINDOW_SIZE = 'global/SET_WINDOW_SIZE';
 
-const initialState = fromJS({
+const initialState = {
   width: null,
-});
+};
 
 // REDUCER
 const reducer = handleActions({
-  [SET_WINDOW_SIZE]: (state, action) => state.set('width', action.payload),
+  [SET_WINDOW_SIZE]: (state, action) => ({ ...state, width: action.paylod }),
 }, initialState);
 
 

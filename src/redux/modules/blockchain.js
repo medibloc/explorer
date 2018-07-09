@@ -1,4 +1,3 @@
-import { fromJS } from 'immutable';
 import { handleActions } from 'redux-actions';
 
 import {
@@ -37,7 +36,7 @@ const subsribeTypes = {
   GET_TAIL_BLOCK,
 };
 
-const initialState = fromJS({
+const initialState = {
   medState: null,
 
   account: null,
@@ -55,26 +54,36 @@ const initialState = fromJS({
   subscribe: false,
 
   error: null,
-});
+};
 
 // REDUCER
 const reducer = handleActions({
-  [GET_MED_STATE]: (state, action) => state.set('medState', action.payload),
+  [GET_MED_STATE]: (state, action) => ({ ...state, medState: action.payload }),
 
-  [GET_ACCOUNT]: (state, action) => state.set('account', action.payload),
+  [GET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload }),
 
-  [GET_BLOCK]: (state, action) => state.set('block', action.payload),
-  [GET_LIB]: (state, action) => state.set('lib', action.payload),
-  [GET_REVERT_BLOCK]: (state, action) => state.update('revertBlocks', revertBlocks => revertBlocks.push(action.payload)),
-  [GET_TAIL_BLOCK]: (state, action) => state.set('tailBlock', action.payload).update('blocks', blocks => blocks.push(action.payload)),
+  [GET_BLOCK]: (state, action) => ({ ...state, block: action.payload }),
+  [GET_LIB]: (state, action) => ({ ...state, lib: action.payload }),
+  [GET_REVERT_BLOCK]: (state, action) => ({
+    ...state,
+    revertBlocks: [...state.revertBlocks, action.payload],
+  }),
+  [GET_TAIL_BLOCK]: (state, action) => ({
+    ...state,
+    tailBlock: action.payload,
+    blocks: [...state.blocks, action.payload],
+  }),
 
-  [GET_EXECUTED_TX]: (state, action) => state.update('txs', txs => txs.push(action.payload)),
-  [GET_PENDING_TX]: (state, action) => state.update('pendingTxs', pendingTxs => pendingTxs.push(action.payload)),
-  [GET_TX]: (state, action) => state.set('tx', action.payload),
+  [GET_EXECUTED_TX]: (state, action) => ({ ...state, txs: [...state.txs, action.payload] }),
+  [GET_PENDING_TX]: (state, action) => ({
+    ...state,
+    pendingTxs: [...state.pendingTxs, action.payload],
+  }),
+  [GET_TX]: (state, action) => ({ ...state, tx: action.payload }),
 
-  [SUBSCRIBE]: state => state.set('subscribe', true),
+  [SUBSCRIBE]: state => ({ ...state, subscribe: true }),
 
-  [ERROR]: (state, action) => state.set('error', action.payload),
+  [ERROR]: (state, action) => ({ ...state, error: action.payload }),
 }, initialState);
 
 

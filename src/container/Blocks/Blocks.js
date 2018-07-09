@@ -21,7 +21,7 @@ class Blocks extends Component {
 }
 
 const mapStateToProps = ({ blockchain }) => ({
-  blocks: blockchain.get('blocks'),
+  blocks: blockchain.blocks,
 });
 
 export default connect(mapStateToProps)(Blocks);

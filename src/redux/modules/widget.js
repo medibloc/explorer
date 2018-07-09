@@ -1,4 +1,3 @@
-import { fromJS } from 'immutable';
 import { createAction, handleActions } from 'redux-actions';
 
 // ACTION TYPES
@@ -6,22 +5,26 @@ const LOAD = 'widgets/LOAD';
 const LOAD_SUCCESS = 'widgets/LOAD_SUCCESS';
 const LOAD_FAIL = 'widgets/LOAD_FAIL';
 
-const initialState = fromJS({
+const initialState = {
   loading: false,
   loaded: false,
   error: null,
-});
+};
 
 // REDUCER
 const reducer = handleActions({
-  [LOAD]: state => state.set('loading', true),
-  [LOAD_SUCCESS]: state => state
-    .set('loading', false)
-    .set('loaded', true),
-  [LOAD_FAIL]: (state, action) => state
-    .set('loading', false)
-    .set('loaded', false)
-    .set('error', action.payload),
+  [LOAD]: state => ({ ...state, loading: true }),
+  [LOAD_SUCCESS]: state => ({
+    ...state,
+    loading: false,
+    loaded: true,
+  }),
+  [LOAD_FAIL]: (state, action) => ({
+    ...state,
+    loading: false,
+    loaded: false,
+    error: action.paylod,
+  }),
 }, initialState);
 
 

@@ -1,5 +1,4 @@
-import axios from 'axios';
-
+import { simpleRequester } from './common';
 import {
   EXECUTED_TX,
   LIB,
@@ -83,25 +82,6 @@ export const subscriber = (dispatch, actionTypes, ERROR) => {
   }));
 };
 
-const simpleRequester = (dispatch, {
-  url,
-  params = null,
-  actionType,
-  ERROR,
-}) => {
-  axios({
-    url,
-    params,
-  })
-    .then(res => dispatch({
-      type: actionType,
-      payload: res.data,
-    }))
-    .catch(err => dispatch({
-      type: ERROR,
-      payload: err.message,
-    }));
-};
 
 // get: "/v1/block"
 // params: "hash[hash, 'genesis', 'confirmed', 'tail']"

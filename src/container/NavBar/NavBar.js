@@ -1,13 +1,13 @@
 /* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
+import { Collapse } from 'react-collapse';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 
-import './NavBar.css';
+import NavList from './NavList';
 import SearchBar from '../SearchBar/SearchBar';
-import TextBox from '../../components/Text/TextBox';
-import HoverButton from '../../components/Button/HoverButton';
 import { GlobalActions, BlockchainActions, TickerActions } from '../../redux/actionCreators';
+
+import './NavBar.scss';
 
 
 const pages = ['Main', 'BLOCK', 'TX', 'Address', 'BP', 'Search', 'Setting'];
@@ -27,26 +27,31 @@ class NavBar extends Component {
     );
   }
 
-
   render() {
-    // const { mode } = this.props;
+    const { handleNavBar } = this;
+    const { mode, navBarOpen } = this.props;
+    const { openNavBar } = GlobalActions;
 
     return (
       <div className="navBar">
         <SearchBar />
-        <ul className="navNavigator">
-          {
-            pages.map(page => (
-              <li key={page}>
-                <HoverButton>
-                  <NavLink to={page === 'Main' ? '/' : page}>
-                   {page}
-                  </NavLink>
-                </HoverButton>
-              </li>
-            ))
-          }
-        </ul>
+        {
+          mode === 0 ? (
+            <div className="navNavigator">
+              <NavList pages={pages} />
+            </div>
+          ) : (
+            <div>
+              <button onClick={openNavBar} type="button">
+                BUTTON
+              </button>
+              <Collapse isOpened={navBarOpen}>
+                <NavList pages={pages} />
+              </Collapse>
+            </div>
+          )
+        }
+
       </div>
     );
   }
@@ -55,6 +60,7 @@ class NavBar extends Component {
 const mapStateToProps = ({ global }) => ({
   width: global.width,
   mode: global.mode,
+  navBarOpen: global.navBarOpen,
 });
 
 export default connect(mapStateToProps)(NavBar);

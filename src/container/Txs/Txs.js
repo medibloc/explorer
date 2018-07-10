@@ -6,17 +6,17 @@ import ContentBox from '../../components/ContentBox/ContentBox';
 
 class Blocks extends Component {
   render() {
-    const { blocks } = this.props;
+    const { txs } = this.props;
 
     return (
       <div>
-        Here is the block sound!!
+        Here is the tx sound!!
         <ul>
           {
-            blocks.map(block => (
+            txs.map(tx => (
               <li>
                 <ContentBox>
-                  {JSON.stringify(block)}
+                  {JSON.stringify(tx)}
                 </ContentBox>
               </li>
             ))
@@ -29,7 +29,7 @@ class Blocks extends Component {
 
 
 const mapStateToProps = ({ blockchain }) => ({
-  blocks: blockchain.blocks,
+  txs: blockchain.txs,
 });
 
 export default connect(mapStateToProps)(Blocks);

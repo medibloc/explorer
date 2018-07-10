@@ -106,6 +106,13 @@ export const accGetter = (dispatch, actionType, ERROR, address) => simpleRequest
   ERROR,
 });
 
+// get: "/v1/user/accounts"
+export const accsGetter = (dispatch, actionType, ERROR) => simpleRequester(dispatch, {
+  url: `${NODE_ENDPOINT}/v1/user/accounts`,
+  actionType,
+  ERROR,
+});
+
 
 // get: "/v1/node/medstate"
 export const medStateGetter = (dispatch, actionType, ERROR) => simpleRequester(dispatch, {

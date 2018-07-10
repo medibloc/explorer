@@ -10,7 +10,7 @@ import { GlobalActions, BlockchainActions, TickerActions } from '../../redux/act
 import './NavBar.scss';
 
 
-const pages = ['Main', 'BLOCK', 'TX', 'Address', 'BP', 'Search', 'Setting'];
+const pages = ['Main', 'BLOCK', 'TX', 'Account', 'BP', 'Search', 'Setting'];
 
 class NavBar extends Component {
   componentDidMount() {

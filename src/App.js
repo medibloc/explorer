@@ -3,8 +3,9 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import {
-  About,
+  Account,
   Block,
+  BP,
   Home,
   Tx,
 } from './pages';
@@ -19,8 +20,9 @@ const App = () => (
         <NavBar />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/about" component={About} />
+          <Route exact path="/account" component={Account} />
           <Route exact path="/block" component={Block} />
+          <Route exact path="/bp" component={BP} />
           <Route exact path="/tx" component={Tx} />
         </Switch>
       </Fragment>

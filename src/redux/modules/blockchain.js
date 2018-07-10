@@ -2,6 +2,7 @@ import { handleActions } from 'redux-actions';
 
 import {
   accGetter,
+  accsGetter,
   blockGetter,
   medStateGetter,
   subscriber,
@@ -13,6 +14,7 @@ import {
 const GET_MED_STATE = 'blockchain/GET_MED_STATE';
 
 const GET_ACCOUNT = 'blockchain/GET_ACCOUNT';
+const GET_ACCOUNTS = 'blockchain/GET_ACCOUNTS';
 
 const GET_BLOCK = 'blockchain/GET_BLOCK';
 const GET_LIB = 'blockchain/GET_LIB';
@@ -40,6 +42,7 @@ const initialState = {
   medState: null,
 
   account: null,
+  accounts: [],
 
   block: null,
   blocks: [],
@@ -61,6 +64,7 @@ const reducer = handleActions({
   [GET_MED_STATE]: (state, action) => ({ ...state, medState: action.payload }),
 
   [GET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload }),
+  [GET_ACCOUNTS]: (state, action) => ({ ...state, accounts: action.payload.accounts }),
 
   [GET_BLOCK]: (state, action) => ({ ...state, block: action.payload }),
   [GET_LIB]: (state, action) => ({ ...state, lib: action.payload }),
@@ -89,6 +93,7 @@ const reducer = handleActions({
 
 // ACTION CREATORS
 export const getAccount = address => dispatch => accGetter(dispatch, GET_ACCOUNT, ERROR, address);
+export const getAccounts = () => dispatch => accsGetter(dispatch, GET_ACCOUNTS, ERROR);
 export const getBlock = hash => dispatch => blockGetter(dispatch, GET_BLOCK, ERROR, hash);
 export const getMedState = () => dispatch => medStateGetter(dispatch, GET_MED_STATE, ERROR);
 export const getTx = hash => dispatch => txGetter(dispatch, GET_TX, ERROR, hash);

@@ -1,0 +1,7 @@
+.searchBar {
+  display: flex;
+  justify-content: flex-end;
+  &.tablet input {
+    width: 100%;
+  }
+}

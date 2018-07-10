@@ -1,0 +1,7 @@
+.hoverButton {
+  font-size: 20px;
+  &:hover {
+    background: red;
+    cursor: pointer;
+  };
+}

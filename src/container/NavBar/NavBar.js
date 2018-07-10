@@ -3,15 +3,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-import { GlobalActions, BlockchainActions } from '../../redux/actionCreators';
+import './NavBar.css';
+import SearchBar from '../SearchBar/SearchBar';
+import TextBox from '../../components/Text/TextBox';
+import HoverButton from '../../components/Button/HoverButton';
+import { GlobalActions, BlockchainActions, TickerActions } from '../../redux/actionCreators';
 
 
-const pages = ['ABOUT', 'BLOCK', 'HOME', 'TX'];
+const pages = ['Main', 'BLOCK', 'TX', 'Address', 'BP', 'Search', 'Setting'];
 
 class NavBar extends Component {
   componentDidMount() {
     this.setWindowSize();
     BlockchainActions.subscribe();
+    TickerActions.getMedPrice();
   }
 
   setWindowSize() {
@@ -24,15 +29,20 @@ class NavBar extends Component {
 
 
   render() {
+    // const { mode } = this.props;
+
     return (
-      <div>
-        <ul>
+      <div className="navBar">
+        <SearchBar />
+        <ul className="navNavigator">
           {
             pages.map(page => (
               <li key={page}>
-                <NavLink to={page === 'HOME' ? '/' : page}>
-                  { page }
-                </NavLink>
+                <HoverButton>
+                  <NavLink to={page === 'Main' ? '/' : page}>
+                   {page}
+                  </NavLink>
+                </HoverButton>
               </li>
             ))
           }
@@ -42,6 +52,9 @@ class NavBar extends Component {
   }
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ global }) => ({
+  width: global.width,
+  mode: global.mode,
+});
 
 export default connect(mapStateToProps)(NavBar);

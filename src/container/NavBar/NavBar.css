@@ -1,0 +1,18 @@
+.navBar {
+  display: flex;
+  flex-direction: column;
+}
+
+.navNavigator {
+  list-style-type: none;
+
+  flex: 1;
+
+  display: flex;
+  justify-content: flex-end;
+}
+
+.navNavigator li {
+  margin-left: 10px;
+  margin-right: 10px;
+}

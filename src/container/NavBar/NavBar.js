@@ -9,7 +9,6 @@ import {
   GlobalActions,
   BlockchainActions,
   TickerActions,
-  WidgetActions,
 } from '../../redux/actionCreators';
 
 import './NavBar.scss';
@@ -19,7 +18,6 @@ const pages = ['Main', 'BLOCK', 'TX', 'Account', 'BP', 'Search', 'Setting'];
 
 class NavBar extends Component {
   componentWillMount() {
-    WidgetActions.load();
     BlockchainActions.getMedState();
   }
 
@@ -27,13 +25,6 @@ class NavBar extends Component {
     this.setWindowSize();
     BlockchainActions.subscribe();
     TickerActions.getMedPrice();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { medState } = this.props;
-    if (nextProps.medState !== medState) {
-      WidgetActions.loadSuccess();
-    }
   }
 
   setWindowSize() {

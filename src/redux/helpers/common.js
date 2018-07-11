@@ -1,4 +1,9 @@
 import axios from 'axios';
+import {
+  LOAD,
+  LOAD_SUCCESS,
+  LOAD_FAIL,
+} from '../modules/widget';
 
 
 export const simpleRequester = (dispatch, {
@@ -7,16 +12,26 @@ export const simpleRequester = (dispatch, {
   actionType,
   ERROR,
 }) => {
+  dispatch({ type: LOAD });
   axios({
     url,
     params,
   })
-    .then(res => dispatch({
-      type: actionType,
-      payload: res.data,
-    }))
-    .catch(err => dispatch({
-      type: ERROR,
-      payload: err.message,
-    }));
+    .then((res) => {
+      dispatch({
+        type: actionType,
+        payload: res.data,
+      });
+      dispatch({ type: LOAD_SUCCESS });
+    })
+    .catch((err) => {
+      dispatch({
+        type: ERROR,
+        payload: err.message,
+      });
+      dispatch({
+        type: LOAD_FAIL,
+        payload: err.message,
+      });
+    });
 };

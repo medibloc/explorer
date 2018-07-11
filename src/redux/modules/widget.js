@@ -1,9 +1,9 @@
 import { createAction, handleActions } from 'redux-actions';
 
 // ACTION TYPES
-const LOAD = 'widgets/LOAD';
-const LOAD_SUCCESS = 'widgets/LOAD_SUCCESS';
-const LOAD_FAIL = 'widgets/LOAD_FAIL';
+export const LOAD = 'widgets/LOAD';
+export const LOAD_SUCCESS = 'widgets/LOAD_SUCCESS';
+export const LOAD_FAIL = 'widgets/LOAD_FAIL';
 
 const initialState = {
   loading: false,

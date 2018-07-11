@@ -1,11 +1,11 @@
 import React from 'react';
-import Blocks from '../container/Blocks';
+import BlockList from '../container/BlockList/BlockList';
 
 const Block = () => (
   <div>
     <h2>
       Block
-      <Blocks />
+      <BlockList />
     </h2>
   </div>
 );

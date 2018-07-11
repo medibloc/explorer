@@ -12,6 +12,8 @@ const initialState = {
   mode: 0,
   width: null,
 
+  page: 1,
+
   navBarOpen: false,
 
   search: '',

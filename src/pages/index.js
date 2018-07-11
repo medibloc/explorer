@@ -8,6 +8,7 @@ import BP from './BP';
 import Home from './Home';
 import Tx from './Tx';
 import NavBar from '../container/NavBar';
+import Footer from '../container/Footer';
 
 import {
   GlobalActions,
@@ -54,6 +55,7 @@ class Pages extends Component {
               </Switch>
             )
           }
+          <Footer />
         </Fragment>
       </BrowserRouter>
     )

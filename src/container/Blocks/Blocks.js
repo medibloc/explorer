@@ -3,14 +3,16 @@ import { connect } from 'react-redux';
 
 import ContentBox from '../../components/ContentBox/ContentBox';
 
+import './Blocks.scss';
+
 
 const Blocks = ({ blocks }) => (
-  <div>
-    Here is the block sound!!
+  <div className="blocks">
+    BLOCKS
     <ul>
       {
         blocks.map(block => (
-          <li>
+          <li key={block.hash}>
             <ContentBox>
               {JSON.stringify(block)}
             </ContentBox>

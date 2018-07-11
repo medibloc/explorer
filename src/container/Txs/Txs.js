@@ -6,7 +6,7 @@ import ContentBox from '../../components/ContentBox/ContentBox';
 
 const Txs = ({ txs }) => (
   <div>
-    Here is the tx sound!!
+    TXS
     <ul>
       {
         txs.map(tx => (

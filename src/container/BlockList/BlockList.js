@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { BlockchainActions, GlobalActions } from '../../redux/actionCreators';
+import { blocksInPage } from '../../config';
 
-const blocksInPage = 10;
 
 class BlockList extends Component {
   componentWillMount() {

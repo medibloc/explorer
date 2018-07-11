@@ -2,17 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import ContentBox from '../../components/ContentBox/ContentBox';
-import { BlockchainActions, WidgetActions } from '../../redux/actionCreators';
+import { BlockchainActions } from '../../redux/actionCreators';
 
 class Accounts extends Component {
   componentWillMount() {
-    WidgetActions.load();
     BlockchainActions.getAccounts();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { accounts } = this.props;
-    if (nextProps.accounts !== accounts) WidgetActions.loadSuccess();
   }
 
   render() {

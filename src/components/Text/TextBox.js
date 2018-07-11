@@ -3,7 +3,7 @@ import './TextBox.css';
 
 
 const TextBox = ({ mode }) => (
-  <div className={mode === 0 ? "textBox" : "textBox mobile"}>
+  <div className={mode === 0 ? 'textBox' : 'textBox mobile'}>
     Text Box
     { mode }
   </div>

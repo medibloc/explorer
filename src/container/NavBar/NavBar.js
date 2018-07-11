@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import { Collapse } from 'react-collapse';
 import { connect } from 'react-redux';

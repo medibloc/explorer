@@ -6,40 +6,52 @@ import { blocksInPage } from '../../config';
 
 
 class BlockList extends Component {
+  constructor(props) {
+    super(props);
+    this.getBlocks = this.getBlocks.bind(this);
+    this.movePage = this.movePage.bind(this);
+  }
+
   componentWillMount() {
     this.getBlocks();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.page !== nextProps.page) {
-      this.getBlocks();
-    }
+    const { page } = this.props;
+    if (page !== nextProps.page) this.getBlocks();
   }
 
-  getBlocks = () => {
-    const { blockList, page } = this.props;
-    const { height} = this.props.medState;
+  getBlocks() {
+    const { page, medState: { height } } = this.props;
     BlockchainActions.getBlocks({
       from: height - page * blocksInPage + 1,
       to: height - (page - 1) * blocksInPage,
     });
   }
 
-  movePage = () => {
+  movePage() {
     const { page } = this.props;
-    GlobalActions.movePage(page+1);
+    GlobalActions.movePage(page + 1);
   }
 
   render() {
-    return this.props.loading ? (
+    const { blockList, loading } = this.props;
+    return loading ? (
       <div>
         LOADING
       </div>
-      ) : (
+    ) : (
       <div>
         BLOCK LIST
-        { this.props.blockList.map(block => (<div>{JSON.stringify(block)}</div>)) }
-        <button onClick={this.movePage}>
+        {
+          blockList.map(block => (
+            <div>
+              {JSON.stringify(block)}
+            </div>
+          ))
+        }
+        <button onClick={this.movePage} type="button">
+          NEXT PAGE
         </button>
       </div>
     );
@@ -51,7 +63,7 @@ const mapStateToProps = ({ blockchain, global, widget }) => ({
   medState: blockchain.medState,
 
   loading: widget.loading,
-  // one page contains 10 blocks
+
   page: global.page,
 });
 

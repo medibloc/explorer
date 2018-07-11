@@ -6,6 +6,8 @@ const SET_WINDOW_SIZE = 'global/SET_WINDOW_SIZE';
 const SET_SEARCH_TEXT = 'global/SET_SEARCH_TEXT';
 
 const OPEN_NAVBAR = 'global/OPEN_NAVBAR';
+const MOVE_PAGE = 'global/MOVE_PAGE';
+
 
 const initialState = {
   // Mode - 0 : Desktop, 1 : Tablet, 2 : Mobile
@@ -40,6 +42,7 @@ const reducer = handleActions({
   },
 
   [OPEN_NAVBAR]: state => ({ ...state, navBarOpen: !state.navBarOpen }),
+  [MOVE_PAGE]: (state, action) => ({ ...state, page: action.payload }),
 
   [SET_SEARCH_TEXT]: (state, action) => ({ ...state, search: action.payload }),
 }, initialState);
@@ -49,5 +52,6 @@ const reducer = handleActions({
 export const setWindowSize = createAction(SET_WINDOW_SIZE);
 export const setSearchText = createAction(SET_SEARCH_TEXT);
 export const openNavBar = createAction(OPEN_NAVBAR);
+export const movePage = createAction(MOVE_PAGE);
 
 export default reducer;

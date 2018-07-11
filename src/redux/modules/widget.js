@@ -6,6 +6,7 @@ export const LOAD_SUCCESS = 'widgets/LOAD_SUCCESS';
 export const LOAD_FAIL = 'widgets/LOAD_FAIL';
 
 const initialState = {
+  isFirstLoad: true,
   loading: false,
   loaded: false,
   error: null,
@@ -18,6 +19,7 @@ const reducer = handleActions({
     ...state,
     loading: false,
     loaded: true,
+    isFirstLoad: false,
   }),
   [LOAD_FAIL]: (state, action) => ({
     ...state,

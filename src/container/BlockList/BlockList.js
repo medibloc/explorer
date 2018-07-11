@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { BlockchainActions } from '../../redux/actionCreators';
+import { BlockchainActions, GlobalActions } from '../../redux/actionCreators';
 
 const blocksInPage = 10;
 
@@ -10,13 +10,24 @@ class BlockList extends Component {
     this.getBlocks();
   }
 
-  getBlocks() {
+  componentWillReceiveProps(nextProps) {
+    if (this.props.page !== nextProps.page) {
+      this.getBlocks();
+    }
+  }
+
+  getBlocks = () => {
     const { blockList, page } = this.props;
-    const height = 10
+    const { height} = this.props.medState;
     BlockchainActions.getBlocks({
       from: height - page * blocksInPage + 1,
       to: height - (page - 1) * blocksInPage,
     });
+  }
+
+  movePage = () => {
+    const { page } = this.props;
+    GlobalActions.movePage(page+1);
   }
 
   render() {
@@ -27,7 +38,9 @@ class BlockList extends Component {
       ) : (
       <div>
         BLOCK LIST
-
+        { this.props.blockList.map(block => (<div>{JSON.stringify(block)}</div>)) }
+        <button onClick={this.movePage}>
+        </button>
       </div>
     );
   }

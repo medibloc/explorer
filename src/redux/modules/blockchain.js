@@ -1,3 +1,4 @@
+import arraySort from 'array-sort';
 import { handleActions } from 'redux-actions';
 
 import {
@@ -67,10 +68,10 @@ const reducer = handleActions({
   [GET_MED_STATE]: (state, action) => ({ ...state, medState: action.payload }),
 
   [GET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload }),
-  [GET_ACCOUNTS]: (state, action) => ({ ...state, accounts: action.payload.accounts }),
+  [GET_ACCOUNTS]: (state, action) => ({ ...state, accounts: arraySort(action.payload.accounts, 'balance', { reverse: true }) }),
 
   [GET_BLOCK]: (state, action) => ({ ...state, block: action.payload }),
-  [GET_BLOCKS]: (state, action) => ({ ...state, blockList: action.payload }),
+  [GET_BLOCKS]: (state, action) => ({ ...state, blockList: arraySort(action.payload.blocks, 'height', { reverse: true }) }),
   [GET_LIB]: (state, action) => ({ ...state, lib: action.payload }),
   [GET_REVERT_BLOCK]: (state, action) => ({
     ...state,

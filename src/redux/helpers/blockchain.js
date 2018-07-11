@@ -21,32 +21,42 @@ const preProcess = (result, maxResponse) => {
   };
 };
 
+const jsonfy = (data) => {
+  const postData = data.substring(1, data.length - 1).split(/, |:/);
+  const result = {};
+  for (let i = 0; i < postData.length; i += 2) {
+    result[postData[i]] = postData[i + 1];
+  }
+  return result;
+};
+
 const distributor = (datum, actionTypes) => {
+  const data = jsonfy(datum.data);
   switch (datum.topic) {
     case EXECUTED_TX:
       return {
         type: actionTypes.GET_EXECUTED_TX,
-        payload: datum.data,
+        payload: data,
       };
     case LIB:
       return {
         type: actionTypes.GET_LIB,
-        payload: datum.data,
+        payload: data,
       };
     case PENDING_TX:
       return {
         type: actionTypes.GET_PENDING_TX,
-        payload: datum.data,
+        payload: data,
       };
     case REVERT_BLOCK:
       return {
         type: actionTypes.GET_REVERT_BLOCK,
-        payload: datum.data,
+        payload: data,
       };
     case TAIL_BLOCK:
       return {
         type: actionTypes.GET_TAIL_BLOCK,
-        payload: datum.data,
+        payload: data,
       };
     default:
       return null;
@@ -89,6 +99,23 @@ export const blockGetter = (dispatch, actionType, ERROR, hash) => simpleRequeste
   url: `${NODE_ENDPOINT}/v1/block`,
   params: {
     hash,
+  },
+  actionType,
+  ERROR,
+});
+
+// get: "/v1/blocks"
+// params: "from, to"
+export const blocksGetter = (
+  dispatch,
+  actionType,
+  ERROR,
+  { from, to },
+) => simpleRequester(dispatch, {
+  url: `${NODE_ENDPOINT}/v1/blocks`,
+  params: {
+    from,
+    to,
   },
   actionType,
   ERROR,

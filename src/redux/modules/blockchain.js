@@ -4,6 +4,7 @@ import {
   accGetter,
   accsGetter,
   blockGetter,
+  blocksGetter,
   medStateGetter,
   subscriber,
   txGetter,
@@ -17,6 +18,7 @@ const GET_ACCOUNT = 'blockchain/GET_ACCOUNT';
 const GET_ACCOUNTS = 'blockchain/GET_ACCOUNTS';
 
 const GET_BLOCK = 'blockchain/GET_BLOCK';
+const GET_BLOCKS = 'blockchain/GET_BLOCKS';
 const GET_LIB = 'blockchain/GET_LIB';
 const GET_REVERT_BLOCK = 'blockchain/GET_REVERT_BLOCK';
 const GET_TAIL_BLOCK = 'blockchain/GET_TAIL_BLOCK';
@@ -46,6 +48,7 @@ const initialState = {
 
   block: null,
   blocks: [],
+  blockList: [],
   lib: null,
   revertBlocks: [],
   tailBlock: null,
@@ -67,6 +70,7 @@ const reducer = handleActions({
   [GET_ACCOUNTS]: (state, action) => ({ ...state, accounts: action.payload.accounts }),
 
   [GET_BLOCK]: (state, action) => ({ ...state, block: action.payload }),
+  [GET_BLOCKS]: (state, action) => ({ ...state, blockList: action.payload }),
   [GET_LIB]: (state, action) => ({ ...state, lib: action.payload }),
   [GET_REVERT_BLOCK]: (state, action) => ({
     ...state,
@@ -95,6 +99,12 @@ const reducer = handleActions({
 export const getAccount = address => dispatch => accGetter(dispatch, GET_ACCOUNT, ERROR, address);
 export const getAccounts = () => dispatch => accsGetter(dispatch, GET_ACCOUNTS, ERROR);
 export const getBlock = hash => dispatch => blockGetter(dispatch, GET_BLOCK, ERROR, hash);
+export const getBlocks = ({ from, to }) => dispatch => blocksGetter(
+  dispatch,
+  GET_BLOCKS,
+  ERROR,
+  { from, to },
+);
 export const getMedState = () => dispatch => medStateGetter(dispatch, GET_MED_STATE, ERROR);
 export const getTx = hash => dispatch => txGetter(dispatch, GET_TX, ERROR, hash);
 export const subscribe = () => dispatch => subscriber(dispatch, subsribeTypes, ERROR);

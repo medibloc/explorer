@@ -5,7 +5,12 @@ import { connect } from 'react-redux';
 
 import NavList from './NavList';
 import SearchBar from '../SearchBar/SearchBar';
-import { GlobalActions, BlockchainActions, TickerActions } from '../../redux/actionCreators';
+import {
+  GlobalActions,
+  BlockchainActions,
+  TickerActions,
+  WidgetActions,
+} from '../../redux/actionCreators';
 
 import './NavBar.scss';
 
@@ -13,10 +18,22 @@ import './NavBar.scss';
 const pages = ['Main', 'BLOCK', 'TX', 'Account', 'BP', 'Search', 'Setting'];
 
 class NavBar extends Component {
+  componentWillMount() {
+    WidgetActions.load();
+    BlockchainActions.getMedState();
+  }
+
   componentDidMount() {
     this.setWindowSize();
     BlockchainActions.subscribe();
     TickerActions.getMedPrice();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { medState } = this.props;
+    if (nextProps.medState !== medState) {
+      WidgetActions.loadSuccess();
+    }
   }
 
   setWindowSize() {
@@ -57,7 +74,8 @@ class NavBar extends Component {
   }
 }
 
-const mapStateToProps = ({ global }) => ({
+const mapStateToProps = ({ blockchain, global }) => ({
+  medState: blockchain.medState,
   width: global.width,
   mode: global.mode,
   navBarOpen: global.navBarOpen,

@@ -5,11 +5,7 @@ import { connect } from 'react-redux';
 
 import NavList from './NavList';
 import SearchBar from '../SearchBar/SearchBar';
-import {
-  GlobalActions,
-  BlockchainActions,
-  TickerActions,
-} from '../../redux/actionCreators';
+import { GlobalActions } from '../../redux/actionCreators';
 
 import './NavBar.scss';
 
@@ -17,24 +13,6 @@ import './NavBar.scss';
 const pages = ['Main', 'BLOCK', 'TX', 'Account', 'BP', 'Search', 'Setting'];
 
 class NavBar extends Component {
-  componentWillMount() {
-    BlockchainActions.getMedState();
-  }
-
-  componentDidMount() {
-    this.setWindowSize();
-    BlockchainActions.subscribe();
-    TickerActions.getMedPrice();
-  }
-
-  setWindowSize() {
-    GlobalActions.setWindowSize(window.innerWidth);
-    window.addEventListener(
-      'resize',
-      () => GlobalActions.setWindowSize(window.innerWidth),
-    );
-  }
-
   render() {
     const { handleNavBar } = this;
     const { mode, navBarOpen } = this.props;

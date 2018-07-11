@@ -8,8 +8,32 @@ import BP from './BP';
 import Home from './Home';
 import Tx from './Tx';
 import NavBar from '../container/NavBar';
+import {
+  GlobalActions,
+  BlockchainActions,
+  TickerActions,
+} from '../redux/actionCreators';
+
 
 class Pages extends Component {
+  componentWillMount() {
+    BlockchainActions.getMedState();
+  }
+
+  componentDidMount() {
+    this.setWindowSize();
+    BlockchainActions.subscribe();
+    TickerActions.getMedPrice();
+  }
+
+  setWindowSize = () => {
+    GlobalActions.setWindowSize(window.innerWidth);
+    window.addEventListener(
+      'resize',
+      () => GlobalActions.setWindowSize(window.innerWidth),
+    );
+  }
+
   render() {
     return (
       <BrowserRouter>

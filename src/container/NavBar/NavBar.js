@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import cx from 'classnames';
+import React, { Component, Fragment } from 'react';
 import { Collapse } from 'react-collapse';
 import { connect } from 'react-redux';
 
@@ -19,24 +20,26 @@ class NavBar extends Component {
 
     return (
       <div className="navBar">
-        <SearchBar />
+        <div>
+          LOGO
+        </div>
         {
           mode === 0 ? (
             <div className="navNavigator">
               <NavList pages={pages} />
             </div>
           ) : (
-            <div>
+            <Fragment>
               <button onClick={openNavBar} type="button">
                 BUTTON
               </button>
               <Collapse isOpened={navBarOpen}>
                 <NavList pages={pages} />
               </Collapse>
-            </div>
+            </Fragment>
           )
         }
-
+        <SearchBar className={cx({ fullWidth: mode !== 0 })} />
       </div>
     );
   }

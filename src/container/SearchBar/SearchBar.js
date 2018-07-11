@@ -1,4 +1,3 @@
-import cx from 'classnames';
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -6,11 +5,11 @@ import './SearchBar.scss';
 import HoverButton from '../../components/Button/HoverButton';
 import { GlobalActions } from '../../redux/actionCreators';
 
-const SearchBar = ({ mode }) => {
+const SearchBar = ({}) => {
   const { setSearchText } = GlobalActions;
 
   return (
-    <div className={cx('searchBar', { tablet: mode !== 0 })}>
+    <div className="searchBar">
       <input onChange={e => setSearchText(e.target.value)} />
       <HoverButton>
         GO

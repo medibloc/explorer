@@ -1,6 +1,16 @@
+$tablet-width: 720px;
+
 .navBar {
+  border: 1px solid black;
+
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+@media (max-width: $tablet-width) {
+  .navBar {
+    flex-direction: column;
+  }
 }
 
 .navNavigator {
@@ -13,4 +23,8 @@
     margin-left: 10px;
     margin-right: 10px;
   }
+}
+
+.fullWidth {
+  width: 100%;
 }

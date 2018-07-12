@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import BlockWrapper from '../../components/BlockWrapper';
 import { BlockchainActions } from '../../redux/actionCreators';
 
 
@@ -13,22 +14,91 @@ class Block extends Component {
 
 
   render() {
-    const { block, loading } = this.props;
-    return loading ? (
+    const { block } = this.props;
+    return block === null ? (
       <div>
         LOADING
       </div>
     ) : (
       <div>
-        { JSON.stringify(block) }
+        <div>
+          <BlockWrapper>
+            <div>
+              Block Height
+            </div>
+            <div>
+              {block.height}
+            </div>
+          </BlockWrapper>
+          <BlockWrapper>
+            <div>
+              Time
+            </div>
+            <div>
+              {block.timestamp}
+            </div>
+          </BlockWrapper>
+          <BlockWrapper>
+            <div>
+              Block Hash
+            </div>
+            <div>
+              {block.hash}
+            </div>
+          </BlockWrapper>
+          <BlockWrapper>
+            <div>
+              Prev Hash
+            </div>
+            <div>
+              {block.parent_hash}
+            </div>
+          </BlockWrapper>
+          <BlockWrapper>
+            <div>
+              No. Tx
+            </div>
+            <div>
+              {block.transactions.length}
+            </div>
+          </BlockWrapper>
+          <BlockWrapper>
+            <div>
+              BP
+            </div>
+            <div>
+              {block.coinbase}
+            </div>
+          </BlockWrapper>
+        </div>
+        <div>
+          Transactions in the Block
+          {
+            block.transactions.map(tx => (
+              <BlockWrapper>
+                <div>
+                  {tx.hash}
+                </div>
+                <div>
+                  {tx.from}
+                </div>
+                <div>
+                  {tx.to}
+                </div>
+                <div>
+                  {tx.amount}
+                </div>
+              </BlockWrapper>
+            ))
+          }
+        </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ blockchain, widget }) => ({
+const mapStateToProps = ({ blockchain }) => ({
   block: blockchain.block,
-  loading: widget.loading,
 });
 
 export default connect(mapStateToProps)(Block);

@@ -19,7 +19,7 @@ const Block = ({ location }) => {
   return (
     <div>
       <h2>
-        BLOCK
+        BLOCK Detail info
       </h2>
       { BlockWrapper }
     </div>

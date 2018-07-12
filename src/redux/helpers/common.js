@@ -6,6 +6,7 @@ import {
 } from '../modules/widget';
 
 
+// eslint-disable-next-line
 export const simpleRequester = (dispatch, {
   url,
   params = null,

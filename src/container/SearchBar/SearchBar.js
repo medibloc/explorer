@@ -5,7 +5,7 @@ import './SearchBar.scss';
 import HoverButton from '../../components/Button/HoverButton';
 import { GlobalActions } from '../../redux/actionCreators';
 
-const SearchBar = ({}) => {
+const SearchBar = () => {
   const { setSearchText } = GlobalActions;
 
   return (

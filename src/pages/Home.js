@@ -1,6 +1,6 @@
 import React from 'react';
 import Blocks from '../container/Blocks';
-import Txs from '../container/Txs/Txs';
+// import Txs from '../container/Txs/Txs';
 
 import './pages.scss';
 

@@ -1,0 +1,14 @@
+.blockWrapper {
+  border: 1px solid black;
+
+  display: flex;
+  flex-direction: row;
+
+  div {
+    width: 20%;
+    word-break: break-all;
+    margin: 10px;
+    flex: 1;
+    border: 1px solid black;
+  }
+}

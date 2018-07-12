@@ -1,13 +1,16 @@
 import React from 'react';
-import BlockList from '../container/BlockList/BlockList';
+import queryString from 'query-string';
 
-const Block = () => (
-  <div>
-    <h2>
-      Block
-      <BlockList />
-    </h2>
-  </div>
-);
+
+const Block = ({ location }) => {
+  console.log(location)
+  return (
+    <div>
+      <h2>
+        Block
+      </h2>
+    </div>
+  );
+}
 
 export default Block;

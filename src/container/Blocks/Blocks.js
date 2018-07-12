@@ -11,8 +11,9 @@ const Blocks = ({ blocks }) => (
     BLOCKS
     <ul>
       {
-        blocks.map(block => (
-          <li key={block.hash}>
+        blocks.map((block, i) => (
+          // eslint-disable-next-line
+          <li key={i}>
             <ContentBox>
               {JSON.stringify(block)}
             </ContentBox>

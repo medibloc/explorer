@@ -10,11 +10,10 @@ import { GlobalActions } from '../../redux/actionCreators';
 import './NavBar.scss';
 
 
-const pages = ['Main', 'BLOCK', 'TX', 'Account', 'BP', 'Search', 'Setting'];
+const pages = ['Main', 'blocks', 'txs', 'accounts', 'bp'];
 
 class NavBar extends Component {
   render() {
-    const { handleNavBar } = this;
     const { mode, navBarOpen } = this.props;
     const { openNavBar } = GlobalActions;
 

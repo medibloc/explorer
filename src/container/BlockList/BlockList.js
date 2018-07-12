@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import BlockWrapper from '../../components/BlockWrapper';
 import { BlockchainActions, GlobalActions } from '../../redux/actionCreators';
 import { blocksInPage } from '../../config';
 
@@ -45,9 +46,13 @@ class BlockList extends Component {
         BLOCK LIST
         {
           blockList.map(block => (
-            <div>
-              {JSON.stringify(block)}
-            </div>
+            <BlockWrapper key={block.height}>
+              <div>{block.height}</div>
+              <div>{block.timestamp}</div>
+              <div>{block.hash}</div>
+              <div>{block.transactions.length}</div>
+              <div>{block.coinbase}</div>
+            </BlockWrapper>
           ))
         }
         <button onClick={this.movePage} type="button">

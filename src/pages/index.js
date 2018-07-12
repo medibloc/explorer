@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Account from './Account';
+import Blocks from './Blocks';
 import Block from './Block';
 import BP from './BP';
 import Home from './Home';
@@ -16,23 +17,23 @@ import {
   TickerActions,
 } from '../redux/actionCreators';
 
+const setWindowSize = () => {
+  GlobalActions.setWindowSize(window.innerWidth);
+  window.addEventListener(
+    'resize',
+    () => GlobalActions.setWindowSize(window.innerWidth),
+  );
+};
+
 class Pages extends Component {
   componentWillMount() {
     BlockchainActions.getMedState();
   }
 
   componentDidMount() {
-    this.setWindowSize();
+    setWindowSize();
     BlockchainActions.subscribe();
     TickerActions.getMedPrice();
-  }
-
-  setWindowSize() {
-    GlobalActions.setWindowSize(window.innerWidth);
-    window.addEventListener(
-      'resize',
-      () => GlobalActions.setWindowSize(window.innerWidth),
-    );
   }
 
   render() {
@@ -48,19 +49,20 @@ class Pages extends Component {
             ) : (
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route exact path="/account" component={Account} />
-                <Route exact path="/block" component={Block} />
+                <Route exact path="/accounts" component={Account} />
+                <Route path="/block" component={Block} />
+                <Route exact path="/blocks" component={Blocks} />
                 <Route exact path="/bp" component={BP} />
-                <Route exact path="/tx" component={Tx} />
+                <Route exact path="/txs" component={Tx} />
               </Switch>
             )
           }
           <Footer />
         </Fragment>
       </BrowserRouter>
-    )
+    );
   }
-};
+}
 
 const mapStateToProps = ({ widget }) => ({
   isFirstLoad: widget.isFirstLoad,

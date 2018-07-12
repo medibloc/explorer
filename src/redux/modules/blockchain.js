@@ -80,7 +80,7 @@ const reducer = handleActions({
   [GET_TAIL_BLOCK]: (state, action) => ({
     ...state,
     tailBlock: action.payload,
-    blocks: [...state.blocks, action.payload],
+    blocks: arraySort([...state.blocks, action.payload], 'Height', { reverse: true }),
   }),
 
   [GET_EXECUTED_TX]: (state, action) => ({ ...state, txs: [...state.txs, action.payload] }),

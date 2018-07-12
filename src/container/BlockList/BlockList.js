@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import BlockWrapper from '../../components/BlockWrapper';
-import { BlockchainActions, GlobalActions } from '../../redux/actionCreators';
+import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
 import { blocksInPage } from '../../config';
 
 
@@ -24,10 +24,10 @@ class BlockList extends Component {
 
   getBlocks() {
     const { page, medState: { height } } = this.props;
-    BlockchainActions.getBlocks({
-      from: height - page * blocksInPage + 1,
+    w.loader(BlockchainActions.getBlocks({
+      from: page <= 1 && height < 10 ? 1 : height - page * blocksInPage + 1,
       to: height - (page - 1) * blocksInPage,
-    });
+    }));
   }
 
   movePage() {

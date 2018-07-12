@@ -7,26 +7,28 @@ import { BlockchainActions } from '../../redux/actionCreators';
 
 class Block extends Component {
   componentWillMount() {
-    const { hash, height } = this.props;
-    if (hash !== undefined) BlockchainActions.getBlock(hash);
-    else if (height !== undefined) BlockchainActions.getBlock(height);
+    const { address } = this.props;
+    console.log(address)
+    if (address !== undefined) BlockchainActions.getAccount(address);
   }
 
 
   render() {
-    const { block } = this.props;
-    if (!block) {
-      return <div>LOADING</div>;
-    }
-    return (
+    const { account } = this.props;
+    return account === null ? (
       <div>
-        <div>
+        LOADING
+      </div>
+    ) : (
+      <div>
+        {JSON.stringify(account)}
+        {/*<div>
           <BlockWrapper>
             <div>
-              Block Height
+              Account
             </div>
             <div>
-              {block.height}
+              {account.address}
             </div>
           </BlockWrapper>
           <BlockWrapper>
@@ -90,14 +92,14 @@ class Block extends Component {
               </BlockWrapper>
             ))
           }
-        </div>
+        </div>*/}
       </div>
     );
   }
 }
 
 const mapStateToProps = ({ blockchain }) => ({
-  block: blockchain.block,
+  account: blockchain.account,
 });
 
 export default connect(mapStateToProps)(Block);

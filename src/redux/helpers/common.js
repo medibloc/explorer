@@ -1,19 +1,38 @@
 import axios from 'axios';
-import {
-  LOAD,
-  LOAD_SUCCESS,
-  LOAD_FAIL,
-} from '../modules/widget';
 
+// export const simpleRequester = (dispatch, {
+//   url,
+//   params = null,
+//   actionType,
+//   ERROR,
+// }, load = true) => {
+//   if (load) dispatch({ type: LOAD });
+//   axios({
+//     url,
+//     params,
+//   })
+//     .then((res) => {
+//       dispatch({
+//         type: actionType,
+//         payload: res.data,
+//       });
+//       if (load) dispatch({ type: LOAD_SUCCESS });
+//     })
+//     .catch((err) => {
+//       dispatch({
+//         type: ERROR,
+//         payload: err.message,
+//       });
+//       if (load) dispatch({ type: LOAD_FAIL, payload: err.message });
+//     });
+// };
 
-// eslint-disable-next-line
 export const simpleRequester = (dispatch, {
   url,
   params = null,
   actionType,
   ERROR,
-}) => {
-  dispatch({ type: LOAD });
+}) => new Promise((resolve, reject) => (
   axios({
     url,
     params,
@@ -23,16 +42,13 @@ export const simpleRequester = (dispatch, {
         type: actionType,
         payload: res.data,
       });
-      dispatch({ type: LOAD_SUCCESS });
+      return resolve(res.data);
     })
     .catch((err) => {
       dispatch({
         type: ERROR,
         payload: err.message,
       });
-      dispatch({
-        type: LOAD_FAIL,
-        payload: err.message,
-      });
-    });
-};
+      return reject(err.message);
+    })
+));

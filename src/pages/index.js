@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Account from './Account';
+import Accounts from './Accounts';
 import Blocks from './Blocks';
 import Block from './Block';
 import BP from './BP';
@@ -15,6 +16,7 @@ import {
   GlobalActions,
   BlockchainActions,
   TickerActions,
+  WidgetActions as w,
 } from '../redux/actionCreators';
 
 const setWindowSize = () => {
@@ -27,7 +29,7 @@ const setWindowSize = () => {
 
 class Pages extends Component {
   componentWillMount() {
-    BlockchainActions.getMedState();
+    w.loader(BlockchainActions.getMedState());
   }
 
   componentDidMount() {
@@ -49,7 +51,8 @@ class Pages extends Component {
             ) : (
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route exact path="/accounts" component={Account} />
+                <Route path="/account" component={Account} />
+                <Route exact path="/accounts" component={Accounts} />
                 <Route path="/block" component={Block} />
                 <Route exact path="/blocks" component={Blocks} />
                 <Route exact path="/bp" component={BP} />

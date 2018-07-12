@@ -35,4 +35,11 @@ export const load = createAction(LOAD);
 export const loadSuccess = createAction(LOAD_SUCCESS);
 export const loadFail = createAction(LOAD_FAIL); // loadFail(error)
 
+export const loader = actions => (dispatch) => {
+  dispatch({ type: LOAD });
+  actions
+    .then(() => dispatch({ type: LOAD_SUCCESS }))
+    .catch(err => dispatch({ type: LOAD_FAIL, payload: err.message }));
+};
+
 export default reducer;

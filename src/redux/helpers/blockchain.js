@@ -8,15 +8,24 @@ import {
 } from '../const';
 import { NODE_ENDPOINT, subscribeMaxResponse } from '../../config';
 
+let lastDataCache = 0;
 
 const preProcess = (result, maxResponse) => {
-  const data = result.split('\n');
+  let data = result.split('\n');
   data.pop();
   let restart = false;
-
   if (data.length >= maxResponse) restart = true;
+
+  const di = lastDataCache;
+  lastDataCache = data.length;
+  data = data.splice(di, data.length);
+
+  const dataList = [];
+  data.forEach(datum => dataList.push(JSON.parse(datum).result));
+
+  if (restart) lastDataCache = 0;
   return {
-    datum: data.length !== 0 ? JSON.parse(data[data.length - 1]).result : null,
+    data: data.length !== 0 ? dataList : null,
     restart,
   };
 };
@@ -70,11 +79,17 @@ export const subscriber = (dispatch, actionTypes, ERROR) => {
   req.open('POST', `${NODE_ENDPOINT}/v1/subscribe`);
   req.onprogress = () => {
     const data = preProcess(req.responseText, subscribeMaxResponse);
-    if (data.datum !== null) dispatch(distributor(data.datum, actionTypes));
-    if (data.restart === true) {
-      req.abort();
-      return subscriber(dispatch, actionTypes);
+
+    if (data.data !== null) {
+      data.data.forEach((datum) => {
+        dispatch(distributor(datum, actionTypes));
+      });
+      if (data.restart === true) {
+        req.abort();
+        return subscriber(dispatch, actionTypes);
+      }
     }
+
     return null;
   };
   req.onerror = () => dispatch({

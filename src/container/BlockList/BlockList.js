@@ -6,7 +6,7 @@ import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redu
 import { blocksInPage } from '../../config';
 
 const blockRanger = (page, height) => {
-  if (height < blocksInPage) return { from: 0, to: height };
+  if (height < blocksInPage) return { from: 1, to: height };
   let from = height - page * blocksInPage + 1;
   let to = height - (page - 1) * blocksInPage;
   if (from < 1) from = 1;
@@ -18,16 +18,17 @@ class BlockList extends Component {
   constructor(props) {
     super(props);
     this.getBlocks = this.getBlocks.bind(this);
-    this.movePage = this.movePage.bind(this);
+    this.moveToPrevPage = this.moveToPrevPage.bind(this);
+    this.moveToNextPage = this.moveToNextPage.bind(this);
   }
 
   componentWillMount() {
     this.getBlocks();
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const { page } = this.props;
-    if (page !== nextProps.page) this.getBlocks();
+    if (page !== prevProps.page) this.getBlocks();
   }
 
   getBlocks() {
@@ -36,7 +37,12 @@ class BlockList extends Component {
     w.loader(BlockchainActions.getBlocks({ from, to }));
   }
 
-  movePage() {
+  moveToPrevPage() {
+    const { page } = this.props;
+    GlobalActions.movePage(page - 1);
+  }
+
+  moveToNextPage() {
     const { page } = this.props;
     GlobalActions.movePage(page + 1);
   }
@@ -61,7 +67,10 @@ class BlockList extends Component {
             </BlockWrapper>
           ))
         }
-        <button onClick={this.movePage} type="button">
+        <button onClick={this.moveToPrevPage} type="button">
+          PREV PAGE
+        </button>
+        <button onClick={this.moveToNextPage} type="button">
           NEXT PAGE
         </button>
       </div>

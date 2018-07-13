@@ -42,7 +42,11 @@ const reducer = handleActions({
   },
 
   [OPEN_NAVBAR]: state => ({ ...state, navBarOpen: !state.navBarOpen }),
-  [MOVE_PAGE]: (state, action) => ({ ...state, page: action.payload }),
+  [MOVE_PAGE]: (state, action) => {
+    let page = action.payload;
+    if (page < 1) page = 1;
+    return { ...state, page };
+  },
 
   [SET_SEARCH_TEXT]: (state, action) => ({ ...state, search: action.payload }),
 }, initialState);

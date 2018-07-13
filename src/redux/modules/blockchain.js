@@ -1,4 +1,3 @@
-import arraySort from 'array-sort';
 import { handleActions } from 'redux-actions';
 
 import {
@@ -10,6 +9,7 @@ import {
   subscriber,
   txGetter,
 } from '../helpers/blockchain';
+import sorter from '../../lib/sorting';
 
 
 // ACTION TYPES
@@ -68,10 +68,10 @@ const reducer = handleActions({
   [GET_MED_STATE]: (state, action) => ({ ...state, medState: action.payload }),
 
   [GET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload }),
-  [GET_ACCOUNTS]: (state, action) => ({ ...state, accounts: arraySort(action.payload.accounts, 'balance', { reverse: true }) }),
+  [GET_ACCOUNTS]: (state, action) => ({ ...state, accounts: sorter(action.payload.accounts, 'balance') }),
 
   [GET_BLOCK]: (state, action) => ({ ...state, block: action.payload }),
-  [GET_BLOCKS]: (state, action) => ({ ...state, blockList: arraySort(action.payload.blocks, 'height', { reverse: true }) }),
+  [GET_BLOCKS]: (state, action) => ({ ...state, blockList: sorter(action.payload.blocks, 'height') }),
   [GET_LIB]: (state, action) => ({ ...state, lib: action.payload }),
   [GET_REVERT_BLOCK]: (state, action) => ({
     ...state,
@@ -80,7 +80,7 @@ const reducer = handleActions({
   [GET_TAIL_BLOCK]: (state, action) => ({
     ...state,
     tailBlock: action.payload,
-    blocks: arraySort([...state.blocks, action.payload], 'Height', { reverse: true }),
+    blocks: sorter([...state.blocks, action.payload], 'Height'),
   }),
 
   [GET_EXECUTED_TX]: (state, action) => ({ ...state, txs: [...state.txs, action.payload] }),

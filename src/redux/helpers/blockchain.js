@@ -6,7 +6,7 @@ import {
   REVERT_BLOCK,
   TAIL_BLOCK,
 } from '../const';
-import { NODE_ENDPOINT } from '../../config';
+import { NODE_ENDPOINT, subscribeMaxResponse } from '../../config';
 
 
 const preProcess = (result, maxResponse) => {
@@ -69,7 +69,7 @@ export const subscriber = (dispatch, actionTypes, ERROR) => {
   const req = new XMLHttpRequest();
   req.open('POST', `${NODE_ENDPOINT}/v1/subscribe`);
   req.onprogress = () => {
-    const data = preProcess(req.responseText, 10);
+    const data = preProcess(req.responseText, subscribeMaxResponse);
     if (data.datum !== null) dispatch(distributor(data.datum, actionTypes));
     if (data.restart === true) {
       req.abort();

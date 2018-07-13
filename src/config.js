@@ -7,3 +7,4 @@ export const COINMARKETCAP_MEDX_PRICE = 'https://api.coinmarketcap.com/v2/ticker
 
 // INTERNAL CONFIG
 export const blocksInPage = 10;
+export const subscribeMaxResponse = 10;

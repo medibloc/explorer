@@ -5,11 +5,25 @@ import BlockWrapper from '../../components/BlockWrapper';
 import { BlockchainActions } from '../../redux/actionCreators';
 
 
+const blockPicker = (pool, { hash, height }) => {
+  let block = null;
+  pool.forEach((bl) => {
+    if (bl.hash === hash || bl.height === height) block = bl;
+  });
+  return block;
+};
+
 class Block extends Component {
   componentWillMount() {
-    const { hash, height } = this.props;
-    if (hash !== undefined) BlockchainActions.getBlock(hash);
-    else if (height !== undefined) BlockchainActions.getBlock(height);
+    const {
+      hash,
+      height,
+      blockList,
+    } = this.props;
+    const block = blockPicker(blockList, { hash, height });
+    if (!block && hash) BlockchainActions.getBlock(hash);
+    if (!block && height) BlockchainActions.getBlock(height);
+    if (block) BlockchainActions.setBlock(block);
   }
 
 
@@ -98,6 +112,7 @@ class Block extends Component {
 
 const mapStateToProps = ({ blockchain }) => ({
   block: blockchain.block,
+  blockList: blockchain.blockList,
 });
 
 export default connect(mapStateToProps)(Block);

@@ -1,4 +1,4 @@
-import { handleActions } from 'redux-actions';
+import { createAction, handleActions } from 'redux-actions';
 
 import {
   accGetter,
@@ -23,6 +23,7 @@ const GET_BLOCKS = 'blockchain/GET_BLOCKS';
 const GET_LIB = 'blockchain/GET_LIB';
 const GET_REVERT_BLOCK = 'blockchain/GET_REVERT_BLOCK';
 const GET_TAIL_BLOCK = 'blockchain/GET_TAIL_BLOCK';
+const SET_BLOCK = 'blockchain/SET_BLOCK';
 
 const GET_EXECUTED_TX = 'blockchain/GET_EXECUTED_TX';
 const GET_PENDING_TX = 'blockchain/GET_PENDING_TX';
@@ -82,6 +83,7 @@ const reducer = handleActions({
     tailBlock: action.payload,
     blocks: sorter([...state.blocks, action.payload], 'Height'),
   }),
+  [SET_BLOCK]: (state, action) => ({ ...state, block: action.payload }),
 
   [GET_EXECUTED_TX]: (state, action) => ({ ...state, txs: [...state.txs, action.payload] }),
   [GET_PENDING_TX]: (state, action) => ({
@@ -108,6 +110,7 @@ export const getBlocks = ({ from, to }) => dispatch => blocksGetter(
 );
 export const getMedState = () => dispatch => medStateGetter(dispatch, GET_MED_STATE, ERROR);
 export const getTx = hash => dispatch => txGetter(dispatch, GET_TX, ERROR, hash);
+export const setBlock = createAction(SET_BLOCK);
 export const subscribe = () => dispatch => subscriber(dispatch, subsribeTypes, ERROR);
 
 

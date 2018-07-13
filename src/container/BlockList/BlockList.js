@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 import BlockWrapper from '../../components/BlockWrapper';
 import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
@@ -59,7 +60,11 @@ class BlockList extends Component {
         {
           blockList.map(block => (
             <BlockWrapper key={block.height}>
-              <div>{block.height}</div>
+              <div>
+                <NavLink to={'/block?height=' + block.height}>
+                  {block.height}
+                </NavLink>
+              </div>
               <div>{block.timestamp}</div>
               <div>{block.hash}</div>
               <div>{block.transactions.length}</div>

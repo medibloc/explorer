@@ -11,11 +11,8 @@ const moveToPage = pageNum => GlobalActions.movePage(pageNum);
 class Navigation extends Component {
   constructor(props) {
     super(props);
+    // TODO bind의 정확한 역
     this.handleKeyPress = this.handleKeyPress.bind(this);
-  }
-
-  componentWillMount() {
-    console.log('ha');
   }
 
   handleKeyPress(e) {
@@ -33,7 +30,7 @@ class Navigation extends Component {
   }
 
   render() {
-    const { page, last, loading } = this.props;
+    const { page, loading } = this.props;
     const lastPage = this.lastPage();
 
     return loading ? (

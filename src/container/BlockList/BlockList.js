@@ -7,6 +7,7 @@ import BlockWrapper from '../../components/BlockWrapper';
 import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
 import { blocksInPage } from '../../config';
 
+
 const blockRanger = (page, height) => {
   if (height < blocksInPage) return { from: 1, to: height };
   let from = height - page * blocksInPage + 1;
@@ -20,8 +21,6 @@ class BlockList extends Component {
   constructor(props) {
     super(props);
     this.getBlocks = this.getBlocks.bind(this);
-    this.moveToPrevPage = this.moveToPrevPage.bind(this);
-    this.moveToNextPage = this.moveToNextPage.bind(this);
   }
 
   componentWillMount() {
@@ -33,20 +32,14 @@ class BlockList extends Component {
     if (page !== prevProps.page) this.getBlocks();
   }
 
+  componentWillUnmount() {
+    GlobalActions.movePage(1);
+  }
+
   getBlocks() {
     const { page, medState: { height } } = this.props;
     const { from, to } = blockRanger(page, height);
     w.loader(BlockchainActions.getBlocks({ from, to }));
-  }
-
-  moveToPrevPage() {
-    const { page } = this.props;
-    GlobalActions.movePage(page - 1);
-  }
-
-  moveToNextPage() {
-    const { page } = this.props;
-    GlobalActions.movePage(page + 1);
   }
 
   render() {

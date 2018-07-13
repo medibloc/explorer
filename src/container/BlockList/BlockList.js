@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
+import Navigation from '../Navigation';
 import BlockWrapper from '../../components/BlockWrapper';
 import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
 import { blocksInPage } from '../../config';
@@ -72,12 +73,7 @@ class BlockList extends Component {
             </BlockWrapper>
           ))
         }
-        <button onClick={this.moveToPrevPage} type="button">
-          PREV PAGE
-        </button>
-        <button onClick={this.moveToNextPage} type="button">
-          NEXT PAGE
-        </button>
+        <Navigation />
       </div>
     );
   }

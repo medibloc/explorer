@@ -54,3 +54,19 @@
     padding: 10px;
   }
 }
+
+#main {
+  justify-content: center;
+
+  .searchBarSearch {
+    width: 520px;
+    height: 50px;
+    border-radius: 2px;
+    background-color: #397ff4;
+  }
+
+  input {
+    background: none;
+    color: #ffffff;
+  }
+}

@@ -32,6 +32,12 @@
     line-height: 1.67;
     color: #75777b;
 
+    span {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
     .special {
       color: #0b0b0b;
     }

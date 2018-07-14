@@ -4,17 +4,10 @@ import Blocks from '../container/Blocks';
 
 import SearchBar from '../container/SearchBar';
 import LiveInfoWrapper from '../components/LiveInfoWrapper';
-import ContentWrapper from '../components/ContentWrapper';
 
 
 import './pages.scss';
 
-const test = {
-  height: 10,
-  BlockHash: 'asdjkjsaefnrdjksfngjksedfngkjsdfngkjsdnfjkgnkjser',
-  TimeStamp: 123456789,
-  BP: 'HELLO',
-};
 
 const Home = () => (
   <div className="home">
@@ -48,11 +41,12 @@ const Home = () => (
         <hr />
         <SearchBar type="main" />
       </div>
-      <LiveInfoWrapper title="Recent Block">
-        {/*<Blocks />*/}
-      </LiveInfoWrapper>
+      <div className="homeLive">
+        <LiveInfoWrapper title="Recent Block">
+          <Blocks />
+        </LiveInfoWrapper>
+      </div>
     </div>
-    <ContentWrapper type="block" data={test} />
   </div>
 );
 

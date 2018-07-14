@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 import Navigation from '../Navigation';
 import BlockWrapper from '../../components/BlockWrapper';
+import ListWrapper from '../../components/ListWrapper';
 import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
 import { blocksInPage } from '../../config';
 
@@ -16,6 +17,25 @@ const blockRanger = (page, height) => {
   if (to < 1) to = 0;
   return { from, to };
 };
+
+const spacing = [1,1,3,1]
+const titles = ['height', 'timestamp', 'blockHash', 'NoTx'];
+const data = [{
+  height: 12312,
+  timestamp: 12331,
+  blockHash: 'asdfdafsdafds',
+  NoTx: 1,
+},{
+  height: 12312,
+  timestamp: 12331,
+  blockHash: 'asdfdafsdafds',
+  NoTx: 1,
+},{
+  height: 12312,
+  timestamp: 12331,
+  blockHash: 'asdfdafsdafds',
+  NoTx: 1,
+}];
 
 class BlockList extends Component {
   constructor(props) {
@@ -50,7 +70,9 @@ class BlockList extends Component {
       </div>
     ) : (
       <div>
-        BLOCK LIST
+        <ListWrapper titles={titles} data={data} spacing={spacing}>
+        </ListWrapper>
+        {/*BLOCK LIST
         {
           blockList.map(block => (
             <BlockWrapper key={block.height}>
@@ -66,7 +88,7 @@ class BlockList extends Component {
             </BlockWrapper>
           ))
         }
-        <Navigation />
+        */}<Navigation />
       </div>
     );
   }

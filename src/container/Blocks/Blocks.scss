@@ -1,3 +1,17 @@
 .blocks {
   width: 100%;
+
+  .blocksTitle {
+    font-size: 24px;
+    font-weight: 500;
+    color: #0b0b0b;
+    letter-spacing: -1px;
+
+    display: flex;
+    align-items: center;
+
+    img {
+      margin-right: 20px;
+    }
+  }
 }

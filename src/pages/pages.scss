@@ -37,13 +37,22 @@
       border: 0;
       background: rgba(0, 0, 0, 0.2);
     }
-    & > div {
-    }
   }
 
   .homeLive {
-    max-width: 560px;
     width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > div {
+      margin: 40px
+    }
+
+    .verticalLine {
+      height: 500px;
+    }
   }
 }
 

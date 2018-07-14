@@ -3,6 +3,9 @@
 
   display: flex;
   flex-direction: column;
+  & > div {
+    margin-top: 10px;
+  }
 
   .liveInfoWrapperInfo {
     width: 100%;

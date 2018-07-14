@@ -45,6 +45,10 @@ const Home = () => (
         <LiveInfoWrapper title="Recent Block">
           <Blocks />
         </LiveInfoWrapper>
+        <div className="verticalLine"/>
+        <LiveInfoWrapper title="Recent Block">
+          <Blocks />
+        </LiveInfoWrapper>
       </div>
     </div>
   </div>

@@ -1,0 +1,39 @@
+.contentWrapper {
+  height: 100px;
+  padding-right: 48px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .contentWrapperIcon {
+    display: flex;
+    justify-content: center;
+    width: 110px;
+    text-align: center;
+  }
+
+  .contentWrapperInfoTitle {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.43;
+    color: #0b0b0b;
+    margin-right: 30px;
+  }
+
+  .contentWrapperInfoContent {
+    max-width: 290px;
+    font-size: 12px;
+    line-height: 1.67;
+    color: #75777b;
+
+    .special {
+      color: #0b0b0b;
+    }
+  }
+}

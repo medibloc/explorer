@@ -1,11 +1,20 @@
 import React from 'react';
-// import Blocks from '../container/Blocks';
+import Blocks from '../container/Blocks';
 // import Txs from '../container/Txs/Txs';
 
 import SearchBar from '../container/SearchBar';
+import LiveInfoWrapper from '../components/LiveInfoWrapper';
+import ContentWrapper from '../components/ContentWrapper';
+
 
 import './pages.scss';
 
+const test = {
+  height: 10,
+  BlockHash: 'asdjkjsaefnrdjksfngjksedfngkjsdfngkjsdnfjkgnkjser',
+  TimeStamp: 123456789,
+  BP: 'HELLO',
+};
 
 const Home = () => (
   <div className="home">
@@ -39,11 +48,11 @@ const Home = () => (
         <hr />
         <SearchBar type="main" />
       </div>
-      {/*<div>
-        <Blocks />
-        <Blocks />
-      </div>*/}
+      <LiveInfoWrapper title="Recent Block">
+        {/*<Blocks />*/}
+      </LiveInfoWrapper>
     </div>
+    <ContentWrapper type="block" data={test} />
   </div>
 );
 

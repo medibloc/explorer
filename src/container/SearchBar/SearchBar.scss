@@ -1,7 +1,55 @@
 .searchBar {
   display: flex;
   justify-content: flex-end;
+
   &.tablet input {
     width: 100%;
+  }
+}
+
+.searchBarSearch {
+  width: 300px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #ffffff;
+  border: solid 1px #c0c0c0;
+  padding-left: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  input {
+    border: none;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  input::-webkit-input-placeholder {
+    width: 226px;
+    height: 20px;
+    // font-family: NotoSansCJKkr;
+    font-size: 14px;
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #a6a6a6;
+  }
+
+  .searchBarIcon {
+    display: flex;
+    align-items: center;
+    padding: 10px;
   }
 }

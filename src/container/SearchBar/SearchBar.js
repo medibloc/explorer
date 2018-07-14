@@ -10,10 +10,12 @@ const SearchBar = () => {
 
   return (
     <div className="searchBar">
-      <input onChange={e => setSearchText(e.target.value)} />
-      <HoverButton>
-        GO
-      </HoverButton>
+      <div className="searchBarSearch">
+        <input placeholder="Enter Address, Tx hash, BLock Height" onChange={e => setSearchText(e.target.value)} />
+        <div className="searchBarIcon">
+          <img src="/image/icon/ico-search-s-black.svg" alt="searchLogo" />
+        </div>
+      </div>
     </div>
   );
 };

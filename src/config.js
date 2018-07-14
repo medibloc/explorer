@@ -8,3 +8,12 @@ export const COINMARKETCAP_MEDX_PRICE = 'https://api.coinmarketcap.com/v2/ticker
 // INTERNAL CONFIG
 export const blocksInPage = 10;
 export const subscribeMaxResponse = 10;
+
+// LANGUAGE
+export const countryList = ['ko', 'en', 'ja', 'cn'];
+export const countryName = {
+  ko: '대한민국',
+  en: 'United States',
+  ja: '日本',
+  cn: '中國',
+};

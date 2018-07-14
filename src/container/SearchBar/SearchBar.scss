@@ -1,6 +1,7 @@
 .searchBar {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 
   &.tablet input {
     width: 100%;

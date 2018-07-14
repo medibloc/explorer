@@ -1,10 +1,11 @@
 $tablet-width: 720px;
 
 .navBar {
-  border: 1px solid black;
+  height: 85px;
 
   display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (max-width: $tablet-width) {
@@ -13,11 +14,27 @@ $tablet-width: 720px;
   }
 }
 
+.navBarContainer {
+  max-width: 1200px;
+  width: 100%;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.navBarLogo {
+  margin-right: 112px;
+
+  display: flex;
+  align-items: center;
+}
+
 .navNavigator {
   flex: 1;
 
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
 
   div {
     margin-left: 10px;

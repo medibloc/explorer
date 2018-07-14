@@ -2,15 +2,17 @@ import cx from 'classnames';
 import React, { Component, Fragment } from 'react';
 import { Collapse } from 'react-collapse';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 import NavList from './NavList';
+import Language from '../Language';
 import SearchBar from '../SearchBar/SearchBar';
 import { GlobalActions } from '../../redux/actionCreators';
 
 import './NavBar.scss';
 
 
-const pages = ['Main', 'blocks', 'txs', 'accounts', 'bp'];
+const pages = ['Block', 'Transaction', 'Account', 'BP'];
 
 class NavBar extends Component {
   render() {
@@ -19,26 +21,31 @@ class NavBar extends Component {
 
     return (
       <div className="navBar">
-        <div>
-          LOGO
-        </div>
-        {
-          mode === 0 ? (
-            <div className="navNavigator">
-              <NavList pages={pages} />
-            </div>
-          ) : (
-            <Fragment>
-              <button onClick={openNavBar} type="button">
-                BUTTON
-              </button>
-              <Collapse isOpened={navBarOpen}>
+        <div className="navBarContainer">
+          <div className="navBarLogo">
+            <NavLink to='/'>
+              <img src="/image/icon/logo.svg" />
+            </NavLink>
+          </div>
+          {
+            mode === 0 ? (
+              <div className="navNavigator">
                 <NavList pages={pages} />
-              </Collapse>
-            </Fragment>
-          )
-        }
-        <SearchBar className={cx({ fullWidth: mode !== 0 })} />
+              </div>
+            ) : (
+              <Fragment>
+                <button onClick={openNavBar} type="button">
+                  BUTTON
+                </button>
+                <Collapse isOpened={navBarOpen}>
+                  <NavList pages={pages} />
+                </Collapse>
+              </Fragment>
+            )
+          }
+          <SearchBar className={cx({ fullWidth: mode !== 0 })} />
+          <Language />
+        </div>
       </div>
     );
   }

@@ -1,0 +1,59 @@
+.language {
+  width: 158px;
+
+  button {
+    border: none;
+    outline: none;
+    letter-spacing: -0.6px;
+    font-size: 14px;
+    color: #0b0b0b;
+
+    display: flex;
+    align-items: center;
+  }
+
+  button img {
+    width: 36px;
+    height: 36px;
+    margin: 10px;
+  }
+}
+
+.languageHamburger {
+  position: absolute;
+}
+
+.languageBox {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  width: 158px;
+  height: 156px;
+  border-radius: 2px;
+  background-color: #ffffff;
+  border: solid 1px rgba(0, 0, 0, 0.4);
+
+  display: flex;
+  flex-direction: column;
+
+  button {
+    height: 36px;
+    flex: 1;
+    padding-left: 15px;
+    font-size: 14px;
+    letter-spacing: -0.6px;
+    color: #0b0b0b;
+
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  button img {
+    width: 24px;
+    height: 24px;
+    padding-right: 10px;
+  }
+}

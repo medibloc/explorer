@@ -2,10 +2,13 @@
   width: 100%;
 
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
 }
 
 .homeContentWrapper {
+  max-width: 1200px;
   width: 100%;
 
   display: flex;
@@ -47,7 +50,7 @@
     align-items: center;
 
     & > div {
-      margin: 40px
+      margin: 20px
     }
 
     .verticalLine {

@@ -41,16 +41,13 @@
 
     * {
       text-decoration: none;
-      height: 100%;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
       font-size: 14px;
       font-weight: normal;
       color: #75777b;
-
-      display: flex;
-      align-items: center;
+      margin: auto;
     }
 
     a {

@@ -4,7 +4,7 @@ const txMapper = tx => ({
   'Time Stamp': tx.timestamp,
   From: tx.from,
   To: tx.to,
-  Amount: tx.value,
+  Amount: `${tx.value} MED`,
   Nonce: tx.nonce,
   Signature: tx.sign,
 });

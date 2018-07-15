@@ -87,3 +87,19 @@
     margin-right: 10px;
   }
 }
+
+.block {
+  margin: auto;
+  width: 100%;
+  max-width: 1200px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .blockNavigation {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+  }
+}

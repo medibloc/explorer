@@ -9,7 +9,7 @@ import './NavList.scss';
 const NavList = ({ pages }) => pages.map(page => (
   <div key={page}>
     <HoverButton>
-      <NavLink className="navListBtn" to={page === 'Main' ? '/' : page}>
+      <NavLink className="navListBtn" to={page === 'Main' ? '/' : `${page}s`}>
         {page}
       </NavLink>
     </HoverButton>

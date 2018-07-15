@@ -1,5 +1,8 @@
 import React from 'react';
+
 import BlockList from '../container/BlockList/BlockList';
+import Navigation from '../container/Navigation';
+
 
 const Blocks = () => (
   <div className="blocks">
@@ -7,10 +10,12 @@ const Blocks = () => (
       <img src="/image/icon/ico-block.svg" alt="blocks" />
       Block List
     </div>
-    <h2>
-      Blocks
+    <div className="blocksContents">
       <BlockList />
-    </h2>
+    </div>
+    <div className="blocksNavigation">
+      <Navigation />
+    </div>
   </div>
 );
 

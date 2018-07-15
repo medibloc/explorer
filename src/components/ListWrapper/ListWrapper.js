@@ -8,7 +8,7 @@ const ListWrapper = ({ titles, data, spacing }) => (
     <div className="listWrapperTitles">
       {
         titles.map((title, i) => (
-          <span className={`content${spacing[i]}`}>
+          <span style={{ width: `${spacing[i]}%` }}>
             {title}
           </span>
         ))
@@ -20,7 +20,7 @@ const ListWrapper = ({ titles, data, spacing }) => (
           <div className="listWrapperContentRow">
             {
               titles.map((title, i) => (
-                <span className={`content${spacing[i]}`}>
+                <span style={{ width: `${spacing[i]}%` }}>
                   {datum[title]}
                 </span>
               ))

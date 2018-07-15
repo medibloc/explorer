@@ -38,21 +38,12 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
     span {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
       font-size: 14px;
       font-weight: normal;
       color: #75777b;
     }
   }
-
 }
-
-
-.content1 { flex-grow: 1 }
-.content2 { flex-grow: 2 }
-.content3 { flex-grow: 3 }
-.content4 { flex-grow: 4 }
-.content5 { flex-grow: 5 }
-.content6 { flex-grow: 6 }
-.content7 { flex-grow: 7 }
-.content8 { flex-grow: 8 }
-.content9 { flex-grow: 9 }

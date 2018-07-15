@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 
-import Navigation from '../Navigation';
-import BlockWrapper from '../../components/BlockWrapper';
 import ListWrapper from '../../components/ListWrapper';
 import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
 import { blocksInPage } from '../../config';
+import { blockMapper, spaceMapper } from '../../lib';
 
 
 const blockRanger = (page, height) => {
@@ -17,25 +15,15 @@ const blockRanger = (page, height) => {
   if (to < 1) to = 0;
   return { from, to };
 };
+const mappedBlocks = (blocks) => {
+  const blockList = [];
+  blocks.forEach(block => blockList.push(blockMapper(block)));
+  return blockList;
+};
 
-const spacing = [1,1,3,1]
-const titles = ['height', 'timestamp', 'blockHash', 'NoTx'];
-const data = [{
-  height: 12312,
-  timestamp: 12331,
-  blockHash: 'asdfdafsdafds',
-  NoTx: 1,
-},{
-  height: 12312,
-  timestamp: 12331,
-  blockHash: 'asdfdafsdafds',
-  NoTx: 1,
-},{
-  height: 12312,
-  timestamp: 12331,
-  blockHash: 'asdfdafsdafds',
-  NoTx: 1,
-}];
+
+const titles = ['Block Height', 'Time Stamp', 'Block Hash', 'No.Tx', 'BP'];
+
 
 class BlockList extends Component {
   constructor(props) {
@@ -70,25 +58,11 @@ class BlockList extends Component {
       </div>
     ) : (
       <div>
-        <ListWrapper titles={titles} data={data} spacing={spacing}>
-        </ListWrapper>
-        {/*BLOCK LIST
-        {
-          blockList.map(block => (
-            <BlockWrapper key={block.height}>
-              <div>
-                <NavLink to={'/block?height=' + block.height}>
-                  {block.height}
-                </NavLink>
-              </div>
-              <div>{block.timestamp}</div>
-              <div>{block.hash}</div>
-              <div>{block.transactions.length}</div>
-              <div>{block.coinbase}</div>
-            </BlockWrapper>
-          ))
-        }
-        */}<Navigation />
+        <ListWrapper
+          titles={titles}
+          data={mappedBlocks(blockList)}
+          spacing={spaceMapper([1, 1, 3, 1, 1])}
+        />
       </div>
     );
   }

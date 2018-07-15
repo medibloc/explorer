@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import BlockWrapper from '../../components/BlockWrapper';
-import { BlockchainActions } from '../../redux/actionCreators';
+import DetailWrapper from '../../components/DetailWrapper';
+import { BlockchainActions, WidgetActions as w } from '../../redux/actionCreators';
 
 
 const blockPicker = (pool, { hash, height }) => {
@@ -21,9 +22,21 @@ class Block extends Component {
       blockList,
     } = this.props;
     const block = blockPicker(blockList, { hash, height });
-    if (!block && hash) BlockchainActions.getBlock(hash);
-    if (!block && height) BlockchainActions.getBlock(height);
-    if (block) BlockchainActions.setBlock(block);
+    if (!block) {
+      let subject = null;
+      if (height) subject = height;
+      if (hash) subject = hash;
+      if (subject === null) throw new Error("Invalid block info");
+      w.loader(BlockchainActions
+        .getBlock(subject)
+        .then((bl) => {
+          BlockchainActions.setTxs(bl.transactions);
+        }));
+    }
+    if (block) {
+      BlockchainActions.setBlock(block);
+      BlockchainActions.setTxs(block.transactions);
+    };
   }
 
 
@@ -32,9 +45,22 @@ class Block extends Component {
     if (!block) {
       return <div>LOADING</div>;
     }
+
+    const keyList = ['Block Height', 'Time', 'Block Hash', 'Prev Hash', 'Amount', 'No. Tx', 'BP'];
+    const data = {
+      'Block Height': 'this is the fake data',
+      Time: 'this is the fake data',
+      'Block Hash': 'this is the fake data',
+      'Prev Hash': 'this is the fake data',
+      Amount: 'this is the fake data',
+      'No. Tx': 'this is the fake data',
+      BP: 'this is the fake data',
+    };
+
     return (
       <div>
-        <div>
+        <DetailWrapper data={data} keyList={keyList} />
+        {/*<div>
           <BlockWrapper>
             <div>
               Block Height
@@ -104,7 +130,7 @@ class Block extends Component {
               </BlockWrapper>
             ))
           }
-        </div>
+        </div>*/}
       </div>
     );
   }

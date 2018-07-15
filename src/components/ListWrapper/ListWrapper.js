@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import './ListWrapper.scss';
 
 
-const linkDistributor = (datum, titles, linkTo, spacing) => titles.map((title, i) => {
+const linkDistributor = (datum, titles, linkTo = [], spacing) => titles.map((title, i) => {
   let content = null;
   linkTo.forEach((link) => {
     const seperator = link.split('/')[1];

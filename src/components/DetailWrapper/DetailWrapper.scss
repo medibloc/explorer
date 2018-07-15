@@ -1,0 +1,45 @@
+.detailWrapper {
+  max-width: 1200px;
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+
+  display: flex;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  span {
+    height: 40px;
+  }
+
+  span + span {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .detailWrapperKey {
+    background-color: rgba(57, 127, 244, 0.8);
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 2.56;
+    color: #ffffff;
+
+    span {
+      padding-left: 18px;
+      padding-right: 65px;
+    }
+  }
+
+  .detailWrapperValue {
+    flex: 1;
+
+    span {
+      padding-left: 27px;
+
+      display: flex;
+      align-items: center;
+    }
+  }
+}

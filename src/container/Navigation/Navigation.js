@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 
 import { GlobalActions } from '../../redux/actionCreators';
-import { blocksInPage } from '../../config';
+import { blocksInPage, navigationDisplay } from '../../config';
 
 import './Navigation.scss';
 
@@ -67,7 +67,7 @@ class Navigation extends Component {
           { lastPage }
         </div>*/}
         {
-          pages(page, lastPage, 7)
+          pages(page, lastPage, navigationDisplay)
         }
         <button onClick={() => moveToPage(page + 1)} type="button" disabled={page === lastPage}>
           {'>'}

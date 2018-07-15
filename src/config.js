@@ -9,6 +9,9 @@ export const COINMARKETCAP_MEDX_PRICE = 'https://api.coinmarketcap.com/v2/ticker
 export const blocksInPage = 10;
 export const subscribeMaxResponse = 10;
 
+// STYLING CONFIG
+export const navigationDisplay = 5;
+
 // LANGUAGE
 export const countryList = ['ko', 'en', 'ja', 'cn'];
 export const countryName = {

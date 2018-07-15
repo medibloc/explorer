@@ -1,12 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+
 import { GlobalActions } from '../../redux/actionCreators';
 import { blocksInPage } from '../../config';
 
 import './Navigation.scss';
 
 const moveToPage = pageNum => GlobalActions.movePage(pageNum);
+const pages = (currentPage, lastPage, pageDisplay) => {
+  const pageNation = [];
+  let startPage = currentPage - Math.floor(pageDisplay / 2);
+  if (startPage < 1) startPage = 1;
+  if (currentPage + Math.floor(pageDisplay / 2) > lastPage) startPage = lastPage - pageDisplay + 1;
+  for (let i = startPage; i < startPage + pageDisplay; i += 1) {
+    pageNation.push(
+      <button onClick={() => moveToPage(i)} type="button" className={currentPage === i && 'active'}>
+        {i}
+      </button>,
+    );
+  }
+  return pageNation;
+};
 
 class Navigation extends Component {
   constructor(props) {
@@ -40,22 +55,25 @@ class Navigation extends Component {
     ) : (
       <div className="navigation">
         <button onClick={() => moveToPage(1)} type="button">
-          First
+          {'<<'}
         </button>
         <button onClick={() => moveToPage(page - 1)} type="button">
-          Before
+          {'<'}
         </button>
-        <div>
+        {/*<div>
           Page
           <input onKeyPress={this.handleKeyPress} />
           /
           { lastPage }
-        </div>
+        </div>*/}
+        {
+          pages(page, lastPage, 5)
+        }
         <button onClick={() => moveToPage(page + 1)} type="button">
-          Next
+          {'>'}
         </button>
         <button onClick={() => moveToPage(lastPage)} type="button">
-          Last
+          {'>>'}
         </button>
       </div>
     );

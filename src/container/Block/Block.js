@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import BlockWrapper from '../../components/BlockWrapper';
 import DetailWrapper from '../../components/DetailWrapper';
+import { blockMapper } from '../../lib';
 import { BlockchainActions, WidgetActions as w } from '../../redux/actionCreators';
 
 
@@ -46,91 +46,11 @@ class Block extends Component {
       return <div>LOADING</div>;
     }
 
-    const keyList = ['Block Height', 'Time', 'Block Hash', 'Prev Hash', 'Amount', 'No. Tx', 'BP'];
-    const data = {
-      'Block Height': 'this is the fake data',
-      Time: 'this is the fake data',
-      'Block Hash': 'this is the fake data',
-      'Prev Hash': 'this is the fake data',
-      Amount: 'this is the fake data',
-      'No. Tx': 'this is the fake data',
-      BP: 'this is the fake data',
-    };
+    const keyList = ['Block Height', 'Time Stamp', 'Block Hash', 'Prev Hash', 'Amount', 'No.Tx', 'BP'];
 
     return (
       <div>
-        <DetailWrapper data={data} keyList={keyList} />
-        {/*<div>
-          <BlockWrapper>
-            <div>
-              Block Height
-            </div>
-            <div>
-              {block.height}
-            </div>
-          </BlockWrapper>
-          <BlockWrapper>
-            <div>
-              Time
-            </div>
-            <div>
-              {block.timestamp}
-            </div>
-          </BlockWrapper>
-          <BlockWrapper>
-            <div>
-              Block Hash
-            </div>
-            <div>
-              {block.hash}
-            </div>
-          </BlockWrapper>
-          <BlockWrapper>
-            <div>
-              Prev Hash
-            </div>
-            <div>
-              {block.parent_hash}
-            </div>
-          </BlockWrapper>
-          <BlockWrapper>
-            <div>
-              No. Tx
-            </div>
-            <div>
-              {block.transactions.length}
-            </div>
-          </BlockWrapper>
-          <BlockWrapper>
-            <div>
-              BP
-            </div>
-            <div>
-              {block.coinbase}
-            </div>
-          </BlockWrapper>
-        </div>
-        <div>
-          Transactions in the Block
-          {
-            block.transactions.map(tx => (
-              <BlockWrapper>
-                <div>
-                  {tx.hash}
-                </div>
-                <div>
-                  {tx.from}
-                </div>
-                <div>
-                  {tx.to}
-                </div>
-                <div>
-                  {tx.amount}
-                </div>
-              </BlockWrapper>
-            ))
-          }
-        </div>*/}
+        <DetailWrapper data={blockMapper(block)} keyList={keyList} />
       </div>
     );
   }

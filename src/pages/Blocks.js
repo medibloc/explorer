@@ -2,14 +2,12 @@ import React from 'react';
 
 import BlockList from '../container/BlockList/BlockList';
 import Navigation from '../container/Navigation';
+import PageInfo from '../components/PageInfo';
 
 
 const Blocks = () => (
   <div className="blocks">
-    <div className="blocksTitle">
-      <img src="/image/icon/ico-block.svg" alt="blocks" />
-      Block List
-    </div>
+    <PageInfo title="block-list" />
     <div className="blocksContents">
       <BlockList />
     </div>

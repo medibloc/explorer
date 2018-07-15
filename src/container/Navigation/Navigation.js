@@ -57,7 +57,7 @@ class Navigation extends Component {
         <button onClick={() => moveToPage(1)} type="button">
           {'<<'}
         </button>
-        <button onClick={() => moveToPage(page - 1)} type="button">
+        <button onClick={() => moveToPage(page - 1)} type="button" disabled={page === 1}>
           {'<'}
         </button>
         {/*<div>
@@ -67,9 +67,9 @@ class Navigation extends Component {
           { lastPage }
         </div>*/}
         {
-          pages(page, lastPage, 5)
+          pages(page, lastPage, 7)
         }
-        <button onClick={() => moveToPage(page + 1)} type="button">
+        <button onClick={() => moveToPage(page + 1)} type="button" disabled={page === lastPage}>
           {'>'}
         </button>
         <button onClick={() => moveToPage(lastPage)} type="button">

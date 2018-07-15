@@ -28,6 +28,7 @@ const SET_BLOCK = 'blockchain/SET_BLOCK';
 const GET_EXECUTED_TX = 'blockchain/GET_EXECUTED_TX';
 const GET_PENDING_TX = 'blockchain/GET_PENDING_TX';
 const GET_TX = 'blockchain/GET_TX';
+const SET_TXS = 'blockchain/SET_TXS';
 
 const SUBSCRIBE = 'blockchain/SUBSCRIBE';
 
@@ -57,6 +58,7 @@ const initialState = {
 
   tx: null,
   txs: [],
+  txList: [],
   pendingTxs: [],
 
   subscribe: false,
@@ -91,6 +93,7 @@ const reducer = handleActions({
     pendingTxs: [...state.pendingTxs, action.payload],
   }),
   [GET_TX]: (state, action) => ({ ...state, tx: action.payload }),
+  [SET_TXS]: (state, action) => ({ ...state, txList: action.payload }),
 
   [SUBSCRIBE]: state => ({ ...state, subscribe: true }),
 
@@ -110,6 +113,7 @@ export const getBlocks = ({ from, to }) => dispatch => blocksGetter(
 );
 export const getMedState = () => dispatch => medStateGetter(dispatch, GET_MED_STATE, ERROR);
 export const getTx = hash => dispatch => txGetter(dispatch, GET_TX, ERROR, hash);
+export const setTxs = createAction(SET_TXS);
 export const setBlock = createAction(SET_BLOCK);
 export const subscribe = () => dispatch => subscriber(dispatch, subsribeTypes, ERROR);
 

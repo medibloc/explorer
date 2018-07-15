@@ -1,9 +1,38 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import './ListWrapper.scss';
 
 
-const ListWrapper = ({ titles, data, spacing }) => (
+const linkDistributor = (datum, titles, linkTo, spacing) => titles.map((title, i) => {
+  let content = null;
+  linkTo.forEach((link) => {
+    const seperator = link.split('/')[1];
+    if (title.toLowerCase().includes(seperator)) {
+      content = (
+        <NavLink to={`${link}/${datum[title]}`} style={{ width: `${spacing[i]}%` }}>
+          {datum[title]}
+        </NavLink>
+      );
+    }
+  });
+
+  if (!content) {
+    content = (
+      <span style={{ width: `${spacing[i]}%` }}>
+        {datum[title]}
+      </span>
+    );
+  }
+  return content;
+});
+
+const ListWrapper = ({
+  titles,
+  data,
+  spacing,
+  linkTo,
+}) => (
   <div className="listWrapper">
     <div className="listWrapperTitles">
       {
@@ -19,11 +48,7 @@ const ListWrapper = ({ titles, data, spacing }) => (
         data.map(datum => (
           <div className="listWrapperContentRow">
             {
-              titles.map((title, i) => (
-                <span style={{ width: `${spacing[i]}%` }}>
-                  {datum[title]}
-                </span>
-              ))
+              linkDistributor(datum, titles, linkTo, spacing)
             }
           </div>
         ))

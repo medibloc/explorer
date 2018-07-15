@@ -1,11 +1,12 @@
 import React from 'react';
-import queryString from 'query-string';
+
 
 import BlockContainer from '../container/Block';
 
 
-const Block = ({ location }) => {
-  const query = queryString.parse(location.search);
+const Block = ({ location, match }) => {
+  const path = queryString.parse(location.search);
+  console.log(path)
   let BlockWrapper = null;
   if (query.hash) {
     BlockWrapper = <BlockContainer hash={query.hash} />;

@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { Collapse } from 'react-collapse';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
@@ -14,42 +14,39 @@ import './NavBar.scss';
 
 const pages = ['Block', 'Transaction', 'Account', 'BP'];
 
-class NavBar extends Component {
-  render() {
-    const { mode, navBarOpen } = this.props;
-    const { openNavBar } = GlobalActions;
+const NavBar = ({ mode, navBarOpen}) => {
+  const { openNavBar } = GlobalActions;
 
-    return (
-      <div className="navBar">
-        <div className="navBarContainer">
-          <div className="navBarLogo">
-            <NavLink to='/'>
-              <img src="/image/icon/logo.svg" />
-            </NavLink>
-          </div>
-          {
-            mode === 0 ? (
-              <div className="navNavigator">
-                <NavList pages={pages} />
-              </div>
-            ) : (
-              <Fragment>
-                <button onClick={openNavBar} type="button">
-                  BUTTON
-                </button>
-                <Collapse isOpened={navBarOpen}>
-                  <NavList pages={pages} />
-                </Collapse>
-              </Fragment>
-            )
-          }
-          <SearchBar className={cx({ fullWidth: mode !== 0 })} />
-          <Language />
+  return (
+    <div className="navBar">
+      <div className="navBarContainer">
+        <div className="navBarLogo">
+          <NavLink to="/">
+            <img src="/image/icon/logo.svg" alt="logo" />
+          </NavLink>
         </div>
+        {
+          mode === 0 ? (
+            <div className="navNavigator">
+              <NavList pages={pages} />
+            </div>
+          ) : (
+            <Fragment>
+              <button onClick={openNavBar} type="button">
+                BUTTON
+              </button>
+              <Collapse isOpened={navBarOpen}>
+                <NavList pages={pages} />
+              </Collapse>
+            </Fragment>
+          )
+        }
+        <SearchBar className={cx({ fullWidth: mode !== 0 })} />
+        <Language />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStateToProps = ({ blockchain, global }) => ({
   medState: blockchain.medState,

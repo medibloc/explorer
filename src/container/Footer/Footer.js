@@ -17,7 +17,7 @@ const Footer = () => (
       <div className="footerSNS">
         {
           sns.map(service => (
-            <img src={`/image/icon/ico-${service}-on@3x.png`} alt="sns" />
+            <img src={`/image/icon/ico-${service}-on@3x.png`} alt="sns" key={service} />
           ))
         }
       </div>

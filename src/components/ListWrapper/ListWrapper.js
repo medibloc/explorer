@@ -10,7 +10,7 @@ const linkDistributor = (datum, titles, linkTo, spacing) => titles.map((title, i
     const seperator = link.split('/')[1];
     if (title.toLowerCase().includes(seperator)) {
       content = (
-        <NavLink to={`${link}/${datum[title]}`} style={{ width: `${spacing[i]}%` }}>
+        <NavLink to={`${link}/${datum[title]}`} style={{ width: `${spacing[i]}%` }} key={title}>
           {datum[title]}
         </NavLink>
       );
@@ -19,7 +19,7 @@ const linkDistributor = (datum, titles, linkTo, spacing) => titles.map((title, i
 
   if (!content) {
     content = (
-      <span style={{ width: `${spacing[i]}%` }}>
+      <span style={{ width: `${spacing[i]}%` }} key={title}>
         {datum[title]}
       </span>
     );
@@ -37,7 +37,7 @@ const ListWrapper = ({
     <div className="listWrapperTitles">
       {
         titles.map((title, i) => (
-          <span style={{ width: `${spacing[i]}%` }}>
+          <span style={{ width: `${spacing[i]}%` }} key={title}>
             {title}
           </span>
         ))
@@ -45,8 +45,9 @@ const ListWrapper = ({
     </div>
     <div className="listWrapperContents">
       {
-        data.map(datum => (
-          <div className="listWrapperContentRow">
+        data.map((datum, i) => (
+          // eslint-disable-next-line
+          <div className="listWrapperContentRow" key={i}>
             {
               linkDistributor(datum, titles, linkTo, spacing)
             }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import ContentBox from '../../components/ContentBox/ContentBox';
 import ContentWrapper from '../../components/ContentWrapper';
 
 import './Blocks.scss';

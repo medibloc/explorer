@@ -15,7 +15,7 @@ const pages = (currentPage, lastPage, pageDisplay) => {
   if (currentPage + Math.floor(pageDisplay / 2) > lastPage) startPage = lastPage - pageDisplay + 1;
   for (let i = startPage; i < startPage + pageDisplay; i += 1) {
     pageNation.push(
-      <button onClick={() => moveToPage(i)} type="button" className={currentPage === i && 'active'}>
+      <button onClick={() => moveToPage(i)} type="button" className={currentPage === i ? 'active' : null} key={i}>
         {i}
       </button>,
     );
@@ -60,12 +60,14 @@ class Navigation extends Component {
         <button onClick={() => moveToPage(page - 1)} type="button" disabled={page === 1}>
           {'<'}
         </button>
-        {/*<div>
+        {/*
+        <div>
           Page
           <input onKeyPress={this.handleKeyPress} />
           /
           { lastPage }
-        </div>*/}
+        </div>
+        */}
         {
           pages(page, lastPage, navigationDisplay)
         }

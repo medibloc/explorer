@@ -4,15 +4,15 @@ import './ContentWrapper.scss';
 
 
 const ContentWrapper = ({ type, data }) => {
-  const { height } = data;
-  if (height) delete data.height;
+  const { Height } = data;
 
   return (
     <div className="contentWrapper">
       <div className="contentWrapperIcon">
         <img src={`/image/icon/ico-${type}.svg`} alt="contentWrapperIcon" />
+        <img src={`/image/icon/ico-${type}-on.svg`} alt="contentWrapperIcon" />
         <span>
-          { height }
+          { Height }
         </span>
       </div>
       <div className="contentWrapperInfoTitle">

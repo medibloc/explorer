@@ -6,6 +6,24 @@
   flex-direction: row;
   align-items: center;
 
+  &:hover {
+    border: 2px solid #ed6664;
+
+    .contentWrapperIcon {
+      span {
+        color: #f16c65;
+      }
+
+      img {
+        display: block;
+      }
+
+      img:first-child {
+        display: none;
+      }
+    }
+  }
+
   & > div {
     display: flex;
     flex-direction: column;
@@ -16,6 +34,14 @@
     justify-content: center;
     width: 110px;
     text-align: center;
+
+    img {
+      display: none;
+    }
+
+    img:first-child {
+      display: block;
+    }
   }
 
   .contentWrapperInfoTitle {

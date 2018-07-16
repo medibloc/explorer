@@ -31,6 +31,11 @@
     margin-top: 30px;
     margin-bottom: 30px;
     position: relative;
+
+    .searchBarSearch input::placeholder {
+      color: #ffffff;
+    }
+
     & > hr {
       position: absolute;
       z-index: -1;

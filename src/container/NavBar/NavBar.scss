@@ -43,7 +43,8 @@ $navBar-border-bottom: 1px;
     background-color: #ffffff;
     top: $navBar-height + $navBar-border-bottom;
     right: $navBar-side-width;
-    width: $navBar-side-width;
+    max-width: $navBar-side-width;
+    width: calc(100% - 60px);
     height: 100%;
     padding: 30px;
 

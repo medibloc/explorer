@@ -26,40 +26,15 @@
     flex-direction: column;
 
     .homeTokenInfo {
+      max-width: 1100px;
       width: 100%;
+      margin: auto;
 
       display: flex;
       justify-content: center;
 
-      & > div {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        margin: 30px;
-      }
-
-      .homeTokenInfoTitle {
-        font-size: 18px;
-        font-weight: 300;
-        letter-spacing: -0.5px;
-        color: #397ff4;
-      }
-
-      .homeInfoValue {
-        height: 72px;
-        font-family: Helvetica;
-        font-size: 30px;
-        font-weight: 100;
-        letter-spacing: -1px;
-        color: #000000;
-
-        span {
-          font-family: Helvetica;
-          font-size: 60px;
-          letter-spacing: -2px;
-          color: #0b0b0b;
-          margin-right: 10px;
-        }
+      .verticalLine {
+        margin: auto;
       }
     }
 
@@ -80,7 +55,7 @@
         z-index: -1;
         bottom: 20px;
         height: 1px;
-        width: 100%;
+        width: 200%;
         border: 0;
         background: rgba(0, 0, 0, 0.2);
       }

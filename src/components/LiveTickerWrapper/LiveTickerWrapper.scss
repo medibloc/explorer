@@ -1,0 +1,40 @@
+$tablet-width: 800px;
+
+.liveTickerWrapper {
+  margin: 30px;
+
+  display: flex;
+  flex-direction: column;
+
+  .liveTickerWrapperTitle {
+    font-size: 18px;
+    letter-spacing: -0.5px;
+    color: #397ff4;
+  }
+
+  .liveTickerWrapperContent {
+    font-size: 60px;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-around;
+
+    div + div {
+      margin-left: 10px;
+    }
+
+    .liveTickerWrapperContentSuffix {
+      font-size: 30px;
+    }
+  }
+
+  @media (max-width: $tablet-width) {
+    .liveTickerWrapperTitle {
+      align-self: center;
+    }
+    .liveTickerWrapperContent {
+      font-size: 30px;
+    }
+  }
+}

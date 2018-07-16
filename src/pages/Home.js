@@ -5,7 +5,7 @@ import Blocks from '../container/Blocks';
 import Txs from '../container/Txs/Txs';
 import SearchBar from '../container/SearchBar';
 import LiveInfoWrapper from '../components/LiveInfoWrapper';
-
+import LiveTickerWrapper from '../components/LiveTickerWrapper';
 
 import './pages.scss';
 
@@ -15,29 +15,17 @@ const Home = () => (
     <div className="home">
       <div className="homeContentWrapper">
         <div className="homeTokenInfo">
-          <div>
-            <span className="homeTokenInfoTitle">
-              Market Cap
-            </span>
-            <div className="homeInfoValue">
-              <span>
-                123,456,789
-              </span>
-              USD
-            </div>
-          </div>
+          <LiveTickerWrapper
+            title="Market Cap"
+            value="123,456,789"
+            suffix="USD"
+          />
           <div className="verticalLine" />
-          <div>
-            <span className="homeTokenInfoTitle">
-              Med Supply
-            </span>
-            <div className="homeInfoValue">
-              <span>
-                100,000,000
-              </span>
-              MED
-            </div>
-          </div>
+          <LiveTickerWrapper
+            title="Med Supply"
+            value="100,000,000"
+            suffix="MED"
+          />
         </div>
         <div className="homeSearchBar">
           <hr />

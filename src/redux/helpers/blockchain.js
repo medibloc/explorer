@@ -1,3 +1,4 @@
+import jsonic from 'jsonic';
 import { simpleRequester } from './common';
 import {
   EXECUTED_TX,
@@ -30,11 +31,31 @@ const preProcess = (result, maxResponse) => {
   };
 };
 
+const arrStrToArrJson = (arrStr) => {
+  const arrJson = [];
+  arrStr
+    .substring(1, arrStr.length - 1)
+    .replace(/},{/g, '}||{')
+    .split('||')
+    .forEach((element) => {
+      const el = jsonic(element);
+      if (Object.keys(el).length !== 0) arrJson.push(el);
+    });
+  return arrJson;
+};
+
 const jsonfy = (data) => {
-  const postData = data.substring(1, data.length - 1).split(/, |:/);
+  const netData = data.substring(1, data.length - 1);
+  const postData = netData.split(/, |:/);
+
   const result = {};
   for (let i = 0; i < postData.length; i += 2) {
-    result[postData[i]] = postData[i + 1];
+    if (postData[i] === 'transactions') {
+      result[postData[i]] = arrStrToArrJson(netData.split('transactions:')[1]);
+      break;
+    } else {
+      result[postData[i]] = postData[i + 1];
+    }
   }
   return result;
 };

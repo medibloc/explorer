@@ -1,6 +1,6 @@
 import React from 'react';
 import Blocks from '../container/Blocks';
-// import Txs from '../container/Txs/Txs';
+import Txs from '../container/Txs/Txs';
 
 import SearchBar from '../container/SearchBar';
 import LiveInfoWrapper from '../components/LiveInfoWrapper';
@@ -45,9 +45,9 @@ const Home = () => (
         <LiveInfoWrapper title="Recent Block">
           <Blocks />
         </LiveInfoWrapper>
-        <div className="verticalLine"/>
-        <LiveInfoWrapper title="Recent Block">
-          <Blocks />
+        <div className="verticalLine" />
+        <LiveInfoWrapper title="Recent Transaction">
+          <Txs />
         </LiveInfoWrapper>
       </div>
     </div>

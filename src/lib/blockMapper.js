@@ -1,8 +1,14 @@
 const blockMapper = (block) => {
   let amount = 0;
-  block.transactions.forEach((tx) => {
-    amount += parseInt(tx.value, 10);
-  });
+  if (block.transactions) {
+    block.transactions.forEach((tx) => {
+      amount += parseInt(tx.value, 10);
+    });
+  } else {
+    // eslint-disable-next-line
+    block.transactions = [];
+  }
+
   return {
     'Block Height': block.height,
     'Time Stamp': block.timestamp,

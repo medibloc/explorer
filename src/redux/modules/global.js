@@ -12,7 +12,7 @@ const MOVE_PAGE = 'global/MOVE_PAGE';
 
 
 const initialState = {
-  // Mode - 0 : Desktop, 1 : Tablet, 2 : Mobile
+  // Mode - 0 : Desktop, 1 : Tablet & Mobile ( < 640px )
   mode: 0,
   width: null,
 
@@ -31,9 +31,7 @@ const reducer = handleActions({
   [SET_WINDOW_SIZE]: (state, action) => {
     const width = action.payload;
     let mode = 0;
-    if (width <= 320) {
-      mode = 2;
-    } else if (width <= 720) {
+    if (width <= 640) {
       mode = 1;
     } else {
       mode = 0;

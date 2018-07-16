@@ -60,6 +60,7 @@ const initialState = {
   txs: [],
   txList: [],
   pendingTxs: [],
+  txsFromBlock: [],
 
   subscribe: false,
 
@@ -83,7 +84,8 @@ const reducer = handleActions({
   [GET_TAIL_BLOCK]: (state, action) => ({
     ...state,
     tailBlock: action.payload,
-    blocks: sorter([...state.blocks, action.payload], 'Height'),
+    blocks: sorter([...state.blocks, action.payload], 'height'),
+    txsFromBlock: [...state.txsFromBlock, ...action.payload.transactions],
   }),
   [SET_BLOCK]: (state, action) => ({ ...state, block: action.payload }),
 

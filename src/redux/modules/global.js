@@ -31,7 +31,9 @@ const reducer = handleActions({
   [SET_WINDOW_SIZE]: (state, action) => {
     const width = action.payload;
     let mode = 0;
-    if (width <= 640) {
+    if (width <= 320) {
+      mode = 2;
+    } else if (width <= 720) {
       mode = 1;
     } else {
       mode = 0;
@@ -41,6 +43,7 @@ const reducer = handleActions({
       width,
       mode,
       navBarOpen: false,
+      languageOpen: mode !== 0,
     };
   },
 

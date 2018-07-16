@@ -1,8 +1,12 @@
+$desktop-width: 1200px;
 $tablet-width: 640px;
+$navBar-height: 85px;
+$navBar-side-width: 400px;
+$navBar-border-bottom: 1px;
 
 .navBar {
-  height: 85px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  height: $navBar-height;
+  border-bottom: $navBar-border-bottom solid rgba(0, 0, 0, 0.2);
 
   display: flex;
   justify-content: center;
@@ -16,16 +20,88 @@ $tablet-width: 640px;
 }
 
 .navBarContainer {
-  max-width: 1200px;
+  max-width: $desktop-width;
   width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
 
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+
+  .navBarOpener {
+
+  }
+
+  .navBarSide {
+    display: none;
+  }
+
+  .navBarOpen {
+    position: absolute;
+    z-index: 999;
+    background-color: #ffffff;
+    top: $navBar-height + $navBar-border-bottom;
+    right: $navBar-side-width;
+    width: $navBar-side-width;
+    height: 100%;
+    padding: 30px;
+
+    transform: translate($navBar-side-width, 0px);
+    transition-duration: 1s;
+
+    display: flex;
+    flex-direction: column;
+
+    .searchBar {
+      max-width: $navBar-side-width;
+    }
+
+    .navBarSideMenu {
+      margin-top: 20px;
+      height: 70px;
+      border-top: 1px solid rgba(0, 0, 0, 0.8);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+      font-size: 18px;
+      line-height: 2.22;
+      color: #0b0b0b;
+
+      display: flex;
+      align-items: center;
+
+      & > img {
+        margin-right: 12px;
+      }
+    }
+
+    .navBarSideNavList {
+      padding-left: 10px;
+
+      & > div {
+        margin-top: 20px;
+      }
+
+      .languageBox {
+        border: none;
+
+        button {
+          font-size: 16px;
+          padding-left: 0px;
+          margin-bottom: 5px;
+          border: none;
+
+          &:hover {
+            background: none;
+            color: #397ff4;
+          }
+        }
+      }
+    }
+  }
 }
 
 .navBarLogo {
-  margin-right: 112px;
+  // margin-right: 112px;
 
   display: flex;
   align-items: center;
@@ -38,11 +114,12 @@ $tablet-width: 640px;
   align-items: center;
 
   div {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 5%;
+    margin-right: 5%;
   }
 }
 
 .fullWidth {
   width: 100%;
+  max-width: 400px;
 }

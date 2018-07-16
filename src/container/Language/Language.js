@@ -9,7 +9,7 @@ import { countryName } from '../../config';
 import './Language.scss';
 
 
-const Language = ({ language, languageOpen }) => (
+const Language = ({ language, languageOpen, mode }) => (
   <div className="language">
     <button onClick={GlobalActions.openLanguage} type="button">
       <img src={`/image/icon/ico-country-${language}@3x.png`} alt="language" />
@@ -24,6 +24,7 @@ const Language = ({ language, languageOpen }) => (
 const mapStateToProps = ({ global }) => ({
   language: global.language,
   languageOpen: global.languageOpen,
+  mode: global.mode,
 });
 
 export default connect(mapStateToProps)(Language);

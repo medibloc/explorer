@@ -1,11 +1,11 @@
 import cx from 'classnames';
 import React, { Fragment } from 'react';
-import { Collapse } from 'react-collapse';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import NavList from './NavList';
 import Language from '../Language';
+import LanguageBox from '../Language/LanguageBox';
 import SearchBar from '../SearchBar/SearchBar';
 import { GlobalActions } from '../../redux/actionCreators';
 
@@ -27,22 +27,38 @@ const NavBar = ({ mode, navBarOpen}) => {
         </div>
         {
           mode === 0 ? (
-            <div className="navNavigator">
-              <NavList pages={pages} />
-            </div>
+            <Fragment>
+              <div className="navNavigator">
+                <NavList pages={pages} />
+              </div>
+              <SearchBar className={cx({ fullWidth: mode !== 0 })} />
+              <Language />
+            </Fragment>
           ) : (
             <Fragment>
-              <button onClick={openNavBar} type="button">
+              <button className="navBarOpener" onClick={openNavBar} type="button">
                 BUTTON
               </button>
-              <Collapse isOpened={navBarOpen}>
-                <NavList pages={pages} />
-              </Collapse>
+              <div className={`navBarSide ${navBarOpen ? 'navBarOpen' : null}`}>
+                <SearchBar className="fullWidth" />
+                <div className="navBarSideMenu">
+                  <img src="/image/icon/ico-all-menu.svg" alt="menu" />
+                  Menu
+                </div>
+                <div className="navBarSideNavList">
+                  <NavList pages={pages} />
+                </div>
+                <div className="navBarSideMenu">
+                  <img src="/image/icon/ico-language.svg" alt="language" />
+                  Language
+                </div>
+                <div className="navBarSideNavList">
+                  <LanguageBox />
+                </div>
+              </div>
             </Fragment>
           )
         }
-        <SearchBar className={cx({ fullWidth: mode !== 0 })} />
-        <Language />
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+$mobile-width: 800px;
+
 .layout {
   width: 100%;
   display: flex;
@@ -7,9 +9,21 @@
   .layoutInner {
     max-width: 1200px;
     width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
+@media (max-width: $mobile-width) {
+  .homeLive {
+    display: flex;
+    flex-direction: column;
+
+    .verticalLine {
+      display: none;
+    }
+  }
+}
 
 .home {
   width: 100%;

@@ -9,6 +9,7 @@ import './Navigation.scss';
 
 const moveToPage = pageNum => GlobalActions.movePage(pageNum);
 const pages = (currentPage, lastPage, pageDisplay) => {
+  if (lastPage < pageDisplay) pageDisplay = lastPage;
   const pageNation = [];
   let startPage = currentPage - Math.floor(pageDisplay / 2);
   if (startPage < 1) startPage = 1;

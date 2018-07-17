@@ -36,6 +36,16 @@ $navBar-border-bottom: 1px;
       }
     }
 
+    .dimmer {
+      position: absolute;
+      z-index: 999;
+      top: $navBar-height;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
     .searchBarOpen {
       display: flex;
     }

@@ -16,6 +16,8 @@ const pages = ['Block', 'Transaction', 'Account', 'BP'];
 
 const NavBar = ({ mode, navBarOpen, searchBarOpen }) => {
   const { openNavBar } = GlobalActions;
+  if (navBarOpen) document.body.style.overflow = 'hidden';
+  else document.body.style.overflow = null;
 
   return (
     <div className="navBar">
@@ -51,6 +53,9 @@ const NavBar = ({ mode, navBarOpen, searchBarOpen }) => {
           mode === 2 && (
             <Fragment>
               <div className="navNavigator" />
+              {
+                navBarOpen && <div className="dimmer" />
+              }
               <button className="navBarOpener" onClick={openNavBar} type="button">
                 {
                   navBarOpen ? (

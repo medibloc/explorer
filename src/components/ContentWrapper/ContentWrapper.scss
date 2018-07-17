@@ -1,6 +1,9 @@
 .contentWrapper {
   height: 100px;
-  padding-right: 48px;
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 15px;
 
   display: flex;
   flex-direction: row;
@@ -27,6 +30,8 @@
   & > div {
     display: flex;
     flex-direction: column;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
   .contentWrapperIcon {
@@ -45,16 +50,20 @@
   }
 
   .contentWrapperInfoTitle {
-    width: max-content;
     font-size: 14px;
     font-weight: 500;
     line-height: 1.43;
     color: #0b0b0b;
     margin-right: 30px;
+
+    span {
+      white-space: nowrap;
+    }
   }
 
   .contentWrapperInfoContent {
-    max-width: 290px;
+    // max-width: 290px;
+    width: auto;
     font-size: 12px;
     line-height: 1.67;
     color: #75777b;

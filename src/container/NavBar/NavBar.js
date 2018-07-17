@@ -14,7 +14,7 @@ import './NavBar.scss';
 
 const pages = ['Block', 'Transaction', 'Account', 'BP'];
 
-const NavBar = ({ mode, navBarOpen}) => {
+const NavBar = ({ mode, navBarOpen, searchBarOpen }) => {
   const { openNavBar } = GlobalActions;
 
   return (
@@ -26,7 +26,7 @@ const NavBar = ({ mode, navBarOpen}) => {
           </NavLink>
         </div>
         {
-          mode === 0 ? (
+          mode === 0 && (
             <Fragment>
               <div className="navNavigator">
                 <NavList pages={pages} />
@@ -34,10 +34,31 @@ const NavBar = ({ mode, navBarOpen}) => {
               <SearchBar className={cx({ fullWidth: mode !== 0 })} />
               <Language />
             </Fragment>
-          ) : (
+          )
+        }
+        {
+          mode === 1 && (
             <Fragment>
+              <div className="navNavigator">
+                <NavList pages={pages} />
+              </div>
+              <img src="/image/icon/ico-search-simple.svg" onClick={GlobalActions.openSearchBar} />
+              <SearchBar />
+            </Fragment>
+          )
+        }
+        {
+          mode === 2 && (
+            <Fragment>
+              <div className="navNavigator" />
               <button className="navBarOpener" onClick={openNavBar} type="button">
-                BUTTON
+                {
+                  navBarOpen ? (
+                    <img src="/image/icon/ico-close.svg" alt="opener" />
+                  ) : (
+                    <img src="/image/icon/ico-hamberg.svg" alt="opener" />
+                  )
+                }
               </button>
               <div className={`navBarSide ${navBarOpen ? 'navBarOpen' : null}`}>
                 <SearchBar className="fullWidth" />
@@ -68,6 +89,7 @@ const mapStateToProps = ({ blockchain, global }) => ({
   medState: blockchain.medState,
   width: global.width,
   mode: global.mode,
+  searchBarOpen: global.searchBarOpen,
   navBarOpen: global.navBarOpen,
 });
 

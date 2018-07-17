@@ -7,6 +7,7 @@ const SET_SEARCH_TEXT = 'global/SET_SEARCH_TEXT';
 
 const OPEN_NAVBAR = 'global/OPEN_NAVBAR';
 const OPEN_LANGUAGE = 'global/OPEN_LANGUAGE';
+const OPEN_SEARCH = 'global/OPEN_SEARCH';
 const CHANGE_LANGUAGE = 'global/CHANGE_LANGUAGE';
 const MOVE_PAGE = 'global/MOVE_PAGE';
 
@@ -20,6 +21,7 @@ const initialState = {
 
   navBarOpen: false,
   languageOpen: false,
+  searchBarOpen: false,
 
   language: 'en',
 
@@ -43,12 +45,13 @@ const reducer = handleActions({
       width,
       mode,
       navBarOpen: false,
-      languageOpen: mode !== 0,
+      languageOpen: mode === 2,
     };
   },
 
   [OPEN_NAVBAR]: state => ({ ...state, navBarOpen: !state.navBarOpen }),
   [OPEN_LANGUAGE]: state => ({ ...state, languageOpen: !state.languageOpen }),
+  [OPEN_SEARCH]: state => ({ ...state, searchBarOpen: !state.searchBarOpen }),
   [MOVE_PAGE]: (state, action) => {
     let page = action.payload;
     if (page < 1) page = 1;
@@ -65,6 +68,7 @@ export const setWindowSize = createAction(SET_WINDOW_SIZE);
 export const setSearchText = createAction(SET_SEARCH_TEXT);
 export const openNavBar = createAction(OPEN_NAVBAR);
 export const openLanguage = createAction(OPEN_LANGUAGE);
+export const openSearchBar = createAction(OPEN_SEARCH);
 export const changeLanguage = createAction(CHANGE_LANGUAGE);
 export const movePage = createAction(MOVE_PAGE);
 

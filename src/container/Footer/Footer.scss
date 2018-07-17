@@ -34,14 +34,10 @@
       justify-content: flex-end;
 
       img {
-        filter: grayscale(100%);
         width: 30px;
         height: 30px;
         object-fit: contain;
         margin-left: 20px;
-        &:hover {
-          filter: grayscale(0%);
-        }
       }
     }
   }

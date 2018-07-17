@@ -3,7 +3,12 @@ import { connect } from 'react-redux';
 
 import './Footer.scss';
 
-const sns = ['telegram', 'twitter', 'fb', 'blog', 'medi'];
+
+const imgChange = (sns, on) => (e) => {
+  e.currentTarget.src = `/image/icon/ico-${sns}-${on ? 'on' : 'off'}@3x.png`;
+};
+
+const sns = ['telegram', 'twitter', 'fb', 'medium', 'brunch', 'medi'];
 
 const Footer = () => (
   <div className="footer">
@@ -17,7 +22,15 @@ const Footer = () => (
       <div className="footerSNS">
         {
           sns.map(service => (
-            <img src={`/image/icon/ico-${service}-on@3x.png`} alt="sns" key={service} />
+            <img
+              src={`/image/icon/ico-${service}-off@3x.png`}
+              alt="sns"
+              key={service}
+              onMouseOver={imgChange(service, true)}
+              onFocus={imgChange(service, true)}
+              onMouseOut={imgChange(service, false)}
+              onBlur={imgChange(service, false)}
+            />
           ))
         }
       </div>

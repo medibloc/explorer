@@ -10,7 +10,7 @@ const linkDistributor = (datum, titles, linkTo = [], spacing) => titles.map((tit
     const seperator = link.split('/')[1];
     if (title.toLowerCase().includes(seperator)) {
       content = (
-        <NavLink to={`${link}/${datum[title]}`} style={{ width: `${spacing[i]}%` }} key={title}>
+        <NavLink to={`/${link}/${datum[title]}`} style={{ width: `${spacing[i]}%` }} key={title}>
           {datum[title]}
         </NavLink>
       );

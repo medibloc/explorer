@@ -3,8 +3,11 @@ import { connect } from 'react-redux';
 
 import ListWrapper from '../../components/ListWrapper';
 import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
+import Blocks from '../Blocks';
 import { blocksInPage } from '../../config';
 import { blockMapper, spaceMapper } from '../../lib';
+
+import './BlockList.scss';
 
 
 const blockRanger = (page, height) => {
@@ -52,20 +55,24 @@ class BlockList extends Component {
   }
 
   render() {
-    const { blockList, loading } = this.props;
+    const { blockList, loading, mode } = this.props;
     return loading ? (
       <div>
         LOADING
       </div>
     ) : (
-      <div>
+      mode !== 2 ? (
         <ListWrapper
           titles={titles}
           data={mappedBlocks(blockList)}
           spacing={spaceMapper([1, 1, 3, 1, 1])}
           linkTo={LinkTo}
         />
-      </div>
+      ) : (
+        <div className="blockList">
+          <Blocks data={blockList} />
+        </div>
+      )
     );
   }
 }
@@ -76,6 +83,7 @@ const mapStateToProps = ({ blockchain, global, widget }) => ({
 
   loading: widget.loading,
 
+  mode: global.mode,
   page: global.page,
 });
 

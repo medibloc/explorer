@@ -94,19 +94,18 @@ $mobile-width: 800px;
   }
 }
 
+.blocks {
+  width: 100%;
 
-
-.verticalLine {
-  border: 1px solid #f4f4f4;
-  height: 100px;
+  .blocksContents {
+    width: 100%;
+  }
 }
-
 
 
 .block {
   margin: auto;
   width: 100%;
-  max-width: 1200px;
 
   display: flex;
   flex-direction: column;
@@ -117,4 +116,9 @@ $mobile-width: 800px;
     display: flex;
     justify-content: center;
   }
+}
+
+.verticalLine {
+  border: 1px solid #f4f4f4;
+  height: 100px;
 }

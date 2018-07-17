@@ -10,15 +10,19 @@ const imgChange = (sns, on) => (e) => {
 
 const sns = ['telegram', 'twitter', 'fb', 'medium', 'brunch', 'medi'];
 
-const Footer = () => (
+const Footer = ({ mode }) => (
   <div className="footer">
     <div className="footerContent">
       <div className="footerLogo">
         <img src="/image/icon/logo-footer.svg" alt="footerLogo" />
       </div>
-      <div className="footerRights">
-        ©2018 MediBloc. All Rights Reserved.
-      </div>
+      {
+        mode === 0 && (
+          <div className="footerRights">
+            ©2018 MediBloc. All Rights Reserved.
+          </div>
+        )
+      }
       <div className="footerSNS">
         {
           sns.map(service => (
@@ -38,8 +42,8 @@ const Footer = () => (
   </div>
 );
 
-const mapStateToProps = () => ({
-
+const mapStateToProps = ({ global }) => ({
+  mode: global.mode,
 });
 
 export default connect(mapStateToProps)(Footer);

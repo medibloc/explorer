@@ -10,8 +10,7 @@ import {
 const GET_MED_PRICE = 'ticker/GET_MED_PRICE';
 const GET_MEDX_PRICE = 'ticker/GET_MEDX_PRICE';
 
-const ERROR = 'blockchain/ERROR';
-
+const ERROR = 'ticker/ERROR';
 
 const initialState = {
   medPrice: 0,

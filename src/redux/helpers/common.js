@@ -1,32 +1,6 @@
 import axios from 'axios';
 
-// export const simpleRequester = (dispatch, {
-//   url,
-//   params = null,
-//   actionType,
-//   ERROR,
-// }, load = true) => {
-//   if (load) dispatch({ type: LOAD });
-//   axios({
-//     url,
-//     params,
-//   })
-//     .then((res) => {
-//       dispatch({
-//         type: actionType,
-//         payload: res.data,
-//       });
-//       if (load) dispatch({ type: LOAD_SUCCESS });
-//     })
-//     .catch((err) => {
-//       dispatch({
-//         type: ERROR,
-//         payload: err.message,
-//       });
-//       if (load) dispatch({ type: LOAD_FAIL, payload: err.message });
-//     });
-// };
-
+// eslint-disable-next-line
 export const simpleRequester = (dispatch, {
   url,
   params = null,

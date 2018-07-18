@@ -34,7 +34,6 @@ const SUBSCRIBE = 'blockchain/SUBSCRIBE';
 
 const ERROR = 'blockchain/ERROR';
 
-
 const subsribeTypes = {
   GET_EXECUTED_TX,
   GET_LIB,
@@ -45,24 +44,23 @@ const subsribeTypes = {
 
 const initialState = {
   medState: null,
-
-  account: null,
-  accounts: [],
-
-  block: null,
-  blocks: [],
-  blockList: [],
-  lib: null,
-  revertBlocks: [],
-  tailBlock: null,
-
-  tx: null,
-  txs: [],
-  txList: [],
-  pendingTxs: [],
-  txsFromBlock: [],
-
   totalSupply: 10000000000,
+
+  account: null, // specific account
+  accounts: [], // all accounts on the blockchain
+
+  block: null, // specific block
+  blockList: [], // blocks from rpc call
+  blocks: [], // blocks from event subscriber
+  lib: null, // lib from event subscriber
+  revertBlocks: [], // revert blocks from event subscriber
+  tailBlock: null, // tail block from event subscriber
+
+  pendingTxs: [], // pending txs from event subscriber
+  tx: null, // specific tx
+  txList: [], // transaction list set from local
+  txs: [], // executed txs from event subscriber
+  txsFromBlock: [], // txs included in the specific block
 
   subscribe: false,
 

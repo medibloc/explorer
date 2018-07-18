@@ -1,4 +1,5 @@
 import jsonic from 'jsonic';
+
 import { simpleRequester } from './common';
 import {
   EXECUTED_TX,
@@ -8,6 +9,7 @@ import {
   TAIL_BLOCK,
 } from '../const';
 import { NODE_ENDPOINT, subscribeMaxResponse } from '../../config';
+
 
 let lastDataCache = 0;
 
@@ -31,7 +33,7 @@ const preProcess = (result, maxResponse) => {
   };
 };
 
-const arrStrToArrJson = (arrStr) => {
+const strArrToJsonArr = (arrStr) => {
   const arrJson = [];
   arrStr
     .substring(1, arrStr.length - 1)
@@ -51,7 +53,7 @@ const jsonfy = (data) => {
   const result = {};
   for (let i = 0; i < postData.length; i += 2) {
     if (postData[i] === 'transactions') {
-      result[postData[i]] = arrStrToArrJson(netData.split('transactions:')[1]);
+      result[postData[i]] = strArrToJsonArr(netData.split('transactions:')[1]);
       break;
     } else {
       result[postData[i]] = postData[i + 1];

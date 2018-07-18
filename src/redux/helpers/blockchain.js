@@ -35,7 +35,7 @@ const arrStrToArrJson = (arrStr) => {
   const arrJson = [];
   arrStr
     .substring(1, arrStr.length - 1)
-    .replace(/},{/g, '}||{')
+    .replace(/}(,|| ){/g, '}||{')
     .split('||')
     .forEach((element) => {
       const el = jsonic(element);

@@ -9,6 +9,7 @@ import Block from './Block';
 import BP from './BP';
 import Home from './Home';
 import Tx from './Tx';
+import Txs from './Txs';
 import NavBar from '../container/NavBar';
 import Footer from '../container/Footer';
 
@@ -56,7 +57,8 @@ class Pages extends Component {
                 <Route path="/block" component={Block} />
                 <Route exact path="/blocks" component={Blocks} />
                 <Route exact path="/bp" component={BP} />
-                <Route exact path="/txs" component={Tx} />
+                <Route exact path="/tx" component={Tx} />
+                <Route exact path="/txs" component={Txs} />
               </Switch>
             )
           }

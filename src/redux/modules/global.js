@@ -57,7 +57,11 @@ const reducer = handleActions({
     if (page < 1) page = 1;
     return { ...state, page };
   },
-  [CHANGE_LANGUAGE]: (state, action) => ({ ...state, language: action.payload, languageOpen: false }),
+  [CHANGE_LANGUAGE]: (state, action) => ({
+    ...state,
+    language: action.payload,
+    languageOpen: false,
+  }),
 
   [SET_SEARCH_TEXT]: (state, action) => ({ ...state, search: action.payload }),
 }, initialState);

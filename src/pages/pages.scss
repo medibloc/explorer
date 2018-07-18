@@ -118,6 +118,15 @@ $mobile-width: 800px;
   }
 }
 
+
+.accounts {
+  .accountsNavigation {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
 .verticalLine {
   border: 1px solid #f4f4f4;
   height: 100px;

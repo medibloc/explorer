@@ -7,6 +7,7 @@ import { blocksInPage, navigationDisplay } from '../../config';
 
 import './Navigation.scss';
 
+
 const moveToPage = pageNum => GlobalActions.movePage(pageNum);
 const pages = (currentPage, lastPage, pageDisplay) => {
   if (lastPage < pageDisplay) pageDisplay = lastPage;
@@ -41,7 +42,8 @@ class Navigation extends Component {
   }
 
   lastPage() {
-    const { last } = this.props;
+    const { last, type, accounts } = this.props;
+    if (type === 'account') return Math.ceil(accounts.length / blocksInPage);
     return Math.ceil((last - 1) / blocksInPage);
   }
 
@@ -85,6 +87,7 @@ class Navigation extends Component {
 
 const mapStateToProps = ({ blockchain, global, widget }) => ({
   page: global.page,
+  accounts: blockchain.accounts,
   last: blockchain.medState.height,
   loading: widget.loading,
 });

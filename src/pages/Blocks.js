@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Layout from './Layout';
-import BlockList from '../container/BlockList/BlockList';
+import BlockList from '../container/BlockList';
 import Navigation from '../container/Navigation';
 import PageInfo from '../components/PageInfo';
 

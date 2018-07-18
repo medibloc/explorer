@@ -12,7 +12,7 @@ import { GlobalActions } from '../../redux/actionCreators';
 import './NavBar.scss';
 
 
-const pages = ['Block', 'Transaction', 'Account', 'BP'];
+const pages = ['Block', 'Tx', 'Account', 'BP'];
 
 const NavBar = ({ mode, navBarOpen, searchBarOpen }) => {
   const { openNavBar } = GlobalActions;

@@ -62,6 +62,8 @@ const initialState = {
   pendingTxs: [],
   txsFromBlock: [],
 
+  totalSupply: 10000000000,
+
   subscribe: false,
 
   error: null,
@@ -85,7 +87,7 @@ const reducer = handleActions({
     ...state,
     tailBlock: action.payload,
     blocks: sorter([...state.blocks, action.payload], 'height'),
-    txsFromBlock: [...state.txsFromBlock, ...action.payload.transactions],
+    txsFromBlock: [...action.payload.transactions, ...state.txsFromBlock],
   }),
   [SET_BLOCK]: (state, action) => ({ ...state, block: action.payload }),
 

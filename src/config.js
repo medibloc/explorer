@@ -1,4 +1,4 @@
-export const NODE_ENDPOINT = 'http://localhost:9921';
+export const NODE_ENDPOINT = 'http://192.168.0.3:9921';
 
 // COINMARKETCAP API
 export const COINMARKETCAP_MED_PRICE = 'https://api.coinmarketcap.com/v2/ticker/2303/';
@@ -7,7 +7,7 @@ export const COINMARKETCAP_MEDX_PRICE = 'https://api.coinmarketcap.com/v2/ticker
 
 // INTERNAL CONFIG
 export const blocksInPage = 10;
-export const subscribeMaxResponse = 10;
+export const subscribeMaxResponse = 4;
 
 // STYLING CONFIG
 export const navigationDisplay = 5;

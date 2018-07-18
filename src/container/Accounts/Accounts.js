@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import ContentBox from '../../components/ContentBox/ContentBox';
+import ContentBox from '../../components/ContentBox';
+import ContentWrapper from '../../components/ContentWrapper';
 import { BlockchainActions } from '../../redux/actionCreators';
+
+
+const titles = ['Account', 'Balance', 'Percentage', 'Transactions'];
 
 class Accounts extends Component {
   componentWillMount() {
@@ -10,26 +14,25 @@ class Accounts extends Component {
   }
 
   render() {
-    const { accounts, loading } = this.props;
+    const { accounts, loading, data } = this.props;
+
 
     return loading ? (
       <div>
         LOADING
       </div>)
       : (
-        <div>
-          Here is the account sound!!
-          <ul>
-            {
-              accounts.map(account => (
-                <li>
-                  <ContentBox>
-                    {JSON.stringify(account)}
-                  </ContentBox>
-                </li>
-              ))
-            }
-          </ul>
+        <div className="accounts">
+          {
+            data.map((acc, i) => (
+              <ContentWrapper
+                type="account"
+                data={acc}
+                titles={titles}
+                key={i}
+              />
+            ))
+          }
         </div>
       );
   }

@@ -26,7 +26,7 @@ const mappedBlocks = (blocks) => {
 
 
 const titles = ['Block Height', 'Time Stamp', 'Block Hash', 'No.Tx', 'BP'];
-const LinkTo = ['block/hash', 'account/bp'];
+const linkTo = ['block/hash', 'account/bp'];
 
 
 class BlockList extends Component {
@@ -66,7 +66,7 @@ class BlockList extends Component {
           titles={titles}
           data={mappedBlocks(blockList)}
           spacing={spaceMapper([1, 1, 3, 1, 1])}
-          linkTo={LinkTo}
+          linkTo={linkTo}
         />
       ) : (
         <div className="blockList">

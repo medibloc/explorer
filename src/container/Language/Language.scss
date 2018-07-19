@@ -1,6 +1,9 @@
 .language {
   width: 158px;
 
+  display: flex;
+  justify-content: space-between;
+
   button {
     border: none;
     outline: none;
@@ -15,7 +18,7 @@
   button img {
     width: 36px;
     height: 36px;
-    margin: 10px;
+    margin-right: 10px;
   }
 
   .hidden {
@@ -25,6 +28,7 @@
 
 .languageHamburger {
   position: absolute;
+  top: 70px;
 }
 
 .languageBox {

@@ -15,6 +15,7 @@ const Language = ({ language, languageOpen, mode }) => (
       <img src={`/image/icon/ico-country-${language}@3x.png`} alt="language" />
       { countryName[language] }
     </button>
+    <img src="/image/icon/triangle.svg" alt="opener" />
     <Collapse className="languageHamburger" isOpened={languageOpen}>
       <LanguageBox />
     </Collapse>

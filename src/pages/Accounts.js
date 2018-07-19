@@ -8,14 +8,12 @@ import PageInfo from '../components/PageInfo';
 
 const Accounts = () => (
   <Layout>
-    <div className="accounts">
-      <PageInfo title="account-list" />
-      <div className="accountsContents">
-        <AccountList />
-      </div>
-      <div className="accountsNavigation">
-        <Navigation type="account" />
-      </div>
+    <PageInfo title="account-list" />
+    <div className="accountsContents">
+      <AccountList />
+    </div>
+    <div className="accountsNavigation">
+      <Navigation type="account" />
     </div>
   </Layout>
 );

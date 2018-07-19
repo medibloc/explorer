@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Account from './Account';
 import Accounts from './Accounts';
@@ -10,8 +10,9 @@ import BP from './BP';
 import Home from './Home';
 import Tx from './Tx';
 import Txs from './Txs';
-import NavBar from '../container/NavBar';
+
 import Footer from '../container/Footer';
+import NavBar from '../container/NavBar';
 
 import {
   GlobalActions,
@@ -19,6 +20,7 @@ import {
   TickerActions,
   WidgetActions as w,
 } from '../redux/actionCreators';
+
 
 const setWindowSize = () => {
   GlobalActions.setWindowSize(window.innerWidth);

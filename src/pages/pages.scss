@@ -12,6 +12,11 @@ $mobile-width: 800px;
     width: 100%;
     padding-left: 10px;
     padding-right: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 }
 
@@ -26,80 +31,69 @@ $mobile-width: 800px;
   }
 }
 
-.home {
+// home
+.homeContentWrapper {
   width: 100%;
 
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
 
-  .homeContentWrapper {
+  .homeTokenInfo {
+    max-width: 1100px;
+    width: 100%;
+    margin: auto;
+
+    display: flex;
+    justify-content: center;
+
+    .verticalLine {
+      margin: auto;
+    }
+  }
+
+  .homeSearchBar {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+
+    .searchBarSearch input::placeholder {
+      color: #ffffff;
+    }
+
+    & > hr {
+      position: absolute;
+      z-index: -1;
+      bottom: 20px;
+      height: 1px;
+      width: 200%;
+      border: 0;
+      background: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .homeLive {
     width: 100%;
 
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    .homeTokenInfo {
-      max-width: 1100px;
-      width: 100%;
-      margin: auto;
-
-      display: flex;
-      justify-content: center;
-
-      .verticalLine {
-        margin: auto;
-      }
+    & > div {
+      margin: 20px
     }
 
-    .homeSearchBar {
-      margin-top: 20px;
-      margin-bottom: 20px;
-      position: relative;
-
-      display: flex;
-      justify-content: center;
-
-      .searchBarSearch input::placeholder {
-        color: #ffffff;
-      }
-
-      & > hr {
-        position: absolute;
-        z-index: -1;
-        bottom: 20px;
-        height: 1px;
-        width: 200%;
-        border: 0;
-        background: rgba(0, 0, 0, 0.2);
-      }
-    }
-
-    .homeLive {
-      width: 100%;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      & > div {
-        margin: 20px
-      }
-
-      .verticalLine {
-        height: 500px;
-      }
+    .verticalLine {
+      height: 500px;
     }
   }
 }
 
-.blocks {
+// blocks
+.blocksContents {
   width: 100%;
-
-  .blocksContents {
-    width: 100%;
-  }
 }
 
 
@@ -118,14 +112,16 @@ $mobile-width: 800px;
   }
 }
 
-
-.accounts {
-  .accountsNavigation {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-  }
+// accounts
+.accountsContents {
+  width: 100%;
 }
+.accountsNavigation {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
 
 .verticalLine {
   border: 1px solid #f4f4f4;

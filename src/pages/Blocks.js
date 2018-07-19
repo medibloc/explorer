@@ -8,14 +8,12 @@ import PageInfo from '../components/PageInfo';
 
 const Blocks = () => (
   <Layout>
-    <div className="blocks">
-      <PageInfo title="block-list" />
-      <div className="blocksContents">
-        <BlockList />
-      </div>
-      <div className="blocksNavigation">
-        <Navigation />
-      </div>
+    <PageInfo title="block-list" />
+    <div className="blocksContents">
+      <BlockList />
+    </div>
+    <div className="blocksNavigation">
+      <Navigation />
     </div>
   </Layout>
 );

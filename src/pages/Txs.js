@@ -11,7 +11,9 @@ const Txs = () => (
     <div className="txs">
       <PageInfo title="transactions-list" />
       <div className="txsContents">
-        <TxList />
+        <TxList
+
+        />
       </div>
       {/*
       <div className="txsNavigation">

@@ -17,6 +17,7 @@ const GET_MED_STATE = 'blockchain/GET_MED_STATE';
 
 const GET_ACCOUNT = 'blockchain/GET_ACCOUNT';
 const GET_ACCOUNTS = 'blockchain/GET_ACCOUNTS';
+const SET_ACCOUNT = 'blockchain/SET_ACCOUNT';
 
 const GET_BLOCK = 'blockchain/GET_BLOCK';
 const GET_BLOCKS = 'blockchain/GET_BLOCKS';
@@ -74,6 +75,7 @@ const reducer = handleActions({
 
   [GET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload }),
   [GET_ACCOUNTS]: (state, action) => ({ ...state, accounts: sorter(action.payload.accounts, 'balance') }),
+  [SET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload }),
 
   [GET_BLOCK]: (state, action) => ({ ...state, block: action.payload }),
   [GET_BLOCKS]: (state, action) => ({ ...state, blockList: sorter(action.payload.blocks, 'height') }),
@@ -86,7 +88,11 @@ const reducer = handleActions({
     ...state,
     tailBlock: action.payload,
     blocks: sorter([...state.blocks, action.payload], 'height'),
-    txsFromBlock: [...action.payload.transactions, ...state.txsFromBlock],
+    txsFromBlock: action.payload.transactions ? (
+      [...action.payload.transactions, ...state.txsFromBlock]
+    ) : (
+      state.txsFromBlock
+    ),
   }),
   [SET_BLOCK]: (state, action) => ({ ...state, block: action.payload }),
 
@@ -117,6 +123,7 @@ export const getBlocks = ({ from, to }) => dispatch => blocksGetter(
 );
 export const getMedState = () => dispatch => medStateGetter(dispatch, GET_MED_STATE, ERROR);
 export const getTx = hash => dispatch => txGetter(dispatch, GET_TX, ERROR, hash);
+export const setAccount = createAction(SET_ACCOUNT);
 export const setTx = createAction(SET_TX);
 export const setTxs = createAction(SET_TXS);
 export const setBlock = createAction(SET_BLOCK);

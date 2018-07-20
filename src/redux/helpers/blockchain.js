@@ -64,6 +64,7 @@ const jsonfy = (data) => {
 
 const distributor = (datum, actionTypes) => {
   const data = jsonfy(datum.data);
+
   switch (datum.topic) {
     case EXECUTED_TX:
       return {

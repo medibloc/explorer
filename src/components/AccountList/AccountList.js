@@ -11,7 +11,7 @@ import './AccountList.scss';
 
 
 const accPicker = (accs, page) => {
-  return accs.slice((page-1) * contentsInPage, page * contentsInPage);
+  return accs.slice((page - 1) * contentsInPage, page * contentsInPage);
 };
 
 const mappedAccounts = (accs, totalSupply) => {
@@ -25,7 +25,7 @@ const mappedAccounts = (accs, totalSupply) => {
 };
 
 const titles = ['Account', 'Balance', 'Percentage', 'Transactions'];
-const linkTo = ['acc/account'];
+const linkTo = ['account/account'];
 
 class AccountList extends Component {
   componentWillMount() {

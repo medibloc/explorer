@@ -7,11 +7,11 @@ import { subjectDistinguisher } from '../lib';
 
 
 const Account = ({ location }) => {
-  const subject = location.pathname.split('/')[1];
+  const subject = location.pathname.split('/')[2];
   const type = subjectDistinguisher(subject);
 
   let AccountWrapper = null;
-  if (type === 'address') {
+  if (type === 'account') {
     AccountWrapper = <AccountContainer address={subject} />;
   } else {
     AccountWrapper = <AccountContainer />;

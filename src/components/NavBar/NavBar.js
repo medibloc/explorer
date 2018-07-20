@@ -39,18 +39,7 @@ const NavBar = ({ mode, navBarOpen, searchBarOpen }) => {
           )
         }
         {
-          mode === 1 && (
-            <Fragment>
-              <div className="navNavigator">
-                <NavList pages={pages} />
-              </div>
-              <img src="/image/icon/ico-search-simple.svg" onClick={GlobalActions.openSearchBar} />
-              <SearchBar />
-            </Fragment>
-          )
-        }
-        {
-          mode === 2 && (
+          mode !== 0 && (
             <Fragment>
               <div className="navNavigator" />
               {
@@ -92,10 +81,11 @@ const NavBar = ({ mode, navBarOpen, searchBarOpen }) => {
 
 const mapStateToProps = ({ blockchain, global }) => ({
   medState: blockchain.medState,
-  width: global.width,
+
   mode: global.mode,
-  searchBarOpen: global.searchBarOpen,
   navBarOpen: global.navBarOpen,
+  searchBarOpen: global.searchBarOpen,
+  width: global.width,
 });
 
 export default connect(mapStateToProps)(NavBar);

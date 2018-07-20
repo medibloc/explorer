@@ -1,4 +1,3 @@
-import cx from 'classnames';
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -9,7 +8,7 @@ const SearchBar = ({ type, searchBarOpen }) => {
   const { setSearchText } = GlobalActions;
 
   return (
-    <div className={cx('searchBar', { searchBarHide: !searchBarOpen && type !== 'main' })} id={type}>
+    <div className="searchBar" id={type}>
       <div className="searchBarSearch">
         <input placeholder="Enter Address, Tx hash, BLock Height" onChange={e => setSearchText(e.target.value)} />
         <div className="searchBarIcon">

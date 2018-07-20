@@ -5,6 +5,7 @@ import Account from './Account';
 
 const mapStateToProps = ({ blockchain, widget }) => ({
   account: blockchain.account,
+  accounts: blockchain.accounts,
 
   loading: widget.loading,
 });

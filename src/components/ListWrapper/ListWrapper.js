@@ -7,10 +7,14 @@ import './ListWrapper.scss';
 const linkDistributor = (datum, titles, linkTo = [], spacing) => titles.map((title, i) => {
   let content = null;
   linkTo.forEach((link) => {
-    const seperator = link.split('/')[1];
-    if (title.toLowerCase().includes(seperator)) {
+    const seperator = link.split('/');
+    if (title.toLowerCase().includes(seperator[1])) {
       content = (
-        <NavLink to={`/${link}/${datum[title]}`} style={{ width: `${spacing[i]}%` }} key={title}>
+        <NavLink
+          to={`/${seperator[0]}/${datum[title]}`}
+          style={{ width: `${spacing[i]}%` }}
+          key={title}
+        >
           {datum[title]}
         </NavLink>
       );
@@ -19,7 +23,10 @@ const linkDistributor = (datum, titles, linkTo = [], spacing) => titles.map((tit
 
   if (!content) {
     content = (
-      <span style={{ width: `${spacing[i]}%` }} key={title}>
+      <span
+        style={{ width: `${spacing[i]}%` }}
+        key={title}
+      >
         {datum[title]}
       </span>
     );
@@ -48,12 +55,9 @@ const ListWrapper = ({
         data.map((datum, i) => (
           // eslint-disable-next-line
           <div className="listWrapperContentRow" key={i}>
-            {
-              linkDistributor(datum, titles, linkTo, spacing)
-            }
+            { linkDistributor(datum, titles, linkTo, spacing) }
           </div>
         ))
-
       }
     </div>
   </div>

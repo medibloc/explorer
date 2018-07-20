@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-import Layout from './Layout';
-import AccountList from '../container/AccountList';
-import Navigation from '../container/Navigation';
+import AccountList from '../components/AccountList';
+import Navigation from '../components/Navigation';
 import PageInfo from '../components/PageInfo';
 
 
 const Accounts = () => (
-  <Layout>
+  <Fragment>
     <PageInfo title="account-list" />
     <div className="accountsContents">
       <AccountList />
@@ -15,7 +14,7 @@ const Accounts = () => (
     <div className="accountsNavigation">
       <Navigation type="account" />
     </div>
-  </Layout>
+  </Fragment>
 );
 
 export default Accounts;

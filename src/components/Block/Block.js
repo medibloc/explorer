@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
-import DetailWrapper from '../../components/DetailWrapper';
+import DetailWrapper from '../DetailWrapper';
 import { blockMapper } from '../../lib';
 import { BlockchainActions, WidgetActions as w } from '../../redux/actionCreators';
 
@@ -20,13 +19,17 @@ class Block extends Component {
       hash,
       height,
       blockList,
+      blocks,
     } = this.props;
-    const block = blockPicker(blockList, { hash, height });
+    let block = blockPicker(blockList, { hash, height });
+    if (!block) block = blockPicker(blocks, { hash, height });
+
     if (!block) {
       let subject = null;
       if (height) subject = height;
       if (hash) subject = hash;
-      if (subject === null) throw new Error("Invalid block info");
+      if (subject === null) throw new Error('Invalid block info');
+
       w.loader(BlockchainActions
         .getBlock(subject)
         .then((bl) => {
@@ -36,29 +39,20 @@ class Block extends Component {
     if (block) {
       BlockchainActions.setBlock(block);
       BlockchainActions.setTxs(block.transactions);
-    };
+    }
   }
 
-
   render() {
-    const { block } = this.props;
-    if (!block) {
-      return <div>LOADING</div>;
-    }
+    const { block, loading } = this.props;
 
-    const keyList = ['Block Height', 'Time Stamp', 'Block Hash', 'Prev Hash', 'Amount', 'No.Tx', 'BP'];
-
-    return (
+    return loading ? (
       <div>
-        <DetailWrapper data={blockMapper(block)} keyList={keyList} />
+        LOADING
       </div>
+    ) : (
+      <DetailWrapper data={blockMapper(block)} type="block" />
     );
   }
 }
 
-const mapStateToProps = ({ blockchain }) => ({
-  block: blockchain.block,
-  blockList: blockchain.blockList,
-});
-
-export default connect(mapStateToProps)(Block);
+export default Block;

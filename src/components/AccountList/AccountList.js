@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import ListWrapper from '../../components/ListWrapper';
 import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
 import Accounts from '../Accounts';
-import { blocksInPage } from '../../config';
+import { contentsInPage } from '../../config';
 import { accountMapper, spaceMapper } from '../../lib';
 
 import './AccountList.scss';
 
 
 const accPicker = (accs, page) => {
-  return accs.slice((page-1) * blocksInPage, page * blocksInPage);
+  return accs.slice((page-1) * contentsInPage, page * contentsInPage);
 };
 
 const mappedAccounts = (accs, totalSupply) => {

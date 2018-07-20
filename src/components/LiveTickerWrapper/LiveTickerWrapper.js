@@ -9,7 +9,7 @@ const LiveTickerWrapper = ({ title, value, suffix }) => (
       {title}
     </div>
     <div className="liveTickerWrapperContent">
-      <div className="liveTickerWrapperContentValue">
+      <div>
         {value}
       </div>
       <div className="liveTickerWrapperContentSuffix">

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
-import ListWrapper from '../../components/ListWrapper';
+import ListWrapper from '../ListWrapper';
 import { spaceMapper, txMapper } from '../../lib';
 import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
 
@@ -66,12 +65,4 @@ class TxList extends Component {
   }
 }
 
-
-const mapStateToProps = ({ blockchain, global }) => ({
-  txList: blockchain.txList,
-  txsFromBlock: blockchain.txsFromBlock,
-  medState: blockchain.medState,
-  mode: global.mode,
-});
-
-export default connect(mapStateToProps)(TxList);
+export default TxList;

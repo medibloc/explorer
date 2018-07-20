@@ -8,12 +8,16 @@ const ContentWrapper = ({ type, data, titles }) => {
   const { 'Block Height': height } = data;
   let hash = '';
   titles.forEach((title) => {
-    if (title.toLowerCase().indexOf('hash') !== -1) hash = data[title];
+    const ti = title.toLowerCase();
+    if (ti.indexOf('hash') !== -1) hash = data[title];
+    if (ti.indexOf('number') !== -1) hash = data[title];
+    if (ti.indexOf('account') !== -1) hash = data[title];
   });
+  const url = `/${type}/${hash}`;
 
   return (
-    <NavLink to={`/${type}/hash/${hash}`} className="contentWrapperLinker">
-    <div className="contentWrapper">
+    <NavLink to={url} className="contentWrapperLinker">
+      <div className="contentWrapper">
         <div className="contentWrapperIcon">
           <img src={`/image/icon/ico-${type}.svg`} alt="contentWrapperIcon" />
           <img src={`/image/icon/ico-${type}-on.svg`} alt="contentWrapperIcon" />
@@ -39,8 +43,7 @@ const ContentWrapper = ({ type, data, titles }) => {
             ))
           }
         </div>
-
-    </div>
+      </div>
     </NavLink>
   );
 };

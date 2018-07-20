@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
 
 import { GlobalActions } from '../../redux/actionCreators';
-import { blocksInPage, navigationDisplay } from '../../config';
+import { contentsInPage, navigationDisplay } from '../../config';
 
 import './Navigation.scss';
 
@@ -28,7 +26,6 @@ const pages = (currentPage, lastPage, pageDisplay) => {
 class Navigation extends Component {
   constructor(props) {
     super(props);
-    // TODO bind의 정확한 역
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
@@ -43,8 +40,16 @@ class Navigation extends Component {
 
   lastPage() {
     const { last, type, accounts } = this.props;
-    if (type === 'account') return Math.ceil(accounts.length / blocksInPage);
-    return Math.ceil((last - 1) / blocksInPage);
+    switch (type) {
+      case 'account':
+        return Math.ceil(accounts.length / contentsInPage);
+      case 'block':
+        return Math.ceil((last - 1) / contentsInPage);
+      case 'tx':
+        return 1;
+      default:
+        return 1;
+    }
   }
 
   render() {
@@ -85,11 +90,4 @@ class Navigation extends Component {
   }
 }
 
-const mapStateToProps = ({ blockchain, global, widget }) => ({
-  page: global.page,
-  accounts: blockchain.accounts,
-  last: blockchain.medState.height,
-  loading: widget.loading,
-});
-
-export default connect(mapStateToProps)(Navigation);
+export default Navigation;

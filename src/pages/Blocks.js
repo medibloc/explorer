@@ -1,21 +1,20 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-import Layout from './Layout';
-import BlockList from '../container/BlockList';
-import Navigation from '../container/Navigation';
+import BlockList from '../components/BlockList';
+import Navigation from '../components/Navigation';
 import PageInfo from '../components/PageInfo';
 
 
 const Blocks = () => (
-  <Layout>
+  <Fragment>
     <PageInfo title="block-list" />
     <div className="blocksContents">
       <BlockList />
     </div>
     <div className="blocksNavigation">
-      <Navigation />
+      <Navigation type="block" />
     </div>
-  </Layout>
+  </Fragment>
 );
 
 export default Blocks;

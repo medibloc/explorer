@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+import Layout from './Layout';
 import Account from './Account';
 import Accounts from './Accounts';
 import Blocks from './Blocks';
@@ -11,8 +12,8 @@ import Home from './Home';
 import Tx from './Tx';
 import Txs from './Txs';
 
-import Footer from '../container/Footer';
-import NavBar from '../container/NavBar';
+import Footer from '../components/Footer';
+import NavBar from '../components/NavBar';
 
 import {
   GlobalActions,
@@ -53,14 +54,16 @@ class Pages extends Component {
               </div>
             ) : (
               <Switch>
-                <Route exact path="/" component={Home} />
-                <Route path="/account" component={Account} />
-                <Route exact path="/accounts" component={Accounts} />
-                <Route path="/block" component={Block} />
-                <Route exact path="/blocks" component={Blocks} />
-                <Route exact path="/bp" component={BP} />
-                <Route exact path="/tx" component={Tx} />
-                <Route exact path="/txs" component={Txs} />
+                <Layout>
+                  <Route exact path="/" component={Home} />
+                  <Route path="/account" component={Account} />
+                  <Route exact path="/accounts" component={Accounts} />
+                  <Route path="/block" component={Block} />
+                  <Route exact path="/blocks" component={Blocks} />
+                  <Route exact path="/bp" component={BP} />
+                  <Route exact path="/tx" component={Tx} />
+                  <Route exact path="/txs" component={Txs} />
+                </Layout>
               </Switch>
             )
           }

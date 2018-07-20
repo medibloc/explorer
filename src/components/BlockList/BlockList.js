@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
-import ListWrapper from '../../components/ListWrapper';
+import ListWrapper from '../ListWrapper';
 import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
-import Blocks from '../Blocks';
-import { blocksInPage } from '../../config';
+import TableWithIcon from '../TableWithIcon';
+import { contentsInPage } from '../../config';
 import { blockMapper, spaceMapper } from '../../lib';
 
 import './BlockList.scss';
 
 
 const blockRanger = (page, height) => {
-  if (height < blocksInPage) return { from: 1, to: height };
-  let from = height - page * blocksInPage + 1;
-  let to = height - (page - 1) * blocksInPage;
+  if (height < contentsInPage) return { from: 1, to: height };
+  let from = height - page * contentsInPage + 1;
+  let to = height - (page - 1) * contentsInPage;
   if (from < 1) from = 1;
   if (to < 1) to = 0;
   return { from, to };
@@ -24,10 +23,8 @@ const mappedBlocks = (blocks) => {
   return blockList;
 };
 
-
 const titles = ['Block Height', 'Time Stamp', 'Block Hash', 'No.Tx', 'BP'];
 const linkTo = ['block/hash', 'account/bp'];
-
 
 class BlockList extends Component {
   constructor(props) {
@@ -70,21 +67,11 @@ class BlockList extends Component {
         />
       ) : (
         <div className="blockList">
-          <Blocks data={blockList} />
+          <TableWithIcon type="block" data={blockList} />
         </div>
       )
     );
   }
 }
 
-const mapStateToProps = ({ blockchain, global, widget }) => ({
-  blockList: blockchain.blockList,
-  medState: blockchain.medState,
-
-  loading: widget.loading,
-
-  mode: global.mode,
-  page: global.page,
-});
-
-export default connect(mapStateToProps)(BlockList);
+export default BlockList;

@@ -21,10 +21,6 @@ class TxList extends Component {
     this.getTransactions = this.getTransactions.bind(this);
   }
 
-  componentWillMount() {
-    this.getTransactions();
-  }
-
   componentDidUpdate(prevProps) {
     const { page } = this.props;
     if (page !== prevProps.page) this.getTransactions();
@@ -40,21 +36,21 @@ class TxList extends Component {
   }
 
   render() {
-    const { mode, txsFromBlock, linkTo, spacing, data } = this.props;
+    const { mode, txList, linkTo, spacing, data } = this.props;
     return (
       <div className="txList">
         {
           mode !== 2 ? (
             <ListWrapper
               titles={titles}
-              data={mappedTxList(txsFromBlock)}
+              data={mappedTxList(txList)}
               spacing={spaceMapper([2, 2, 2, 1])}
               linkTo={["tx/hash", "acc/from", "acc/to"]}
             />
           ) : (
             <ListWrapper
               titles={['Transaction Hash']}
-              data={mappedTxList(txsFromBlock)}
+              data={mappedTxList(txList)}
               spacing={spaceMapper([1])}
               linkTo={["tx/hash"]}
             />

@@ -1,10 +1,10 @@
 const subjectDistinguisher = (string) => {
-  if (string.toLowerCase().match(/[a-z]+/g)) {
+  if (/[a-z]+/g.test(string.toLowerCase())) {
     if (string.length === 64) return 'hash';
-    if (string.length === 66) return 'address';
+    if (string.length === 66) return 'account';
     return false;
   }
-  if (string.match(/^[0-9]+$/g)) return 'height';
+  if (/^[0-9]+$/g.test(string)) return 'height';
   return false;
 };
 

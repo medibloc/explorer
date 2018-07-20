@@ -45,7 +45,7 @@ class Block extends Component {
   render() {
     const { block, loading } = this.props;
 
-    return loading ? (
+    return loading || !block ? (
       <div>
         LOADING
       </div>

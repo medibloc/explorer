@@ -14,7 +14,7 @@ import './NavBar.scss';
 
 const pages = ['Block', 'Tx', 'Account', 'BP'];
 
-const NavBar = ({ mode, navBarOpen, searchBarOpen }) => {
+const NavBar = ({ currentUrl, mode, navBarOpen, searchBarOpen }) => {
   const { openNavBar } = GlobalActions;
   if (navBarOpen) document.body.style.overflow = 'hidden';
   else document.body.style.overflow = null;
@@ -31,7 +31,7 @@ const NavBar = ({ mode, navBarOpen, searchBarOpen }) => {
           mode === 0 && (
             <Fragment>
               <div className="navNavigator">
-                <NavList pages={pages} />
+                <NavList pages={pages} currentUrl={currentUrl} />
               </div>
               <SearchBar className={cx({ fullWidth: mode !== 0 })} />
               <Language />
@@ -61,7 +61,7 @@ const NavBar = ({ mode, navBarOpen, searchBarOpen }) => {
                   Menu
                 </div>
                 <div className="navBarSideNavList">
-                  <NavList pages={pages} />
+                  <NavList pages={pages} currentUrl={currentUrl} />
                 </div>
                 <div className="navBarSideMenu">
                   <img src="/image/icon/ico-language.svg" alt="language" />
@@ -82,6 +82,7 @@ const NavBar = ({ mode, navBarOpen, searchBarOpen }) => {
 const mapStateToProps = ({ blockchain, global }) => ({
   medState: blockchain.medState,
 
+  currentUrl: global.currentUrl,
   mode: global.mode,
   navBarOpen: global.navBarOpen,
   searchBarOpen: global.searchBarOpen,

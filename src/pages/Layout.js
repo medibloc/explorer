@@ -1,12 +1,32 @@
-import React from 'react';
+import React, { Component } from 'react';
+
+import { GlobalActions } from '../redux/actionCreators';
 
 
-const Layout = ({ children }) => (
-  <div className="layout">
-    <div className="layoutInner">
-      { children }
-    </div>
-  </div>
-);
+class Layout extends Component {
+  componentWillMount() {
+    const { location: { pathname: path } } = this.props;
+    GlobalActions.moveUrl(path.split('/')[1]);
+  }
+
+  componentWillUpdate(nextProps) {
+    const { location: { pathname: path } } = this.props;
+    if (path !== nextProps.location.pathname) {
+      GlobalActions.moveUrl(nextProps.location.pathname.split('/')[1]);
+    }
+  }
+
+  render() {
+    const { children } = this.props;
+    return (
+      <div className="layout">
+        <div className="layoutInner">
+          { children }
+        </div>
+      </div>
+    );
+  }
+}
+
 
 export default Layout;

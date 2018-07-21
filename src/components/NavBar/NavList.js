@@ -1,19 +1,21 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import HoverButton from '../../components/Button/HoverButton';
-
 import './NavList.scss';
 
 
-const NavList = ({ pages }) => pages.map(page => (
-  <div key={page}>
-    <HoverButton>
-      <NavLink className="navListBtn" to={page === 'Main' ? '/' : `/${page.toLowerCase()}s`}>
+const NavList = ({ pages, currentUrl }) => pages.map((page) => {
+  const PAGE = page.toLowerCase();
+  return (
+    <div key={page}>
+      <NavLink
+        className={`navListBtn ${currentUrl.indexOf(PAGE) !== -1 && 'selected'}`}
+        to={`/${PAGE}s`}
+      >
         {page}
       </NavLink>
-    </HoverButton>
-  </div>
-));
+    </div>
+  );
+});
 
 export default NavList;

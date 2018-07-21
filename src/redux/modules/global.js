@@ -16,6 +16,8 @@ const CHANGE_LANGUAGE = 'global/CHANGE_LANGUAGE';
 
 const MOVE_PAGE = 'global/MOVE_PAGE';
 
+const MOVE_URL = 'global/MOVE_URL';
+
 const initialState = {
   // Mode - 0 : Desktop, 1 : Tablet, 2 : Mobile
   mode: 0,
@@ -32,6 +34,8 @@ const initialState = {
   language: 'en',
 
   page: 1,
+
+  currentUrl: '/',
 };
 
 // REDUCER
@@ -74,11 +78,17 @@ const reducer = handleActions({
     if (page < 1) page = 1;
     return { ...state, page };
   },
+
+  [MOVE_URL]: (state, action) => ({
+    ...state,
+    currentUrl: action.payload,
+  }),
 }, initialState);
 
 // ACTION CREATORS
 export const changeLanguage = createAction(CHANGE_LANGUAGE);
 export const movePage = createAction(MOVE_PAGE);
+export const moveUrl = createAction(MOVE_URL);
 export const openLanguage = createAction(OPEN_LANGUAGE);
 export const openModal = createAction(OPEN_MODAL);
 export const openNavBar = createAction(OPEN_NAVBAR);

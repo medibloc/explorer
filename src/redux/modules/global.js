@@ -9,6 +9,9 @@ const SET_SEARCH_TEXT = 'global/SET_SEARCH_TEXT';
 const OPEN_LANGUAGE = 'global/OPEN_LANGUAGE';
 const OPEN_NAVBAR = 'global/OPEN_NAVBAR';
 
+const OPEN_MODAL = 'global/OPEN_MODAL';
+const SET_MODAL_TYPE = 'global/SET_MODAL_TYPE';
+
 const CHANGE_LANGUAGE = 'global/CHANGE_LANGUAGE';
 
 const MOVE_PAGE = 'global/MOVE_PAGE';
@@ -22,6 +25,9 @@ const initialState = {
 
   languageOpen: false,
   navBarOpen: false,
+
+  modalOpen: false,
+  modalType: null,
 
   language: 'en',
 
@@ -54,6 +60,9 @@ const reducer = handleActions({
   [OPEN_LANGUAGE]: state => ({ ...state, languageOpen: !state.languageOpen }),
   [OPEN_NAVBAR]: state => ({ ...state, navBarOpen: !state.navBarOpen }),
 
+  [OPEN_MODAL]: state => ({ ...state, modalOpen: !state.modalOpen }),
+  [SET_MODAL_TYPE]: (state, action) => ({ ...state, modalType: action.payload }),
+
   [CHANGE_LANGUAGE]: (state, action) => ({
     ...state,
     language: action.payload,
@@ -71,7 +80,9 @@ const reducer = handleActions({
 export const changeLanguage = createAction(CHANGE_LANGUAGE);
 export const movePage = createAction(MOVE_PAGE);
 export const openLanguage = createAction(OPEN_LANGUAGE);
+export const openModal = createAction(OPEN_MODAL);
 export const openNavBar = createAction(OPEN_NAVBAR);
+export const setModalType = createAction(SET_MODAL_TYPE);
 export const setSearchText = createAction(SET_SEARCH_TEXT);
 export const setWindowSize = createAction(SET_WINDOW_SIZE);
 

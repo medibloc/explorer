@@ -8,9 +8,10 @@ import LiveTickerWrapper from '../components/LiveTickerWrapper';
 
 import './pages.scss';
 
-
+import Modal from '../components/Modal';
 const Home = () => (
   <div className="homeContentWrapper">
+    <Modal />
     <div className="homeTokenInfo">
       <LiveTickerWrapper
         title="Market Cap"

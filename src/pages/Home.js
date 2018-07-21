@@ -29,11 +29,11 @@ const Home = () => (
       <SearchBar type="main" />
     </div>
     <div className="homeLive">
-      <LiveInfoWrapper title="Recent Block">
+      <LiveInfoWrapper title="Recent Block" type="block">
         <LiveBlocks />
       </LiveInfoWrapper>
       <div className="verticalLine" />
-      <LiveInfoWrapper title="Recent Transaction">
+      <LiveInfoWrapper title="Recent Transaction" type="tx">
         <LiveTxs />
       </LiveInfoWrapper>
     </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import ListWrapper from '../ListWrapper';
 import { spaceMapper, txMapper } from '../../lib';
-import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
+import { GlobalActions } from '../../redux/actionCreators';
 
 import './TxList.scss';
 

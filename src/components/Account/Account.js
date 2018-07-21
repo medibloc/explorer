@@ -22,7 +22,7 @@ class Account extends Component {
   render() {
     const { account, loading } = this.props;
 
-    return account === null ? (
+    return account === null || loading ? (
       <div>
         LOADING
       </div>

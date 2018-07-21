@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import ContentBox from '../../components/ContentBox';
 import ContentWrapper from '../../components/ContentWrapper';
 import { BlockchainActions } from '../../redux/actionCreators';
 
@@ -14,7 +13,7 @@ class Accounts extends Component {
   }
 
   render() {
-    const { accounts, loading, data } = this.props;
+    const { loading, data } = this.props;
 
 
     return loading ? (
@@ -29,7 +28,7 @@ class Accounts extends Component {
                 type="account"
                 data={acc}
                 titles={titles}
-                key={i}
+                key={acc.Account}
               />
             ))
           }

@@ -34,11 +34,15 @@ const Footer = ({ mode }) => (
       <div className="footerSNS">
         {
           sns.map(service => (
-            <a href={snsLink[service]} target="_blank">
+            <a
+              href={snsLink[service]}
+              target="_blank"
+              rel="noopener"
+              key={service}
+            >
               <img
                 src={`/image/icon/ico-${service}-off@3x.png`}
                 alt="sns"
-                key={service}
                 onMouseOver={imgChange(service, true)}
                 onFocus={imgChange(service, true)}
                 onMouseOut={imgChange(service, false)}

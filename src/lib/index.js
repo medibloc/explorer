@@ -3,6 +3,7 @@ import blockMapper from './blockMapper';
 import subjectDistinguisher from './subjectDistinguisher';
 import spaceMapper from './spaceMapper';
 import sorting from './sorting';
+import timeConverter from './timeConverter';
 import txMapper from './txMapper';
 
 export {
@@ -11,5 +12,6 @@ export {
   subjectDistinguisher,
   spaceMapper,
   sorting,
+  timeConverter,
   txMapper,
 };

@@ -14,16 +14,44 @@ const blockPicker = (pool, { hash, height }) => {
 };
 
 class Block extends Component {
-  componentWillMount() {
+  constructor(props) {
+    super(props);
+    this.callBlock = this.callBlock.bind(this);
+  }
+
+  componentDidMount() {
+    this.callBlock();
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const { hash, height, block } = this.props;
+    if (hash !== nextProps.hash || height !== nextProps.height) {
+      this.callBlock(nextProps);
+      return true;
+    }
+    if (block !== nextProps.block) {
+      return true;
+    }
+    return false;
+  }
+
+  callBlock(nextProps) {
+    let hash = '';
+    let height = '';
+    if (nextProps) {
+      hash = nextProps.hash;
+      height = nextProps.height;
+    } else {
+      hash = this.props.hash;
+      height = this.props.height;
+    }
+
     const {
-      hash,
-      height,
       blockList,
       blocks,
     } = this.props;
     let block = blockPicker(blockList, { hash, height });
     if (!block) block = blockPicker(blocks, { hash, height });
-
     if (!block) {
       let subject = null;
       if (height) subject = height;
@@ -44,8 +72,7 @@ class Block extends Component {
 
   render() {
     const { block, loading } = this.props;
-
-    return loading || !block ? (
+    return !block ? (
       <div>
         LOADING
       </div>

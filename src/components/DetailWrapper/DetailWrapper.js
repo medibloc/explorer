@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import './DetailWrapper.scss';
 
@@ -9,8 +10,15 @@ const titles = {
   account: ['Account', 'Balance', 'Transactions'],
 };
 
+const linkTo = {
+  block: ['block/Prev Hash', 'account/BP'],
+  tx: [],
+  account: [],
+};
+
 const DetailWrapper = ({ data, type }) => {
   const titleList = type ? titles[type] : [];
+  const linkList = type ? linkTo[type] : [];
 
   return (
     <div className="detailWrapper">
@@ -25,11 +33,24 @@ const DetailWrapper = ({ data, type }) => {
       </div>
       <div className="detailWrapperValue">
         {
-          titleList.map(title => (
-            <span key={title}>
-              {data[title]}
-            </span>
-          ))
+          titleList.map((title) => {
+            for (let i = 0; i < linkList.length; i += 1) {
+              if (linkList[i].includes(title)) {
+                return (
+                  <span key={title}>
+                    <NavLink to={`/${linkList[i].split('/')[0]}/${data[title]}`}>
+                      {data[title]}
+                    </NavLink>
+                  </span>
+                );
+              }
+            }
+            return (
+              <span key={title}>
+                {data[title]}
+              </span>
+            );
+          })
         }
       </div>
     </div>

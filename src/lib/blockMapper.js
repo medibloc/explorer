@@ -1,3 +1,5 @@
+import timeConverter from './timeConverter';
+
 const blockMapper = (block) => {
   let amount = 0;
   if (block.transactions) {
@@ -11,7 +13,7 @@ const blockMapper = (block) => {
 
   return {
     'Block Height': block.height,
-    'Time Stamp': block.timestamp,
+    'Time Stamp': timeConverter(block.timestamp),
     'Block Hash': block.hash,
     'Prev Hash': block.parent_hash,
     'No.Tx': block.transactions.length,

@@ -9,6 +9,14 @@ const imgChange = (sns, on) => (e) => {
 };
 
 const sns = ['telegram', 'twitter', 'fb', 'medium', 'brunch', 'medi'];
+const snsLink = {
+  telegram: 'https://t.me/medibloc',
+  twitter: 'https://twitter.com/_MediBloc',
+  fb: 'https://www.facebook.com/medibloc/',
+  medium: 'https://medium.com/@medibloc',
+  brunch: 'https://brunch.co.kr/@medibloc/',
+  medi: 'https://medibloc.org/',
+};
 
 const Footer = ({ mode }) => (
   <div className="footer">
@@ -26,15 +34,17 @@ const Footer = ({ mode }) => (
       <div className="footerSNS">
         {
           sns.map(service => (
-            <img
-              src={`/image/icon/ico-${service}-off@3x.png`}
-              alt="sns"
-              key={service}
-              onMouseOver={imgChange(service, true)}
-              onFocus={imgChange(service, true)}
-              onMouseOut={imgChange(service, false)}
-              onBlur={imgChange(service, false)}
-            />
+            <a href={snsLink[service]} target="_blank">
+              <img
+                src={`/image/icon/ico-${service}-off@3x.png`}
+                alt="sns"
+                key={service}
+                onMouseOver={imgChange(service, true)}
+                onFocus={imgChange(service, true)}
+                onMouseOut={imgChange(service, false)}
+                onBlur={imgChange(service, false)}
+              />
+            </a>
           ))
         }
       </div>

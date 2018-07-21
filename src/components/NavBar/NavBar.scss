@@ -58,23 +58,28 @@ $navBar-border-bottom: 1px;
       border: none;
     }
 
-    .navBarSide {
-      display: none;
+    .navBarOpen {
+      transform: translateX(0);
     }
 
-    .navBarOpen {
+    .navBarClose {
+      transform: translateX($navBar-side-width);
+    }
+
+    .navBarSide {
       position: absolute;
       z-index: 999;
       background-color: #ffffff;
       top: $navBar-height + $navBar-border-bottom;
-      right: $navBar-side-width;
+      // right: $navBar-side-width;
+      right: 0;
       max-width: $navBar-side-width;
       width: calc(100% - 60px);
+      width: 100%;
       height: 100%;
       padding: 30px;
 
-      transform: translate($navBar-side-width, 0px);
-      transition-duration: 1s;
+      transition: transform 1s ease-in-out;
 
       display: flex;
       flex-direction: column;

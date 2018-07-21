@@ -43,7 +43,7 @@ const NavBar = ({ mode, navBarOpen, searchBarOpen }) => {
             <Fragment>
               <div className="navNavigator" />
               {
-                navBarOpen && <div className="dimmer" />
+                navBarOpen && <div className="dimmer" onClick={openNavBar} />
               }
               <button className="navBarOpener" onClick={openNavBar} type="button">
                 {
@@ -54,7 +54,7 @@ const NavBar = ({ mode, navBarOpen, searchBarOpen }) => {
                   )
                 }
               </button>
-              <div className={`navBarSide ${navBarOpen ? 'navBarOpen' : null}`}>
+              <div className={`navBarSide ${navBarOpen ? 'navBarOpen' : 'navBarClose'}`} onClick={openNavBar}>
                 <SearchBar className="fullWidth" />
                 <div className="navBarSideMenu">
                   <img src="/image/icon/ico-all-menu.svg" alt="menu" />

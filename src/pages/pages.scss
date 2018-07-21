@@ -1,8 +1,14 @@
-$mobile-width: 800px;
+$mobile_width: 800px;
+$navBar_height: 85px;
+$footer_height: 100px;
+$footer-margin-height: 50px;
 
 .layout {
   width: 100%;
+  min-height: calc(100vh - 235px);
+
   display: flex;
+  align-items: flex-start;
   justify-content: center;
   overflow: hidden;
 

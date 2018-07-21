@@ -7,6 +7,7 @@ const mapStateToProps = ({ blockchain, global }) => ({
   txList: blockchain.txList,
   txsFromBlock: blockchain.txsFromBlock,
   medState: blockchain.medState,
+
   mode: global.mode,
 });
 

@@ -12,7 +12,7 @@ const Accounts = () => (
       <AccountList />
     </div>
     <div className="accountsNavigation">
-      <Navigation type="account" />
+      <Navigation type="accounts" />
     </div>
   </Fragment>
 );

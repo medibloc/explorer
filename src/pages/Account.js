@@ -3,6 +3,7 @@ import React from 'react';
 import PageInfo from '../components/PageInfo';
 import AccountContainer from '../components/Account';
 import TxList from '../components/TxList';
+import Navigation from '../components/Navigation';
 import { subjectDistinguisher } from '../lib';
 
 
@@ -24,6 +25,9 @@ const Account = ({ location }) => {
       <div className="blockDetailTx">
         <PageInfo title="transactions-list" />
         <TxList type="account" />
+      </div>
+      <div className="contentNavigation">
+        <Navigation type="account" />
       </div>
     </div>
   );

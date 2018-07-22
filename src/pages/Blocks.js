@@ -12,7 +12,7 @@ const Blocks = () => (
       <BlockList />
     </div>
     <div className="blocksNavigation">
-      <Navigation type="block" />
+      <Navigation type="blocks" />
     </div>
   </Fragment>
 );

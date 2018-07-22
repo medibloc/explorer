@@ -39,13 +39,23 @@ class Navigation extends Component {
   }
 
   lastPage() {
-    const { last, type, accounts } = this.props;
+    const {
+      last,
+      type,
+      accounts,
+      txList,
+    } = this.props;
+
     switch (type) {
-      case 'account':
+      case 'accounts':
         return Math.ceil(accounts.length / contentsInPage);
-      case 'block':
+      case 'account':
+        return Math.ceil(txList.length / contentsInPage);
+      case 'blocks':
         return Math.ceil((last - 1) / contentsInPage);
-      case 'tx':
+      case 'block':
+        return Math.ceil(txList.length / contentsInPage);
+      case 'txs':
         return 1;
       default:
         return 1;

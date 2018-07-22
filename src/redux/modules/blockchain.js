@@ -10,7 +10,7 @@ import {
   subscriber,
   txGetter,
 } from '../helpers/blockchain';
-import sorter from '../../lib/sorting';
+import { sorter } from '../../lib';
 
 
 // ACTION TYPES
@@ -77,7 +77,7 @@ const reducer = handleActions({
 
   [GET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload }),
   [GET_ACCOUNTS]: (state, action) => ({ ...state, accounts: sorter(action.payload.accounts, 'balance') }),
-  [GET_ACCOUNT_DETAIL]: (state, action) => ({ ...state, txList: action.payload.transactions }),
+  [GET_ACCOUNT_DETAIL]: (state, action) => ({ ...state, txList: sorter(action.payload.transactions, 'timestamp') }),
   [SET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload }),
 
   [GET_BLOCK]: (state, action) => ({ ...state, block: action.payload }),
@@ -101,7 +101,7 @@ const reducer = handleActions({
 
   [GET_EXECUTED_TX]: (state, action) => ({
     ...state,
-    txs: [...state.txs, action.payload].slice(0, 5)
+    txs: [...state.txs, action.payload].slice(0, 5),
   }),
   [GET_PENDING_TX]: (state, action) => ({
     ...state,
@@ -109,7 +109,10 @@ const reducer = handleActions({
   }),
   [GET_TX]: (state, action) => ({ ...state, tx: action.payload }),
   [SET_TX]: (state, action) => ({ ...state, tx: action.payload }),
-  [SET_TXS]: (state, action) => ({ ...state, txList: action.payload }),
+  [SET_TXS]: (state, action) => ({
+    ...state,
+    txList: sorter(action.payload, 'timestamp', -1),
+  }),
 
   [SUBSCRIBE]: state => ({ ...state, subscribe: true }),
 

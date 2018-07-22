@@ -2,7 +2,7 @@ import accountMapper from './accountMapper';
 import blockMapper from './blockMapper';
 import subjectDistinguisher from './subjectDistinguisher';
 import spaceMapper from './spaceMapper';
-import sorting from './sorting';
+import sorter from './sorter';
 import timeConverter from './timeConverter';
 import timezoneMatcher from './timezoneMatcher';
 import txMapper from './txMapper';
@@ -12,7 +12,7 @@ export {
   blockMapper,
   subjectDistinguisher,
   spaceMapper,
-  sorting,
+  sorter,
   timeConverter,
   timezoneMatcher,
   txMapper,

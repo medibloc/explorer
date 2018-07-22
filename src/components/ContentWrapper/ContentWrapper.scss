@@ -2,7 +2,7 @@
   height: 100px;
   width: 100%;
   overflow: hidden;
-  box-sizing: border-box;
+
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -55,6 +55,7 @@
 
     img {
       display: none;
+      margin-bottom: 5px;
     }
 
     span {
@@ -79,11 +80,12 @@
   }
 
   .contentWrapperInfoContent {
-    // max-width: 290px;
-    width: auto;
     font-size: 12px;
     line-height: 1.67;
     color: #75777b;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 
     span {
       text-overflow: ellipsis;

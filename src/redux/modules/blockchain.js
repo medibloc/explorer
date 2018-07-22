@@ -87,7 +87,7 @@ const reducer = handleActions({
   [GET_TAIL_BLOCK]: (state, action) => ({
     ...state,
     tailBlock: action.payload,
-    blocks: sorter([...state.blocks, action.payload], 'height'),
+    blocks: sorter([...state.blocks, action.payload], 'height').slice(0,5),
     txsFromBlock: action.payload.transactions ? (
       [...action.payload.transactions, ...state.txsFromBlock]
     ) : (

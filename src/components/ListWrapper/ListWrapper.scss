@@ -38,6 +38,10 @@
     align-items: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
+    &:hover {
+      background: rgba(57, 127, 244, 0.05);
+    }
+
     * {
       text-decoration: none;
       text-overflow: ellipsis;

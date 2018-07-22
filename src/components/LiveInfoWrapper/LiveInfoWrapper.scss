@@ -24,21 +24,33 @@ $tablet-width: 800px;
       color: #0b0b0b;
     }
 
+    & a {
+      text-decoration: none;
+
+      display: flex;
+      align-items: flex-end;
+    }
+
     & button {
       border: none;
       font-size: 16px;
       font-weight: 500;
       line-height: 1.25;
       color: #0b0b0b;
+
+      &:hover {
+        cursor: pointer;
+        color: #397ff4;
+      }
     }
   }
 
   .liveInfoWrapperContentBox {
     width: 100%;
-    height: 525px;
+    height: 510px;
     opacity: 0.7;
     background-color: #f4f4f4;
-    overflow-y: scroll;
+    overflow-y: hidden;
   }
 }
 

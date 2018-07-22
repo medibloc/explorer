@@ -44,6 +44,13 @@
       overflow: hidden;
       white-space: nowrap;
       line-height: 2.56;
+
+      button {
+        padding-left: 0px;
+        vertical-align: middle;
+        border: none;
+        outline: none;
+      }
     }
   }
 }

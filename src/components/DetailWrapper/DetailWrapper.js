@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
+import { GlobalActions } from '../../redux/actionCreators';
+
 import './DetailWrapper.scss';
 
 
@@ -38,6 +40,19 @@ const DetailWrapper = ({ data, type }) => {
               if (linkList[i].includes(title)) {
                 return (
                   <span key={title}>
+                    {
+                      (title === 'From' || title === 'To') && (
+                        <button
+                          type="button"
+                          onClick={() => GlobalActions.openModal({ modalData: data[title], modalType: 'QrCode' })}
+                        >
+                          <img
+                            src="/image/icon/ico-qr.png"
+                            alt="qr"
+                          />
+                        </button>
+                      )
+                    }
                     <NavLink to={`/${linkList[i].split('/')[0]}/${data[title]}`}>
                       {data[title]}
                     </NavLink>

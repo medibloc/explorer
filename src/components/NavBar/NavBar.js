@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import NavList from './NavList';
+import Modal from '../Modal';
 import Language from '../Language';
 import LanguageBox from '../Language/LanguageBox';
 import SearchBar from '../SearchBar/SearchBar';
@@ -21,6 +22,7 @@ const NavBar = ({ currentUrl, mode, navBarOpen, searchBarOpen }) => {
 
   return (
     <div className="navBar">
+      <Modal />
       <div className="navBarContainer">
         <div className="navBarLogo">
           <NavLink to="/">

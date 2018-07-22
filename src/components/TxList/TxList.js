@@ -3,11 +3,13 @@ import React, { Component } from 'react';
 import ListWrapper from '../ListWrapper';
 import { spaceMapper, txMapper } from '../../lib';
 import { GlobalActions } from '../../redux/actionCreators';
+import { contentsInPage } from '../../config';
 
 import './TxList.scss';
 
 
-const mappedTxList = (txs) => {
+const mappedTxList = (txs, page) => {
+  txs = txs.slice((page - 1) * contentsInPage, page * contentsInPage);
   const txList = [];
   txs.forEach(tx => txList.push(txMapper(tx)));
   return txList;
@@ -51,6 +53,7 @@ class TxList extends Component {
       spacing,
       data,
       type,
+      page,
     } = this.props;
     const titles = type ? titleList[type] : [];
     const spaces = type ? spaceList[type] : [];
@@ -61,14 +64,14 @@ class TxList extends Component {
           mode !== 2 ? (
             <ListWrapper
               titles={titles}
-              data={mappedTxList(txList)}
+              data={mappedTxList(txList, page)}
               spacing={spaceMapper(spaces)}
               linkTo={['tx/hash', 'acc/from', 'acc/to']}
             />
           ) : (
             <ListWrapper
               titles={['Transaction Hash']}
-              data={mappedTxList(txList)}
+              data={mappedTxList(txList, page)}
               spacing={spaceMapper([1])}
               linkTo={['tx/hash']}
             />

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ContentWrapper from '../ContentWrapper';
-import { blockMapper, txMapper, accountMapper } from '../../lib';
+import { blockMapper, txMapper, accountMapper, timeConverter } from '../../lib';
 
 import './TableWithIcon.scss';
 
@@ -34,14 +34,19 @@ const TableWithIcon = ({ type, data }) => {
   return (
     <div className="blocks">
       {
-        dataList.map((data, i) => (
-          <ContentWrapper
-            type={type}
-            data={data}
-            titles={titleList}
-            key={i}
-          />
-        ))
+        dataList.map((datum, i) => {
+          const d = Object.assign({}, datum, {
+            'Time Stamp': timeConverter(datum['Time Stamp']),
+          });
+          return (
+            <ContentWrapper
+              type={type}
+              data={d}
+              titles={titleList}
+              key={i}
+            />
+          );
+        })
       }
     </div>
   );

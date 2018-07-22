@@ -1,7 +1,15 @@
 const timeConverter = (time) => {
   // Incase that time unit is "ms"
-  if (time.toString().length === 13) time = Math.floor(time / 1000);
-  const timeGap = Math.floor(Date.now() / 1000) - time;
+  let timeString = time;
+  switch (typeof time) {
+    case 'string':
+      timeString = parseInt(time, 10);
+      break;
+    default:
+      break;
+  }
+  if (timeString.toString().length === 13) timeString = Math.floor(time / 1000);
+  const timeGap = Math.floor(Date.now() / 1000) - timeString;
 
   switch (true) {
     case (timeGap < 0):

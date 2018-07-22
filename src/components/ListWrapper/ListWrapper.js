@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
+import { timeConverter } from '../../lib';
+
 import './ListWrapper.scss';
 
 
@@ -22,12 +24,15 @@ const linkDistributor = (datum, titles, linkTo = [], spacing) => titles.map((tit
   });
 
   if (!content) {
+    const d = Object.assign({}, datum, {
+      'Time Stamp': timeConverter(datum['Time Stamp']),
+    });
     content = (
       <span
         style={{ width: `${spacing[i]}%` }}
         key={title}
       >
-        {datum[title]}
+        {d[title]}
       </span>
     );
   }

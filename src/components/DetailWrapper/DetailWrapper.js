@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { GlobalActions } from '../../redux/actionCreators';
+import { timezoneMatcher } from '../../lib';
 
 import './DetailWrapper.scss';
 
@@ -54,7 +55,7 @@ const DetailWrapper = ({ data, type }) => {
                       )
                     }
                     <NavLink to={`/${linkList[i].split('/')[0]}/${data[title]}`}>
-                      {data[title]}
+                      { data[title] }
                     </NavLink>
                   </span>
                 );
@@ -62,7 +63,13 @@ const DetailWrapper = ({ data, type }) => {
             }
             return (
               <span key={title}>
-                {data[title]}
+                {
+                  title === 'Time Stamp' ? (
+                    timezoneMatcher(data[title])
+                  ) : (
+                    data[title]
+                  )
+                }
               </span>
             );
           })

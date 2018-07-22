@@ -4,6 +4,7 @@ import subjectDistinguisher from './subjectDistinguisher';
 import spaceMapper from './spaceMapper';
 import sorting from './sorting';
 import timeConverter from './timeConverter';
+import timezoneMatcher from './timezoneMatcher';
 import txMapper from './txMapper';
 
 export {
@@ -13,5 +14,6 @@ export {
   spaceMapper,
   sorting,
   timeConverter,
+  timezoneMatcher,
   txMapper,
 };

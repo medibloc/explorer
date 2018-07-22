@@ -71,21 +71,21 @@ const distributor = (datum, actionTypes) => {
         type: actionTypes.GET_EXECUTED_TX,
         payload: data,
       };
-    case LIB:
-      return {
-        type: actionTypes.GET_LIB,
-        payload: data,
-      };
-    case PENDING_TX:
-      return {
-        type: actionTypes.GET_PENDING_TX,
-        payload: data,
-      };
-    case REVERT_BLOCK:
-      return {
-        type: actionTypes.GET_REVERT_BLOCK,
-        payload: data,
-      };
+    // case LIB:
+    //   return {
+    //     type: actionTypes.GET_LIB,
+    //     payload: data,
+    //   };
+    // case PENDING_TX:
+    //   return {
+    //     type: actionTypes.GET_PENDING_TX,
+    //     payload: data,
+    //   };
+    // case REVERT_BLOCK:
+    //   return {
+    //     type: actionTypes.GET_REVERT_BLOCK,
+    //     payload: data,
+    //   };
     case TAIL_BLOCK:
       return {
         type: actionTypes.GET_TAIL_BLOCK,
@@ -110,7 +110,7 @@ export const subscriber = (dispatch, actionTypes, ERROR) => {
       });
       if (data.restart === true) {
         req.abort();
-        return subscriber(dispatch, actionTypes);
+        return subscriber(dispatch, actionTypes, ERROR);
       }
     }
 
@@ -123,9 +123,9 @@ export const subscriber = (dispatch, actionTypes, ERROR) => {
   req.send(JSON.stringify({
     topics: [
       EXECUTED_TX,
-      LIB,
-      PENDING_TX,
-      REVERT_BLOCK,
+      // LIB,
+      // PENDING_TX,
+      // REVERT_BLOCK,
       TAIL_BLOCK,
     ],
   }));

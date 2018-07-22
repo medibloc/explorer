@@ -40,9 +40,9 @@ const ERROR = 'blockchain/ERROR';
 
 const subsribeTypes = {
   GET_EXECUTED_TX,
-  GET_LIB,
-  GET_PENDING_TX,
-  GET_REVERT_BLOCK,
+  // GET_LIB,
+  // GET_PENDING_TX,
+  // GET_REVERT_BLOCK,
   GET_TAIL_BLOCK,
 };
 
@@ -90,7 +90,7 @@ const reducer = handleActions({
   [GET_TAIL_BLOCK]: (state, action) => ({
     ...state,
     tailBlock: action.payload,
-    blocks: sorter([...state.blocks, action.payload], 'height').slice(0,5),
+    blocks: sorter([...state.blocks, action.payload], 'height').slice(0, 5),
     txsFromBlock: action.payload.transactions ? (
       [...action.payload.transactions, ...state.txsFromBlock]
     ) : (
@@ -99,7 +99,10 @@ const reducer = handleActions({
   }),
   [SET_BLOCK]: (state, action) => ({ ...state, block: action.payload }),
 
-  [GET_EXECUTED_TX]: (state, action) => ({ ...state, txs: [...state.txs, action.payload] }),
+  [GET_EXECUTED_TX]: (state, action) => ({
+    ...state,
+    txs: [...state.txs, action.payload].slice(0, 5)
+  }),
   [GET_PENDING_TX]: (state, action) => ({
     ...state,
     pendingTxs: [...state.pendingTxs, action.payload],

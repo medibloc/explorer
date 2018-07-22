@@ -18,7 +18,7 @@ const blockMapper = (block) => {
     'Prev Hash': block.parent_hash,
     'No.Tx': block.transactions.length,
     BP: block.coinbase,
-    Amount: amount,
+    Amount: `${amount.toLocaleString()} MED`,
   };
 };
 

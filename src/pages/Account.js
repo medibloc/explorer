@@ -10,11 +10,9 @@ const Account = ({ location }) => {
   const subject = location.pathname.split('/')[2];
   const type = subjectDistinguisher(subject);
 
-  let AccountWrapper = null;
+  let AccountWrapper = <AccountContainer />;
   if (type === 'account') {
     AccountWrapper = <AccountContainer address={subject} />;
-  } else {
-    AccountWrapper = <AccountContainer />;
   }
 
   return (

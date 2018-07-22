@@ -10,15 +10,12 @@ const Block = ({ location }) => {
   const subject = location.pathname.split('/')[2];
   const type = subjectDistinguisher(subject);
 
-  let BlockWrapper = null;
+  let BlockWrapper = <BlockContainer />;
   if (type === 'hash') {
     BlockWrapper = <BlockContainer hash={subject} />;
   } else if (type === 'height') {
     BlockWrapper = <BlockContainer height={subject} />;
-  } else {
-    BlockWrapper = <BlockContainer />;
   }
-
 
   return (
     <div className="block">

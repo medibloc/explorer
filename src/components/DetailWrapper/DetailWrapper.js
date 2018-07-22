@@ -12,7 +12,7 @@ const titles = {
 
 const linkTo = {
   block: ['block/Prev Hash', 'account/BP'],
-  tx: [],
+  tx: ['account/From', 'account/To'],
   account: [],
 };
 

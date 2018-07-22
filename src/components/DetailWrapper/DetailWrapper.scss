@@ -35,13 +35,15 @@
 
   .detailWrapperValue {
     flex: 1;
+    overflow: hidden;
 
     span {
       padding-left: 27px;
       color: #75777b;
-
-      display: flex;
-      align-items: center;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      line-height: 2.56;
     }
   }
 }

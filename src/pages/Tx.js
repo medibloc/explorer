@@ -6,14 +6,12 @@ import { subjectDistinguisher } from '../lib';
 
 
 const Tx = ({ location }) => {
-  const subject = location.pathname.split('/')[1];
+  const subject = location.pathname.split('/')[2];
   const type = subjectDistinguisher(subject);
 
-  let TxWrapper = null;
+  let TxWrapper = <TxContainer />;
   if (type === 'hash') {
     TxWrapper = <TxContainer hash={subject} />;
-  } else {
-    TxWrapper = <TxContainer />;
   }
 
   return (

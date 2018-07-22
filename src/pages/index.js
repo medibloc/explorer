@@ -61,7 +61,7 @@ class Pages extends Component {
                   <Route path="/block" component={Block} />
                   <Route exact path="/blocks" component={Blocks} />
                   <Route exact path="/bp" component={BP} />
-                  <Route exact path="/tx" component={Tx} />
+                  <Route path="/tx" component={Tx} />
                   <Route exact path="/txs" component={Txs} />
                 </Layout>
               </Switch>

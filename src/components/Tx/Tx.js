@@ -5,35 +5,24 @@ import { txMapper } from '../../lib';
 import { BlockchainActions, WidgetActions as w } from '../../redux/actionCreators';
 
 
-const txPicker = (pool, hash) => {
-  let tx = null;
-  pool.forEach((tr) => {
-    if (tr.hash === hash) tx = tr;
-  });
-  return tx;
-};
+// const txPicker = (pool, hash) => {
+//   let tx = null;
+//   pool.forEach((tr) => {
+//     if (tr.hash === hash) tx = tr;
+//   });
+//   return tx;
+// };
 
 class Tx extends Component {
   componentWillMount() {
-    const {
-      hash,
-      txList,
-      txs,
-    } = this.props;
-    let tx = txPicker(txList, hash);
-    if (!tx) tx = txPicker(txs, hash);
-    if (!tx) {
-      if (!hash) throw new Error('Invalid tx info');
-
-      w.loader(BlockchainActions.getTx(hash));
-    }
-    if (tx) BlockchainActions.setTx(tx);
+    const { hash } = this.props;
+    w.loader(BlockchainActions.getTx(hash));
   }
 
   render() {
-    const { tx, loading } = this.props;
+    const { tx } = this.props;
 
-    return loading ? (
+    return !tx ? (
       <div>
         LOADING
       </div>

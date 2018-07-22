@@ -4,7 +4,7 @@ import LiveTxs from './LiveTxs';
 
 
 const mapStateToProps = ({ blockchain }) => ({
-  txsFromBlock: blockchain.txsFromBlock,
+  txs: blockchain.txs,
 });
 
 export default connect(mapStateToProps)(LiveTxs);

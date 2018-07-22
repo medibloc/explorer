@@ -9,15 +9,19 @@ import './TxList.scss';
 
 const mappedTxList = (txs) => {
   const txList = [];
-  txs.forEach(tx => {
-    console.log(tx.timestamp)
-    txList.push(txMapper(tx))
-
-  });
+  txs.forEach(tx => txList.push(txMapper(tx)));
   return txList;
 };
 
-const titles = ['Transaction Hash', 'Time Stamp', 'From', 'To', 'Amount'];
+const titleList = {
+  account: ['Transaction Hash', 'Time Stamp', 'From', 'To', 'Amount'],
+  block: ['Transaction Hash', 'From', 'To', 'Amount'],
+};
+
+const spaceList = {
+  account: [2, 1, 2, 2, 1],
+  block: [2, 2, 2, 1],
+};
 
 class TxList extends Component {
   constructor(props) {
@@ -40,7 +44,17 @@ class TxList extends Component {
   }
 
   render() {
-    const { mode, txList, linkTo, spacing, data } = this.props;
+    const {
+      mode,
+      txList,
+      linkTo,
+      spacing,
+      data,
+      type,
+    } = this.props;
+    const titles = type ? titleList[type] : [];
+    const spaces = type ? spaceList[type] : [];
+
     return (
       <div className="txList">
         {
@@ -48,15 +62,15 @@ class TxList extends Component {
             <ListWrapper
               titles={titles}
               data={mappedTxList(txList)}
-              spacing={spaceMapper([2, 2, 2, 2, 1])}
-              linkTo={["tx/hash", "acc/from", "acc/to"]}
+              spacing={spaceMapper(spaces)}
+              linkTo={['tx/hash', 'acc/from', 'acc/to']}
             />
           ) : (
             <ListWrapper
               titles={['Transaction Hash']}
               data={mappedTxList(txList)}
               spacing={spaceMapper([1])}
-              linkTo={["tx/hash"]}
+              linkTo={['tx/hash']}
             />
           )
         }

@@ -5,7 +5,7 @@ import './NavList.scss';
 
 
 const NavList = ({ pages, currentUrl }) => pages.map((page) => {
-  const PAGE = page.toLowerCase();
+  const PAGE = page === 'Transaction' ? 'tx' : page.toLowerCase();
   return (
     <div key={page}>
       <NavLink

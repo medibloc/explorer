@@ -9,11 +9,15 @@ import './TxList.scss';
 
 const mappedTxList = (txs) => {
   const txList = [];
-  txs.forEach(tx => txList.push(txMapper(tx)));
+  txs.forEach(tx => {
+    console.log(tx.timestamp)
+    txList.push(txMapper(tx))
+
+  });
   return txList;
 };
 
-const titles = ['Transaction Hash', 'From', 'To', 'Amount'];
+const titles = ['Transaction Hash', 'Time Stamp', 'From', 'To', 'Amount'];
 
 class TxList extends Component {
   constructor(props) {
@@ -44,7 +48,7 @@ class TxList extends Component {
             <ListWrapper
               titles={titles}
               data={mappedTxList(txList)}
-              spacing={spaceMapper([2, 2, 2, 1])}
+              spacing={spaceMapper([2, 2, 2, 2, 1])}
               linkTo={["tx/hash", "acc/from", "acc/to"]}
             />
           ) : (

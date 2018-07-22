@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 
 import {
   accGetter,
+  accDetailGetter,
   accsGetter,
   blockGetter,
   blocksGetter,
@@ -17,6 +18,7 @@ const GET_MED_STATE = 'blockchain/GET_MED_STATE';
 
 const GET_ACCOUNT = 'blockchain/GET_ACCOUNT';
 const GET_ACCOUNTS = 'blockchain/GET_ACCOUNTS';
+const GET_ACCOUNT_DETAIL = 'blockchain/GET_ACCOUNT_DETAIL';
 const SET_ACCOUNT = 'blockchain/SET_ACCOUNT';
 
 const GET_BLOCK = 'blockchain/GET_BLOCK';
@@ -75,6 +77,7 @@ const reducer = handleActions({
 
   [GET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload }),
   [GET_ACCOUNTS]: (state, action) => ({ ...state, accounts: sorter(action.payload.accounts, 'balance') }),
+  [GET_ACCOUNT_DETAIL]: (state, action) => ({ ...state, txList: action.payload.transactions }),
   [SET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload }),
 
   [GET_BLOCK]: (state, action) => ({ ...state, block: action.payload }),
@@ -113,6 +116,12 @@ const reducer = handleActions({
 
 // ACTION CREATORS
 export const getAccount = address => dispatch => accGetter(dispatch, GET_ACCOUNT, ERROR, address);
+export const getAccountDetail = address => dispatch => accDetailGetter(
+  dispatch,
+  GET_ACCOUNT_DETAIL,
+  ERROR,
+  address,
+);
 export const getAccounts = () => dispatch => accsGetter(dispatch, GET_ACCOUNTS, ERROR);
 export const getBlock = hash => dispatch => blockGetter(dispatch, GET_BLOCK, ERROR, hash);
 export const getBlocks = ({ from, to }) => dispatch => blocksGetter(

@@ -17,7 +17,9 @@ class Account extends Component {
       }
     }
     if (!accFound) BlockchainActions.getAccount(address);
+    BlockchainActions.getAccountDetail(address);
   }
+
 
   render() {
     const { account, loading } = this.props;

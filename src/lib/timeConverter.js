@@ -1,5 +1,8 @@
 const timeConverter = (time) => {
+  // Incase that time unit is "ms"
+  if (time.toString().length === 13) time = Math.floor(time / 1000);
   const timeGap = Math.floor(Date.now() / 1000) - time;
+
   switch (true) {
     case (timeGap < 0):
       return '0 sec ago';

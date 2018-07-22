@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 
+import QrCode from '../QrCode';
 import { GlobalActions } from '../../redux/actionCreators';
 
 import './Modal.scss';
@@ -8,7 +9,16 @@ import './Modal.scss';
 
 Modal.setAppElement('#root');
 
-const ModalContainer = ({ children, modalOpen }) => (
+const modalContent = (type, data) => {
+  switch (type) {
+    case 'QrCode':
+      return <QrCode data={data} />;
+    default:
+      return <div />;
+  }
+};
+
+const ModalContainer = ({ modalOpen, modalType, modalData }) => (
   <div className="modal">
     <Modal
       className="modalContent"
@@ -17,7 +27,7 @@ const ModalContainer = ({ children, modalOpen }) => (
       onRequestClose={GlobalActions.openModal}
       shouldCloseOnOverlayClick={true}
     >
-      {children}
+      { modalContent(modalType, modalData) }
     </Modal>
   </div>
 );

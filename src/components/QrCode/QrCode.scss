@@ -1,0 +1,41 @@
+.qrCode {
+  width: 500px;
+  height: 330px;
+  border-radius: 4px;
+  background-color: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+
+  .qrCodeTitle {
+    height: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.8px;
+    color: #0b0b0b;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    button {
+      border: none;
+    }
+  }
+
+  .qrCodeContent {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    #qrCanvas {
+      width: 233px !important;
+      height: 233px !important;
+    }
+  }
+}

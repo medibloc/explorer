@@ -8,6 +8,7 @@
     "immutable": "^3.8.2",
     "jsonic": "^0.3.0",
     "node-sass": "^4.9.2",
+    "qrcode": "^1.2.0",
     "react": "^16.4.1",
     "react-collapse": "^4.0.3",
     "react-dom": "^16.4.1",

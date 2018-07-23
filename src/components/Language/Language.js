@@ -16,7 +16,11 @@ const Language = ({ language, languageOpen, mode }) => (
       { countryName[language] }
     </button>
     <img src="/image/icon/triangle.svg" alt="opener" />
-    <Collapse className="languageHamburger" isOpened={languageOpen}>
+    <Collapse
+      className="languageHamburger"
+      isOpened={languageOpen}
+      springConfig={{ stiffness: 100, damping: 10 }}
+    >
       <LanguageBox />
     </Collapse>
   </div>

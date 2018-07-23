@@ -1,7 +1,7 @@
 $tablet-width: 800px;
 
 .liveTickerWrapper {
-  margin: 30px;
+  margin: 30px auto;
 
   display: flex;
   flex-direction: column;
@@ -35,7 +35,12 @@ $tablet-width: 800px;
       align-self: center;
     }
     .liveTickerWrapperContent {
-      font-size: 30px;
+      padding: 5px;
+      font-size: 26px;
+
+      .liveTickerWrapperContentSuffix {
+        font-size: 24px;
+      }
     }
   }
 }

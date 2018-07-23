@@ -10,7 +10,11 @@ const SearchBar = ({ type, searchBarOpen }) => {
   return (
     <div className="searchBar" id={type}>
       <div className="searchBarSearch">
-        <input placeholder="Enter Address, Tx hash, BLock Height" onChange={e => setSearchText(e.target.value)} />
+        <input
+          placeholder="Enter Address, Tx hash, BLock Height"
+          onChange={e => setSearchText(e.target.value)}
+          disabled
+        />
         <div className="searchBarIcon">
           <img src={`/image/icon/ico-search-s${type ? '' : '-black'}.svg`} alt="searchLogo" />
         </div>

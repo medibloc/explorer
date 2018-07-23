@@ -14,7 +14,7 @@ $footer-margin-height: 50px;
 
   .layoutInner {
     box-sizing: border-box;
-    max-width: 1200px;
+    max-width: 1260px;
     width: 100%;
     padding-left: 30px;
     padding-right: 30px;
@@ -90,10 +90,11 @@ $footer-margin-height: 50px;
     align-items: center;
 
     & > div {
-      margin: 20px
+
     }
 
     .verticalLine {
+      margin: 40px 40px 0px 40px;
       height: 500px;
     }
   }

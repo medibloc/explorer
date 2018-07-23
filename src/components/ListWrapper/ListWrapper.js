@@ -25,7 +25,7 @@ const linkDistributor = (datum, titles, linkTo = [], spacing) => titles.map((tit
 
   if (!content) {
     const d = Object.assign({}, datum, {
-      'Time Stamp': timeConverter(datum['Time Stamp']),
+      'Time Stamp': datum['Time Stamp'] && timeConverter(datum['Time Stamp']),
     });
     content = (
       <span

@@ -101,7 +101,7 @@ const reducer = handleActions({
 
   [GET_EXECUTED_TX]: (state, action) => ({
     ...state,
-    txs: [...state.txs, action.payload].slice(0, 5),
+    txs: sorter([...state.txs, action.payload].slice(0, 5), 'timestamp'),
   }),
   [GET_PENDING_TX]: (state, action) => ({
     ...state,

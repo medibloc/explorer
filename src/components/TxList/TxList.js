@@ -66,7 +66,7 @@ class TxList extends Component {
               titles={titles}
               data={mappedTxList(txList, page)}
               spacing={spaceMapper(spaces)}
-              linkTo={['tx/hash', 'acc/from', 'acc/to']}
+              linkTo={['tx/hash', 'account/from', 'account/to']}
             />
           ) : (
             <ListWrapper

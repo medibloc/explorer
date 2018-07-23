@@ -13,10 +13,10 @@ export const subscribeMaxResponse = 4;
 export const navigationDisplay = 5;
 
 // LANGUAGE
-export const countryList = ['ko', 'en', 'ja', 'cn'];
+export const countryList = ['ko', 'en', 'ja', 'zh'];
 export const countryName = {
   ko: '대한민국',
   en: 'United States',
   ja: '日本',
-  cn: '中國',
+  zh: '中國',
 };

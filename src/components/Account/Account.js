@@ -6,8 +6,35 @@ import { BlockchainActions } from '../../redux/actionCreators';
 
 
 class Account extends Component {
-  componentWillMount() {
-    const { address, accounts } = this.props;
+  constructor(props) {
+    super(props);
+    this.callAccount = this.callAccount.bind(this);
+  }
+
+  componentDidMount() {
+    this.callAccount();
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const { address, account } = this.props;
+    if (address !== nextProps.address) {
+      this.callAccount(nextProps);
+      return true;
+    }
+    if (account !== nextProps.account) {
+      return true;
+    }
+    return false;
+  }
+
+  callAccount(nextProps) {
+    let { address } = this.props;
+    const { accounts } = this.props;
+    if (nextProps) {
+      address = nextProps.address;
+    }
+    console.log(address)
+
     let accFound = false;
     for (let i = 0; i < accounts.length; i += 1) {
       if (accounts[i].address === address) {
@@ -22,16 +49,10 @@ class Account extends Component {
 
 
   render() {
-    const { account, loading } = this.props;
-
-    return account === null || loading ? (
-      <div>
-        LOADING
-      </div>
-    ) : (
-      <div>
-        <DetailWrapper data={accountMapper(account)} type="account" />
-      </div>
+    const { account } = this.props;
+    console.log(account)
+    return account && (
+      <DetailWrapper data={accountMapper(account)} type="account" />
     );
   }
 }

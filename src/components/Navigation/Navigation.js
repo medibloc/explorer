@@ -63,14 +63,10 @@ class Navigation extends Component {
   }
 
   render() {
-    const { page, loading } = this.props;
+    const { page } = this.props;
     const lastPage = this.lastPage();
 
-    return loading ? (
-      <div>
-        LOADING
-      </div>
-    ) : (
+    return (
       <div className="navigation">
         <button onClick={() => moveToPage(1)} type="button">
           {'<<'}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import ContentWrapper from '../../components/ContentWrapper';
+import ContentWrapper from '../ContentWrapper';
 import { BlockchainActions } from '../../redux/actionCreators';
 
 
@@ -13,34 +13,29 @@ class Accounts extends Component {
   }
 
   render() {
-    const { loading, data } = this.props;
+    const { data } = this.props;
 
 
-    return loading ? (
-      <div>
-        LOADING
-      </div>)
-      : (
-        <div className="accounts">
-          {
-            data.map((acc, i) => (
-              <ContentWrapper
-                type="account"
-                data={acc}
-                titles={titles}
-                key={acc.Account}
-              />
-            ))
-          }
-        </div>
-      );
+    return (
+      <div className="accounts">
+        {
+          data.map(acc => (
+            <ContentWrapper
+              type="account"
+              data={acc}
+              titles={titles}
+              key={acc.Account}
+            />
+          ))
+        }
+      </div>
+    );
   }
 }
 
 
-const mapStateToProps = ({ blockchain, widget }) => ({
+const mapStateToProps = ({ blockchain }) => ({
   accounts: blockchain.accounts,
-  loading: widget.loading,
 });
 
 export default connect(mapStateToProps)(Accounts);

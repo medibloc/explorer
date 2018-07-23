@@ -3,12 +3,9 @@ import { connect } from 'react-redux';
 import Block from './Block';
 
 
-const mapStateToProps = ({ blockchain, widget }) => ({
+const mapStateToProps = ({ blockchain }) => ({
   block: blockchain.block,
-  blocks: blockchain.blocks,
-  blockList: blockchain.blockList,
-
-  loading: widget.loading,
+  blockList: blockchain.blockList
 });
 
 export default connect(mapStateToProps)(Block);

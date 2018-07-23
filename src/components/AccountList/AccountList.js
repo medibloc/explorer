@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import ListWrapper from '../ListWrapper';
-import { BlockchainActions, GlobalActions } from '../../redux/actionCreators';
+import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
 import Accounts from '../Accounts';
 import { contentsInPage } from '../../config';
 import { accountMapper, spaceMapper } from '../../lib';
@@ -27,7 +27,7 @@ const linkTo = ['account/account'];
 
 class AccountList extends Component {
   componentWillMount() {
-    BlockchainActions.getAccounts();
+    w.loader(BlockchainActions.getAccounts());
   }
 
   componentWillUnmount() {
@@ -38,17 +38,12 @@ class AccountList extends Component {
   render() {
     const {
       accounts,
-      loading,
       totalSupply,
       page,
       mode,
     } = this.props;
     const accountList = accPicker(accounts, page);
-    return loading ? (
-      <div>
-        LOADING
-      </div>
-    ) : (
+    return (
       mode !== 2 ? (
         <ListWrapper
           titles={titles}
@@ -65,12 +60,12 @@ class AccountList extends Component {
   }
 }
 
-const mapStateToProps = ({ blockchain, global, widget }) => ({
+const mapStateToProps = ({ blockchain, global }) => ({
   accounts: blockchain.accounts,
   totalSupply: blockchain.totalSupply,
+
   page: global.page,
   mode: global.mode,
-  loading: widget.loading,
 });
 
 export default connect(mapStateToProps)(AccountList);

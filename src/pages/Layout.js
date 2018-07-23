@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import { GlobalActions } from '../redux/actionCreators';
+import { withLoading } from '../hoc';
+import { BlockchainActions, GlobalActions } from '../redux/actionCreators';
 
 
 class Layout extends Component {
@@ -29,4 +30,4 @@ class Layout extends Component {
 }
 
 
-export default Layout;
+export default withLoading(Layout);

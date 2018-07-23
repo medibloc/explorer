@@ -53,14 +53,14 @@ class Pages extends Component {
   }
 
   render() {
-    const { isFirstLoad, language } = this.props;
+    const { isFirstLoad, language, loading } = this.props;
     return (
-      <BrowserRouter>
-        <IntlProvider
-          locale={language}
-          messages={locale[language]}
-          textComponent={React.Fragment}
-        >
+      <IntlProvider
+        locale={language}
+        messages={locale[language]}
+        textComponent={React.Fragment}
+      >
+        <BrowserRouter>
           <Fragment>
             <NavBar />
             {
@@ -70,7 +70,7 @@ class Pages extends Component {
                 </div>
               ) : (
                 <Switch>
-                  <Layout>
+                  <Layout loading={loading}>
                     <Route exact path="/" component={Home} />
                     <Route path="/account" component={Account} />
                     <Route exact path="/accounts" component={Accounts} />
@@ -85,8 +85,8 @@ class Pages extends Component {
             }
             <Footer />
           </Fragment>
-        </IntlProvider>
-      </BrowserRouter>
+        </BrowserRouter>
+      </IntlProvider>
     );
   }
 }
@@ -94,6 +94,7 @@ class Pages extends Component {
 const mapStateToProps = ({ global, widget }) => ({
   language: global.language,
 
+  loading: widget.loading,
   isFirstLoad: widget.isFirstLoad,
 });
 

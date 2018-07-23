@@ -46,12 +46,8 @@ class Block extends Component {
       height = this.props.height;
     }
 
-    const {
-      blockList,
-      blocks,
-    } = this.props;
-    let block = blockPicker(blockList, { hash, height });
-    if (!block) block = blockPicker(blocks, { hash, height });
+    const { blockList } = this.props;
+    const block = blockPicker(blockList, { hash, height });
     if (!block) {
       let subject = null;
       if (height) subject = height;
@@ -71,12 +67,8 @@ class Block extends Component {
   }
 
   render() {
-    const { block, loading } = this.props;
-    return !block ? (
-      <div>
-        LOADING
-      </div>
-    ) : (
+    const { block } = this.props;
+    return block && (
       <DetailWrapper data={blockMapper(block)} type="block" />
     );
   }

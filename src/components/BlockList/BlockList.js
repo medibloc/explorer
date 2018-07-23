@@ -52,12 +52,8 @@ class BlockList extends Component {
   }
 
   render() {
-    const { blockList, loading, mode } = this.props;
-    return loading ? (
-      <div>
-        LOADING
-      </div>
-    ) : (
+    const { blockList, mode } = this.props;
+    return (
       mode !== 2 ? (
         <ListWrapper
           titles={titles}

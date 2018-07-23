@@ -22,11 +22,7 @@ class Tx extends Component {
   render() {
     const { tx } = this.props;
 
-    return !tx ? (
-      <div>
-        LOADING
-      </div>
-    ) : (
+    return tx && (
       <DetailWrapper data={txMapper(tx)} type="tx" />
     );
   }

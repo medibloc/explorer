@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 
+import Loading from '../Loading';
 import QrCode from '../QrCode';
 import { GlobalActions } from '../../redux/actionCreators';
 
@@ -13,6 +14,8 @@ const modalContent = (type, data) => {
   switch (type) {
     case 'QrCode':
       return <QrCode data={data} />;
+    case 'Loading':
+      return <Loading />;
     default:
       return <div />;
   }

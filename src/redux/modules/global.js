@@ -9,6 +9,7 @@ const SET_SEARCH_TEXT = 'global/SET_SEARCH_TEXT';
 const OPEN_LANGUAGE = 'global/OPEN_LANGUAGE';
 const OPEN_NAVBAR = 'global/OPEN_NAVBAR';
 
+const CLOSE_MODAL = 'global/CLOSE_MODAL';
 const OPEN_MODAL = 'global/OPEN_MODAL';
 
 const CHANGE_LANGUAGE = 'global/CHANGE_LANGUAGE';
@@ -64,11 +65,15 @@ const reducer = handleActions({
   [OPEN_LANGUAGE]: state => ({ ...state, languageOpen: !state.languageOpen }),
   [OPEN_NAVBAR]: state => ({ ...state, navBarOpen: !state.navBarOpen }),
 
+  [CLOSE_MODAL]: state => ({
+    ...state,
+    modalOpen: false,
+  }),
   [OPEN_MODAL]: (state, action) => ({
     ...state,
-    modalData: action.payload.modalData,
-    modalOpen: !state.modalOpen,
-    modalType: action.payload.modalType,
+    modalData: action.payload && action.payload.modalData,
+    modalOpen: true,
+    modalType: action.payload && action.payload.modalType,
   }),
 
   [CHANGE_LANGUAGE]: (state, action) => ({
@@ -91,6 +96,7 @@ const reducer = handleActions({
 
 // ACTION CREATORS
 export const changeLanguage = createAction(CHANGE_LANGUAGE);
+export const closeModal = createAction(CLOSE_MODAL);
 export const movePage = createAction(MOVE_PAGE);
 export const moveUrl = createAction(MOVE_URL);
 export const openLanguage = createAction(OPEN_LANGUAGE);

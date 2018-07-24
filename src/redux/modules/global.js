@@ -6,6 +6,7 @@ const SET_WINDOW_SIZE = 'global/SET_WINDOW_SIZE';
 
 const SET_SEARCH_TEXT = 'global/SET_SEARCH_TEXT';
 
+const CLOSE_LANGUAGE = 'global/CLOSE_LANGUAGE';
 const OPEN_LANGUAGE = 'global/OPEN_LANGUAGE';
 const OPEN_NAVBAR = 'global/OPEN_NAVBAR';
 
@@ -62,6 +63,7 @@ const reducer = handleActions({
 
   [SET_SEARCH_TEXT]: (state, action) => ({ ...state, search: action.payload }),
 
+  [CLOSE_LANGUAGE]: state => ({ ...state, languageOpen: false }),
   [OPEN_LANGUAGE]: state => ({ ...state, languageOpen: !state.languageOpen }),
   [OPEN_NAVBAR]: state => ({ ...state, navBarOpen: !state.navBarOpen }),
 
@@ -96,6 +98,7 @@ const reducer = handleActions({
 
 // ACTION CREATORS
 export const changeLanguage = createAction(CHANGE_LANGUAGE);
+export const closeLanguage = createAction(CLOSE_LANGUAGE);
 export const closeModal = createAction(CLOSE_MODAL);
 export const movePage = createAction(MOVE_PAGE);
 export const moveUrl = createAction(MOVE_URL);

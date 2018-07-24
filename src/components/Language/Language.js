@@ -11,15 +11,18 @@ import './Language.scss';
 
 const Language = ({ language, languageOpen, mode }) => (
   <div className="language">
-    <button onClick={GlobalActions.openLanguage} type="button">
+    <button type="button" onClick={GlobalActions.openLanguage}>
       <img src={`/image/icon/ico-country-${language}@3x.png`} alt="language" />
       { countryName[language] }
     </button>
     <img src="/image/icon/triangle.svg" alt="opener" />
+    {
+      languageOpen && <div className="languageCloser" onClick={GlobalActions.closeLanguage} role="button" />
+    }
     <Collapse
       className="languageHamburger"
       isOpened={languageOpen}
-      springConfig={{ stiffness: 100, damping: 10 }}
+      springConfig={{ stiffness: 60, damping: 10 }}
     >
       <LanguageBox />
     </Collapse>

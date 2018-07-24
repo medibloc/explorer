@@ -2,7 +2,7 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import express from 'express';
 
-import config from './config';
+import config from '../config';
 import route from './route';
 
 const { port } = config;

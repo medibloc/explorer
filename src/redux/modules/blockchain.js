@@ -23,6 +23,7 @@ const SET_ACCOUNT = 'blockchain/SET_ACCOUNT';
 
 const GET_BLOCK = 'blockchain/GET_BLOCK';
 const GET_BLOCKS = 'blockchain/GET_BLOCKS';
+const GET_INITIAL_BLOCKS = 'blockchain/GET_INITIAL_BLOCKS';
 const GET_LIB = 'blockchain/GET_LIB';
 const GET_REVERT_BLOCK = 'blockchain/GET_REVERT_BLOCK';
 const GET_TAIL_BLOCK = 'blockchain/GET_TAIL_BLOCK';
@@ -82,6 +83,10 @@ const reducer = handleActions({
 
   [GET_BLOCK]: (state, action) => ({ ...state, block: action.payload }),
   [GET_BLOCKS]: (state, action) => ({ ...state, blockList: sorter(action.payload.blocks, 'height') }),
+  [GET_INITIAL_BLOCKS]: (state, action) => ({
+    ...state,
+    blocks: sorter([...state.blocks, ...action.payload.blocks], 'height').slice(0, 5),
+  }),
   [GET_LIB]: (state, action) => ({ ...state, lib: action.payload }),
   [GET_REVERT_BLOCK]: (state, action) => ({
     ...state,
@@ -135,6 +140,15 @@ export const getBlocks = ({ from, to }) => dispatch => blocksGetter(
   GET_BLOCKS,
   ERROR,
   { from, to },
+);
+export const getInitialBlocks = ({ from, to }) => dispatch => blocksGetter(
+  dispatch,
+  GET_INITIAL_BLOCKS,
+  ERROR,
+  {
+    from,
+    to,
+  },
 );
 export const getMedState = () => dispatch => medStateGetter(dispatch, GET_MED_STATE, ERROR);
 export const getTx = hash => dispatch => txGetter(dispatch, GET_TX, ERROR, hash);

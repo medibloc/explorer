@@ -43,7 +43,9 @@ const setWindowSize = () => {
 
 class Pages extends Component {
   componentWillMount() {
-    w.loader(BlockchainActions.getMedState());
+    w.loader(BlockchainActions
+      .getMedState()
+      .then(({ height }) => BlockchainActions.getInitialBlocks({ from: height - 5, to: height })));
   }
 
   componentDidMount() {

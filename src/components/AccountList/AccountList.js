@@ -48,7 +48,7 @@ class AccountList extends Component {
         <ListWrapper
           titles={titles}
           data={mappedAccounts(accountList, totalSupply)}
-          spacing={spaceMapper([7, 1, 1, 1])}
+          spacing={spaceMapper([8, 2, 1, 1])}
           linkTo={linkTo}
         />
       ) : (

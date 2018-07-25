@@ -21,7 +21,7 @@ const NavBar = ({
   navBarOpen,
   searchBarOpen
 }) => {
-  const { openNavBar } = GlobalActions;
+  const { openNavBar, closeNavBar } = GlobalActions;
   // if (navBarOpen) document.body.style.overflow = 'hidden';
   // else document.body.style.overflow = null;
 
@@ -50,18 +50,18 @@ const NavBar = ({
             <Fragment>
               <div className="navNavigator" />
               {
-                navBarOpen && <div className="dimmer" onClick={openNavBar} />
+                navBarOpen && <div className="dimmer" onClick={closeNavBar} />
               }
-              <button className="navBarOpener" onClick={openNavBar} type="button">
+              <button className="navBarOpener" type="button">
                 {
                   navBarOpen ? (
-                    <img src="/image/icon/ico-close.svg" alt="opener" />
+                    <img src="/image/icon/ico-close.svg" alt="opener" onClick={closeNavBar} />
                   ) : (
-                    <img src="/image/icon/ico-hamberg.svg" alt="opener" />
+                    <img src="/image/icon/ico-hamberg.svg" alt="opener" onClick={openNavBar} />
                   )
                 }
               </button>
-              <div className={`navBarSide ${navBarOpen ? 'navBarOpen' : 'navBarClose'}`} onClick={openNavBar}>
+              <div className={`navBarSide ${navBarOpen ? 'navBarOpen' : 'navBarClose'}`}>
                 <SearchBar className="fullWidth" />
                 <div className="navBarSideMenu">
                   <img src="/image/icon/ico-all-menu.svg" alt="menu" />

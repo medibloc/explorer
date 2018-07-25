@@ -11,7 +11,7 @@ const SearchBar = ({ type, searchBarOpen }) => {
     <div className="searchBar" id={type}>
       <div className="searchBarSearch">
         <input
-          placeholder="Enter Address, Tx hash, BLock Height"
+          placeholder="Enter Address, Tx hash, Block Height"
           onChange={e => setSearchText(e.target.value)}
           disabled
         />

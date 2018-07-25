@@ -19,7 +19,7 @@ const Home = () => (
       />
       <div className="verticalLine" />
       <LiveTickerWrapper
-        title="Med Supply"
+        title="MED Supply"
         value="100,000,000"
         suffix="MED"
       />
@@ -29,11 +29,11 @@ const Home = () => (
       <SearchBar type="main" />
     </div>
     <div className="homeLive">
-      <LiveInfoWrapper title="Recent Block" type="block">
+      <LiveInfoWrapper title="Recent Blocks" type="block">
         <LiveBlocks />
       </LiveInfoWrapper>
       <div className="verticalLine" />
-      <LiveInfoWrapper title="Recent Transaction" type="tx">
+      <LiveInfoWrapper title="Recent Transactions" type="tx">
         <LiveTxs />
       </LiveInfoWrapper>
     </div>

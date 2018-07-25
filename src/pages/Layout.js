@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { withLoading } from '../hoc';
-import { BlockchainActions, GlobalActions } from '../redux/actionCreators';
+import { BlockchainActions, GlobalActions, WidgetActions as w } from '../redux/actionCreators';
 
 
 class Layout extends Component {
@@ -13,6 +13,7 @@ class Layout extends Component {
   componentWillUpdate(nextProps) {
     const { location: { pathname: path } } = this.props;
     if (path !== nextProps.location.pathname) {
+      w.loader(BlockchainActions.getMedState());
       GlobalActions.moveUrl(nextProps.location.pathname.split('/')[1]);
     }
   }

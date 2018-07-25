@@ -110,6 +110,11 @@ $navBar-border-bottom: 1px;
 
         & > div {
           margin-top: 20px;
+
+          a {
+            display: inline-block;
+            width: 100%;
+          }
         }
 
         .languageBox {

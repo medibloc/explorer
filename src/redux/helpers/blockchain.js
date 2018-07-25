@@ -3,9 +3,9 @@ import jsonic from 'jsonic';
 import { simpleRequester } from './common';
 import {
   EXECUTED_TX,
-  LIB,
-  PENDING_TX,
-  REVERT_BLOCK,
+  // LIB,
+  // PENDING_TX,
+  // REVERT_BLOCK,
   TAIL_BLOCK,
 } from '../const';
 import { NODE_ENDPOINT, subscribeMaxResponse } from '../../config';
@@ -13,7 +13,7 @@ import { NODE_ENDPOINT, subscribeMaxResponse } from '../../config';
 
 let lastDataCache = 0;
 
-const preProcess = (result, maxResponse) => {
+const preProcess = (result, maxResponse) =>  {
   let data = result.split('\n');
   data.pop();
   let restart = false;

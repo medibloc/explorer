@@ -42,16 +42,15 @@ class TxList extends Component {
 
   getTransactions() {
     const { page, medState: { height } } = this.props;
-
   }
 
   render() {
     const {
       mode,
       txList,
-      linkTo,
-      spacing,
-      data,
+      // linkTo,
+      // spacing,
+      // data,
       type,
       page,
     } = this.props;

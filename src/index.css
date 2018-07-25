@@ -1,10 +1,23 @@
-body {
+html, body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  width: 100%;
   overflow-x: hidden;
+}
+
+body {
+  position: relative;
 }
 
 * {
   box-sizing: border-box;
+}
+
+button {
+  background: none;
+}
+
+a {
+  text-decoration: none;
 }

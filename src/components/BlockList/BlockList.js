@@ -25,6 +25,7 @@ const mappedBlocks = (blocks) => {
 
 const titles = ['Block Height', 'Time Stamp', 'Block Hash', 'No.Tx', 'BP'];
 const linkTo = ['block/hash', 'account/bp'];
+const centerList = ['Block Height', 'No.Tx'];
 
 class BlockList extends Component {
   constructor(props) {
@@ -58,8 +59,9 @@ class BlockList extends Component {
         <ListWrapper
           titles={titles}
           data={mappedBlocks(blockList)}
-          spacing={spaceMapper([1, 1, 3, 1, 1])}
+          spacing={spaceMapper([3, 3, 10, 3, 3])}
           linkTo={linkTo}
+          centerList={centerList}
         />
       ) : (
         <div className="blockList">

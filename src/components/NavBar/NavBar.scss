@@ -1,12 +1,12 @@
 $desktop-width: 1200px;
 $tablet-width: 800px;
-$navBarHeight: 85px;
+$navBar-height: 85px;
 $navBar-side-width: 400px;
 $navBar-border-bottom: 1px;
 
 .navBar {
   width: 100%;
-  height: $navBarHeight;
+  height: $navBar-height;
   border-bottom: $navBar-border-bottom solid rgba(0, 0, 0, 0.2);
 
   display: flex;
@@ -39,7 +39,7 @@ $navBar-border-bottom: 1px;
     .dimmer {
       position: absolute;
       z-index: 999;
-      top: $navBarHeight;
+      top: $navBar-height;
       left: 0;
       width: 100%;
       height: 100%;
@@ -56,6 +56,7 @@ $navBar-border-bottom: 1px;
 
     .navBarOpener {
       border: none;
+      background: none;
     }
 
     .navBarOpen {
@@ -70,7 +71,7 @@ $navBar-border-bottom: 1px;
       position: absolute;
       z-index: 999;
       background-color: #ffffff;
-      top: $navBarHeight + $navBar-border-bottom;
+      top: $navBar-height + $navBar-border-bottom;
       // right: $navBar-side-width;
       right: 0;
       max-width: $navBar-side-width;

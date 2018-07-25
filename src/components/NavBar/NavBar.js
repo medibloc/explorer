@@ -15,10 +15,15 @@ import './NavBar.scss';
 
 const pages = ['Block', 'Transaction', 'Account', 'BP'];
 
-const NavBar = ({ currentUrl, mode, navBarOpen, searchBarOpen }) => {
+const NavBar = ({
+  currentUrl,
+  mode,
+  navBarOpen,
+  searchBarOpen
+}) => {
   const { openNavBar } = GlobalActions;
-  if (navBarOpen) document.body.style.overflow = 'hidden';
-  else document.body.style.overflow = null;
+  // if (navBarOpen) document.body.style.overflow = 'hidden';
+  // else document.body.style.overflow = null;
 
   return (
     <div className="navBar">

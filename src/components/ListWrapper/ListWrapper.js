@@ -6,7 +6,13 @@ import { timeConverter } from '../../lib';
 import './ListWrapper.scss';
 
 
-const linkDistributor = (datum, titles, linkTo = [], spacing) => titles.map((title, i) => {
+const linkDistributor = (
+  datum,
+  titles,
+  linkTo = [],
+  spacing,
+  centerList = [],
+) => titles.map((title, i) => {
   let content = null;
   linkTo.forEach((link) => {
     const seperator = link.split('/');
@@ -29,7 +35,7 @@ const linkDistributor = (datum, titles, linkTo = [], spacing) => titles.map((tit
     });
     content = (
       <span
-        style={{ width: `${spacing[i]}%` }}
+        style={{ width: `${spacing[i]}%`, textAlign: `${centerList.indexOf(title) !== -1 && 'center'}` }}
         key={title}
       >
         {d[title]}
@@ -44,12 +50,13 @@ const ListWrapper = ({
   data,
   spacing,
   linkTo,
+  centerList = [],
 }) => (
   <div className="listWrapper">
     <div className="listWrapperTitles">
       {
         titles.map((title, i) => (
-          <span style={{ width: `${spacing[i]}%` }} key={title}>
+          <span style={{ width: `${spacing[i]}%`, textAlign: `${centerList.indexOf(title) !== -1 && 'center'}` }} key={title}>
             {title}
           </span>
         ))
@@ -60,7 +67,7 @@ const ListWrapper = ({
         data.map((datum, i) => (
           // eslint-disable-next-line
           <div className="listWrapperContentRow" key={i}>
-            { linkDistributor(datum, titles, linkTo, spacing) }
+            { linkDistributor(datum, titles, linkTo, spacing, centerList) }
           </div>
         ))
       }

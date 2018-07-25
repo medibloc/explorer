@@ -31,7 +31,7 @@ class QrCode extends Component {
       <div className="qrCode">
         <div className="qrCodeTitle">
           QR code
-          <button type="button" onClick={GlobalActions.openModal}>
+          <button type="button" onClick={GlobalActions.closeModal}>
             <img
               src="/image/icon/ico-close.svg"
               alt="close"

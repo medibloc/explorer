@@ -27,7 +27,7 @@ const ModalContainer = ({ modalOpen, modalType, modalData }) => (
       className="modalContent"
       overlayClassName="modalOverlay"
       isOpen={modalOpen}
-      onRequestClose={GlobalActions.openModal}
+      onRequestClose={GlobalActions.closeModal}
       shouldCloseOnOverlayClick={true}
     >
       { modalContent(modalType, modalData) }

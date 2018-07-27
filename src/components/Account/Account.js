@@ -56,9 +56,13 @@ class Account extends Component {
 }
 
 Account.propTypes = {
-  account: PropTypes.object.isRequired,
+  account: PropTypes.object,
   accounts: PropTypes.array.isRequired,
   address: PropTypes.string.isRequired,
 };
+
+Account.defaultProps = {
+  account: null,
+}
 
 export default Account;

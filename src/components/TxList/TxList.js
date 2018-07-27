@@ -24,7 +24,7 @@ const titleList = {
 
 const spaceList = {
   account: [2, 1, 2, 2, 1],
-  block: [2, 2, 2, 1],
+  block: [28, 28, 28, 16],
 };
 
 class TxList extends Component {
@@ -51,6 +51,8 @@ class TxList extends Component {
               data={mappedTxList(txList, page)}
               spacing={spaceMapper(spaces)}
               linkTo={['tx/hash', 'account/from', 'account/to']}
+              centerList={['Amount']}
+              rightList={['Amount']}
             />
           ) : (
             <ListWrapper

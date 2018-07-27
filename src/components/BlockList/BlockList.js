@@ -60,7 +60,7 @@ class BlockList extends Component {
         <ListWrapper
           titles={titles}
           data={mappedBlocks(blockList)}
-          spacing={spaceMapper([3, 3, 10, 3, 3])}
+          spacing={spaceMapper([2, 4, 9, 2, 3])}
           linkTo={linkTo}
           centerList={centerList}
         />

@@ -74,13 +74,14 @@ class Block extends Component {
 }
 
 Block.propTypes = {
-  block: PropTypes.object.isRequired,
+  block: PropTypes.object,
   blockList: PropTypes.array.isRequired,
   hash: PropTypes.string,
   height: PropTypes.string,
 };
 
 Block.defaultProps = {
+  block: null,
   hash: null,
   height: null,
 };

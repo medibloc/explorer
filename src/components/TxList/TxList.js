@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import ListWrapper from '../ListWrapper';
@@ -9,6 +10,7 @@ import './TxList.scss';
 
 
 const mappedTxList = (txs, page) => {
+  // eslint-disable-next-line no-param-reassign
   txs = txs.slice((page - 1) * contentsInPage, page * contentsInPage);
   const txList = [];
   txs.forEach(tx => txList.push(txMapper(tx)));
@@ -26,33 +28,16 @@ const spaceList = {
 };
 
 class TxList extends Component {
-  constructor(props) {
-    super(props);
-    this.getTransactions = this.getTransactions.bind(this);
-  }
-
-  componentDidUpdate(prevProps) {
-    const { page } = this.props;
-    if (page !== prevProps.page) this.getTransactions();
-  }
-
   componentWillUnmount() {
     GlobalActions.movePage(1);
-  }
-
-  getTransactions() {
-    const { page, medState: { height } } = this.props;
   }
 
   render() {
     const {
       mode,
-      txList,
-      // linkTo,
-      // spacing,
-      // data,
-      type,
       page,
+      txList,
+      type,
     } = this.props;
     const titles = type ? titleList[type] : [];
     const spaces = type ? spaceList[type] : [];
@@ -80,5 +65,12 @@ class TxList extends Component {
     );
   }
 }
+
+TxList.propTypes = {
+  mode: PropTypes.number.isRequired,
+  page: PropTypes.number.isRequired,
+  txList: PropTypes.array.isRequired,
+  type: PropTypes.string.isRequired,
+};
 
 export default TxList;

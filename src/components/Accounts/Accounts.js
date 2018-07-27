@@ -1,5 +1,5 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import ContentWrapper from '../ContentWrapper';
 import { BlockchainActions } from '../../redux/actionCreators';
@@ -14,8 +14,6 @@ class Accounts extends Component {
 
   render() {
     const { data } = this.props;
-
-
     return (
       <div className="accounts">
         {
@@ -33,9 +31,8 @@ class Accounts extends Component {
   }
 }
 
+Accounts.propTypes = {
+  data: PropTypes.array.isRequired,
+};
 
-const mapStateToProps = ({ blockchain }) => ({
-  accounts: blockchain.accounts,
-});
-
-export default connect(mapStateToProps)(Accounts);
+export default Accounts;

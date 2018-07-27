@@ -1,10 +1,12 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
 
-import './SearchBar.scss';
 import { GlobalActions } from '../../redux/actionCreators';
 
-const SearchBar = ({ type, searchBarOpen }) => {
+import './SearchBar.scss';
+
+
+const SearchBar = ({ type }) => {
   const { setSearchText } = GlobalActions;
 
   return (
@@ -23,11 +25,12 @@ const SearchBar = ({ type, searchBarOpen }) => {
   );
 };
 
+SearchBar.propTypes = {
+  type: PropTypes.string,
+};
 
-const mapStateToProps = ({ global }) => ({
-  mode: global.mode,
-  search: global.search,
-  searchBarOpen: global.searchBarOpen,
-});
+SearchBar.defaultProps = {
+  type: null,
+};
 
-export default connect(mapStateToProps)(SearchBar);
+export default SearchBar;

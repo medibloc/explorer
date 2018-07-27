@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import { GlobalActions } from '../../redux/actionCreators';
@@ -8,6 +9,7 @@ import './Navigation.scss';
 
 const moveToPage = pageNum => GlobalActions.movePage(pageNum);
 const pages = (currentPage, lastPage, pageDisplay) => {
+  // eslint-disable-next-line no-param-reassign
   if (lastPage < pageDisplay) pageDisplay = lastPage;
   const pageNation = [];
   let startPage = currentPage - Math.floor(pageDisplay / 2);
@@ -40,21 +42,21 @@ class Navigation extends Component {
 
   lastPage() {
     const {
-      last,
-      type,
       accounts,
+      last,
       txList,
+      type,
     } = this.props;
 
     switch (type) {
+      case 'account':
+        return Math.ceil(txList.length / contentsInPage);
       case 'accounts':
         return Math.ceil(accounts.length / contentsInPage);
-      case 'account':
+      case 'block':
         return Math.ceil(txList.length / contentsInPage);
       case 'blocks':
         return Math.ceil((last - 1) / contentsInPage);
-      case 'block':
-        return Math.ceil(txList.length / contentsInPage);
       case 'txs':
         return 1;
       default:
@@ -74,14 +76,6 @@ class Navigation extends Component {
         <button onClick={() => moveToPage(page - 1)} type="button" disabled={page === 1}>
           {'<'}
         </button>
-        {/*
-        <div>
-          Page
-          <input onKeyPress={this.handleKeyPress} />
-          /
-          { lastPage }
-        </div>
-        */}
         {
           pages(page, lastPage, navigationDisplay)
         }
@@ -95,5 +89,26 @@ class Navigation extends Component {
     );
   }
 }
+
+Navigation.propTypes = {
+  accounts: PropTypes.array,
+  last: PropTypes.number,
+  page: PropTypes.number.isRequired,
+  txList: PropTypes.array,
+  type: PropTypes.oneOf([
+    'account',
+    'accounts',
+    'block',
+    'blocks',
+    'tx',
+    'txs',
+  ]).isRequired,
+};
+
+Navigation.defaultProps = {
+  accounts: [],
+  last: 1,
+  txList: [],
+};
 
 export default Navigation;

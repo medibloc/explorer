@@ -1,15 +1,15 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Collapse } from 'react-collapse';
-import { connect } from 'react-redux';
 
 import LanguageBox from './LanguageBox';
 import { GlobalActions } from '../../redux/actionCreators';
-import { countryName } from '../../config';
+import { countryList, countryName } from '../../config';
 
 import './Language.scss';
 
 
-const Language = ({ language, languageOpen, mode }) => (
+const Language = ({ language, languageOpen }) => (
   <div className="language">
     <button type="button" onClick={GlobalActions.openLanguage}>
       <img src={`/image/icon/ico-country-${language}@3x.png`} alt="language" />
@@ -17,7 +17,8 @@ const Language = ({ language, languageOpen, mode }) => (
     </button>
     <img src="/image/icon/triangle.svg" alt="opener" />
     {
-      languageOpen && <div className="languageCloser" onClick={GlobalActions.closeLanguage} role="button" />
+      // eslint-disable-next-line
+      languageOpen && <div className="languageCloser" onClick={GlobalActions.closeLanguage} />
     }
     <Collapse
       className="languageHamburger"
@@ -29,10 +30,9 @@ const Language = ({ language, languageOpen, mode }) => (
   </div>
 );
 
-const mapStateToProps = ({ global }) => ({
-  language: global.language,
-  languageOpen: global.languageOpen,
-  mode: global.mode,
-});
+Language.propTypes = {
+  language: PropTypes.oneOf(countryList).isRequired,
+  languageOpen: PropTypes.bool.isRequired,
+};
 
-export default connect(mapStateToProps)(Language);
+export default Language;

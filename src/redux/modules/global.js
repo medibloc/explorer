@@ -57,8 +57,8 @@ const reducer = handleActions({
       ...state,
       width,
       mode,
-      navBarOpen: false,
       languageOpen: mode === 2,
+      navBarOpen: false,
     };
   },
 

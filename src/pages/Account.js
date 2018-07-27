@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
-import PageInfo from '../components/PageInfo';
 import AccountContainer from '../components/Account';
-import TxList from '../components/TxList';
 import Navigation from '../components/Navigation';
+import PageInfo from '../components/PageInfo';
+import TxList from '../components/TxList';
 import { subjectDistinguisher } from '../lib';
 
 
@@ -31,6 +32,10 @@ const Account = ({ location }) => {
       </div>
     </div>
   );
+};
+
+Account.propTypes = {
+  location: PropTypes.object.isRequired,
 };
 
 export default Account;

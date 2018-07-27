@@ -1,36 +1,37 @@
+import PropTypes from 'prop-types';
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 // Language Setting
 import { IntlProvider, addLocaleData } from 'react-intl';
-import en from 'react-intl/locale-data/en';
-import ko from 'react-intl/locale-data/ko';
-import ja from 'react-intl/locale-data/ja';
-import zh from 'react-intl/locale-data/zh';
+import en from 'react-intl/locale-data/en'; // English
+import ja from 'react-intl/locale-data/ja'; // Japanese
+import ko from 'react-intl/locale-data/ko'; // Korean
+import zh from 'react-intl/locale-data/zh'; // Chinese
 import locale from '../locale';
 
-import Layout from './Layout';
 import Account from './Account';
 import Accounts from './Accounts';
-import Blocks from './Blocks';
 import Block from './Block';
+import Blocks from './Blocks';
 import BP from './BP';
 import Home from './Home';
+import Layout from './Layout';
 import Tx from './Tx';
 import Txs from './Txs';
-
 import Footer from '../components/Footer';
 import NavBar from '../components/NavBar';
 
+import { countryList } from '../config';
 import {
-  GlobalActions,
   BlockchainActions,
-  TickerActions,
+  GlobalActions,
+  // TickerActions,
   WidgetActions as w,
 } from '../redux/actionCreators';
 
-addLocaleData([...en, ...ko, ...ja, ...zh]);
+addLocaleData([...en, ...ja, ...ko, ...zh]);
 
 
 const setWindowSize = () => {
@@ -51,7 +52,7 @@ class Pages extends Component {
   componentDidMount() {
     setWindowSize();
     BlockchainActions.subscribe();
-    TickerActions.getMedPrice();
+    // TickerActions.getMedPrice();
   }
 
   render() {
@@ -93,11 +94,17 @@ class Pages extends Component {
   }
 }
 
+Pages.propTypes = {
+  isFirstLoad: PropTypes.bool.isRequired,
+  language: PropTypes.oneOf(countryList).isRequired,
+  loading: PropTypes.bool.isRequired,
+};
+
 const mapStateToProps = ({ global, widget }) => ({
   language: global.language,
 
-  loading: widget.loading,
   isFirstLoad: widget.isFirstLoad,
+  loading: widget.loading,
 });
 
 export default connect(mapStateToProps)(Pages);

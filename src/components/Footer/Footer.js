@@ -1,5 +1,7 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
+
+import { snsLink } from '../../config';
 
 import './Footer.scss';
 
@@ -9,14 +11,6 @@ const imgChange = (sns, on) => (e) => {
 };
 
 const sns = ['telegram', 'twitter', 'fb', 'medium', 'brunch', 'medi'];
-const snsLink = {
-  telegram: 'https://t.me/medibloc',
-  twitter: 'https://twitter.com/_MediBloc',
-  fb: 'https://www.facebook.com/medibloc/',
-  medium: 'https://medium.com/@medibloc',
-  brunch: 'https://brunch.co.kr/@medibloc/',
-  medi: 'https://medibloc.org/',
-};
 
 const Footer = ({ mode }) => (
   <div className="footer">
@@ -37,7 +31,7 @@ const Footer = ({ mode }) => (
             <a
               href={snsLink[service]}
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               key={service}
             >
               <img
@@ -56,8 +50,8 @@ const Footer = ({ mode }) => (
   </div>
 );
 
-const mapStateToProps = ({ global }) => ({
-  mode: global.mode,
-});
+Footer.propTypes = {
+  mode: PropTypes.number.isRequired,
+};
 
-export default connect(mapStateToProps)(Footer);
+export default Footer;

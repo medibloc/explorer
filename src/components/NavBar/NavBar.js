@@ -1,12 +1,12 @@
 import cx from 'classnames';
+import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-import NavList from './NavList';
-import Modal from '../Modal';
 import Language from '../Language';
 import LanguageBox from '../Language/LanguageBox';
+import Modal from '../Modal';
+import NavList from './NavList';
 import SearchBar from '../SearchBar/SearchBar';
 import { GlobalActions } from '../../redux/actionCreators';
 
@@ -19,11 +19,8 @@ const NavBar = ({
   currentUrl,
   mode,
   navBarOpen,
-  searchBarOpen
 }) => {
   const { openNavBar, closeNavBar } = GlobalActions;
-  // if (navBarOpen) document.body.style.overflow = 'hidden';
-  // else document.body.style.overflow = null;
 
   return (
     <div className="navBar">
@@ -35,7 +32,7 @@ const NavBar = ({
           </NavLink>
         </div>
         {
-          mode === 0 && (
+          mode === 0 ? (
             <Fragment>
               <div className="navNavigator">
                 <NavList pages={pages} currentUrl={currentUrl} />
@@ -43,20 +40,20 @@ const NavBar = ({
               <SearchBar className={cx({ fullWidth: mode !== 0 })} />
               <Language />
             </Fragment>
-          )
-        }
-        {
-          mode !== 0 && (
+          ) : (
             <Fragment>
               <div className="navNavigator" />
               {
+                // eslint-disable-next-line
                 navBarOpen && <div className="dimmer" onClick={closeNavBar} />
               }
               <button className="navBarOpener" type="button">
                 {
                   navBarOpen ? (
+                    // eslint-disable-next-line
                     <img src="/image/icon/ico-close.svg" alt="opener" onClick={closeNavBar} />
                   ) : (
+                  // eslint-disable-next-line
                     <img src="/image/icon/ico-hamberg.svg" alt="opener" onClick={openNavBar} />
                   )
                 }
@@ -86,14 +83,10 @@ const NavBar = ({
   );
 };
 
-const mapStateToProps = ({ blockchain, global }) => ({
-  medState: blockchain.medState,
+NavBar.propTypes = {
+  currentUrl: PropTypes.string.isRequired,
+  mode: PropTypes.number.isRequired,
+  navBarOpen: PropTypes.bool.isRequired,
+};
 
-  currentUrl: global.currentUrl,
-  mode: global.mode,
-  navBarOpen: global.navBarOpen,
-  searchBarOpen: global.searchBarOpen,
-  width: global.width,
-});
-
-export default connect(mapStateToProps)(NavBar);
+export default NavBar;

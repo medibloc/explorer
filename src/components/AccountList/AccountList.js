@@ -1,9 +1,9 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
+import Accounts from '../Accounts';
 import ListWrapper from '../ListWrapper';
 import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
-import Accounts from '../Accounts';
 import { contentsInPage } from '../../config';
 import { accountMapper, spaceMapper } from '../../lib';
 
@@ -26,7 +26,7 @@ const titles = ['Account', 'Balance', 'Percentage', 'Transactions'];
 const linkTo = ['account/account'];
 
 class AccountList extends Component {
-  componentWillMount() {
+  componentDidMount() {
     w.loader(BlockchainActions.getAccounts());
   }
 
@@ -34,15 +34,15 @@ class AccountList extends Component {
     GlobalActions.movePage(1);
   }
 
-
   render() {
     const {
       accounts,
-      totalSupply,
-      page,
       mode,
+      page,
+      totalSupply,
     } = this.props;
     const accountList = accPicker(accounts, page);
+
     return (
       mode !== 2 ? (
         <ListWrapper
@@ -60,12 +60,11 @@ class AccountList extends Component {
   }
 }
 
-const mapStateToProps = ({ blockchain, global }) => ({
-  accounts: blockchain.accounts,
-  totalSupply: blockchain.totalSupply,
+AccountList.propTypes = {
+  accounts: PropTypes.array.isRequired,
+  mode: PropTypes.number.isRequired,
+  page: PropTypes.number.isRequired,
+  totalSupply: PropTypes.number.isRequired,
+};
 
-  page: global.page,
-  mode: global.mode,
-});
-
-export default connect(mapStateToProps)(AccountList);
+export default AccountList;

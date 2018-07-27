@@ -4,6 +4,16 @@ export const NODE_ENDPOINT = 'http://192.168.0.3:9921';
 export const COINMARKETCAP_MED_PRICE = 'https://api.coinmarketcap.com/v2/ticker/2303/';
 export const COINMARKETCAP_MEDX_PRICE = 'https://api.coinmarketcap.com/v2/ticker/2845/';
 
+// SNS LINK
+export const snsLink = {
+  telegram: 'https://t.me/medibloc',
+  twitter: 'https://twitter.com/_MediBloc',
+  fb: 'https://www.facebook.com/medibloc/',
+  medium: 'https://medium.com/@medibloc',
+  brunch: 'https://brunch.co.kr/@medibloc/',
+  medi: 'https://medibloc.org/',
+};
+
 
 // INTERNAL CONFIG
 export const contentsInPage = 20;

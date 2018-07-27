@@ -1,10 +1,10 @@
 import React from 'react';
 
 import LiveBlocks from '../components/LiveBlocks';
-import LiveTxs from '../components/LiveTxs';
-import SearchBar from '../components/SearchBar';
 import LiveInfoWrapper from '../components/LiveInfoWrapper';
 import LiveTickerWrapper from '../components/LiveTickerWrapper';
+import LiveTxs from '../components/LiveTxs';
+import SearchBar from '../components/SearchBar';
 
 import './pages.scss';
 

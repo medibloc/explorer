@@ -33,10 +33,8 @@ const reducer = handleActions({
   [ERROR]: (state, action) => ({ ...state, error: action.payload }),
 }, initialState);
 
-
 // ACTION CREATORS
 export const getMedPrice = () => dispatch => medPriceGetter(dispatch, GET_MED_PRICE, ERROR);
 export const getMedxPrice = () => dispatch => medxPriceGetter(dispatch, GET_MEDX_PRICE, ERROR);
-
 
 export default reducer;

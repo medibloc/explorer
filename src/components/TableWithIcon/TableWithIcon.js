@@ -1,30 +1,36 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import ContentWrapper from '../ContentWrapper';
-import { blockMapper, txMapper, accountMapper, timeConverter } from '../../lib';
+import {
+  accountMapper,
+  blockMapper,
+  timeConverter,
+  txMapper,
+} from '../../lib';
 
 import './TableWithIcon.scss';
 
 
 const titles = {
-  block: ['Block Hash', 'Time Stamp', 'BP'],
-  tx: ['Transaction Hash', 'Time Stamp'],
+  block: ['Block Hash', 'BP', 'Time Stamp'],
+  tx: ['Time Stamp', 'Transaction Hash'],
   account: [],
 };
 
-const TableWithIcon = ({ type, data }) => {
-  let dataList = [];
+const TableWithIcon = ({ data, type }) => {
+  const dataList = [];
   const titleList = type ? titles[type] : [];
   if (data) {
     switch (type) {
+      case 'account':
+        data.forEach(datum => dataList.push(accountMapper(datum)));
+        break;
       case 'block':
         data.forEach(datum => dataList.push(blockMapper(datum)));
         break;
       case 'tx':
         data.forEach(datum => dataList.push(txMapper(datum)));
-        break;
-      case 'account':
-        data.forEach(datum => dataList.push(accountMapper(datum)));
         break;
       default:
         break;
@@ -43,13 +49,18 @@ const TableWithIcon = ({ type, data }) => {
               type={type}
               data={d}
               titles={titleList}
-              key={i}
+              key={i} // eslint-disable-line
             />
           );
         })
       }
     </div>
   );
+};
+
+TableWithIcon.propTypes = {
+  data: PropTypes.array.isRequired,
+  type: PropTypes.oneOf(['block', 'tx', 'account']).isRequired,
 };
 
 export default TableWithIcon;

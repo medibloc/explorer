@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Modal from 'react-modal';
 
@@ -28,11 +29,22 @@ const ModalContainer = ({ modalOpen, modalType, modalData }) => (
       overlayClassName="modalOverlay"
       isOpen={modalOpen}
       onRequestClose={GlobalActions.closeModal}
-      shouldCloseOnOverlayClick={true}
+      shouldCloseOnOverlayClick
     >
       { modalContent(modalType, modalData) }
     </Modal>
   </div>
 );
+
+ModalContainer.propTypes = {
+  modalOpen: PropTypes.bool.isRequired,
+  modalType: PropTypes.oneOf(['QrCode', 'Loading']),
+  modalData: PropTypes.string,
+};
+
+ModalContainer.defaultProps = {
+  modalType: null,
+  modalData: null,
+};
 
 export default ModalContainer;

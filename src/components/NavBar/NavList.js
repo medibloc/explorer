@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -11,7 +12,13 @@ const NavList = ({ pages, currentUrl }) => pages.map((page) => {
   return (
     <div key={page}>
       <NavLink
-        className={`navListBtn ${currentUrl.indexOf(PAGE) !== -1 && 'navSelected'} ${disableLink.indexOf(PAGE) !== -1 && 'navDisabled'}`}
+        className={cx(
+          'navListBtn',
+          {
+            navSelected: currentUrl.indexOf(PAGE) !== -1,
+            navDisabled: disableLink.indexOf(PAGE) !== -1,
+          },
+        )}
         to={`/${PAGE}s`}
         disabled="disabled"
       >

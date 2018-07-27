@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import { accountMapper } from '../../lib';
@@ -16,7 +17,7 @@ class Account extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const { address, account } = this.props;
+    const { account, address } = this.props;
     if (address !== nextProps.address) {
       this.callAccount(nextProps);
       return true;
@@ -31,9 +32,8 @@ class Account extends Component {
     let { address } = this.props;
     const { accounts } = this.props;
     if (nextProps) {
-      address = nextProps.address;
+      ({ address } = nextProps.address);
     }
-    console.log(address)
 
     let accFound = false;
     for (let i = 0; i < accounts.length; i += 1) {
@@ -47,14 +47,18 @@ class Account extends Component {
     BlockchainActions.getAccountDetail(address);
   }
 
-
   render() {
     const { account } = this.props;
-    console.log(account)
     return account && (
       <DetailWrapper data={accountMapper(account)} type="account" />
     );
   }
 }
+
+Account.propTypes = {
+  account: PropTypes.object.isRequired,
+  accounts: PropTypes.array.isRequired,
+  address: PropTypes.string.isRequired,
+};
 
 export default Account;

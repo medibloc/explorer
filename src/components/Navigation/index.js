@@ -6,7 +6,7 @@ import Navigation from './Navigation';
 const mapStateToProps = ({ blockchain, global }) => ({
   accounts: blockchain.accounts,
   txList: blockchain.txList,
-  last: blockchain.medState.height,
+  last: parseInt(blockchain.medState.height, 10),
 
   page: global.page,
 });

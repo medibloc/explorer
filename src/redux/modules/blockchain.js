@@ -1,8 +1,8 @@
 import { createAction, handleActions } from 'redux-actions';
 
 import {
-  accGetter,
   accDetailGetter,
+  accGetter,
   accsGetter,
   blockGetter,
   blocksGetter,
@@ -41,15 +41,16 @@ const ERROR = 'blockchain/ERROR';
 
 const subsribeTypes = {
   GET_EXECUTED_TX,
+  GET_TAIL_BLOCK,
   // GET_LIB,
   // GET_PENDING_TX,
   // GET_REVERT_BLOCK,
-  GET_TAIL_BLOCK,
 };
 
 const initialState = {
-  medState: null,
   totalSupply: 10000000000,
+
+  medState: null,
 
   account: null, // specific account
   accounts: [], // all accounts on the blockchain
@@ -124,7 +125,6 @@ const reducer = handleActions({
   [ERROR]: (state, action) => ({ ...state, error: action.payload }),
 }, initialState);
 
-
 // ACTION CREATORS
 export const getAccount = address => dispatch => accGetter(dispatch, GET_ACCOUNT, ERROR, address);
 export const getAccountDetail = address => dispatch => accDetailGetter(
@@ -145,18 +145,14 @@ export const getInitialBlocks = ({ from, to }) => dispatch => blocksGetter(
   dispatch,
   GET_INITIAL_BLOCKS,
   ERROR,
-  {
-    from,
-    to,
-  },
+  { from, to },
 );
 export const getMedState = () => dispatch => medStateGetter(dispatch, GET_MED_STATE, ERROR);
 export const getTx = hash => dispatch => txGetter(dispatch, GET_TX, ERROR, hash);
 export const setAccount = createAction(SET_ACCOUNT);
+export const setBlock = createAction(SET_BLOCK);
 export const setTx = createAction(SET_TX);
 export const setTxs = createAction(SET_TXS);
-export const setBlock = createAction(SET_BLOCK);
 export const subscribe = () => dispatch => subscriber(dispatch, subsribeTypes, ERROR);
-
 
 export default reducer;

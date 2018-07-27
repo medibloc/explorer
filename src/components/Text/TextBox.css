@@ -1,8 +1,0 @@
-.textBox {
-  background: red;
-  font-size: 100px;
-}
-
-.textBox.mobile {
-  display: none;
-}

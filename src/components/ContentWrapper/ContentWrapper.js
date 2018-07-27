@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -46,6 +47,12 @@ const ContentWrapper = ({ type, data, titles }) => {
       </div>
     </NavLink>
   );
+};
+
+ContentWrapper.propTypes = {
+  type: PropTypes.string.isRequired,
+  data: PropTypes.object.isRequired,
+  titles: PropTypes.array.isRequired,
 };
 
 export default ContentWrapper;

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -21,5 +22,11 @@ const LiveInfoWrapper = ({ title, type, children }) => (
     </div>
   </div>
 );
+
+LiveInfoWrapper.propTypes = {
+  title: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  children: PropTypes.object.isRequired,
+};
 
 export default LiveInfoWrapper;

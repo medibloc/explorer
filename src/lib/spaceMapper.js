@@ -8,5 +8,4 @@ const spaceMapper = (spaceList) => {
   return convertedSpaceList;
 };
 
-
 export default spaceMapper;

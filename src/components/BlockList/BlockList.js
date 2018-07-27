@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import ListWrapper from '../ListWrapper';
@@ -71,5 +72,12 @@ class BlockList extends Component {
     );
   }
 }
+
+BlockList.propTypes = {
+  blockList: PropTypes.array.isRequired,
+  medState: PropTypes.object.isRequired,
+  mode: PropTypes.number.isRequired,
+  page: PropTypes.number.isRequired,
+};
 
 export default BlockList;

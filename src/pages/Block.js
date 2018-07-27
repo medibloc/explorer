@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
-import PageInfo from '../components/PageInfo';
 import BlockContainer from '../components/Block';
-import TxList from '../components/TxList';
 import Navigation from '../components/Navigation';
+import PageInfo from '../components/PageInfo';
+import TxList from '../components/TxList';
 import { subjectDistinguisher } from '../lib';
 
 // location.pathname => /block/hash/e1197cb1845600ff30fcff3cca3bb2e6dd084981a9c7c235d629379df55e1b28
@@ -33,6 +34,10 @@ const Block = ({ location }) => {
       </div>
     </div>
   );
+};
+
+Block.propTypes = {
+  location: PropTypes.object.isRequired,
 };
 
 export default Block;

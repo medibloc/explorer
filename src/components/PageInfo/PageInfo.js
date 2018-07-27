@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import './PageInfo.scss';
@@ -18,5 +19,9 @@ const PageInfo = ({ title }) => (
     { titlize(title) }
   </div>
 );
+
+PageInfo.propTypes = {
+  title: PropTypes.string.isRequired,
+};
 
 export default PageInfo;

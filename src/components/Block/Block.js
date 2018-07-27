@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import DetailWrapper from '../DetailWrapper';
@@ -24,7 +25,7 @@ class Block extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const { hash, height, block } = this.props;
+    const { block, hash, height } = this.props;
     if (hash !== nextProps.hash || height !== nextProps.height) {
       this.callBlock(nextProps);
       return true;
@@ -39,11 +40,9 @@ class Block extends Component {
     let hash = '';
     let height = '';
     if (nextProps) {
-      hash = nextProps.hash;
-      height = nextProps.height;
+      ({ hash, height } = nextProps);
     } else {
-      hash = this.props.hash;
-      height = this.props.height;
+      ({ hash, height } = this.props);
     }
 
     const { blockList } = this.props;
@@ -73,5 +72,17 @@ class Block extends Component {
     );
   }
 }
+
+Block.propTypes = {
+  block: PropTypes.object.isRequired,
+  blockList: PropTypes.array.isRequired,
+  hash: PropTypes.string,
+  height: PropTypes.string,
+};
+
+Block.defaultProps = {
+  hash: null,
+  height: null,
+};
 
 export default Block;

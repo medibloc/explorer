@@ -5,10 +5,12 @@ export const LOAD = 'widgets/LOAD';
 export const LOAD_SUCCESS = 'widgets/LOAD_SUCCESS';
 export const LOAD_FAIL = 'widgets/LOAD_FAIL';
 
+
 const initialState = {
   isFirstLoad: true,
-  loading: false,
   loaded: false,
+  loading: false,
+
   error: null,
 };
 
@@ -17,14 +19,14 @@ const reducer = handleActions({
   [LOAD]: state => ({ ...state, loading: true }),
   [LOAD_SUCCESS]: state => ({
     ...state,
-    loading: false,
-    loaded: true,
     isFirstLoad: false,
+    loaded: true,
+    loading: false,
   }),
   [LOAD_FAIL]: (state, action) => ({
     ...state,
-    loading: false,
     loaded: false,
+    loading: false,
     error: action.paylod,
   }),
 }, initialState);
@@ -32,8 +34,8 @@ const reducer = handleActions({
 
 // ACTION CREATORS
 export const load = createAction(LOAD);
-export const loadSuccess = createAction(LOAD_SUCCESS);
 export const loadFail = createAction(LOAD_FAIL); // loadFail(error)
+export const loadSuccess = createAction(LOAD_SUCCESS);
 
 export const loader = actions => (dispatch) => {
   dispatch({ type: LOAD });

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -74,5 +75,18 @@ const ListWrapper = ({
     </div>
   </div>
 );
+
+ListWrapper.propTypes = {
+  titles: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+  spacing: PropTypes.array.isRequired,
+  linkTo: PropTypes.array,
+  centerList: PropTypes.array,
+};
+
+ListWrapper.defaultProps = {
+  linkTo: [],
+  centerList: [],
+};
 
 export default ListWrapper;

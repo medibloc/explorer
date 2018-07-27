@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import PageInfo from '../components/PageInfo';
@@ -22,6 +23,10 @@ const Tx = ({ location }) => {
       </div>
     </div>
   );
+};
+
+Tx.propTypes = {
+  location: PropTypes.object.isRequired,
 };
 
 export default Tx;

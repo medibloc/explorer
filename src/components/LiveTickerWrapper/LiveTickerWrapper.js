@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import './LiveTickerWrapper.scss';
@@ -18,5 +19,11 @@ const LiveTickerWrapper = ({ title, value, suffix }) => (
     </div>
   </div>
 );
+
+LiveTickerWrapper.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  suffix: PropTypes.string.isRequired,
+};
 
 export default LiveTickerWrapper;

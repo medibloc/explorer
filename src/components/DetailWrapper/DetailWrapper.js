@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -77,6 +78,11 @@ const DetailWrapper = ({ data, type }) => {
       </div>
     </div>
   );
+};
+
+DetailWrapper.propTypes = {
+  data: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default DetailWrapper;

@@ -3,17 +3,17 @@ import jsonic from 'jsonic';
 import { simpleRequester } from './common';
 import {
   EXECUTED_TX,
+  TAIL_BLOCK,
   // LIB,
   // PENDING_TX,
   // REVERT_BLOCK,
-  TAIL_BLOCK,
 } from '../const';
 import { NODE_ENDPOINT, subscribeMaxResponse } from '../../config';
 
 
 let lastDataCache = 0;
 
-const preProcess = (result, maxResponse) =>  {
+const preProcess = (result, maxResponse) => {
   let data = result.split('\n');
   data.pop();
   let restart = false;
@@ -176,7 +176,7 @@ export const accGetter = (dispatch, actionType, ERROR, address) => simpleRequest
 export const accDetailGetter = (dispatch, actionType, ERROR, address) => simpleRequester(dispatch, {
   url: `${NODE_ENDPOINT}/v1/user/${address}/transactions`,
   actionType,
-  Error,
+  ERROR,
 });
 
 // get: "/v1/user/accounts"

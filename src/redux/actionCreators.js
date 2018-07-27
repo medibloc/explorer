@@ -1,10 +1,10 @@
 import { bindActionCreators } from 'redux';
 
+import store from './store';
 import * as blockchainActions from './modules/blockchain';
 import * as globalActions from './modules/global';
 import * as tickerActions from './modules/ticker';
 import * as widgetActions from './modules/widget';
-import store from './store';
 
 
 const { dispatch } = store;

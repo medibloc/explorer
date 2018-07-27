@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Account from './Account';
 
 
-const mapStateToProps = ({ blockchain, widget }) => ({
+const mapStateToProps = ({ blockchain }) => ({
   account: blockchain.account,
   accounts: blockchain.accounts,
 });

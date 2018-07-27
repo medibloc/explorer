@@ -1,6 +1,6 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import { withLoading } from '../hoc';
 import { BlockchainActions, GlobalActions, WidgetActions as w } from '../redux/actionCreators';
 
 
@@ -11,11 +11,14 @@ class Layout extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    const { location: { pathname: path } } = this.props;
-    if (path !== nextProps.location.pathname) {
+    const { loading, location: { pathname: path } } = this.props;
+    const { location: { pathname: newPath } } = nextProps;
+    if (path !== newPath) {
       w.loader(BlockchainActions.getMedState());
-      GlobalActions.moveUrl(nextProps.location.pathname.split('/')[1]);
+      GlobalActions.moveUrl(newPath.split('/')[1]);
     }
+    if (!loading && nextProps.loading) GlobalActions.openModal({ modalType: 'Loading' });
+    else if (loading && !nextProps.loading) GlobalActions.closeModal();
   }
 
   render() {
@@ -30,5 +33,15 @@ class Layout extends Component {
   }
 }
 
+Layout.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.element),
+  loading: PropTypes.bool.isRequired,
+  location: PropTypes.object,
+};
 
-export default withLoading(Layout);
+Layout.defaultProps = {
+  children: React.createElement('div'),
+  location: {},
+};
+
+export default Layout;

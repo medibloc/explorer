@@ -4,5 +4,4 @@ const sorter = (objectArray, topic, reverse = false) => {
   return objectArray.sort(compare);
 };
 
-
 export default sorter;

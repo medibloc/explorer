@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import QR from 'qrcode';
+import React, { Component } from 'react';
 
 import { GlobalActions } from '../../redux/actionCreators';
 
@@ -45,5 +46,9 @@ class QrCode extends Component {
     );
   }
 }
+
+QrCode.propTypes = {
+  data: PropTypes.string.isRequired,
+};
 
 export default QrCode;

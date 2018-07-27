@@ -7,6 +7,7 @@
     "classnames": "^2.2.6",
     "immutable": "^3.8.2",
     "jsonic": "^0.3.0",
+    "prop-types": "^15.6.2",
     "qrcode": "^1.2.0",
     "react": "^16.4.1",
     "react-collapse": "^4.0.3",

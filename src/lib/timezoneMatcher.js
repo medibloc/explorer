@@ -1,4 +1,5 @@
 const timezoneMatcher = (unixTime) => {
+  // eslint-disable-next-line no-param-reassign
   if (unixTime.toString().length === 13) unixTime = Math.floor(unixTime / 1000);
   const offset = new Date().getTimezoneOffset();
 

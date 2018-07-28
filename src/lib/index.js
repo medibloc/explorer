@@ -5,6 +5,7 @@ import spaceMapper from './spaceMapper';
 import subjectDistinguisher from './subjectDistinguisher';
 import timeConverter from './timeConverter';
 import timezoneMatcher from './timezoneMatcher';
+import titleConverter from './titleConverter';
 import txMapper from './txMapper';
 
 export {
@@ -15,5 +16,6 @@ export {
   subjectDistinguisher,
   timeConverter,
   timezoneMatcher,
+  titleConverter,
   txMapper,
 };

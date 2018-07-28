@@ -12,6 +12,7 @@ import './pages.scss';
 const Home = () => (
   <div className="homeContentWrapper">
     <div className="homeTokenInfo">
+      <img className="bg" src="/image/icon/bg@3x.jpg" alt="bg" />
       <LiveTickerWrapper
         title="Market Cap"
         value="123,456,789"
@@ -25,6 +26,7 @@ const Home = () => (
       />
     </div>
     <div className="homeSearchBar">
+      <div className="blur" />
       <hr />
       <SearchBar type="main" />
     </div>

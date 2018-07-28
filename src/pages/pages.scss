@@ -44,6 +44,13 @@ $footer-margin-height: 50px;
   display: flex;
   flex-direction: column;
 
+  .bg {
+    position: absolute;
+    z-index: -1;
+    top: $navBar_height;
+    width: 1920px;
+  }
+
   .homeTokenInfo {
     max-width: 1100px;
     width: 100%;
@@ -66,6 +73,15 @@ $footer-margin-height: 50px;
 
     display: flex;
     justify-content: center;
+
+    .blur {
+      top: 20px;
+      position: absolute;
+      z-index: -1;
+      height: 500px;
+      width: 100vw;
+      background: white;
+    }
 
     .searchBarSearch input::placeholder {
       color: #ffffff;

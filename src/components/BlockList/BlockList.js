@@ -25,7 +25,7 @@ const mappedBlocks = (blocks) => {
 };
 
 const titles = ['Block Height', 'Time Stamp', 'Block Hash', 'No.Tx', 'BP'];
-const linkTo = ['block/hash', 'account/bp'];
+const linkTo = ['block/height', 'block/hash', 'account/bp'];
 const centerList = ['Block Height', 'No.Tx'];
 
 class BlockList extends Component {

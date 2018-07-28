@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl, intlShape } from 'react-intl';
 
 import LiveBlocks from '../components/LiveBlocks';
 import LiveInfoWrapper from '../components/LiveInfoWrapper';
@@ -9,18 +10,18 @@ import SearchBar from '../components/SearchBar';
 import './pages.scss';
 
 
-const Home = () => (
+const Home = ({ intl }) => (
   <div className="homeContentWrapper">
     <div className="homeTokenInfo">
       <img className="bg" src="/image/icon/bg@3x.jpg" alt="bg" />
       <LiveTickerWrapper
-        title="Market Cap"
+        title={intl.formatMessage({ id: 'marketCap' })}
         value="123,456,789"
         suffix="USD"
       />
       <div className="verticalLine" />
       <LiveTickerWrapper
-        title="MED Supply"
+        title={intl.formatMessage({ id: 'medSupply' })}
         value="100,000,000"
         suffix="MED"
       />
@@ -31,15 +32,19 @@ const Home = () => (
       <SearchBar type="main" />
     </div>
     <div className="homeLive">
-      <LiveInfoWrapper title="Recent Blocks" type="block">
+      <LiveInfoWrapper title={intl.formatMessage({ id: 'recentBlock' })} type="block">
         <LiveBlocks />
       </LiveInfoWrapper>
       <div className="verticalLine" />
-      <LiveInfoWrapper title="Recent Transactions" type="tx">
+      <LiveInfoWrapper title={intl.formatMessage({ id: 'recentTx' })} type="tx">
         <LiveTxs />
       </LiveInfoWrapper>
     </div>
   </div>
 );
 
-export default Home;
+Home.propTypes = {
+  intl: intlShape.isRequired,
+};
+
+export default injectIntl(Home);

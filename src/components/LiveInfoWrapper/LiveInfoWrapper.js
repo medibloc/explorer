@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 
 import './LiveInfoWrapper.scss';
@@ -13,7 +14,7 @@ const LiveInfoWrapper = ({ title, type, children }) => (
       </span>
       <NavLink to={`/${type}s`}>
         <button type="button">
-          View All +
+          <FormattedMessage id="viewAll" />
         </button>
       </NavLink>
     </div>

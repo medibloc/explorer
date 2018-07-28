@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import './PageInfo.scss';
 
 
 const titlize = (string) => {
   let title = '';
-  string.split('-').forEach((pre) => {
-    title = `${title}${pre.charAt(0).toUpperCase()}${pre.slice(1)} `;
+  string.split('-').forEach((pre, i) => {
+    title = `${title}${i !== 0 ? pre.charAt(0).toUpperCase() : pre.charAt(0)}${pre.slice(1)}`;
   });
   return title;
 };
@@ -16,7 +17,7 @@ const titlize = (string) => {
 const PageInfo = ({ title }) => (
   <div className="pageInfo">
     <img src={`/image/icon/ico-${title}.svg`} alt={title} />
-    { titlize(title) }
+    <FormattedMessage id={titlize(title)} />
   </div>
 );
 

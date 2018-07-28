@@ -25,14 +25,18 @@ class Block extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const { block, hash, height } = this.props;
+    const {
+      block,
+      hash,
+      height,
+      language,
+    } = this.props;
     if (hash !== nextProps.hash || height !== nextProps.height) {
       this.callBlock(nextProps);
       return true;
     }
-    if (block !== nextProps.block) {
-      return true;
-    }
+    if (block !== nextProps.block) return true;
+    if (language !== nextProps.language) return true;
     return false;
   }
 
@@ -78,6 +82,7 @@ Block.propTypes = {
   blockList: PropTypes.array.isRequired,
   hash: PropTypes.string,
   height: PropTypes.string,
+  language: PropTypes.string.isRequired,
 };
 
 Block.defaultProps = {

@@ -17,14 +17,13 @@ class Account extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const { account, address } = this.props;
+    const { account, address, language } = this.props;
     if (address !== nextProps.address) {
       this.callAccount(nextProps);
       return true;
     }
-    if (account !== nextProps.account) {
-      return true;
-    }
+    if (account !== nextProps.account) return true;
+    if (language !== nextProps.language) return true;
     return false;
   }
 
@@ -59,10 +58,11 @@ Account.propTypes = {
   account: PropTypes.object,
   accounts: PropTypes.array.isRequired,
   address: PropTypes.string.isRequired,
+  language: PropTypes.string.isRequired,
 };
 
 Account.defaultProps = {
   account: null,
-}
+};
 
 export default Account;

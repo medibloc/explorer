@@ -1,9 +1,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 
 import './ContentWrapper.scss';
 
+
+const titleConverter = (title) => {
+  let convertedTitle = title.split(' ')[0].toLowerCase();
+  if (title.split(' ')[1]) convertedTitle += title.split(' ')[1];
+  return convertedTitle;
+};
 
 const ContentWrapper = ({ type, data, titles }) => {
   const { 'Block Height': height } = data;
@@ -30,7 +37,7 @@ const ContentWrapper = ({ type, data, titles }) => {
           {
             titles.map(title => (
               <span key={title}>
-                {title}
+                <FormattedMessage id={titleConverter(title)} />
               </span>
             ))
           }

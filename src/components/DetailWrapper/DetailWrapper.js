@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 
 import { GlobalActions } from '../../redux/actionCreators';
-import { timezoneMatcher } from '../../lib';
+import { timezoneMatcher, titleConverter } from '../../lib';
 
 import './DetailWrapper.scss';
 
@@ -30,7 +31,7 @@ const DetailWrapper = ({ data, type }) => {
         {
           titleList.map(title => (
             <span key={title}>
-              {title}
+              <FormattedMessage id={titleConverter(title)} />
             </span>
           ))
         }

@@ -1,20 +1,21 @@
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 
-import { timeConverter } from '../../lib';
+import { timeConverter, titleConverter } from '../../lib';
 
 import './ListWrapper.scss';
 
 
 const linkDistributor = (
+  centerList,
   datum,
-  titles,
-  linkTo = [],
+  linkTo,
+  rightList,
   spacing,
-  centerList = [],
-  rightList = [],
+  titles,
 ) => titles.map((title, i) => {
   let content = null;
   linkTo.forEach((link) => {
@@ -73,7 +74,7 @@ const ListWrapper = ({
             className={cx({ center: centerList.indexOf(title) !== -1 })}
             key={title}
           >
-            {title}
+            <FormattedMessage id={titleConverter(title)} />
           </span>
         ))
       }
@@ -83,7 +84,7 @@ const ListWrapper = ({
         data.map((datum, i) => (
           // eslint-disable-next-line
           <div className="listWrapperContentRow" key={i}>
-            { linkDistributor(datum, titles, linkTo, spacing, centerList, rightList) }
+            { linkDistributor(centerList, datum, linkTo, rightList, spacing, titles) }
           </div>
         ))
       }

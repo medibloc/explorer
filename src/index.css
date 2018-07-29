@@ -7,7 +7,7 @@ html, body {
 }
 
 body {
-  position: relative;
+  /*position: relative;*/
 }
 
 * {
@@ -27,4 +27,8 @@ a {
 
 a:focus {
   outline: none;
+}
+
+div {
+  /*-ms-flex: 0 0 auto;*/
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TxList from '../components/TxList';
+// import TxList from '../components/TxList';
 import PageInfo from '../components/PageInfo';
 // import Navigation from '../container/Navigation';
 
@@ -8,9 +8,9 @@ import PageInfo from '../components/PageInfo';
 const Txs = () => (
   <div className="txs">
     <PageInfo title="transactions-list" />
-    <div className="txsContents">
+    {/*<div className="txsContents">
       <TxList />
-    </div>
+    </div>*/}
   </div>
 );
 

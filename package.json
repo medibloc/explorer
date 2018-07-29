@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.6",
     "immutable": "^3.8.2",
     "jsonic": "^0.3.0",

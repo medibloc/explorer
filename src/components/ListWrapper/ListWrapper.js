@@ -20,7 +20,7 @@ const linkDistributor = (
   let content = null;
   linkTo.forEach((link) => {
     const seperator = link.split('/');
-    if (title.toLowerCase().includes(seperator[1])) {
+    if (title.toLowerCase().indexOf(seperator[1]) !== -1) {
       content = (
         <NavLink
           to={`/${seperator[0]}/${datum[title]}`}

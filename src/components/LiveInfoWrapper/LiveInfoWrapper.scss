@@ -1,12 +1,11 @@
 $tablet-width: 800px;
 
 .liveInfoWrapper {
-  flex: 1;
+  flex: 1 1 auto;
   width: 100%;
 
   display: flex;
   flex-direction: column;
-  flex: 1;
   & > div {
     margin-top: 10px;
   }
@@ -47,7 +46,7 @@ $tablet-width: 800px;
 
   .liveInfoWrapperContentBox {
     width: 100%;
-    height: 510px;
+    height: 500px;
     opacity: 0.7;
     background-color: #f4f4f4;
     overflow-y: hidden;

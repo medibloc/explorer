@@ -1,0 +1,1 @@
+flexibility(document.documentElement);

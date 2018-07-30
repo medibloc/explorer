@@ -2,9 +2,12 @@ $tablet-width: 800px;
 
 .liveTickerWrapper {
   margin: 30px auto;
+  max-width: calc(50% - 30px);
 
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
+  -ms-flex: 0 0 auto;
 
   .liveTickerWrapperTitle {
     font-size: 18px;
@@ -18,7 +21,7 @@ $tablet-width: 800px;
     display: flex;
     flex-wrap: wrap;
     align-items: flex-end;
-    justify-content: space-around;
+    justify-content: center;
 
     div + div {
       margin-left: 10px;

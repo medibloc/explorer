@@ -2,6 +2,7 @@ $navBar-height: 85px;
 
 .language {
   width: 158px;
+  position: relative;
 
   display: flex;
   justify-content: space-between;
@@ -23,6 +24,12 @@ $navBar-height: 85px;
     margin-right: 10px;
   }
 
+  & > img {
+    margin: auto;
+    width: 12px;
+    height: 10px;
+  }
+
   .hidden {
     // display: none;
   }
@@ -40,6 +47,8 @@ $navBar-height: 85px;
 .languageHamburger {
   position: absolute;
   top: 70px;
+  left: 5px;
+  top: 40px + (($navBar-height - 40px) / 2);
 }
 
 .languageBox {

@@ -4,14 +4,17 @@ html, body {
   font-family: sans-serif;
   width: 100%;
   overflow-x: hidden;
+  -ms-overflow-x: hidden;
 }
 
 body {
-  /*position: relative;*/
+  position: relative;
+  -ms-overflow-style: none;
 }
 
 * {
   box-sizing: border-box;
+  /*-ms-flex: 0 0 auto;*/
 }
 
 button {
@@ -29,6 +32,3 @@ a:focus {
   outline: none;
 }
 
-div {
-  /*-ms-flex: 0 0 auto;*/
-}

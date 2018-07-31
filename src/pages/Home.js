@@ -13,7 +13,7 @@ import './pages.scss';
 const Home = ({ intl }) => (
   <div className="homeContentWrapper">
     <div className="homeTokenInfo">
-      <img className="bg" src="/image/icon/bg@3x.jpg" alt="bg" />
+      <div className="bg" />
       <LiveTickerWrapper
         title={intl.formatMessage({ id: 'marketCap' })}
         value="123,456,789"

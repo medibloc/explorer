@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
-    "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.6",
     "immutable": "^3.8.2",
     "jsonic": "^0.3.0",
@@ -21,6 +20,7 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
+    "react-scroll": "^1.7.10",
     "redux": "^4.0.0",
     "redux-actions": "^2.4.0",
     "redux-logger": "^3.0.6",

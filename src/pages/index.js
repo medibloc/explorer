@@ -42,15 +42,6 @@ const setWindowSize = () => {
   );
 };
 
-const injectScript = (src) => {
-  const script = document.createElement('script');
-  script.src = src;
-  script.async = false;
-  script.type = 'text/javascript';
-  const head = document.head || document.getElementsByTagName('head')[0];
-  head.appendChild(script);
-};
-
 class Pages extends Component {
   componentWillMount() {
     w.loader(BlockchainActions
@@ -59,8 +50,6 @@ class Pages extends Component {
   }
 
   componentDidMount() {
-    injectScript('js/flexibility.js');
-    injectScript('js/runScript.js');
     setWindowSize();
     BlockchainActions.subscribe();
     // TickerActions.getMedPrice();

@@ -3,6 +3,16 @@ $tablet-width: 800px;
 $navBar-height: 85px;
 $navBar-side-width: 400px;
 $navBar-border-bottom: 1px;
+$tablet_width: 1200px;
+
+@media (max-width: $tablet-width) {
+  .navBar {
+    .navBarContainer {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+  }
+}
 
 .navBar {
   width: 100%;
@@ -16,8 +26,6 @@ $navBar-border-bottom: 1px;
   .navBarContainer {
     max-width: $desktop-width;
     width: 100%;
-    margin-left: 30px;
-    margin-right: 30px;
 
     display: flex;
     flex-wrap: wrap;

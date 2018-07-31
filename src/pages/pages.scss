@@ -44,21 +44,31 @@ $footer-margin-height: 50px;
   display: flex;
   flex-direction: column;
 
-  .bg {
-    position: absolute;
-    z-index: -1;
-    top: $navBar_height;
-    width: 1920px;
-  }
-
   .homeTokenInfo {
     max-width: 1100px;
     width: 100%;
     margin: auto;
     margin-top: 20px;
+    overflow: hidden;
+    -ms-overflow: hidden;
 
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+
+    .bg {
+      position: absolute;
+      z-index: -2;
+      top: $navBar_height;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 250px;
+
+      background-image: url("https://i.imgur.com/P1k5vK1.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
 
     .verticalLine {
       margin-top: auto;
@@ -76,6 +86,7 @@ $footer-margin-height: 50px;
 
     .blur {
       top: 20px;
+      left: -50vw;
       position: absolute;
       z-index: -1;
       height: 500px;

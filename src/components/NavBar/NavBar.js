@@ -47,14 +47,14 @@ const NavBar = ({
                 // eslint-disable-next-line
                 navBarOpen && <div className="dimmer" onClick={closeNavBar} />
               }
-              <button className="navBarOpener" type="button" onClick={navBarOpen ? closeNavBar : openNavBar}>
+              <button className="navBarOpener" type="button">
                 {
                   navBarOpen ? (
                     // eslint-disable-next-line
-                    <img src="/image/icon/ico-close.svg" alt="opener" />
+                    <img src="/image/icon/ico-close.svg" alt="opener" onClick={closeNavBar} />
                   ) : (
                   // eslint-disable-next-line
-                    <img src="/image/icon/ico-hamberg.svg" alt="opener" />
+                    <img src="/image/icon/ico-hamberg.svg" alt="opener" onClick={openNavBar} />
                   )
                 }
               </button>

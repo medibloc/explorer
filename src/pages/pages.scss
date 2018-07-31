@@ -46,9 +46,7 @@ $footer-margin-height: 50px;
 
   .bg {
     position: absolute;
-    margin: auto;
     z-index: -1;
-    left: calc(50% - 960px);
     top: $navBar_height;
     width: 1920px;
   }
@@ -60,7 +58,7 @@ $footer-margin-height: 50px;
     margin-top: 20px;
 
     display: flex;
-    // justify-content: space-between;
+    justify-content: center;
 
     .verticalLine {
       margin-top: auto;
@@ -80,9 +78,8 @@ $footer-margin-height: 50px;
       top: 20px;
       position: absolute;
       z-index: -1;
-      left: -50vw;
       height: 500px;
-      width: 200vw;
+      width: 100vw;
       background: white;
     }
 

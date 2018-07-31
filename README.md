@@ -56,7 +56,7 @@ To connect with custom MediBloc blockchain, Node IP address should be set (or ch
 `NODE_ENDPOINT` should be set with the custom node address. By default, `node1` in [go-medibloc](https://github.com/medibloc/go-medibloc) uses 9921 port.
 
 ## License
-
+```
 Copyright 2018 MediBloc
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -70,3 +70,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+```

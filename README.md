@@ -47,7 +47,7 @@ The `config.js` file contains configuration settings for MediBloc Explorer.
 
 #### Node IP address
 
-To connect custom MediBloc blockchain, Node IP address should be set (or changed):
+To connect with custom MediBloc blockchain, Node IP address should be set (or changed):
 
   ```
   export const NODE_ENDPOINT = 'http://localhost:9921';

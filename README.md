@@ -1,16 +1,16 @@
 # MediBloc Blockchain Explorer
 
-MediBlock Explorer works with [go-medibloc](https://github.com/medibloc/go-medibloc). Current version of Explorer doesn't have a server feature.
+MediBloc Explorer works with [go-medibloc](https://github.com/medibloc/go-medibloc). Current version of MediBloc Explorer does not have a server feature.
 
 ## Prerequisites
 
 To run MediBloc Explorer following resources are required.
 
-- Nodejs v8.11.3 or higher (<https://nodejs.org/>)
+- Node.js v8.11.3 or higher (<https://nodejs.org/>)
 
 - Yarn v1.9.2 (<https://yarnpkg.com/en/docs/install>)
 
-- Go-MediBloc v0.2 (<https://github.com/medibloc/go-medibloc>) - You need to install all required resources written in [go-medibloc](https://github.com/medibloc/go-medibloc).
+- go-medibloc v0.2 (<https://github.com/medibloc/go-medibloc>) - You need to install all required resources written in [go-medibloc](https://github.com/medibloc/go-medibloc).
 
   ```
   git clone https://github.com/medibloc/go-medibloc.git
@@ -21,7 +21,7 @@ To run MediBloc Explorer following resources are required.
 
 ## Installation
 
-- Clone the MediBloc Explorer Repository and run.
+- Clone the MediBloc Explorer repository and run.
 
   ```
   git clone https://github.com/medibloc/explorer.git
@@ -33,7 +33,7 @@ To run MediBloc Explorer following resources are required.
 
 MediBloc Explorer is using Webpack.
 
-If you want to watch all the changes of the code in real time, run the following command. It will run the MediBloc Explorer on the port 3000 (<http://localhost:3000>)
+If you want to watch all the changes of the code in real time, run the following command. It will run the MediBloc Explorer on the port 3000(<http://localhost:3000>).
 
 `yarn start`
 
@@ -47,13 +47,13 @@ The `config.js` file contains configuration settings for MediBloc Explorer.
 
 #### Node IP address
 
-To connect custom medibloc blockchain, Node IP address should be set (or changed):
+To connect custom MediBloc blockchain, Node IP address should be set (or changed):
 
   ```
   export const NODE_ENDPOINT = 'http://localhost:9921';
   ```
 
-`NODE_ENDPOINT` should be set with the custom node address. By default, `node1` in `go-medibloc` uses 9921 port.
+`NODE_ENDPOINT` should be set with the custom node address. By default, `node1` in [go-medibloc](https://github.com/medibloc/go-medibloc) uses 9921 port.
 
 ## License
 

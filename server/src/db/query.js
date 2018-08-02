@@ -1,6 +1,6 @@
 import { Op } from 'sequelize';
 
-const DEFAULT_PAGINATION_COUNT = 100;
+const MAX_PAGINATION_COUNT = 100;
 
 const toPagination = (option) => {
   let { from, limit, to } = option;
@@ -14,13 +14,15 @@ const toPagination = (option) => {
     if (to) {
       console.log('limit is ignored'); // eslint-disable-line no-console
     } else {
-      limit = Math.min(limit, DEFAULT_PAGINATION_COUNT);
+      limit = Math.min(limit, MAX_PAGINATION_COUNT);
     }
+  } else if (!to) {
+    to = from + MAX_PAGINATION_COUNT - 1;
   }
   if (to) {
     if (to < from) {
       console.log('to must not be smaller than from. set default count'); // eslint-disable-line no-console
-      to = from + DEFAULT_PAGINATION_COUNT - 1; // eslint-disable-line no-param-reassign
+      to = from + MAX_PAGINATION_COUNT - 1; // eslint-disable-line no-param-reassign
     }
     limit = to - from + 1;
   }

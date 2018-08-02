@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import config from '../../config';
 
+import db from '../db';
 import Block from '../block/model';
 import Transaction from '../transaction/model';
 
@@ -21,8 +22,8 @@ const parseTransaction = (block, tx) => ({
   txHash: tx.hash,
 });
 
-const handleBlockResponse = blocks => Block
-  .bulkCreate(blocks.map(parseBlock))
+const handleBlockResponse = (blocks, t) => Block
+  .bulkCreate(blocks.map(parseBlock), { transaction: t })
   .then((res) => {
     console.log(`blocks from ${res[0].height} to ${res[res.length - 1].height} added`); // eslint-disable-line no-console
     let txs = [];
@@ -38,9 +39,9 @@ const handleBlockResponse = blocks => Block
     const txCount = txs.length;
     if (txCount) {
       console.log(`add ${txCount} transactions`); // eslint-disable-line no-console
-      return Transaction.bulkCreate(txs);
+      return Transaction.bulkCreate(txs, { transaction: t });
     }
-    return null;
+    return Promise.resolve();
   });
 
 export default async () => {
@@ -57,23 +58,25 @@ export default async () => {
   if (currentHeight >= lastHeight) {
     return Promise.resolve();
   }
-  const getBlocks = () => {
-    const from = currentHeight + 1;
-    const step = Math.min(REQUEST_STEP, lastHeight - from + 1);
-    const to = from + step - 1;
-    return axios({
-      method: 'get',
-      params: { from, to },
-      url: `${url}/v1/blocks`,
-    }).then(res => handleBlockResponse(res.data.blocks || []))
-      .then(() => {
-        currentHeight = to;
-        if (currentHeight < lastHeight) {
-          return getBlocks();
-        }
-        return null;
-      })
-      .catch(console.error); // eslint-disable-line no-console
-  };
-  return getBlocks();
+  return db.transaction((t) => {
+    const getBlocks = () => {
+      const from = currentHeight + 1;
+      const step = Math.min(REQUEST_STEP, lastHeight - from + 1);
+      const to = from + step - 1;
+      return axios({
+        method: 'get',
+        params: { from, to },
+        url: `${url}/v1/blocks`,
+      }).then(res => handleBlockResponse(res.data.blocks || [], t))
+        .then(() => {
+          currentHeight = to;
+          if (currentHeight < lastHeight) {
+            return getBlocks();
+          }
+          return null;
+        })
+        .catch(console.error); // eslint-disable-line no-console
+    };
+    return getBlocks();
+  });
 };

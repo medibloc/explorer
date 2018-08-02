@@ -2,11 +2,7 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import express from 'express';
 
-import config from '../config';
 import route from './route';
-import initBlockChain from './blockchain/init';
-
-const { port } = config;
 
 const sendError = (err, req, res) => {
   const code = err.status || 500;
@@ -26,16 +22,12 @@ const errorHandler = (err, req, res, next) => {
   return sendError(err, req, res);
 };
 
-initBlockChain().then(() => {
-  console.log('sync blockchain complete'); // eslint-disable-line no-console
-
+export default () => {
   const app = express();
+
   app.use(compression());
   app.use(bodyParser.json());
   app.use('/api', route);
   app.use(errorHandler);
-
-  app.listen(port, () => {
-    console.log(`Listening on ${port}`); // eslint-disable-line no-console
-  });
-});
+  return app;
+};

@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import app from '../utils/testUtil';
+import app from '../utils/testApp';
 
 import Block from './model';
 

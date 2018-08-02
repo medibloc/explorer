@@ -12,6 +12,7 @@ const REQUEST_STEP = 100;
 const parseBlock = block => ({
   data: block,
   height: +block.height,
+  id: +block.height,
 });
 
 const parseTransaction = (block, tx) => ({
@@ -25,8 +26,13 @@ const handleBlockResponse = blocks => Block
   .then((res) => {
     console.log(`blocks from ${res[0].height} to ${res[res.length - 1].height} added`); // eslint-disable-line no-console
     let txs = [];
+    const blockMap = blocks.reduce((obj, b) => {
+      obj[+b.height] = b; // eslint-disable-line no-param-reassign
+      return obj;
+    }, {});
     res.forEach((block) => {
-      txs = txs.concat((block.transactions || []).map(tx => parseTransaction(block, tx)));
+      const { transactions = [] } = blockMap[block.height];
+      txs = txs.concat(transactions.map(tx => parseTransaction(block, tx)));
     });
 
     const txCount = txs.length;
@@ -48,6 +54,9 @@ export default async () => {
   }
   const lastHeight = +medState.data.height;
   console.log(`current height ${currentHeight}, last height ${lastHeight}`); // eslint-disable-line no-console
+  if (currentHeight >= lastHeight) {
+    return Promise.resolve();
+  }
   const getBlocks = () => {
     const from = currentHeight + 1;
     const step = Math.min(REQUEST_STEP, lastHeight - from + 1);

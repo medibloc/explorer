@@ -1,3 +1,10 @@
-import config from './default';
+import { merge } from 'lodash';
 
-export default config;
+import defaultConfig from './default';
+import test from './test';
+
+const configs = {
+  test,
+};
+
+export default merge({}, defaultConfig, configs[process.env.NODE_ENV] || {});

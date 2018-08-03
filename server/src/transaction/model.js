@@ -6,7 +6,7 @@ import db from '../db';
 import Block from '../block/model';
 
 export default db.define('transactions', {
-  ...data,
+  data,
   id,
   txHash: { type: Sequelize.STRING, unique: true },
   ...refer(Block),

@@ -26,7 +26,7 @@ const toPagination = (option) => {
     }
     limit = to - from + 1;
   }
-  return { from, limit, to };
+  return { offset: from, limit, to };
 };
 
 export const listQuery = ({ // eslint-disable-line import/prefer-default-export, max-len
@@ -43,12 +43,21 @@ export const listQuery = ({ // eslint-disable-line import/prefer-default-export,
       where.push({ id: +q });
     }
     if (searchColumns) {
-      searchColumns.forEach();
+      searchColumns.forEach((col) => {
+        if (col.type.constructor.key === 'INTEGER') {
+          if (+q) {
+            where.push({ [col.fieldName]: +q });
+          }
+        } else {
+          where.push({ [col.fieldName]: { [Op.like]: `%${q}%` } });
+        }
+      });
     }
 
     param.where = { [Op.or]: where };
   }
   // ordering
+  param.order = [['id', 'DESC']];
 
   return param;
 };

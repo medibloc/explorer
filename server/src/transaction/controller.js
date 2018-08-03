@@ -13,7 +13,9 @@ export const get = async (req, res) => {
   res.json({ transaction });
 };
 
+const searchColumns = [Transaction.tableAttributes.txHash];
+
 export const list = async (req, res) => {
-  const transactions = await Transaction.findAll(listQuery(req.query));
+  const transactions = await Transaction.findAll(listQuery(req.query, searchColumns));
   res.json({ transactions });
 };

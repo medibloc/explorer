@@ -28,13 +28,13 @@ const parseTx = (block, tx) => ({
 
 const accountUpdater = (t) => {
   const accountMap = {};
-  const getAccount = (accountId) => {
-    if (accountMap[accountId]) {
-      return Promise.resolve(accountMap[accountId]);
+  const getAccount = (address) => {
+    if (accountMap[address]) {
+      return Promise.resolve(accountMap[address]);
     }
-    return Account.findOrCreate({ transaction: t, where: { accountId } })
+    return Account.findOrCreate({ transaction: t, where: { address } })
       .then(([account]) => {
-        accountMap[accountId] = account;
+        accountMap[address] = account;
         return account;
       });
   };
@@ -65,8 +65,15 @@ const accountUpdater = (t) => {
       AccountLog.create(toLog, { transaction: t }),
     ]);
   };
+  const updateAccountsData = height => Promise.all(
+    Object.values(accountMap).map(dbAccount => axios({
+      params: { address: dbAccount.address, height },
+      url: `${url}/v1/user/accountstate`,
+    }).then(({ data }) => dbAccount
+      .update({ data }, { where: { id: dbAccount.id }, transaction: t }))),
+  );
 
-  return { handleTx };
+  return { handleTx, updateAccountsData };
 };
 
 const handleBlockResponse = (blocks, handleTx, t) => Block
@@ -109,7 +116,7 @@ export default async () => {
     return Promise.resolve();
   }
   return db.transaction((t) => {
-    const { handleTx } = accountUpdater(t);
+    const { handleTx, updateAccountsData } = accountUpdater(t);
     const getBlocks = () => {
       const from = currentHeight + 1;
       const step = Math.min(REQUEST_STEP, lastHeight - from + 1);
@@ -124,7 +131,7 @@ export default async () => {
           if (currentHeight < lastHeight) {
             return getBlocks();
           }
-          return Promise.resolve();
+          return updateAccountsData(lastHeight);
         });
     };
     return getBlocks();

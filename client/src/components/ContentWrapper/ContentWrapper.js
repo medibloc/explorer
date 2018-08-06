@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -21,10 +22,11 @@ const ContentWrapper = ({ type, data, titles }) => {
     if (ti.indexOf('number') !== -1) hash = data[title];
     if (ti.indexOf('account') !== -1) hash = data[title];
   });
-  const url = `/${type}/${hash}`;
+  const url = (type === 'bp') ? `/account/${hash}` : `/${type}/${hash}`;
+
 
   return (
-    <NavLink to={url} className="contentWrapperLinker">
+    <NavLink to={url} className={cx('contentWrapperLinker', { special: (data.Ranking >= 1 && data.Ranking <= 21) })}>
       <div className="contentWrapper">
         <div className="contentWrapperIcon">
           <img src={`/image/icon/ico-${type}.svg`} alt="contentWrapperIcon" />

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import { GlobalActions } from '../../redux/actionCreators';
-import { contentsInPage, navigationDisplay } from '../../config';
+import { bpsInPage, contentsInPage, navigationDisplay } from '../../config';
 
 import './Navigation.scss';
 
@@ -43,6 +43,7 @@ class Navigation extends Component {
   lastPage() {
     const {
       accounts,
+      bpList,
       last,
       txList,
       type,
@@ -59,6 +60,8 @@ class Navigation extends Component {
         return Math.ceil((last - 1) / contentsInPage);
       case 'txs':
         return 1;
+      case 'bps':
+        return Math.ceil(bpList.length / bpsInPage);
       default:
         return 1;
     }
@@ -92,6 +95,7 @@ class Navigation extends Component {
 
 Navigation.propTypes = {
   accounts: PropTypes.array,
+  bpList: PropTypes.array,
   last: PropTypes.number,
   page: PropTypes.number.isRequired,
   txList: PropTypes.array,
@@ -107,6 +111,7 @@ Navigation.propTypes = {
 
 Navigation.defaultProps = {
   accounts: [],
+  bpList: [],
   last: 1,
   txList: [],
 };

@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import './NavList.scss';
 
 
-const disableLink = ['tx', 'bp'];
+const disableLink = ['tx'];
 
 const NavList = ({ currentUrl, intl, pages }) => pages.map((page) => {
   const PAGE = page === 'Transaction' ? 'tx' : page.toLowerCase();

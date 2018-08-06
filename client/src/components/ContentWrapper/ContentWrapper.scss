@@ -7,6 +7,26 @@
   flex-direction: row;
   align-items: center;
   text-decoration: none;
+
+
+
+  &.special {
+    .contentWrapperIcon {
+      img {
+        display: block;
+      }
+      img:first-child {
+        display: none;
+      }
+    }
+
+    .contentWrapperInfoContent {
+      span:first-child {
+        font-weight: bold;
+        color: #ff9f00;
+      }
+    }
+  }
 }
 
 .contentWrapper {

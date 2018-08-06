@@ -8,7 +8,7 @@ import './PageInfo.scss';
 const titlize = (string) => {
   let title = '';
   string.split('-').forEach((pre, i) => {
-    title = `${title}${i !== 0 ? pre.charAt(0).toUpperCase() : pre.charAt(0)}${pre.slice(1)}`;
+    title = `${title}${pre.charAt(0).toUpperCase()}${pre.slice(1)} `;
   });
   return title;
 };

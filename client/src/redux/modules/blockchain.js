@@ -6,7 +6,7 @@ import {
   accsGetter,
   blockGetter,
   blocksGetter,
-  candidatesGetter,
+  bpsGetter,
   medStateGetter,
   subscriber,
   txGetter,
@@ -36,7 +36,7 @@ const GET_TX = 'blockchain/GET_TX';
 const SET_TX = 'blockchain/SET_TX';
 const SET_TXS = 'blockchain/SET_TXS';
 
-const GET_CANDIDATES = 'blockchain/GET_CANDIDATES';
+const GET_BPS = 'blockchain/GET_BPS';
 
 const SUBSCRIBE = 'blockchain/SUBSCRIBE';
 
@@ -71,7 +71,7 @@ const initialState = {
   txs: [], // executed txs from event subscriber
   txsFromBlock: [], // txs included in the specific block
 
-  candidateList: [],
+  bpList: [],
 
   subscribe: false,
 
@@ -125,9 +125,9 @@ const reducer = handleActions({
     txList: sorter(action.payload, 'timestamp', -1),
   }),
 
-  [GET_CANDIDATES]: (state, action) => ({
+  [GET_BPS]: (state, action) => ({
     ...state,
-    candidateList: action.payload.candidates,
+    bpList: sorter(action.payload.candidates, 'votePower'),
   }),
 
   [SUBSCRIBE]: state => ({ ...state, subscribe: true }),
@@ -151,7 +151,7 @@ export const getBlocks = ({ from, to }) => dispatch => blocksGetter(
   ERROR,
   { from, to },
 );
-export const getCandidates = () => dispatch => candidatesGetter(dispatch, GET_CANDIDATES, ERROR);
+export const getBPs = () => dispatch => bpsGetter(dispatch, GET_BPS, ERROR);
 export const getInitialBlocks = ({ from, to }) => dispatch => blocksGetter(
   dispatch,
   GET_INITIAL_BLOCKS,

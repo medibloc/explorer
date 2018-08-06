@@ -17,6 +17,7 @@ export const snsLink = {
 
 // INTERNAL CONFIG
 export const contentsInPage = 20;
+export const bpsInPage = 30;
 export const subscribeMaxResponse = 4;
 
 // STYLING CONFIG

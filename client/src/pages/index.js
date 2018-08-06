@@ -79,7 +79,7 @@ class Pages extends Component {
                     <Route exact path="/accounts" component={Accounts} />
                     <Route path="/block" component={Block} />
                     <Route exact path="/blocks" component={Blocks} />
-                    <Route exact path="/bp" component={BP} />
+                    <Route exact path="/bps" component={BP} />
                     <Route path="/tx" component={Tx} />
                     <Route exact path="/txs" component={Txs} />
                   </Layout>

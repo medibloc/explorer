@@ -16,10 +16,11 @@ const titles = {
   block: ['Block Hash', 'BP', 'Time Stamp'],
   tx: ['Time Stamp', 'Transaction Hash'],
   account: [],
+  bp: ['Ranking', 'Account', 'votes'],
 };
 
 const TableWithIcon = ({ data, type }) => {
-  const dataList = [];
+  let dataList = [];
   const titleList = type ? titles[type] : [];
   if (data) {
     switch (type) {
@@ -32,6 +33,9 @@ const TableWithIcon = ({ data, type }) => {
       case 'tx':
         data.forEach(datum => dataList.push(txMapper(datum)));
         break;
+      case 'bp':
+        dataList = data;
+        break;
       default:
         break;
     }
@@ -41,9 +45,9 @@ const TableWithIcon = ({ data, type }) => {
     <div className="blocks">
       {
         dataList.map((datum, i) => {
-          const d = Object.assign({}, datum, {
+          const d = datum['Time Stamp'] !== undefined ? Object.assign({}, datum, {
             'Time Stamp': timeConverter(datum['Time Stamp']),
-          });
+          }) : datum;
           return (
             <ContentWrapper
               type={type}

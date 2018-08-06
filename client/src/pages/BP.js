@@ -1,12 +1,20 @@
-import React from 'react';
-// import Blocks from '../container/Blocks';
+import React, { Fragment } from 'react';
+
+import BPList from '../components/BPList';
+import Navigation from '../components/Navigation';
+import PageInfo from '../components/PageInfo';
+
 
 const BP = () => (
-  <div>
-    <h2>
-      BP
-    </h2>
-  </div>
+  <Fragment>
+    <PageInfo title="block-producer-list" />
+    <div className="bpsContents">
+      <BPList />
+    </div>
+    <div className="bpsNavigation">
+      <Navigation type="bps" />
+    </div>
+  </Fragment>
 );
 
 export default BP;

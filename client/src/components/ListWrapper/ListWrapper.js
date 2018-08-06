@@ -83,7 +83,8 @@ const ListWrapper = ({
       {
         data.map((datum, i) => (
           // eslint-disable-next-line
-          <div className="listWrapperContentRow" key={i}>
+          // <div className="listWrapperContentRow" key={i}>
+          <div className={cx('listWrapperContentRow', { special: (datum.Ranking >= 1 && datum.Ranking <= 21) })} key={i}>
             { linkDistributor(centerList, datum, linkTo, rightList, spacing, titles) }
           </div>
         ))

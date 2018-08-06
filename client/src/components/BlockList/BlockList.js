@@ -55,6 +55,7 @@ class BlockList extends Component {
 
   render() {
     const { blockList, mode } = this.props;
+
     return (
       mode !== 2 ? (
         <ListWrapper

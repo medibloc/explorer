@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-// import TxList from '../components/TxList';
+import TxList from '../components/TxList';
+import Navigation from '../components/Navigation';
 import PageInfo from '../components/PageInfo';
-// import Navigation from '../container/Navigation';
 
 
 const Txs = () => (
-  <div className="txs">
+  <Fragment>
     <PageInfo title="transactions-list" />
-    {/*<div className="txsContents">
-      <TxList />
-    </div>*/}
-  </div>
+    <div className="txsContents">
+      <TxList type="tx" />
+    </div>
+    <div className="txsNavigation">
+      <Navigation type="txs" />
+    </div>
+  </Fragment>
 );
 
 export default Txs;

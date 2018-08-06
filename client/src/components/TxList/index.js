@@ -6,6 +6,7 @@ import TxList from './TxList';
 const mapStateToProps = ({ blockchain, global }) => ({
   medState: blockchain.medState,
   txList: blockchain.txList,
+  txs: blockchain.txs,
   txsFromBlock: blockchain.txsFromBlock,
 
   language: global.language,

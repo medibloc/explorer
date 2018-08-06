@@ -6,8 +6,6 @@ import { NavLink } from 'react-router-dom';
 import './NavList.scss';
 
 
-const disableLink = ['tx'];
-
 const NavList = ({ currentUrl, intl, pages }) => pages.map((page) => {
   const PAGE = page === 'Transaction' ? 'tx' : page.toLowerCase();
   return (
@@ -17,7 +15,6 @@ const NavList = ({ currentUrl, intl, pages }) => pages.map((page) => {
           'navListBtn',
           {
             navSelected: currentUrl.indexOf(PAGE) !== -1,
-            navDisabled: disableLink.indexOf(PAGE) !== -1,
           },
         )}
         to={`/${PAGE}s`}

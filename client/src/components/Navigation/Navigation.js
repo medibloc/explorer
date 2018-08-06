@@ -46,6 +46,7 @@ class Navigation extends Component {
       bpList,
       last,
       txList,
+      txs,
       type,
     } = this.props;
 
@@ -59,7 +60,7 @@ class Navigation extends Component {
       case 'blocks':
         return Math.ceil((last - 1) / contentsInPage);
       case 'txs':
-        return 1;
+        return Math.ceil(txs.length / contentsInPage);
       case 'bps':
         return Math.ceil(bpList.length / bpsInPage);
       default:
@@ -99,6 +100,7 @@ Navigation.propTypes = {
   last: PropTypes.number,
   page: PropTypes.number.isRequired,
   txList: PropTypes.array,
+  txs: PropTypes.array,
   type: PropTypes.oneOf([
     'account',
     'accounts',
@@ -114,6 +116,7 @@ Navigation.defaultProps = {
   bpList: [],
   last: 1,
   txList: [],
+  txs: [],
 };
 
 export default Navigation;

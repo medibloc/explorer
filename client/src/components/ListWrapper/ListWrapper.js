@@ -31,7 +31,9 @@ const linkDistributor = (
           })}
           key={title}
         >
-          {datum[title]}
+          {
+            (title === 'To' && datum[title] === '000000000000000000000000000000000000000000000000000000000000000000') ? '-' : datum[title]
+          }
         </NavLink>
       );
     }

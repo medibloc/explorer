@@ -13,6 +13,7 @@ import Transaction from '../transaction/model';
 const { url } = config.blockchain;
 
 const REQUEST_STEP = 100;
+const UPDATE_PERIOD = 5000; // 5 sec
 
 const parseBlock = block => ({
   data: block,
@@ -101,7 +102,7 @@ const handleBlockResponse = (blocks, handleTx, t) => Block
     return Promise.resolve();
   });
 
-export default async () => {
+const sync = async () => {
   const [lastBlock, medState] = await Promise.all([
     Block.findOne({ order: [['id', 'desc']] }),
     axios.get(`${url}/v1/node/medstate`),
@@ -139,4 +140,9 @@ export default async () => {
     console.error(err); // eslint-disable-line no-console
     process.exit(1);
   });
+};
+
+export default async () => {
+  setInterval(sync, UPDATE_PERIOD);
+  return sync();
 };

@@ -11,6 +11,7 @@ import {
   subscriber,
   txGetter,
 } from '../helpers/blockchain';
+import { simpleRequester } from '../helpers/common';
 import { sorter } from '../../lib';
 
 
@@ -152,6 +153,12 @@ export const getBlocks = ({ from, to }) => dispatch => blocksGetter(
   ERROR,
   { from, to },
 );
+export const getBlocksFromServer = ({ from, to }) => dispatch => simpleRequester(dispatch, {
+  actionType: GET_BLOCKS,
+  ERROR,
+  params: { from, to },
+  url: '/api/v1/blocks',
+});
 export const getBPs = () => dispatch => bpsGetter(dispatch, GET_BPS, ERROR);
 export const getInitialBlocks = ({ from, to }) => dispatch => blocksGetter(
   dispatch,

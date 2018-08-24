@@ -2,6 +2,7 @@
   "name": "explorer",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "autoprefixer": "^9.0.2",
     "axios": "^0.18.0",
@@ -10,6 +11,7 @@
     "jsonic": "^0.3.0",
     "prop-types": "^15.6.2",
     "qrcode": "^1.2.0",
+    "query-string": "^6.1.0",
     "react": "^16.4.1",
     "react-collapse": "^4.0.3",
     "react-dom": "^16.4.1",
@@ -20,6 +22,7 @@
     "react-onclickoutside": "^6.7.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
+    "react-router-prop-types": "^1.0.4",
     "react-scripts": "1.1.4",
     "react-scroll": "^1.7.10",
     "redux": "^4.0.0",

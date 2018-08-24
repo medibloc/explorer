@@ -26,16 +26,10 @@ To run MediBloc Explorer following resources are required.
   ```
   git clone https://github.com/medibloc/explorer.git
   cd explorer
-  yarn
+  cd client && npm install
+  cd ..
+  cd server && npm install
   ```
-
-## Build
-
-```
-cd client && npm install
-cd server && npm install
-```
-
 
 ## Start(Server)
 

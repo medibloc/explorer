@@ -4,6 +4,7 @@
   "description": "explorer server",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint src",
     "start": "babel-node src/server",
     "syncdb": "babel-node src/db/sync",
     "test": "NODE_ENV=test mocha --require babel-register src/**/test.js"
@@ -34,6 +35,11 @@
     "babel-preset-stage-3": "^6.24.1",
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
+    "eslint": "^5.4.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1",
     "mocha": "^5.2.0",
     "supertest": "^3.1.0"
   }

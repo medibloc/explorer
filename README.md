@@ -31,7 +31,38 @@ To run MediBloc Explorer following resources are required.
 
 ## Build
 
-MediBloc Explorer is using Webpack.
+```
+cd client && npm install
+cd server && npm install
+```
+
+
+## Start(Server)
+
+MediBloc Explorer Server uses Mysql as Backend Storage
+
+Install & Configure Mysql
+
+General : https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/
+
+Mac : https://github.com/rajivkanaujia/alphaworks/wiki/Install-MySQL-using-Homebrew
+
+Default database name is "medi_explorer". You can change database name in server/config/default.js. Create this database with mysql command-line.
+
+And then, You must configure ENVIRONMNET VARIABLES with your DB username & password
+
+```
+export EXPLORER_DB_USERNAME={username}
+export EXPLORER_DB_PASSWORD={password}
+```
+
+Then,
+`cd server && npm start`
+
+
+## Start(Client)
+
+MediBloc Explorer Client is using Webpack.
 
 If you want to watch all the changes of the code in real time, run the following command. It will run the MediBloc Explorer on the port 3000(<http://localhost:3000>).
 

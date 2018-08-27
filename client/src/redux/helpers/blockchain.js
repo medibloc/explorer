@@ -135,10 +135,7 @@ export const subscriber = (dispatch, actionTypes, ERROR) => {
 // get: "/v1/block"
 // params: "hash[hash, 'genesis', 'confirmed', 'tail']"
 export const blockGetter = (dispatch, actionType, ERROR, hash) => simpleRequester(dispatch, {
-  url: `${NODE_ENDPOINT}/v1/block`,
-  params: {
-    hash,
-  },
+  url: `${NODE_ENDPOINT}/blocks/${hash}`,
   actionType,
   ERROR,
 });
@@ -151,7 +148,7 @@ export const blocksGetter = (
   ERROR,
   { from, to },
 ) => simpleRequester(dispatch, {
-  url: `${NODE_ENDPOINT}/v1/blocks`,
+  url: `${NODE_ENDPOINT}/blocks`,
   params: {
     from: from < 1 ? 1 : from,
     to,
@@ -163,11 +160,7 @@ export const blocksGetter = (
 // get: "/v1/user/accountstate"
 // params: "address / height[number, 'genesis', 'confirmed', 'tail']"
 export const accGetter = (dispatch, actionType, ERROR, address) => simpleRequester(dispatch, {
-  url: `${NODE_ENDPOINT}/v1/user/accountstate`,
-  params: {
-    address,
-    height: 'tail',
-  },
+  url: `${NODE_ENDPOINT}/accounts/${address}`,
   actionType,
   ERROR,
 });
@@ -180,15 +173,24 @@ export const accDetailGetter = (dispatch, actionType, ERROR, address) => simpleR
 });
 
 // get: "/v1/user/accounts"
-export const accsGetter = (dispatch, actionType, ERROR) => simpleRequester(dispatch, {
-  url: `${NODE_ENDPOINT}/v1/user/accounts`,
+export const accsGetter = (
+  dispatch,
+  actionType,
+  ERROR,
+  { from, to },
+) => simpleRequester(dispatch, {
+  url: `${NODE_ENDPOINT}/accounts`,
+  params: {
+    from: from < 1 ? 1 : from,
+    to,
+  },
   actionType,
   ERROR,
 });
 
 // get: "/v1/node/medstate"
 export const medStateGetter = (dispatch, actionType, ERROR) => simpleRequester(dispatch, {
-  url: `${NODE_ENDPOINT}/v1/node/medstate`,
+  url: `${NODE_ENDPOINT}/info`,
   actionType,
   ERROR,
 });
@@ -196,10 +198,7 @@ export const medStateGetter = (dispatch, actionType, ERROR) => simpleRequester(d
 // get: "/v1/transaction"
 // params: "hash"
 export const txGetter = (dispatch, actionType, ERROR, hash) => simpleRequester(dispatch, {
-  url: `${NODE_ENDPOINT}/v1/transaction`,
-  params: {
-    hash,
-  },
+  url: `${NODE_ENDPOINT}/transactions/${hash}`,
   actionType,
   ERROR,
 });

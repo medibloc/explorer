@@ -5,7 +5,7 @@ import { data, id } from '../db/columns';
 
 export default db.define('accounts', {
   address: { type: Sequelize.STRING, unique: true },
-  balance: { defaultValue: '0', type: Sequelize.DECIMAL(16, 8) },
+  balance: { defaultValue: '0', type: Sequelize.DECIMAL(24, 8) },
   data, // last data received from node(BP)
   id,
 });

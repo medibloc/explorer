@@ -69,7 +69,7 @@ const accountUpdater = (t) => {
   const updateAccountsData = height => Promise.all(
     Object.values(accountMap).map(dbAccount => axios({
       params: { address: dbAccount.address, height },
-      url: `${url}/v1/user/accountstate`,
+      url: `${url}/v1/account`,
     }).then(({ data }) => dbAccount
       .update({ data }, { where: { id: dbAccount.id }, transaction: t }))),
   );

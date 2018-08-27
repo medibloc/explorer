@@ -1,6 +1,6 @@
 import { NotFound } from 'http-errors';
 
-import { listQuery } from '../db/query';
+import { listQueryWithCount } from '../db/query';
 import Block from './model';
 
 export const get = async (req, res) => {
@@ -13,6 +13,6 @@ export const get = async (req, res) => {
 };
 
 export const list = async (req, res) => {
-  const blocks = await Block.findAll(listQuery(req.query));
+  const blocks = await listQueryWithCount(Block, req.query);
   res.json({ blocks });
 };

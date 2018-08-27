@@ -1,3 +1,4 @@
+import { BadRequest } from 'http-errors';
 import { Op } from 'sequelize';
 
 const MAX_PAGINATION_COUNT = 100;
@@ -19,20 +20,19 @@ const toPagination = (option) => {
   } else if (!to) {
     to = from + MAX_PAGINATION_COUNT - 1;
   }
-  if (to) {
+  if (to >= 0) {
     if (to < from) {
-      console.log('to must not be smaller than from. set default count'); // eslint-disable-line no-console
-      to = from + MAX_PAGINATION_COUNT - 1; // eslint-disable-line no-param-reassign
+      throw new BadRequest('to is smaller than from');
     }
     limit = to - from + 1;
   }
   return { offset: from, limit, to };
 };
 
-export const listQuery = ({ // eslint-disable-line import/prefer-default-export, max-len
+export const listQuery = ({
   from, limit, q, to,
 }, searchColumns) => {
-  const param = {
+  const params = {
     ...toPagination({ from, limit, to }),
   };
 
@@ -54,10 +54,19 @@ export const listQuery = ({ // eslint-disable-line import/prefer-default-export,
       });
     }
 
-    param.where = { [Op.or]: where };
+    params.where = { [Op.or]: where };
   }
   // ordering
-  param.order = [['id', 'DESC']];
+  params.order = [['id', 'DESC']];
 
-  return param;
+  return params;
+};
+
+export const listQueryWithCount = (model, ...args) => {
+  const params = listQuery(...args);
+  const { offset } = params;
+  return model.findAndCountAll(params).then(({ count, rows }) => ({
+    data: rows,
+    pagination: { count: rows.length, offset, total: count },
+  }));
 };

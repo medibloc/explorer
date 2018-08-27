@@ -89,7 +89,11 @@ const reducer = handleActions({
   [SET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload }),
 
   [GET_BLOCK]: (state, action) => ({ ...state, block: action.payload }),
-  [GET_BLOCKS]: (state, action) => ({ ...state, blockList: sorter(action.payload.blocks, 'height') }),
+  [GET_BLOCKS]: (state, action) => {
+    const blockList = [];
+    action.payload.blocks.forEach(res => blockList.push(res.data));
+    return ({...state, blockList: sorter(blockList, 'height')})
+  },
   [GET_INITIAL_BLOCKS]: (state, action) => ({
     ...state,
     blocks: sorter([...state.blocks, ...action.payload.blocks], 'height').slice(0, 5),

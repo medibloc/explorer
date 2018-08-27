@@ -1,22 +1,22 @@
 import PropTypes from 'prop-types';
-import qs from 'query-string';
+// import qs from 'query-string';
 import React, { Component } from 'react';
-import { location as LocationType, match as MatchType } from 'react-router-prop-types';
+// import { location as LocationType, match as MatchType } from 'react-router-prop-types';
 
 import ListWrapper from '../ListWrapper';
 import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
 import TableWithIcon from '../TableWithIcon';
 import { contentsInPage } from '../../config';
 import { blockMapper, spaceMapper } from '../../lib';
-import { getFromTo } from '../../lib/pagination';
+// import { getFromTo } from '../../lib/pagination';
 
 import './BlockList.scss';
 
 
 const blockRanger = (page, height) => {
   if (height < contentsInPage) return { from: 1, to: height };
-  let from = height - page * contentsInPage + 1;
-  let to = height - (page - 1) * contentsInPage;
+  let from = (page - 1) * contentsInPage + 1;
+  let to = page * contentsInPage;
   if (from < 1) from = 1;
   if (to < 1) to = 0;
   return { from, to };
@@ -32,28 +32,49 @@ const titles = ['Block Height', 'Time Stamp', 'Block Hash', 'No.Tx', 'BP'];
 const linkTo = ['block/height', 'block/hash', 'account/bp'];
 const centerList = ['Block Height', 'No.Tx'];
 
-const loadData = (props) => {
-  const { location: { search } } = props;
-  const { page = 1, q } = qs.parse(search);
-  const action = BlockchainActions.getBlocksFromServer({ ...getFromTo(+page, 20), q });
-  w.loader(action);
-};
+// const loadData = (props) => {
+//   const { location: { search } } = props;
+//   const { page = 1, q } = qs.parse(search);
+//   const action = BlockchainActions.getBlocksFromServer({ ...getFromTo(+page, 20), q });
+//   w.loader(action);
+// }
 
 class BlockList extends Component {
-  componentDidMount() {
-    loadData(this.props);
+  constructor(props) {
+    super(props);
+    this.getBlocks = this.getBlocks.bind(this);
   }
 
-  componentWillUpdate(nextProps) {
-    const { location: { search } } = this.props;
-    if (nextProps.location.search !== search) {
-      loadData(nextProps);
-    }
+  componentWillMount() {
+    this.getBlocks();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { page } = this.props;
+    if (page !== prevProps.page) this.getBlocks();
+  }
+
+  componentWillUnmount() {
+    GlobalActions.movePage(1);
+  }
+
+  // componentWillUpdate(nextProps) {
+  //   const { location: { search } } = this.props;
+  //   if (nextProps.location.search !== search) {
+  //     loadData(nextProps);
+  //   }
+  // }
+
+  getBlocks() {
+    const { page, medState: { height } } = this.props;
+    const { from, to } = blockRanger(page, height);
+    w.loader(BlockchainActions.getBlocks({ from, to }));
   }
 
   render() {
-    const { blockList: blockListInRedux, mode } = this.props;
-    const blockList = blockListInRedux.map(item => ({ id: item.id, ...item.data }));
+    // const { blockList: blockListInRedux, mode } = this.props;
+    // const blockList = blockListInRedux.map(item => ({ id: item.id, ...item.data }));
+    const { blockList, mode } = this.props;
 
     return (
       mode !== 2 ? (
@@ -75,8 +96,10 @@ class BlockList extends Component {
 
 BlockList.propTypes = {
   blockList: PropTypes.array.isRequired,
-  location: LocationType.isRequired,
+  // location: LocationType.isRequired,
+  medState: PropTypes.object.isRequired,
   mode: PropTypes.number.isRequired,
+  page: PropTypes.number.isRequired,
 };
 
 export default BlockList;

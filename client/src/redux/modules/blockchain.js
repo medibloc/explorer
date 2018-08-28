@@ -10,6 +10,7 @@ import {
   medStateGetter,
   subscriber,
   txGetter,
+  txsGetter,
 } from '../helpers/blockchain';
 import { simpleRequester } from '../helpers/common';
 import { sorter } from '../../lib';
@@ -34,6 +35,7 @@ const SET_BLOCK = 'blockchain/SET_BLOCK';
 const GET_EXECUTED_TX = 'blockchain/GET_EXECUTED_TX';
 const GET_PENDING_TX = 'blockchain/GET_PENDING_TX';
 const GET_TX = 'blockchain/GET_TX';
+const GET_TXS = 'blockchain/GET_TXS';
 const SET_TX = 'blockchain/SET_TX';
 const SET_TXS = 'blockchain/SET_TXS';
 
@@ -92,7 +94,7 @@ const reducer = handleActions({
   [GET_BLOCKS]: (state, action) => {
     const blockList = [];
     action.payload.blocks.data.forEach(res => blockList.push(res.data));
-    return ({...state, blockList: sorter(blockList, 'height')})
+    return ({ ...state, blockList: sorter(blockList, 'height') });
   },
   [GET_INITIAL_BLOCKS]: (state, action) => ({
     ...state,
@@ -125,6 +127,11 @@ const reducer = handleActions({
     pendingTxs: [...state.pendingTxs, action.payload],
   }),
   [GET_TX]: (state, action) => ({ ...state, tx: action.payload }),
+  [GET_TXS]: (state, action) => {
+    const txList = [];
+    action.payload.transactions.forEach(res => txList.push(res.data));
+    return ({ ...state, txList });
+  },
   [SET_TX]: (state, action) => ({ ...state, tx: action.payload }),
   [SET_TXS]: (state, action) => ({
     ...state,
@@ -172,6 +179,12 @@ export const getInitialBlocks = ({ from, to }) => dispatch => blocksGetter(
 );
 export const getMedState = () => dispatch => medStateGetter(dispatch, GET_MED_STATE, ERROR);
 export const getTx = hash => dispatch => txGetter(dispatch, GET_TX, ERROR, hash);
+export const getTxs = ({ from, to }) => dispatch => txsGetter(
+  dispatch,
+  GET_TXS,
+  ERROR,
+  { from, to },
+);
 export const setAccount = createAction(SET_ACCOUNT);
 export const setBlock = createAction(SET_BLOCK);
 export const setTx = createAction(SET_TX);

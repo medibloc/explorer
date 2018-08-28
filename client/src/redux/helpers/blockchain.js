@@ -203,6 +203,18 @@ export const txGetter = (dispatch, actionType, ERROR, hash) => simpleRequester(d
   ERROR,
 });
 
+export const txsGetter = (
+  dispatch,
+  actionType,
+  ERROR,
+  { from, to },
+) => simpleRequester(dispatch, {
+  url: `${NODE_ENDPOINT}/transactions`,
+  params: { from, to },
+  actionType,
+  ERROR,
+});
+
 // get: "/v1/candidates"
 export const bpsGetter = (dispatch, actionType, ERROR) => simpleRequester(dispatch, {
   url: `${NODE_ENDPOINT}/v1/candidates`,

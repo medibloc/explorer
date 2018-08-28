@@ -42,11 +42,12 @@ class Navigation extends Component {
 
   lastPage() {
     const {
-      accounts,
-      bpList,
-      last,
+      numAccounts,
+      numBlocks,
+      numCandidates,
+      numTxs,
+
       txList,
-      txs,
       type,
     } = this.props;
 
@@ -54,15 +55,15 @@ class Navigation extends Component {
       case 'account':
         return Math.ceil(txList.length / contentsInPage);
       case 'accounts':
-        return Math.ceil(accounts.length / contentsInPage);
+        return Math.ceil(numAccounts / contentsInPage);
       case 'block':
         return Math.ceil(txList.length / contentsInPage);
       case 'blocks':
-        return Math.ceil((last - 1) / contentsInPage);
+        return Math.ceil(numBlocks / contentsInPage);
       case 'txs':
-        return Math.ceil(txs.length / contentsInPage);
+        return Math.ceil(numTxs / contentsInPage);
       case 'bps':
-        return Math.ceil(bpList.length / bpsInPage);
+        return Math.ceil(numCandidates / bpsInPage);
       default:
         return 1;
     }

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-// import qs from 'query-string';
+import qs from 'query-string';
 import React, { Component } from 'react';
 // import { location as LocationType, match as MatchType } from 'react-router-prop-types';
 
@@ -46,27 +46,24 @@ class BlockList extends Component {
   }
 
   componentWillMount() {
-    this.getBlocks();
+    this.getBlocks(this.props);
   }
 
-  componentDidUpdate(prevProps) {
-    const { page } = this.props;
-    if (page !== prevProps.page) this.getBlocks();
+  componentWillUpdate(nextProps) {
+    const { location: { search } } = this.props;
+    if (nextProps.location.search !== search) {
+      this.getBlocks(nextProps);
+    }
   }
 
   componentWillUnmount() {
     GlobalActions.movePage(1);
   }
 
-  // componentWillUpdate(nextProps) {
-  //   const { location: { search } } = this.props;
-  //   if (nextProps.location.search !== search) {
-  //     loadData(nextProps);
-  //   }
-  // }
-
-  getBlocks() {
-    const { page, medState: { height } } = this.props;
+  getBlocks(props) {
+    const { location: { search } } = props;
+    const { page = 1 } = qs.parse(search);
+    const { medState: { height } } = props;
     const { from, to } = blockRanger(page, height);
     w.loader(BlockchainActions.getBlocks({ from, to }));
   }

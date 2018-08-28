@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
+import qs from 'query-string';
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import { GlobalActions } from '../../redux/actionCreators';
 import { bpsInPage, contentsInPage, navigationDisplay } from '../../config';
@@ -8,7 +10,7 @@ import './Navigation.scss';
 
 
 const moveToPage = pageNum => GlobalActions.movePage(pageNum);
-const pages = (currentPage, lastPage, pageDisplay) => {
+const pages = (currentPage, lastPage, pageDisplay, curPath) => {
   // eslint-disable-next-line no-param-reassign
   if (lastPage < pageDisplay) pageDisplay = lastPage;
   const pageNation = [];
@@ -16,11 +18,11 @@ const pages = (currentPage, lastPage, pageDisplay) => {
   if (startPage < 1) startPage = 1;
   if (currentPage + Math.floor(pageDisplay / 2) > lastPage) startPage = lastPage - pageDisplay + 1;
   for (let i = startPage; i < startPage + pageDisplay; i += 1) {
-    pageNation.push(
+    pageNation.push(<NavLink to={`${curPath}?page=${i}`}>
       <button onClick={() => moveToPage(i)} type="button" className={currentPage === i ? 'active' : null} key={i}>
         {i}
-      </button>,
-    );
+      </button>
+    </NavLink>);
   }
   return pageNation;
 };
@@ -72,24 +74,34 @@ class Navigation extends Component {
   render() {
     const { page } = this.props;
     const lastPage = this.lastPage();
+    const qpage = () => parseInt(qs.parse(window.location.search).page, 10) || 1;
+    const path = () => window.location.pathname;
 
     return (
       <div className="navigation">
-        <button onClick={() => moveToPage(1)} type="button">
-          {'<<'}
-        </button>
-        <button onClick={() => moveToPage(page - 1)} type="button" disabled={page === 1}>
-          {'<'}
-        </button>
+        <NavLink to={`${path()}?page=1`}>
+          <button onClick={() => moveToPage(1)} type="button">
+            {'<<'}
+          </button>
+        </NavLink>
+        <NavLink to={`${path()}?page=${qpage() <= 1 ? 1 : qpage() - 1}`}>
+          <button onClick={() => moveToPage(page - 1)} type="button" disabled={page === 1}>
+            {'<'}
+          </button>
+        </NavLink>
         {
-          pages(page, lastPage, navigationDisplay)
+          pages(page, lastPage, navigationDisplay, path())
         }
-        <button onClick={() => moveToPage(page + 1)} type="button" disabled={page === lastPage}>
-          {'>'}
-        </button>
-        <button onClick={() => moveToPage(lastPage)} type="button">
-          {'>>'}
-        </button>
+        <NavLink to={`${path()}?page=${qpage() === lastPage ? lastPage : qpage() + 1}`}>
+          <button onClick={() => moveToPage(page + 1)} type="button" disabled={page === lastPage}>
+            {'>'}
+          </button>
+        </NavLink>
+        <NavLink to={`${path()}?page=${lastPage}`}>
+          <button onClick={() => moveToPage(lastPage)} type="button">
+            {'>>'}
+          </button>
+        </NavLink>
       </div>
     );
   }

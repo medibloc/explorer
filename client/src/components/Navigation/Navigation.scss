@@ -1,10 +1,10 @@
 .navigation {
   display: flex;
 
-  button {
+
+  a > button {
     width: 30px;
     height: 40px;
-    border: none;
     font-size: 14px;
     color: #397ff4;
     border: 1px solid #dddddd;
@@ -14,18 +14,22 @@
     outline: none;
   }
 
-  button.active {
+  a button.active {
     background: #397ff4;
     color: #ffffff;
   }
 
-  button:first-child {
-    border-radius: 8px 0 0 8px;
-    border-left: solid 1px #dddddd;
+  a:first-child {
+    button {
+      border-radius: 8px 0 0 8px;
+      border-left: solid 1px #dddddd;
+    }
   }
 
-  button:last-child {
-    border-radius: 0 8px 8px 0;
-    border-right: solid 1px #dddddd;
+  a:last-child {
+    button {
+      border-radius: 0 8px 8px 0;
+      border-right: solid 1px #dddddd;
+    }
   }
 }

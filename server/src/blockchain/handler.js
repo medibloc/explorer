@@ -95,7 +95,7 @@ export const handleBlockResponse = (blocks, handleTx, t) => Block
         .then(dbTxs => dbTxs
           .reduce((promise, dbTx) => promise.then(() => handleTx(dbTx)), Promise.resolve()));
     }
-    return Promise.resolve();
+    return Promise.resolve(res);
   });
 
 const topics = {
@@ -107,8 +107,10 @@ const topics = {
     }).then(({ data: block }) => db.transaction((t) => {
       const { handleTx, updateAccountsData } = accountUpdater(t);
       return handleBlockResponse([block], handleTx, t)
-        .then(() => updateAccountsData(block.height))
-        .then(() => block);
+        .then(([dbBlock]) => {
+          updateAccountsData(block.height);
+          return dbBlock;
+        });
     }))
       .then(block => pushEvent({ data: block.dataValues, topic })), // eslint-disable-line no-use-before-define, max-len
   },

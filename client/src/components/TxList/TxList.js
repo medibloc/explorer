@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import ListWrapper from '../ListWrapper';
-import { GlobalActions } from '../../redux/actionCreators';
+import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
 import TableWithIcon from '../TableWithIcon';
 import { spaceMapper, txMapper } from '../../lib';
 import { contentsInPage } from '../../config';
@@ -10,9 +10,16 @@ import { contentsInPage } from '../../config';
 import './TxList.scss';
 
 
-const mappedTxList = (txs, page) => {
-  // eslint-disable-next-line no-param-reassign
-  txs = txs.slice((page - 1) * contentsInPage, page * contentsInPage);
+const txRanger = (page, numTxs) => {
+  if (numTxs < contentsInPage) return { from: 1, to: numTxs };
+  let from = (page - 1) * contentsInPage + 1;
+  let to = page * contentsInPage;
+  if (from < 1) from = 1;
+  if (to < from) to = from;
+  return { from, to };
+}
+
+const mappedTxs = (txs) => {
   const txList = [];
   txs.forEach(tx => txList.push(txMapper(tx)));
   return txList;
@@ -31,8 +38,28 @@ const spaceList = {
 };
 
 class TxList extends Component {
+  constructor(props) {
+    super(props);
+    this.getTxs = this.getTxs.bind(this);
+  }
+
+  componentWillMount() {
+    this.getTxs();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { page } = this.props;
+    if (page !== prevProps.page) this.getTxs();
+  }
+
   componentWillUnmount() {
     GlobalActions.movePage(1);
+  }
+
+  getTxs() {
+    const { page, medState: { numTx } } = this.props;
+    const { from, to } = txRanger(page, numTx);
+    w.loader(BlockchainActions.getTxs({ from, to }));
   }
 
   render() {
@@ -52,7 +79,7 @@ class TxList extends Component {
           (mode !== 2 && type !== 'tx') && (
             <ListWrapper
               titles={titles}
-              data={mappedTxList(txList, page)}
+              data={mappedTxs(txList, page)}
               spacing={spaceMapper(spaces)}
               linkTo={['tx/hash', 'account/from', 'account/to']}
               centerList={['Amount']}
@@ -64,7 +91,7 @@ class TxList extends Component {
           (mode === 2 && type !== 'tx') && (
             <ListWrapper
               titles={['Transaction Hash']}
-              data={mappedTxList(txList, page)}
+              data={mappedTxs(txList, page)}
               spacing={spaceMapper([1])}
               linkTo={['tx/hash']}
             />
@@ -72,14 +99,14 @@ class TxList extends Component {
         }
         {
           (mode === 2 && type === 'tx') && (
-            <TableWithIcon type="tx" data={mappedTxList(txs, page)} />
+            <TableWithIcon type="tx" data={mappedTxs(txList, page)} />
           )
         }
         {
           (mode !== 2 && type === 'tx') && (
             <ListWrapper
               titles={titles}
-              data={mappedTxList(txs, page)}
+              data={mappedTxs(txList, page)}
               spacing={spaceMapper(spaces)}
               linkTo={['tx/hash', 'account/from', 'account/to']}
               centerList={['Amount']}

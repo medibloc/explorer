@@ -18,7 +18,7 @@ const blockRanger = (page, height) => {
   let from = (page - 1) * contentsInPage + 1;
   let to = page * contentsInPage;
   if (from < 1) from = 1;
-  if (to < 1) to = 0;
+  if (to < from) to = from;
   return { from, to };
 };
 

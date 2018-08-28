@@ -22,11 +22,30 @@ const errorHandler = (err, req, res, next) => {
   return sendError(err, req, res);
 };
 
+// SSE stands for Server Sent Event
+const sseMiddleware = (req, res, next) => {
+  res.sseSetup = () => {
+    res.writeHead(200, {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      Connection: 'keep-alive',
+    });
+  };
+
+  res.sseSend = (data) => {
+    res.write(`data: ${JSON.stringify(data)}\n\n`);
+    res.flush();
+  };
+
+  next();
+};
+
 export default () => {
   const app = express();
 
   app.use(compression());
   app.use(bodyParser.json());
+  app.use(sseMiddleware);
   app.use('/api', route);
   app.use(errorHandler);
   return app;

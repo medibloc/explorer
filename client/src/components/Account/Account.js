@@ -29,21 +29,10 @@ class Account extends Component {
 
   callAccount(nextProps) {
     let { address } = this.props;
-    const { accounts } = this.props;
     if (nextProps) {
-      ({ address } = nextProps.address);
+      ({ address } = nextProps);
     }
-
-    let accFound = false;
-    for (let i = 0; i < accounts.length; i += 1) {
-      if (accounts[i].address === address) {
-        BlockchainActions.setAccount(accounts[i]);
-        accFound = true;
-        break;
-      }
-    }
-    if (!accFound) BlockchainActions.getAccount(address);
-    BlockchainActions.getAccountDetail(address);
+    BlockchainActions.getAccount(address);
   }
 
   render() {

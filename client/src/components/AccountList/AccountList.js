@@ -8,9 +8,17 @@ import { contentsInPage } from '../../config';
 import { accountMapper, spaceMapper } from '../../lib';
 
 import './AccountList.scss';
+import txMapper from "../../lib/txMapper";
 
 
-const accPicker = (accs, page) => accs.slice((page - 1) * contentsInPage, page * contentsInPage);
+const accRanger = (page, numAccounts) => {
+  if (numAccounts < contentsInPage) return { from: 1, to: numAccounts };
+  let from = (page - 1) * contentsInPage + 1;
+  let to = page * contentsInPage;
+  if (from < 1) from = 1;
+  if (to < from) to = from;
+  return { from, to };
+}
 
 const mappedAccounts = (accs, totalSupply) => {
   const accList = [];
@@ -26,22 +34,37 @@ const titles = ['Account', 'Balance', 'Percentage', 'Transactions'];
 const linkTo = ['account/account'];
 
 class AccountList extends Component {
-  componentDidMount() {
-    w.loader(BlockchainActions.getAccounts());
+  constructor(props) {
+    super(props);
+    this.getAccounts = this.getAccounts.bind(this);
+  }
+
+  componentWillMount() {
+    this.getAccounts();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { page } = this.props;
+    if (page !== prevProps.page) this.getAccounts();
   }
 
   componentWillUnmount() {
     GlobalActions.movePage(1);
   }
 
+  getAccounts() {
+    const { page, medState: { numAccount } } = this.props;
+    const { from, to } = accRanger(page, numAccount);
+    w.loader(BlockchainActions.getAccounts({ from, to }));
+  }
+
   render() {
     const {
+      accountList,
       accounts,
       mode,
-      page,
       totalSupply,
     } = this.props;
-    const accountList = accPicker(accounts, page);
 
     return (
       mode !== 2 ? (

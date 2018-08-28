@@ -160,7 +160,7 @@ export const blocksGetter = (
 // get: "/v1/user/accountstate"
 // params: "address / height[number, 'genesis', 'confirmed', 'tail']"
 export const accGetter = (dispatch, actionType, ERROR, address) => simpleRequester(dispatch, {
-  url: `${NODE_ENDPOINT}/accounts/${address}`,
+  url: `${NODE_ENDPOINT}/accounts?q=${address}`,
   actionType,
   ERROR,
 });
@@ -180,10 +180,7 @@ export const accsGetter = (
   { from, to },
 ) => simpleRequester(dispatch, {
   url: `${NODE_ENDPOINT}/accounts`,
-  params: {
-    from: from < 1 ? 1 : from,
-    to,
-  },
+  params: { from, to },
   actionType,
   ERROR,
 });
@@ -198,7 +195,7 @@ export const medStateGetter = (dispatch, actionType, ERROR) => simpleRequester(d
 // get: "/v1/transaction"
 // params: "hash"
 export const txGetter = (dispatch, actionType, ERROR, hash) => simpleRequester(dispatch, {
-  url: `${NODE_ENDPOINT}/transactions/${hash}`,
+  url: `${NODE_ENDPOINT}/transactions?q=${hash}`,
   actionType,
   ERROR,
 });

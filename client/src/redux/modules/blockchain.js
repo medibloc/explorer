@@ -60,6 +60,7 @@ const initialState = {
 
   account: null, // specific account
   accounts: [], // all accounts on the blockchain
+  accountList: [], // accounts from rpc call
 
   block: null, // specific block
   blockList: [], // blocks from rpc call
@@ -85,8 +86,12 @@ const initialState = {
 const reducer = handleActions({
   [GET_MED_STATE]: (state, action) => ({ ...state, medState: action.payload }),
 
-  [GET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload }),
-  [GET_ACCOUNTS]: (state, action) => ({ ...state, accounts: sorter(action.payload.accounts, 'balance') }),
+  [GET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload.accounts[0].data }),
+  [GET_ACCOUNTS]: (state, action) => {
+    const accList = [];
+    action.payload.accounts.forEach(res => accList.push(res.data));
+    return ({ ...state, accountList: sorter(accList, 'balance') });
+  },
   [GET_ACCOUNT_DETAIL]: (state, action) => ({ ...state, txList: sorter(action.payload.transactions, 'timestamp') }),
   [SET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload }),
 
@@ -126,7 +131,7 @@ const reducer = handleActions({
     ...state,
     pendingTxs: [...state.pendingTxs, action.payload],
   }),
-  [GET_TX]: (state, action) => ({ ...state, tx: action.payload }),
+  [GET_TX]: (state, action) => ({ ...state, tx: action.payload.transactions[0].data }),
   [GET_TXS]: (state, action) => {
     const txList = [];
     action.payload.transactions.forEach(res => txList.push(res.data));
@@ -156,7 +161,12 @@ export const getAccountDetail = address => dispatch => accDetailGetter(
   ERROR,
   address,
 );
-export const getAccounts = () => dispatch => accsGetter(dispatch, GET_ACCOUNTS, ERROR);
+export const getAccounts = ({ from, to }) => dispatch => accsGetter(
+  dispatch,
+  GET_ACCOUNTS,
+  ERROR,
+  { from, to },
+);
 export const getBlock = hash => dispatch => blockGetter(dispatch, GET_BLOCK, ERROR, hash);
 export const getBlocks = ({ from, to }) => dispatch => blocksGetter(
   dispatch,

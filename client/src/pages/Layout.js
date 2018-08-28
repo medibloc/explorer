@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import { BlockchainActions, GlobalActions, WidgetActions as w } from '../redux/actionCreators';
+import qs from "query-string";
 
 
 class Layout extends Component {
@@ -19,6 +20,8 @@ class Layout extends Component {
     }
     if (!loading && nextProps.loading) GlobalActions.openModal({ modalType: 'Loading' });
     else if (loading && !nextProps.loading) GlobalActions.closeModal();
+    const page = parseInt(qs.parse(window.location.search).page, 10) || 1;
+    GlobalActions.movePage(page);
   }
 
   render() {

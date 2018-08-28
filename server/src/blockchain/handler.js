@@ -25,15 +25,36 @@ const parseTx = (block, tx) => ({
 
 export const accountUpdater = (t) => {
   const accountMap = {};
+  const accountPromise = {};
   const getAccount = (address) => {
     if (accountMap[address]) {
       return Promise.resolve(accountMap[address]);
     }
-    return Account.findOrCreate({ transaction: t, where: { address } })
+    if (accountPromise[address]) {
+      return accountPromise[address];
+    }
+    const promise = Account.findOrCreate({ transaction: t, where: { address } })
       .then(([account]) => {
+        delete accountPromise[address];
         accountMap[address] = account;
         return account;
       });
+    accountPromise[address] = promise;
+    return promise;
+  };
+  const handleBlock = async (block) => {
+    const { id, data: { coinbase, reward } } = block;
+    const coinbaseAccount = await getAccount(coinbase);
+    return Promise.all([
+      coinbaseAccount.update({
+        balance: new BigNumber(coinbaseAccount.balance).plus(new BigNumber(reward)).toString(),
+      }, { transaction: t }),
+      AccountLog.create({
+        accountId: coinbaseAccount.id,
+        blockId: id,
+        data: { balance: `+${reward}` },
+      }, { transaction: t }),
+    ]);
   };
   const handleTx = async (dbTx) => {
     const { data: { from, to, value: valueStr } } = dbTx;
@@ -70,19 +91,19 @@ export const accountUpdater = (t) => {
       .update({ data }, { where: { id: dbAccount.id }, transaction: t }))),
   );
 
-  return { handleTx, updateAccountsData };
+  return { handleBlock, handleTx, updateAccountsData };
 };
 
 export const handleBlockResponse = (blocks, handleTx, t) => Block
   .bulkCreate(blocks.map(parseBlock), { transaction: t })
-  .then((res) => {
-    console.log(`blocks from ${res[0].height} to ${res[res.length - 1].height} added`); // eslint-disable-line no-console
+  .then((dbBlocks) => {
+    console.log(`blocks from ${dbBlocks[0].height} to ${dbBlocks[dbBlocks.length - 1].height} added`); // eslint-disable-line no-console
     let txs = [];
     const blockMap = blocks.reduce((obj, b) => {
       obj[+b.height] = b; // eslint-disable-line no-param-reassign
       return obj;
     }, {});
-    res.forEach((block) => {
+    dbBlocks.forEach((block) => {
       const { transactions = [] } = blockMap[block.height];
       txs = txs.concat(transactions.map(tx => parseTx(block, tx)));
     });
@@ -93,24 +114,24 @@ export const handleBlockResponse = (blocks, handleTx, t) => Block
       return Transaction
         .bulkCreate(txs, { transaction: t })
         .then(dbTxs => dbTxs
-          .reduce((promise, dbTx) => promise.then(() => handleTx(dbTx)), Promise.resolve()));
+          .reduce((promise, dbTx) => promise.then(() => handleTx(dbTx)), Promise.resolve()))
+        .then(() => dbBlocks);
     }
-    return Promise.resolve(res);
+    return dbBlocks;
   });
 
 const topics = {
-  // EXECUTED_TX: 'chain.transactionResult',
   'chain.newTailBlock': {
     onEvent: ({ hash, topic }) => axios({
       method: 'get',
       url: `${url}/v1/block?hash=${hash}`,
     }).then(({ data: block }) => db.transaction((t) => {
-      const { handleTx, updateAccountsData } = accountUpdater(t);
+      const { handleBlock, handleTx, updateAccountsData } = accountUpdater(t);
       return handleBlockResponse([block], handleTx, t)
-        .then(([dbBlock]) => {
-          updateAccountsData(block.height);
-          return dbBlock;
-        });
+        .then(([dbBlock]) => Promise.all([
+          updateAccountsData(block.height),
+          handleBlock(dbBlock),
+        ]).then(() => dbBlock));
     }))
       .then(block => pushEvent({ data: block.dataValues, topic })), // eslint-disable-line no-use-before-define, max-len
   },
@@ -138,7 +159,7 @@ export const pushEvent = (e) => {
   });
 };
 
-export const startSubscribe = () => {
+export const startSubscribe = (promise) => {
   axios({
     data: {
       topics: Object.keys(topics),
@@ -155,7 +176,7 @@ export const startSubscribe = () => {
         return;
       }
       console.log(`event ${topic} received`); // eslint-disable-line no-console
-      topics[topic].onEvent(result);
+      promise = promise.then(() => topics[topic].onEvent(result)); // eslint-disable-line no-param-reassign, max-len
     });
   });
 };

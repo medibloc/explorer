@@ -27,7 +27,7 @@ const sync = async () => {
     return Promise.resolve();
   }
   return db.transaction((t) => {
-    const { handleTx, updateAccountsData } = accountUpdater(t);
+    const { handleBlock, handleTx, updateAccountsData } = accountUpdater(t);
     const getBlocks = () => {
       const from = currentHeight + 1;
       const step = Math.min(REQUEST_STEP, lastHeight - from + 1);
@@ -36,7 +36,11 @@ const sync = async () => {
         method: 'get',
         params: { from, to },
         url: `${url}/v1/blocks`,
-      }).then(res => handleBlockResponse(res.data.blocks || [], handleTx, t))
+      }).then((res) => {
+        const blocks = res.data.blocks || [];
+        return handleBlockResponse(blocks, handleTx, t)
+          .then(dbBlocks => Promise.all(dbBlocks.map(handleBlock)));
+      })
         .then(() => {
           currentHeight = to;
           if (currentHeight < lastHeight) {
@@ -52,7 +56,4 @@ const sync = async () => {
   });
 };
 
-export default async () => {
-  startSubscribe();
-  return sync();
-};
+export default async () => startSubscribe(sync());

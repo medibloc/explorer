@@ -91,7 +91,7 @@ const reducer = handleActions({
   [GET_BLOCK]: (state, action) => ({ ...state, block: action.payload }),
   [GET_BLOCKS]: (state, action) => {
     const blockList = [];
-    action.payload.blocks.forEach(res => blockList.push(res.data));
+    action.payload.blocks.data.forEach(res => blockList.push(res.data));
     return ({...state, blockList: sorter(blockList, 'height')})
   },
   [GET_INITIAL_BLOCKS]: (state, action) => ({

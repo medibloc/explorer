@@ -79,7 +79,7 @@ class TxList extends Component {
           (mode !== 2 && type !== 'tx') && (
             <ListWrapper
               titles={titles}
-              data={mappedTxs(txList, page)}
+              data={mappedTxs(txList)}
               spacing={spaceMapper(spaces)}
               linkTo={['tx/hash', 'account/from', 'account/to']}
               centerList={['Amount']}
@@ -91,7 +91,7 @@ class TxList extends Component {
           (mode === 2 && type !== 'tx') && (
             <ListWrapper
               titles={['Transaction Hash']}
-              data={mappedTxs(txList, page)}
+              data={mappedTxs(txList)}
               spacing={spaceMapper([1])}
               linkTo={['tx/hash']}
             />
@@ -99,14 +99,14 @@ class TxList extends Component {
         }
         {
           (mode === 2 && type === 'tx') && (
-            <TableWithIcon type="tx" data={mappedTxs(txList, page)} />
+            <TableWithIcon type="tx" data={txList} />
           )
         }
         {
           (mode !== 2 && type === 'tx') && (
             <ListWrapper
               titles={titles}
-              data={mappedTxs(txList, page)}
+              data={mappedTxs(txList)}
               spacing={spaceMapper(spaces)}
               linkTo={['tx/hash', 'account/from', 'account/to']}
               centerList={['Amount']}

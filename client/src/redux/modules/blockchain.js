@@ -86,7 +86,7 @@ const initialState = {
 const reducer = handleActions({
   [GET_MED_STATE]: (state, action) => ({ ...state, medState: action.payload }),
 
-  [GET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload.accounts[0].data }),
+  [GET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload.account.data }),
   [GET_ACCOUNTS]: (state, action) => {
     const accList = [];
     action.payload.accounts.forEach(res => accList.push(res.data));
@@ -95,7 +95,9 @@ const reducer = handleActions({
   [GET_ACCOUNT_DETAIL]: (state, action) => ({ ...state, txList: sorter(action.payload.transactions, 'timestamp') }),
   [SET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload }),
 
-  [GET_BLOCK]: (state, action) => ({ ...state, block: action.payload }),
+  [GET_BLOCK]: (state, action) => {
+    return ({...state, block: action.payload.blocks.data[0]});
+  },
   [GET_BLOCKS]: (state, action) => {
     const blockList = [];
     action.payload.blocks.data.forEach(res => blockList.push(res.data));
@@ -140,7 +142,7 @@ const reducer = handleActions({
   [SET_TX]: (state, action) => ({ ...state, tx: action.payload }),
   [SET_TXS]: (state, action) => ({
     ...state,
-    txList: sorter(action.payload, 'timestamp', -1),
+    txs: sorter(action.payload, 'timestamp'),
   }),
 
   [GET_BPS]: (state, action) => ({

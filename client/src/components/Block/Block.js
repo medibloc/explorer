@@ -49,24 +49,16 @@ class Block extends Component {
       ({ hash, height } = this.props);
     }
 
-    const { blockList } = this.props;
-    const block = blockPicker(blockList, { hash, height });
-    if (!block) {
-      let subject = null;
-      if (height) subject = height;
-      if (hash) subject = hash;
-      if (subject === null) throw new Error('Invalid block info');
+    let subject = null;
+    if (height) subject = height;
+    if (hash) subject = hash;
+    if (subject === null) throw new Error('Invalid block info');
 
-      w.loader(BlockchainActions
-        .getBlock(subject)
-        .then((bl) => {
-          BlockchainActions.setTxs(bl.transactions);
-        }));
-    }
-    if (block) {
-      BlockchainActions.setBlock(block);
-      BlockchainActions.setTxs(block.transactions);
-    }
+    w.loader(BlockchainActions
+      .getBlock(subject)
+      .then((bl) => {
+        BlockchainActions.setTxs(bl.transactions);
+      }));
   }
 
   render() {

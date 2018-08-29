@@ -135,7 +135,7 @@ export const subscriber = (dispatch, actionTypes, ERROR) => {
 // get: "/v1/block"
 // params: "hash[hash, 'genesis', 'confirmed', 'tail']"
 export const blockGetter = (dispatch, actionType, ERROR, hash) => simpleRequester(dispatch, {
-  url: `${NODE_ENDPOINT}/blocks/${hash}`,
+  url: `${NODE_ENDPOINT}/blocks?q=${hash}`,
   actionType,
   ERROR,
 });
@@ -160,7 +160,7 @@ export const blocksGetter = (
 // get: "/v1/user/accountstate"
 // params: "address / height[number, 'genesis', 'confirmed', 'tail']"
 export const accGetter = (dispatch, actionType, ERROR, address) => simpleRequester(dispatch, {
-  url: `${NODE_ENDPOINT}/accounts?q=${address}`,
+  url: `${NODE_ENDPOINT}/accounts/${address}`,
   actionType,
   ERROR,
 });

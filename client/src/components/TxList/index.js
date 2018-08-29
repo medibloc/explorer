@@ -4,6 +4,8 @@ import TxList from './TxList';
 
 
 const mapStateToProps = ({ blockchain, global }) => ({
+  account: blockchain.account,
+  block: blockchain.block,
   medState: blockchain.medState,
   txList: blockchain.txList,
   txs: blockchain.txs,

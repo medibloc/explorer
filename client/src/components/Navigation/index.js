@@ -9,6 +9,7 @@ const mapStateToProps = ({ blockchain, global }) => ({
   numTxs: blockchain.medState.numTx,
   numBlocks: blockchain.medState.height,
   txList: blockchain.txList,
+  txs: blockchain.txs,
 
   page: global.page,
 });

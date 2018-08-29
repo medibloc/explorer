@@ -18,7 +18,7 @@ const pages = (currentPage, lastPage, pageDisplay, curPath) => {
   if (startPage < 1) startPage = 1;
   if (currentPage + Math.floor(pageDisplay / 2) > lastPage) startPage = lastPage - pageDisplay + 1;
   for (let i = startPage; i < startPage + pageDisplay; i += 1) {
-    pageNation.push(<NavLink to={`${curPath}?page=${i}`} key={`${curPath}?page=${i}`}>
+    pageNation.push(<NavLink to={`${curPath}?page=${i}`}>
       <button onClick={() => moveToPage(i)} type="button" className={currentPage === i ? 'active' : null} key={i}>
         {i}
       </button>
@@ -50,12 +50,13 @@ class Navigation extends Component {
       numTxs,
 
       txList,
+      txs,
       type,
     } = this.props;
 
     switch (type) {
       case 'account':
-        return Math.ceil(txList.length / contentsInPage);
+        return Math.ceil(txs.length / contentsInPage);
       case 'accounts':
         return Math.ceil(numAccounts / contentsInPage);
       case 'block':

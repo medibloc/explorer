@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import { accountMapper } from '../../lib';
 import DetailWrapper from '../DetailWrapper';
-import { BlockchainActions } from '../../redux/actionCreators';
+import { BlockchainActions, WidgetActions as w } from '../../redux/actionCreators';
 
 
 class Account extends Component {
@@ -32,7 +32,15 @@ class Account extends Component {
     if (nextProps) {
       ({ address } = nextProps);
     }
-    BlockchainActions.getAccount(address);
+
+    w.loader(BlockchainActions
+      .getAccount(address)
+      .then((acc) => {
+        const txs = [];
+        acc.account.data.txs_from.forEach(tx => txs.push(tx.data));
+        acc.account.data.txs_to.forEach(tx => txs.push(tx.data));
+        BlockchainActions.setTxs(txs);
+      }));
   }
 
   render() {

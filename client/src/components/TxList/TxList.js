@@ -20,6 +20,7 @@ const txRanger = (page, numTxs) => {
 }
 
 const mappedTxs = (txs) => {
+  if (txs.length < 1) return [];
   const txList = [];
   txs.forEach(tx => txList.push(txMapper(tx)));
   return txList;
@@ -44,7 +45,7 @@ class TxList extends Component {
   }
 
   componentWillMount() {
-    this.getTxs();
+    if (this.props.type === 'tx') this.getTxs();
   }
 
   componentDidUpdate(prevProps) {
@@ -65,19 +66,22 @@ class TxList extends Component {
   render() {
     const {
       mode,
+      page,
       txList,
+      txs,
       type,
     } = this.props;
     const titles = type ? titleList[type] : [];
     const spaces = type ? spaceList[type] : [];
 
+    const { from, to } = txRanger(page, txs.length);
     return (
       <div className="txList">
         {
           (mode !== 2 && type !== 'tx') && (
             <ListWrapper
               titles={titles}
-              data={mappedTxs(txList)}
+              data={mappedTxs(txs.slice(from - 1, to))}
               spacing={spaceMapper(spaces)}
               linkTo={['tx/hash', 'account/from', 'account/to']}
               centerList={['Amount']}
@@ -89,7 +93,7 @@ class TxList extends Component {
           (mode === 2 && type !== 'tx') && (
             <ListWrapper
               titles={['Transaction Hash']}
-              data={mappedTxs(txList)}
+              data={mappedTxs(txs.slice(from - 1, to))}
               spacing={spaceMapper([1])}
               linkTo={['tx/hash']}
             />

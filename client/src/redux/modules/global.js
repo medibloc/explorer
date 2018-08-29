@@ -86,19 +86,21 @@ const reducer = handleActions({
   }),
 
   [CLOSE_LANGUAGE]: state => ({ ...state, languageOpen: false }),
-  [CLOSE_NAVBAR]: state => ({ ...state, navBarOpen: false }),
+  [CLOSE_NAVBAR]: state => ({ ...state, navBarOpen: false, modalOpen: false }),
   [OPEN_LANGUAGE]: state => ({ ...state, languageOpen: !state.languageOpen }),
-  [OPEN_NAVBAR]: state => ({ ...state, navBarOpen: true }),
+  [OPEN_NAVBAR]: state => ({ ...state, navBarOpen: true, modalOpen: false }),
 
   [CLOSE_MODAL]: state => ({
     ...state,
     modalOpen: false,
+    search: '',
   }),
   [OPEN_MODAL]: (state, action) => ({
     ...state,
     modalData: action.payload && action.payload.modalData,
     modalOpen: true,
     modalType: action.payload && action.payload.modalType,
+    navBarOpen: false,
   }),
 
   [CHANGE_LANGUAGE]: (state, action) => ({

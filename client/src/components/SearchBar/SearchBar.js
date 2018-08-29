@@ -6,15 +6,23 @@ import { GlobalActions } from '../../redux/actionCreators';
 import './SearchBar.scss';
 
 
-const SearchBar = ({ type }) => {
-  const { setSearchText } = GlobalActions;
+const SearchBar = ({ modalType, search, type }) => {
+  const { setSearchText, openModal } = GlobalActions;
 
   return (
     <div className="searchBar" id={type}>
       <div className="searchBarSearch">
         <input
+          autoFocus={modalType === 'Search'}
           placeholder="Enter Address, Tx hash, Block Height"
-          onChange={e => setSearchText(e.target.value)}
+          onClick={(e) => {
+            openModal({ modalType: 'Search' });
+            if (modalType !== 'Search') e.target.blur();
+          }}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+          }}
+          value={search}
         />
         <div className="searchBarIcon">
           <img src={`/image/icon/ico-search-s${type ? '' : '-black'}.svg`} alt="searchLogo" />

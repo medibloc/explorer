@@ -23,7 +23,6 @@ const Language = ({ language, languageOpen }) => (
     <Collapse
       className="languageHamburger"
       isOpened={languageOpen}
-      springConfig={{ stiffness: 60, damping: 10 }}
     >
       <LanguageBox />
     </Collapse>

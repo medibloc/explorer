@@ -65,9 +65,7 @@ class TxList extends Component {
   render() {
     const {
       mode,
-      page,
       txList,
-      txs,
       type,
     } = this.props;
     const titles = type ? titleList[type] : [];

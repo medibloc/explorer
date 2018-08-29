@@ -44,6 +44,7 @@
     background-color: rgba(255, 255, 255, 0.5);
     border: 1px solid #ed6664;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.05);
+    padding-left: 14px;
 
     .contentWrapperIcon {
       span {
@@ -70,8 +71,8 @@
   .contentWrapperIcon {
     display: flex;
     justify-content: center;
-    width: 110px;
     text-align: center;
+    padding: 0 30px;
 
     img {
       display: none;

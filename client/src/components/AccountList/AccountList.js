@@ -1,14 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import Accounts from '../Accounts';
 import ListWrapper from '../ListWrapper';
 import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
 import { contentsInPage } from '../../config';
 import { accountMapper, spaceMapper } from '../../lib';
 
 import './AccountList.scss';
-import txMapper from "../../lib/txMapper";
 import TableWithIcon from "../TableWithIcon/TableWithIcon";
 
 
@@ -62,7 +60,6 @@ class AccountList extends Component {
   render() {
     const {
       accountList,
-      accounts,
       mode,
       totalSupply,
     } = this.props;

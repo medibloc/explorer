@@ -1,7 +1,10 @@
+@import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+
 html, body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   width: 100%;
   overflow-x: hidden;
   -ms-overflow-x: hidden;
@@ -12,6 +15,10 @@ body {
   -ms-overflow-style: none;
 }
 
+.root {
+  overflow-x: hidden;
+  position: relative;
+}
 * {
   box-sizing: border-box;
   /*-ms-flex: 0 0 auto;*/

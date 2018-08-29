@@ -1,9 +1,12 @@
 import { createAction, handleActions } from 'redux-actions';
+import { searcher, searchTextSetter, searchWorker } from '../helpers/global';
+import { maxResult } from '../../config';
 
 
 // ACTION TYPES
 const SET_WINDOW_SIZE = 'global/SET_WINDOW_SIZE';
 
+const SEARCH = 'global/SEARCH';
 const SET_SEARCH_TEXT = 'global/SET_SEARCH_TEXT';
 
 const CLOSE_LANGUAGE = 'global/CLOSE_LANGUAGE';
@@ -26,6 +29,7 @@ const initialState = {
   width: null,
 
   search: '',
+  searchResult: [],
 
   languageOpen: false,
   navBarOpen: false,
@@ -62,7 +66,24 @@ const reducer = handleActions({
     };
   },
 
-  [SET_SEARCH_TEXT]: (state, action) => ({ ...state, search: action.payload }),
+  [SEARCH]: (state, action) => {
+    let result = [];
+    if (state.searchResult.length >= maxResult) {
+      result = state.searchResult;
+    } else {
+      result = result.concat(searchWorker(action.payload).slice(0, maxResult));
+    }
+
+    return {
+      ...state,
+      searchResult: result,
+    };
+  },
+  [SET_SEARCH_TEXT]: (state, action) => ({
+    ...state,
+    search: action.payload,
+    searchResult: [],
+  }),
 
   [CLOSE_LANGUAGE]: state => ({ ...state, languageOpen: false }),
   [CLOSE_NAVBAR]: state => ({ ...state, navBarOpen: false }),
@@ -110,7 +131,10 @@ export const moveUrl = createAction(MOVE_URL);
 export const openLanguage = createAction(OPEN_LANGUAGE);
 export const openModal = createAction(OPEN_MODAL); // { modalData, modalType }
 export const openNavBar = createAction(OPEN_NAVBAR);
-export const setSearchText = createAction(SET_SEARCH_TEXT);
+export const setSearchText = searchText => dispatch => {
+  searchTextSetter(dispatch, SET_SEARCH_TEXT, null, searchText);
+  searcher(dispatch, SEARCH, null, searchText);
+};
 export const setWindowSize = createAction(SET_WINDOW_SIZE);
 
 export default reducer;

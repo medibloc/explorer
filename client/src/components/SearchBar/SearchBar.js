@@ -15,7 +15,6 @@ const SearchBar = ({ type }) => {
         <input
           placeholder="Enter Address, Tx hash, Block Height"
           onChange={e => setSearchText(e.target.value)}
-          disabled
         />
         <div className="searchBarIcon">
           <img src={`/image/icon/ico-search-s${type ? '' : '-black'}.svg`} alt="searchLogo" />

@@ -31,3 +31,6 @@ export const countryName = {
   ja: '日本',
   zh: '中國',
 };
+
+// SEARCH
+export const maxResult = 5;

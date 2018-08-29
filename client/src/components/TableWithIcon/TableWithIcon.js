@@ -19,13 +19,13 @@ const titles = {
   bp: ['Ranking', 'Account', 'votes'],
 };
 
-const TableWithIcon = ({ data, type }) => {
+const TableWithIcon = ({ data, type, totalSupply = undefined }) => {
   let dataList = [];
   const titleList = type ? titles[type] : [];
   if (data) {
     switch (type) {
       case 'account':
-        data.forEach(datum => dataList.push(accountMapper(datum)));
+        data.forEach(datum => dataList.push(accountMapper(datum, totalSupply)));
         break;
       case 'block':
         data.forEach(datum => dataList.push(blockMapper(datum)));

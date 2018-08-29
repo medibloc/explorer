@@ -78,7 +78,7 @@ class AccountList extends Component {
       ) : (
         <div className="accountList">
           {/*<Accounts data={accountList} />*/}
-          <TableWithIcon type="account" data={accountList} />
+          <TableWithIcon type="account" data={accountList} totalSupply={totalSupply} />
         </div>
       )
     );

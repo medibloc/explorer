@@ -9,6 +9,7 @@ import { accountMapper, spaceMapper } from '../../lib';
 
 import './AccountList.scss';
 import txMapper from "../../lib/txMapper";
+import TableWithIcon from "../TableWithIcon/TableWithIcon";
 
 
 const accRanger = (page, numAccounts) => {
@@ -76,7 +77,8 @@ class AccountList extends Component {
         />
       ) : (
         <div className="accountList">
-          <Accounts data={mappedAccounts(accountList, totalSupply)} />
+          {/*<Accounts data={accountList} />*/}
+          <TableWithIcon type="account" data={accountList} />
         </div>
       )
     );

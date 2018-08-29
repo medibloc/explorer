@@ -46,7 +46,7 @@ const SUBSCRIBE = 'blockchain/SUBSCRIBE';
 const ERROR = 'blockchain/ERROR';
 
 const subsribeTypes = {
-  GET_EXECUTED_TX,
+  // GET_EXECUTED_TX,
   GET_TAIL_BLOCK,
   // GET_LIB,
   // GET_PENDING_TX,

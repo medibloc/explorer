@@ -4,7 +4,7 @@ import LiveTxs from './LiveTxs';
 
 
 const mapStateToProps = ({ blockchain, global }) => ({
-  txs: blockchain.txs,
+  blocks: blockchain.blocks,
 
   language: global.language,
 });

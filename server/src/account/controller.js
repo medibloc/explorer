@@ -44,6 +44,7 @@ export const get = async (req, res) => {
 const searchColumns = [Account.tableAttributes.address];
 
 export const list = async (req, res) => {
-  const { data, pagination } = await listQueryWithCount(Account, req.query, searchColumns);
+  const options = { ...req.query, order: [['balance', 'DESC'], ['id', 'DESC']] };
+  const { data, pagination } = await listQueryWithCount(Account, options, searchColumns);
   res.json({ accounts: data, pagination });
 };

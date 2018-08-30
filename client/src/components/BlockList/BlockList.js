@@ -49,6 +49,12 @@ class BlockList extends Component {
     this.getBlocks(this.props);
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.page !== this.props.page) return true;
+    if (this.props.blockList !== nextProps.blockList) return true;
+    return false;
+  }
+
   componentWillUpdate(nextProps) {
     const { location: { search } } = this.props;
     if (nextProps.location.search !== search) {

@@ -73,15 +73,15 @@ class TxList extends Component {
     } = this.props;
     const titles = type ? titleList[type] : [];
     const spaces = type ? spaceList[type] : [];
-
     const { from, to } = txRanger(page, txs.length);
+
     return (
       <div className="txList">
         {
           (mode !== 2 && type !== 'tx') && (
             <ListWrapper
               titles={titles}
-              data={mappedTxs(txs.slice(from - 1, to))}
+              data={mappedTxs(txs.slice(from, to))}
               spacing={spaceMapper(spaces)}
               linkTo={['tx/hash', 'account/from', 'account/to']}
               centerList={['Amount']}

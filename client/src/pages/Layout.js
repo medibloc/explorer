@@ -12,9 +12,9 @@ class Layout extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    const { loading, location: { pathname: path } } = this.props;
-    const { location: { pathname: newPath } } = nextProps;
-    if (path !== newPath) {
+    const { loading, location: { pathname: path, search: prevSearch } } = this.props;
+    const { location: { pathname: newPath, search: newSearch } } = nextProps;
+    if (path !== newPath || prevSearch !== newSearch) {
       w.loader(BlockchainActions.getMedState());
       GlobalActions.moveUrl(newPath.split('/')[1]);
     }

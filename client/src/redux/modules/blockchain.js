@@ -103,7 +103,6 @@ const reducer = handleActions({
   },
   [GET_INITIAL_BLOCKS]: (state, action) => {
     const blockList = [];
-    console.log(blockList)
     action.payload.blocks.data.forEach(res => blockList.push(res.data));
     return {
       ...state,

@@ -93,7 +93,7 @@ class TxList extends Component {
           (mode === 2 && type !== 'tx') && (
             <ListWrapper
               titles={['Transaction Hash']}
-              data={mappedTxs(txs.slice(from - 1, to))}
+              data={mappedTxs(txs.slice(from, to))}
               spacing={spaceMapper([1])}
               linkTo={['tx/hash']}
             />

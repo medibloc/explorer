@@ -12,7 +12,7 @@ const SearchWrapper = ({ searchResult }) => (
     </div>
     <div className="searchWrapperResultBox">
       {
-        searchResult.map(res => {
+        searchResult.map((res, i) => {
           let type = '';
           if ('tx_type' in res) {
             type = 'tx';
@@ -21,7 +21,7 @@ const SearchWrapper = ({ searchResult }) => (
           } else {
             type = 'acc';
           }
-          return <SearchBox data={res} type={type} />
+          return <SearchBox data={res} type={type} key={i} />
         })
       }
     </div>

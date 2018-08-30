@@ -6,13 +6,13 @@ import { blockMapper } from '../../lib';
 import { BlockchainActions, WidgetActions as w } from '../../redux/actionCreators';
 
 
-const blockPicker = (pool, { hash, height }) => {
-  let block = null;
-  pool.forEach((bl) => {
-    if (bl.hash === hash || bl.height === height) block = bl;
-  });
-  return block;
-};
+// const blockPicker = (pool, { hash, height }) => {
+//   let block = null;
+//   pool.forEach((bl) => {
+//     if (bl.hash === hash || bl.height === height) block = bl;
+//   });
+//   return block;
+// };
 
 class Block extends Component {
   constructor(props) {

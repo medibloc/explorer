@@ -8,9 +8,9 @@ import './PageInfo.scss';
 const titlize = (string) => {
   let title = '';
   string.split('-').forEach((pre, i) => {
-    title = `${title}${pre.charAt(0).toUpperCase()}${pre.slice(1)} `;
+    title = `${title}${pre.charAt(0).toUpperCase()}${pre.slice(1)}`;
   });
-  return title;
+  return `${title.charAt(0).toLowerCase()}${title.slice(1)}`;
 };
 
 // title : block-list

@@ -41,7 +41,7 @@ const ModalContainer = ({ modalOpen, modalType, modalData }) => (
 
 ModalContainer.propTypes = {
   modalOpen: PropTypes.bool.isRequired,
-  modalType: PropTypes.oneOf(['QrCode', 'Loading']),
+  modalType: PropTypes.oneOf(['QrCode', 'Loading', 'Search']),
   modalData: PropTypes.string,
 };
 

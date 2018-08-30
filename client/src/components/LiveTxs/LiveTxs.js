@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import React from 'react';
-import { sorter } from '../../lib'
+import { sorter } from '../../lib';
 
 import TableWithIcon from '../TableWithIcon';
 

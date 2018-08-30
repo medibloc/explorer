@@ -4,17 +4,17 @@ import { NODE_ENDPOINT } from '../../config';
 
 export const searcher = (dispatch, actionType, ERROR, query) => {
   simpleRequester(dispatch, {
-    url: `${NODE_ENDPOINT}/blocks?q=${query}`,
+    url: `${NODE_ENDPOINT}/blocks?q=${query}&limit=5`,
     actionType,
     ERROR,
   });
   simpleRequester(dispatch, {
-    url: `${NODE_ENDPOINT}/accounts?q=${query}`,
+    url: `${NODE_ENDPOINT}/accounts?q=${query}&limit=5`,
     actionType,
     ERROR,
   });
   simpleRequester(dispatch, {
-    url: `${NODE_ENDPOINT}/transactions?q=${query}`,
+    url: `${NODE_ENDPOINT}/transactions?q=${query}&limit=5`,
     actionType,
     ERROR,
   });

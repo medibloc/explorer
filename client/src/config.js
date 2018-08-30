@@ -33,4 +33,4 @@ export const countryName = {
 };
 
 // SEARCH
-export const maxResult = 5;
+export const maxResult = 15;

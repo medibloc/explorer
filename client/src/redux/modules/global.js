@@ -71,7 +71,7 @@ const reducer = handleActions({
     if (state.searchResult.length >= maxResult) {
       result = state.searchResult;
     } else {
-      result = result.concat(searchWorker(action.payload).slice(0, maxResult));
+      result = result.concat(state.searchResult).concat(searchWorker(action.payload));
     }
 
     return {
@@ -94,6 +94,7 @@ const reducer = handleActions({
     ...state,
     modalOpen: false,
     search: '',
+    searchResult: [],
   }),
   [OPEN_MODAL]: (state, action) => ({
     ...state,

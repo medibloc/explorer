@@ -5,14 +5,21 @@ import Block from './model';
 
 export const get = async (req, res) => {
   const { id } = req.params;
-  const block = await Block.findById(id);
+  let block;
+  if (+id) {
+    block = await Block.findById(id);
+  } else {
+    block = await Block.findOne({ where: { hash: id } });
+  }
   if (!block) {
     throw new NotFound('block not exists');
   }
   res.json({ block });
 };
 
+const searchColumns = [Block.tableAttributes.hash];
+
 export const list = async (req, res) => {
-  const blocks = await listQueryWithCount(Block, req.query);
+  const blocks = await listQueryWithCount(Block, req.query, searchColumns);
   res.json({ blocks });
 };

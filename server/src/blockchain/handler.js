@@ -13,6 +13,7 @@ const { url } = config.blockchain;
 
 export const parseBlock = block => ({
   data: block,
+  hash: block.hash,
   height: +block.height,
   id: +block.height,
 });

@@ -8,6 +8,6 @@ import Block from '../block/model';
 export default db.define('transactions', {
   data,
   id,
-  txHash: { type: Sequelize.STRING, unique: true },
+  txHash: { allowNull: false, type: Sequelize.STRING, unique: true },
   ...refer(Block),
 });

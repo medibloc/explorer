@@ -5,6 +5,7 @@ import { data, id } from '../db/columns';
 
 export default db.define('blocks', {
   data,
+  hash: { allowNull: false, type: Sequelize.STRING, unique: true },
   height: { type: Sequelize.INTEGER },
   id,
 });

@@ -181,7 +181,12 @@ export const getBlocksFromServer = ({ from, to }) => dispatch => simpleRequester
   params: { from, to },
   url: '/api/v1/blocks',
 });
-export const getBPs = () => dispatch => bpsGetter(dispatch, GET_BPS, ERROR);
+export const getBPs = ({ from, to }) => dispatch => bpsGetter(
+  dispatch,
+  GET_BPS,
+  ERROR,
+  { from, to },
+);
 export const getInitialBlocks = ({ from, to }) => dispatch => blocksGetter(
   dispatch,
   GET_INITIAL_BLOCKS,

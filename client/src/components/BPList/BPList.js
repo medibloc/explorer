@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import ListWrapper from '../ListWrapper';
-import { BlockchainActions, GlobalActions } from '../../redux/actionCreators';
+import {BlockchainActions, GlobalActions, WidgetActions as w} from '../../redux/actionCreators';
 import TableWithIcon from '../TableWithIcon';
 import { bpsInPage } from '../../config';
 import { bpMapper, spaceMapper } from '../../lib';
@@ -15,21 +15,20 @@ const bpRanger = (page, totalBPs) => {
   let from = (page - 1) * bpsInPage + 1;
   let to = (page) * bpsInPage;
   if (from < 1) from = 1;
-  if (to < 1) to = 0;
   if (to > totalBPs) to = totalBPs;
+  if (to < from) to = from;
   return { from, to };
 };
 
 const mappedBPs = (BPs, page, totalSupply) => {
   if (BPs === undefined) BPs = [];
-  const { from, to } = bpRanger(page, BPs.length);
   const BPList = [];
-  for (let i = from - 1; i < to; i += 1) {
-    const bp = bpMapper(BPs[i]);
-    bp.Ranking = i + 1;
-    bp.votes = `${(parseInt(bp.votes, 10) / totalSupply * 100).toFixed(4)}%`;
-    BPList.push(bp);
-  }
+  BPs.forEach((preBP, i) => {
+    const BP = bpMapper(preBP);
+    BP.Ranking = (page - 1) * bpsInPage + i + 1;
+    BP.votes = `${(parseInt(BP.votes, 10) / totalSupply * 100).toFixed(4)}%`;
+    BPList.push(BP);
+  });
   return BPList;
 };
 
@@ -39,12 +38,28 @@ const centerList = ['Ranking'];
 const rightList = ['votes'];
 
 class BPList extends Component {
+  constructor(props) {
+    super(props);
+    this.getBPs = this.getBPs.bind(this);
+  }
+
   componentWillMount() {
-    BlockchainActions.getBPs();
+    this.getBPs();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { page } = this.props;
+    if (page !== prevProps.page) this.getBPs(prevProps);
   }
 
   componentWillUnmount() {
     GlobalActions.movePage(1);
+  }
+
+  getBPs() {
+    const { page, medState: { numCandidate } } = this.props;
+    const { from, to } = bpRanger(page, numCandidate);
+    w.loader(BlockchainActions.getBPs({ from, to }));
   }
 
   render() {

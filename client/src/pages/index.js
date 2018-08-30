@@ -46,14 +46,13 @@ class Pages extends Component {
   componentWillMount() {
     w.loader(BlockchainActions
       .getMedState()
-      .then(({ height }) => BlockchainActions.getInitialBlocks({ from: height - 5, to: height }))
-      .then(() => TickerActions.getMedxPrice()));
+      .then(() => TickerActions.getMedxPrice())
+      .then(() => BlockchainActions.getInitialBlocks({ from: 0, to: 4 })));
   }
 
   componentDidMount() {
     setWindowSize();
     BlockchainActions.subscribe();
-    // TickerActions.getMedPrice();
   }
 
   render() {

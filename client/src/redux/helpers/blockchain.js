@@ -45,7 +45,7 @@ export const blocksGetter = (
 ) => simpleRequester(dispatch, {
   url: `${NODE_ENDPOINT}/blocks`,
   params: {
-    from: from < 1 ? 1 : from,
+    from: from < 0 ? 0 : from,
     to,
   },
   actionType,

@@ -12,9 +12,9 @@ import './BPList.scss';
 
 const bpRanger = (page, totalBPs) => {
   if (totalBPs < bpsInPage) return { from: 1, to: totalBPs };
-  let from = (page - 1) * bpsInPage + 1;
-  let to = (page) * bpsInPage;
-  if (from < 1) from = 1;
+  let from = (page - 1) * bpsInPage;
+  let to = (page) * bpsInPage - 1;
+  if (from < 0) from = 0;
   if (to > totalBPs) to = totalBPs;
   if (to < from) to = from;
   return { from, to };

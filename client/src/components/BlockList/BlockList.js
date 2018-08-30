@@ -15,9 +15,9 @@ import './BlockList.scss';
 
 const blockRanger = (page, height) => {
   if (height < contentsInPage) return { from: 1, to: height };
-  let from = (page - 1) * contentsInPage + 1;
-  let to = page * contentsInPage;
-  if (from < 1) from = 1;
+  let from = (page - 1) * contentsInPage;
+  let to = page * contentsInPage - 1;
+  if (from < 0) from = 0;
   if (to < from) to = from;
   return { from, to };
 };

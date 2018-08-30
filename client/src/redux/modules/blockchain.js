@@ -101,10 +101,16 @@ const reducer = handleActions({
     action.payload.blocks.data.forEach(res => blockList.push(res.data));
     return ({ ...state, blockList: sorter(blockList, 'height') });
   },
-  [GET_INITIAL_BLOCKS]: (state, action) => ({
-    ...state,
-    blocks: sorter([...state.blocks, ...action.payload.blocks], 'height').slice(0, 5),
-  }),
+  [GET_INITIAL_BLOCKS]: (state, action) => {
+    const blockList = [];
+    console.log(blockList)
+    action.payload.blocks.data.forEach(res => blockList.push(res.data));
+    return {
+      ...state,
+      blocks: sorter(blockList, 'height'),
+      totalSupply: divider(blockList[0].supply, [10 ** 12]),
+    };
+  },
   [GET_LIB]: (state, action) => ({ ...state, lib: action.payload }),
   [GET_REVERT_BLOCK]: (state, action) => ({
     ...state,

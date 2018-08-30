@@ -14,7 +14,7 @@ const LiveTickerWrapper = ({ title, suffix, medxPrice, totalSupply }) => (
       </div>
       <div className="liveTickerWrapperContent">
         <div>
-          { suffix === 'USD' ? injectComma((medxPrice * totalSupply).toFixed(0)) : injectComma(totalSupply) }
+          { suffix === 'USD' ? medxPrice.toFixed(5) : injectComma(totalSupply) }
         </div>
         <div className="liveTickerWrapperContentSuffix">
           {suffix}

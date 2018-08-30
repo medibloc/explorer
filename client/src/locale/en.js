@@ -25,7 +25,7 @@ const en = {
   timeStamp: 'Time Stamp',
   to: 'To',
   transactionDetailInfo: 'Transaction Detail Info',
-  transactionHash: 'Transaction Hash',
+  transactionHash: 'TX Hash',
   transactions: 'Transactions',
   transactionsInTheBlock: 'Transactions in the block',
   transactionsList: 'Transactions List',

@@ -1,3 +1,5 @@
+$mobile_width: 800px;
+
 .contentWrapperLinker {
   height: 100px;
   width: 100%;
@@ -40,11 +42,19 @@
   flex-direction: row;
   align-items: center;
 
+  @media (max-width: $mobile_width) {
+    padding: 10px;
+  }
+
   &:hover {
     background-color: rgba(255, 255, 255, 0.5);
     border: 1px solid #ed6664;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.05);
     padding-left: 14px;
+
+    @media (max-width: $mobile_width) {
+      padding-left: 9px;
+    }
 
     .contentWrapperIcon {
       span {
@@ -72,7 +82,10 @@
     display: flex;
     justify-content: center;
     text-align: center;
-    padding: 0 30px;
+    padding: 0 20px;
+    @media (max-width: $mobile_width) {
+      padding: 0 4px;
+    }
 
     img {
       display: none;
@@ -96,7 +109,12 @@
     font-weight: 500;
     line-height: 1.43;
     color: #0b0b0b;
-    margin-right: 30px;
+    margin-right: 20px;
+
+    @media (max-width: $mobile_width) {
+      margin-right: 4px;
+      //max-width: 80px;
+    }
 
     span {
       white-space: nowrap;
@@ -110,6 +128,10 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+
+    @media (max-width: $mobile_width) {
+      margin-right: 0px;
+    }
 
     span {
       text-overflow: ellipsis;

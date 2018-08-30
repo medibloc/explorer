@@ -31,7 +31,7 @@
       border: none;
       // width: 100%;
       flex: 1;
-      font-size: 14px;
+      //font-size: 14px;
       font-weight: 300;
       font-style: normal;
       font-stretch: normal;
@@ -69,6 +69,8 @@
 #main {
   justify-content: center;
   max-width: 560px;
+  margin-left: 0;
+  margin-right: 0;
 
   .searchBarSearch {
     width: 100%;

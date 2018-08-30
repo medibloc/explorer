@@ -3,7 +3,7 @@ import { Op } from 'sequelize';
 
 const MAX_PAGINATION_COUNT = 100;
 
-const toPagination = (option) => {
+export const toPagination = (option) => {
   let { from, limit, to } = option;
   from = +from;
   to = +to;
@@ -17,7 +17,7 @@ const toPagination = (option) => {
     } else {
       limit = Math.min(limit, MAX_PAGINATION_COUNT);
     }
-  } else if (!to) {
+  } else if (to !== 0 && !to) {
     to = from + MAX_PAGINATION_COUNT - 1;
   }
   if (to >= 0) {

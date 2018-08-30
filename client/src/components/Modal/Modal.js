@@ -1,3 +1,4 @@
+import noScroll from 'no-scroll';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Modal from 'react-modal';
@@ -25,19 +26,24 @@ const modalContent = (type, data) => {
   }
 };
 
-const ModalContainer = ({ modalOpen, modalType, modalData }) => (
-  <div className="modal">
-    <Modal
-      className="modalContent"
-      overlayClassName="modalOverlay"
-      isOpen={modalOpen}
-      onRequestClose={GlobalActions.closeModal}
-      shouldCloseOnOverlayClick
-    >
-      { modalContent(modalType, modalData) }
-    </Modal>
-  </div>
-);
+const ModalContainer = ({ modalOpen, modalType, modalData }) => {
+  if (modalOpen) noScroll.on();
+  else noScroll.off();
+
+  return (
+    <div className="modal">
+      <Modal
+        className="modalContent"
+        overlayClassName="modalOverlay"
+        isOpen={modalOpen}
+        onRequestClose={GlobalActions.closeModal}
+        shouldCloseOnOverlayClick
+      >
+        { modalContent(modalType, modalData) }
+      </Modal>
+    </div>
+  );
+};
 
 ModalContainer.propTypes = {
   modalOpen: PropTypes.bool.isRequired,

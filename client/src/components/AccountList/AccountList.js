@@ -11,7 +11,7 @@ import TableWithIcon from "../TableWithIcon/TableWithIcon";
 
 
 const accRanger = (page, numAccounts) => {
-  if (numAccounts < contentsInPage) return { from: 1, to: numAccounts };
+  if (numAccounts < contentsInPage) return { from: 0, to: numAccounts };
   let from = (page - 1) * contentsInPage;
   let to = page * contentsInPage - 1;
   if (from < 0) from = 0;

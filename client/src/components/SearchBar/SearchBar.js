@@ -23,6 +23,7 @@ const SearchBar = ({ modalType, search, type }) => {
             setSearchText(e.target.value);
           }}
           value={search}
+          disabled
         />
         <div className="searchBarIcon">
           <img src={`/image/icon/ico-search-s${type ? '' : '-black'}.svg`} alt="searchLogo" />

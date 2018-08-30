@@ -11,7 +11,7 @@ import './TxList.scss';
 
 
 const txRanger = (page, numTxs) => {
-  if (numTxs < contentsInPage) return { from: 1, to: numTxs };
+  if (numTxs < contentsInPage) return { from: 0, to: numTxs };
   let from = (page - 1) * contentsInPage;
   let to = page * contentsInPage - 1;
   if (from < 0) from = 0;

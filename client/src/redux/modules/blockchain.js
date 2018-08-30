@@ -13,7 +13,7 @@ import {
   txsGetter,
 } from '../helpers/blockchain';
 import { simpleRequester } from '../helpers/common';
-import { sorter } from '../../lib';
+import { divider, sorter } from '../../lib';
 
 
 // ACTION TYPES
@@ -113,7 +113,7 @@ const reducer = handleActions({
   [GET_TAIL_BLOCK]: (state, action) => ({
     ...state,
     tailBlock: action.payload,
-    totalSupply: action.payload.supply,
+    totalSupply: divider(action.payload.supply, [10 ** 12]),
     blocks: sorter([...state.blocks, action.payload], 'height').slice(0, 5),
     txsFromBlock: action.payload.transactions ? (
       [...action.payload.transactions, ...state.txsFromBlock].slice(0, 5)

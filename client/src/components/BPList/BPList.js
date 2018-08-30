@@ -5,7 +5,7 @@ import ListWrapper from '../ListWrapper';
 import {BlockchainActions, GlobalActions, WidgetActions as w} from '../../redux/actionCreators';
 import TableWithIcon from '../TableWithIcon';
 import { bpsInPage } from '../../config';
-import { bpMapper, spaceMapper } from '../../lib';
+import { bpMapper, spaceMapper, divider } from '../../lib';
 
 import './BPList.scss';
 
@@ -26,7 +26,7 @@ const mappedBPs = (BPs, page, totalSupply) => {
   BPs.forEach((preBP, i) => {
     const BP = bpMapper(preBP);
     BP.Ranking = (page - 1) * bpsInPage + i + 1;
-    BP.votes = `${(parseInt(BP.votes, 10) / totalSupply * 100).toFixed(4)}%`;
+    BP.votes = `${divider(BP.votes, [totalSupply, 10 ** 12 / 100], 4)}%`;
     BPList.push(BP);
   });
   return BPList;

@@ -1,8 +1,10 @@
+import { adder, divider } from './bigNumCalculator';
+
 const blockMapper = (block) => {
-  let amount = 0;
+  let amount = '0';
   if (block.transactions) {
     block.transactions.forEach((tx) => {
-      amount += parseInt(tx.value, 10);
+      amount = adder(amount, [tx.value]);
     });
   } else {
     // eslint-disable-next-line
@@ -16,7 +18,7 @@ const blockMapper = (block) => {
     'Prev Hash': block.parent_hash,
     'No.Tx': block.transactions.length,
     BP: block.coinbase,
-    Amount: `${amount.toLocaleString()} MED`,
+    Amount: `${divider(amount, [10 ** 12]).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} MED`,
   };
 };
 

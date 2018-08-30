@@ -1,8 +1,10 @@
+import { divider } from './bigNumCalculator';
+
 const accountMapper = (account, totalSupply = undefined) => ({
   Account: account.address,
-  Balance: `${parseInt(account.balance, 10).toLocaleString()} MED`,
+  Balance: `${divider(account.balance, [10 ** 12]).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} MED`,
   Transactions: account.txs_from.length + account.txs_to.length,
-  Percentage: totalSupply ? `${(parseInt(account.balance, 10) / totalSupply * 100).toFixed(5)}%` : 0,
+  Percentage: totalSupply ? `${divider(account.balance, [totalSupply, 10 ** 12 / 100], 5)}` : 0,
 });
 
 export default accountMapper;

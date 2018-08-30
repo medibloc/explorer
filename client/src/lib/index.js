@@ -1,4 +1,5 @@
 import accountMapper from './accountMapper';
+import { adder, divider } from './bigNumCalculator';
 import blockMapper from './blockMapper';
 import bpMapper from './bpMapper';
 import sorter from './sorter';
@@ -10,6 +11,9 @@ import titleConverter from './titleConverter';
 import txMapper from './txMapper';
 
 export {
+  adder,
+  divider,
+
   accountMapper,
   blockMapper,
   bpMapper,

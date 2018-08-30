@@ -26,7 +26,7 @@ const LiveTickerWrapper = ({ title, suffix, medxPrice, totalSupply }) => (
 
 LiveTickerWrapper.propTypes = {
   title: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  // value: PropTypes.string.isRequired,
   suffix: PropTypes.string.isRequired,
 };
 

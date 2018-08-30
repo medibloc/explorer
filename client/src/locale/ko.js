@@ -10,7 +10,7 @@ const ko = {
   blockHeight: '블록번호',
   blockList: '블록 리스트',
   bp: '블록 생산자',
-  bpList: '블록 생산자 목록',
+  blockProducerList: '블록 생산자 목록',
   from: '보낸 사람',
   marketCap: '시장 가격',
   medSupply: '메디 총 개수',

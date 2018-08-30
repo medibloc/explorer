@@ -86,7 +86,7 @@ AccountList.propTypes = {
   accounts: PropTypes.array.isRequired,
   mode: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
-  totalSupply: PropTypes.number.isRequired,
+  // totalSupply: PropTypes.number.isRequired,
 };
 
 export default AccountList;

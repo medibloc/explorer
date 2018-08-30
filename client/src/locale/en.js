@@ -10,7 +10,7 @@ const en = {
   blockHeight: 'Block Height',
   blockList: 'Block List',
   bp: 'BP',
-  bpList: 'Block Producer List',
+  blockProducerList: 'Block Producer List',
   from: 'From',
   marketCap: 'Maket Cap',
   medSupply: 'Med Supply',

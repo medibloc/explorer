@@ -10,7 +10,7 @@ const zh = {
   blockHeight: '区块号码',
   blockList: '区块列表',
   bp: '区块生产者',
-  bpList: '区块生产者目录',
+  blockProducerList: '区块生产者目录',
   from: '发送人',
   marketCap: '市场价格',
   medSupply: 'MED总量',

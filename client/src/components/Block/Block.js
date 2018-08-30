@@ -57,7 +57,7 @@ class Block extends Component {
     w.loader(BlockchainActions
       .getBlock(subject)
       .then((bl) => {
-        BlockchainActions.setTxs(bl.transactions);
+        BlockchainActions.setTxs(bl.blocks.data[0].data.transactions);
       }));
   }
 

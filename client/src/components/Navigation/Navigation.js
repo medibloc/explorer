@@ -60,7 +60,7 @@ class Navigation extends Component {
       case 'accounts':
         return Math.ceil(numAccounts / contentsInPage);
       case 'block':
-        return Math.ceil(txList.length / contentsInPage);
+        return Math.ceil(txs.length / contentsInPage);
       case 'blocks':
         return Math.ceil(numBlocks / contentsInPage);
       case 'txs':

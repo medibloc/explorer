@@ -95,9 +95,7 @@ const reducer = handleActions({
   [GET_ACCOUNT_DETAIL]: (state, action) => ({ ...state, txList: sorter(action.payload.transactions, 'timestamp') }),
   [SET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload }),
 
-  [GET_BLOCK]: (state, action) => {
-    return ({...state, block: action.payload.blocks.data[0]});
-  },
+  [GET_BLOCK]: (state, action) => ({ ...state, block: action.payload.blocks.data[0].data }),
   [GET_BLOCKS]: (state, action) => {
     const blockList = [];
     action.payload.blocks.data.forEach(res => blockList.push(res.data));

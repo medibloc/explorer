@@ -16,13 +16,11 @@ const Home = ({ intl }) => (
       <div className="bg" />
       <LiveTickerWrapper
         title={intl.formatMessage({ id: 'marketCap' })}
-        value="123,456,789"
         suffix="USD"
       />
       <div className="verticalLine" />
       <LiveTickerWrapper
         title={intl.formatMessage({ id: 'medSupply' })}
-        value="100,000,000"
         suffix="MED"
       />
     </div>

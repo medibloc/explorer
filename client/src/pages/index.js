@@ -27,7 +27,7 @@ import { countryList } from '../config';
 import {
   BlockchainActions,
   GlobalActions,
-  // TickerActions,
+  TickerActions,
   WidgetActions as w,
 } from '../redux/actionCreators';
 
@@ -46,7 +46,8 @@ class Pages extends Component {
   componentWillMount() {
     w.loader(BlockchainActions
       .getMedState()
-      .then(({ height }) => BlockchainActions.getInitialBlocks({ from: height - 5, to: height })));
+      .then(({ height }) => BlockchainActions.getInitialBlocks({ from: height - 5, to: height }))
+      .then(() => TickerActions.getMedxPrice()));
   }
 
   componentDidMount() {

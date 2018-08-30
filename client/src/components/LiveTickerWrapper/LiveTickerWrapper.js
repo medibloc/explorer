@@ -4,7 +4,9 @@ import React from 'react';
 import './LiveTickerWrapper.scss';
 
 
-const LiveTickerWrapper = ({ title, value, suffix }) => (
+const injectComma = supply => supply.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+const LiveTickerWrapper = ({ title, suffix, medxPrice, totalSupply }) => (
   <div className="liveTickerWrapperGuide">
     <div className="liveTickerWrapper">
       <div className="liveTickerWrapperTitle">
@@ -12,7 +14,7 @@ const LiveTickerWrapper = ({ title, value, suffix }) => (
       </div>
       <div className="liveTickerWrapperContent">
         <div>
-          {value}
+          { suffix === 'USD' ? injectComma((medxPrice * totalSupply).toFixed(0)) : injectComma(totalSupply) }
         </div>
         <div className="liveTickerWrapperContentSuffix">
           {suffix}

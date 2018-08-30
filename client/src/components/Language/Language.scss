@@ -35,8 +35,8 @@ $navBar-height: 85px;
   }
 
   .languageCloser {
-    position: absolute;
-    top: $navBar-height;
+    position: fixed;
+    top: 0;
     left: 0;
     width: 100%;
     height: 100%;

@@ -49,7 +49,6 @@ class Navigation extends Component {
       numCandidates,
       numTxs,
 
-      txList,
       txs,
       type,
     } = this.props;

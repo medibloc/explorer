@@ -2,7 +2,6 @@
   "name": "explorer",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001",
   "dependencies": {
     "autoprefixer": "^9.0.2",
     "axios": "^0.18.0",
@@ -34,7 +33,7 @@
   },
   "scripts": {
     "start": "node scripts/customized-config start",
-    "build": "node scripts/customized-config build",
+    "build": "node scripts/customized-config build && rm -rf ../server/build && mv build ../server",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },

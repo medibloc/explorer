@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import express from 'express';
+import path from 'path';
 
 import route from './route';
 
@@ -49,6 +50,9 @@ export default () => {
   app.use(sseMiddleware);
   app.use('/api', route);
   app.use('/', express.static('build'));
+  app.use('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
+  });
   app.use(errorHandler);
   return app;
 };

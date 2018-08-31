@@ -1,6 +1,6 @@
 export default {
   blockchain: {
-    url: 'http://localhost:9921',
+    url: 'http://node.medibloc.org',
   },
   db: {
     database: 'medi_explorer',

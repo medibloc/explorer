@@ -10,7 +10,7 @@ import route from './route';
 const sendError = (err, req, res) => {
   const code = err.status || 500;
   let { message } = err;
-  if (code >= 500 && process.NODE_ENV === 'production') {
+  if (code >= 500 && process.env.NODE_ENV === 'production') {
     message = 'Internal Server Error'; // hide error message on production
   }
   console.log(err.stack); // eslint-disable-line no-console
@@ -102,7 +102,6 @@ export default () => {
     const glob = require('glob-fs')({ gitignore: false });
     const jsFiles = glob.readdirSync('build/static/js/*.js');
     res.set('Cache-Control', 'no-cache');
-    console.log(jsFiles)
     return res.sendFile(path.join(__dirname, '../', jsFiles[0]));
   });
 

@@ -16,7 +16,7 @@ const divider = (target, divideNums = [], fixed = 0) => {
     const dividerNum = new BigNumber(div);
     targetNum = targetNum.dividedBy(dividerNum);
   });
-  return targetNum.toFixed(fixed).toString();
+  return targetNum.toFixed().toString();
 };
 
 export {

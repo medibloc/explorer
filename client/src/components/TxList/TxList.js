@@ -17,7 +17,7 @@ const txRanger = (page, numTxs) => {
   if (from < 0) from = 0;
   if (to < from) to = from;
   return { from, to };
-}
+};
 
 const mappedTxs = (txs) => {
   if (txs.length < 1) return [];

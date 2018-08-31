@@ -11,6 +11,10 @@ const blockMapper = (block) => {
     block.transactions = [];
   }
 
+  const tempAmount = divider(amount, [10 ** 12]).split('.');
+  tempAmount[0] = tempAmount[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  amount = `${tempAmount.join('.')} MED`;
+
   return {
     'Block Height': block.height,
     'Time Stamp': block.timestamp,
@@ -18,7 +22,7 @@ const blockMapper = (block) => {
     'Prev Hash': block.parent_hash,
     'No.Tx': block.transactions.length,
     BP: block.coinbase,
-    Amount: `${divider(amount, [10 ** 12]).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} MED`,
+    Amount: amount,
   };
 };
 

@@ -1,9 +1,9 @@
 git pull origin master
 cd client
-yarn
-yarn build
+npm install
+npm run build
 cd ../
 cp ./polyfill.js server/build/static/js
 node inject_polyfill.js
 cd server/
-yarn start
+npm start

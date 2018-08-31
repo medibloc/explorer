@@ -15,7 +15,7 @@ const Home = ({ intl }) => (
     <div className="homeTokenInfo">
       <div className="bg" />
       <LiveTickerWrapper
-        title={intl.formatMessage({ id: 'marketCap' })}
+        title={intl.formatMessage({ id: 'medPrice' })}
         suffix="USD"
       />
       <div className="verticalLine" />

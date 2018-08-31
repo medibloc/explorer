@@ -13,6 +13,7 @@ const zh = {
   blockProducerList: '区块生产者目录',
   from: '发送人',
   marketCap: '市场价格',
+  medPrice: 'MED市场价格',
   medSupply: 'MED总量',
   name: '姓名',
   noTx: '所有交易',

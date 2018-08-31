@@ -50,7 +50,8 @@ class BlockList extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (nextProps.page !== this.props.page) return true;
+    if (this.props.language !== nextProps.language) return true;
+    if (this.props.page !== nextProps.page) return true;
     if (this.props.blockList !== nextProps.blockList) return true;
     return false;
   }

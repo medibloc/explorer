@@ -24,6 +24,12 @@ const parseTx = (block, tx) => ({
   txHash: tx.hash,
 });
 
+const parseAccount = account => ({
+  balance: account.balance,
+  data: account,
+  vesting: account.vesting,
+});
+
 export const accountUpdater = (t) => {
   const accountMap = {};
   const accountPromise = {};
@@ -48,12 +54,13 @@ export const accountUpdater = (t) => {
     const coinbaseAccount = await getAccount(coinbase);
     return Promise.all([
       coinbaseAccount.update({
-        balance: new BigNumber(coinbaseAccount.balance).plus(new BigNumber(reward)).toString(),
+        totalAmount: new BigNumber(coinbaseAccount.totalAmount)
+          .plus(new BigNumber(reward)).toString(),
       }, { transaction: t }),
       AccountLog.create({
         accountId: coinbaseAccount.id,
         blockId: id,
-        data: { balance: `+${reward}` },
+        data: { amount: `+${reward}` },
       }, { transaction: t }),
     ]);
   };
@@ -65,21 +72,21 @@ export const accountUpdater = (t) => {
     const toAccount = await getAccount(to);
     const fromLog = {
       accountId: fromAccount.id,
-      data: { balance: `-${value}` },
+      data: { amount: `-${value}` },
       transactionId: dbTx.id,
     };
     const toLog = {
       accountId: toAccount.id,
-      data: { balance: `+${value}` },
+      data: { amount: `+${value}` },
       transactionId: dbTx.id,
     };
     return Promise.all([
       fromAccount.update({
-        balance: new BigNumber(fromAccount.balance).minus(value).toString(),
+        totalAmount: new BigNumber(fromAccount.totalAmount).minus(value).toString(),
       }, { transaction: t }),
       AccountLog.create(fromLog, { transaction: t }),
       toAccount.update({
-        balance: new BigNumber(toAccount.balance).plus(value).toString(),
+        totalAmount: new BigNumber(toAccount.totalAmount).plus(value).toString(),
       }, { transaction: t }),
       AccountLog.create(toLog, { transaction: t }),
     ]);
@@ -89,7 +96,7 @@ export const accountUpdater = (t) => {
       params: { address: dbAccount.address, height },
       url: `${url}/v1/account`,
     }).then(({ data }) => dbAccount
-      .update({ data }, { where: { id: dbAccount.id }, transaction: t }))),
+      .update(parseAccount(data), { where: { id: dbAccount.id }, transaction: t }))),
   );
 
   return { handleBlock, handleTx, updateAccountsData };

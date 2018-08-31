@@ -7,5 +7,5 @@ export default {
     dialect: 'mysql',
     host: 'localhost',
   },
-  port: 3001,
+  port: 3000,
 };

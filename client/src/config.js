@@ -26,10 +26,10 @@ export const navigationDisplay = 5;
 // LANGUAGE
 export const countryList = ['ko', 'en', 'ja', 'zh'];
 export const countryName = {
-  ko: '대한민국',
-  en: 'United States',
-  ja: '日本',
-  zh: '中國',
+  ko: '한국어',
+  en: 'English',
+  ja: '日本語',
+  zh: '中文',
 };
 
 // SEARCH

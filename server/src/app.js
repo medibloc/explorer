@@ -1,7 +1,6 @@
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import express from 'express';
-import cors from 'cors';
 
 import route from './route';
 
@@ -44,9 +43,6 @@ const sseMiddleware = (req, res, next) => {
 export default () => {
   const app = express();
 
-  if (process.env.NODE_ENV === 'development') {
-    app.use(cors());
-  }
   app.use(compression());
   app.use(bodyParser.json());
   app.use(sseMiddleware);

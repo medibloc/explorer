@@ -13,7 +13,7 @@ const ja = {
   blockProducerList: 'ブロック生産者リスト',
   from: '送信者',
   marketCap: '市場価格',
-  medPrice: '成行値段',
+  medPrice: 'MED成行値段',
   medSupply: 'MED総数',
   name: '名前',
   noTx: '含まれた取引',

@@ -13,7 +13,7 @@ const ko = {
   blockProducerList: '블록 생산자 목록',
   from: '보낸 사람',
   marketCap: '시장 가격',
-  medPrice: '시장 가격',
+  medPrice: '메디 시장 가격',
   medSupply: '메디 총 개수',
   name: '이름',
   noTx: '포함된 거래',

@@ -1,3 +1,4 @@
+import { BadRequest } from 'http-errors';
 import { keyBy } from 'lodash';
 import { Op } from 'sequelize';
 
@@ -10,17 +11,18 @@ export const get = async (req, res) => {
   let account;
   if (+id) {
     account = await Account.findById(req.params.id);
-  } else {
+  }
+  if (!account) {
     account = await Account.findOne({ where: { address: id } });
   }
   // TODO use accountLogs
+  if (!account) {
+    throw new BadRequest('account not found');
+  }
 
   const { data: { txs_from: txsFrom, txs_to: txsTo } } = account;
-  const txs = {};
-  [...txsFrom, ...txsTo].forEach((tx) => {
-    txs[tx] = {};
-  });
-  const dbTxs = await Transaction.findAll({ where: { txHash: { [Op.in]: Object.keys(txs) } } });
+  const dbTxs = await Transaction
+    .findAll({ where: { txHash: { [Op.in]: [...txsFrom, ...txsTo] } } });
   const dbTxsMap = keyBy(dbTxs, 'txHash');
   txsFrom.forEach((tx, i) => {
     txsFrom[i] = dbTxsMap[tx].dataValues;

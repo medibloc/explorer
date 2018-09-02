@@ -96,7 +96,8 @@ export const accountUpdater = (t) => {
       params: { address: dbAccount.address, height },
       url: `${url}/v1/account`,
     }).then(({ data }) => dbAccount
-      .update(parseAccount(data), { where: { id: dbAccount.id }, transaction: t }))),
+      .update(parseAccount(data), { where: { id: dbAccount.id }, transaction: t }))
+      .catch(() => { console.log(`failed to update account ${dbAccount.address}`); })), // eslint-disable-line no-console
   );
 
   return { handleBlock, handleTx, updateAccountsData };
@@ -184,7 +185,8 @@ export const startSubscribe = (promise) => {
         return;
       }
       console.log(`event ${topic} received`); // eslint-disable-line no-console
-      promise = promise.then(() => topics[topic].onEvent(result)); // eslint-disable-line no-param-reassign, max-len
+      promise = promise.then(() => topics[topic].onEvent(result) // eslint-disable-line no-param-reassign, max-len
+        .catch(err => console.log(err.message))); // eslint-disable-line no-console
     });
   });
 };

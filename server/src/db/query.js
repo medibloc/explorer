@@ -30,15 +30,15 @@ export const toPagination = (option) => {
 };
 
 export const listQuery = ({
-  from, limit, q, to, order,
+  from, limit, order, q, to, where: passedWhere,
 }, searchColumns) => {
   const params = {
     ...toPagination({ from, limit, to }),
   };
 
+  const where = [...(passedWhere || [])];
   // where (= search, handle q)
   if (q) {
-    const where = [];
     if (+q) {
       where.push({ id: +q });
     }
@@ -53,7 +53,8 @@ export const listQuery = ({
         }
       });
     }
-
+  }
+  if (where.length) {
     params.where = { [Op.or]: where };
   }
   // ordering

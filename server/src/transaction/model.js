@@ -7,7 +7,14 @@ import Block from '../block/model';
 
 export default db.define('transactions', {
   data,
+  fromAccount: { allowNull: false, type: Sequelize.STRING },
   id,
+  toAccount: { type: Sequelize.STRING },
   txHash: { allowNull: false, type: Sequelize.STRING, unique: true },
   ...refer(Block),
+}, {
+  indexes: [
+    { fields: ['fromAccount'] },
+    { fields: ['toAccount'] },
+  ],
 });

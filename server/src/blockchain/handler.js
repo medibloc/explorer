@@ -21,6 +21,8 @@ export const parseBlock = block => ({
 const parseTx = (block, tx) => ({
   blockId: block.id,
   data: tx,
+  fromAccount: tx.from,
+  toAccount: tx.to,
   txHash: tx.hash,
 });
 

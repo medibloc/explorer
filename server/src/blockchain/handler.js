@@ -84,10 +84,12 @@ export const accountUpdater = (t) => {
     };
     return Promise.all([
       fromAccount.update({
+        totalTxs: fromAccount.totalTxs + 1,
         totalAmount: new BigNumber(fromAccount.totalAmount).minus(value).toString(),
       }, { transaction: t }),
       AccountLog.create(fromLog, { transaction: t }),
       toAccount.update({
+        totalTxs: toAccount.totalTxs + 1,
         totalAmount: new BigNumber(toAccount.totalAmount).plus(value).toString(),
       }, { transaction: t }),
       AccountLog.create(toLog, { transaction: t }),

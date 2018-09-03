@@ -9,6 +9,7 @@ export default db.define('accounts', {
   balance: { ...value },
   data, // last data received from node(BP)
   id,
+  totalTxs: { defaultValue: 0, type: Sequelize.INTEGER },
   totalAmount: { ...value },
   vesting: { ...value },
 });

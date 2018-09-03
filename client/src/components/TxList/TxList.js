@@ -54,7 +54,7 @@ class TxList extends Component {
     if (page !== prevProps.page) {
       if (type === 'tx') this.getTxs();
       if (type === 'account' && account) this.getAccTxs();
-    };
+    }
     if (prevProps.account !== account) this.getAccTxs();
   }
 
@@ -70,8 +70,7 @@ class TxList extends Component {
 
   getAccTxs() {
     const { account, page } = this.props;
-    // TODO @ggomma change 30 to account tx number
-    const { from, to } = txRanger(page, 30);
+    const { from, to } = txRanger(page, account.totalTxs);
     BlockchainActions.getAccountDetail({
       address: account.address,
       from,
@@ -97,7 +96,7 @@ class TxList extends Component {
           (mode !== 2 && type !== 'tx') && (
             <ListWrapper
               titles={titles}
-              data={mappedTxs(txs.slice(from, to))}
+              data={mappedTxs(type === 'block' ? txs.slice(from, to) : txs)}
               spacing={spaceMapper(spaces)}
               linkTo={['tx/hash', 'account/from', 'account/to']}
               centerList={['Amount']}
@@ -109,7 +108,7 @@ class TxList extends Component {
           (mode === 2 && type !== 'tx') && (
             <ListWrapper
               titles={['Transaction Hash']}
-              data={mappedTxs(txs.slice(from, to))}
+              data={mappedTxs(type === 'block' ? txs.slice(from, to) : txs)}
               spacing={spaceMapper([1])}
               linkTo={['tx/hash']}
             />

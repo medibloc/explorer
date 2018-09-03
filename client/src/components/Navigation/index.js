@@ -4,9 +4,7 @@ import Navigation from './Navigation';
 
 
 const mapStateToProps = ({ blockchain, global }) => ({
-  // TODO @ggomma set numTxs with correct value
-  // numAccTxs: blockchain.account.numTxs,
-  numAccTxs: 30,
+  account: blockchain.account,
   numAccounts: blockchain.medState.numAccount,
   numCandidates: blockchain.medState.numCandidate,
   numTxs: blockchain.medState.numTx,

@@ -86,7 +86,13 @@ const initialState = {
 const reducer = handleActions({
   [GET_MED_STATE]: (state, action) => ({ ...state, medState: action.payload }),
 
-  [GET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload.account.data }),
+  [GET_ACCOUNT]: (state, action) => {
+    const account = {
+      ...action.payload.account.data,
+      totalTxs: action.payload.account.totalTxs,
+    };
+    return { ...state, account };
+  },
   [GET_ACCOUNTS]: (state, action) => ({ ...state, accountList: sorter(action.payload.accounts, 'balance') }),
   [GET_ACCOUNT_DETAIL]: (state, action) => {
     const txs = [];

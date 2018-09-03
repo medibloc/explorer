@@ -45,9 +45,11 @@ class Navigation extends Component {
   lastPage() {
     const {
       numAccounts,
+      numAccTxs,
       numBlocks,
       numCandidates,
       numTxs,
+
 
       txs,
       type,
@@ -55,7 +57,7 @@ class Navigation extends Component {
 
     switch (type) {
       case 'account':
-        return Math.ceil(txs.length / contentsInPage);
+        return Math.ceil(numAccTxs / contentsInPage);
       case 'accounts':
         return Math.ceil(numAccounts / contentsInPage);
       case 'block':

@@ -34,13 +34,13 @@ class Account extends Component {
     }
 
     w.loader(BlockchainActions
-      .getAccount(address)
-      .then((acc) => {
-        const txs = [];
-        acc.account.data.txs_from.forEach(tx => txs.push(tx.data));
-        acc.account.data.txs_to.forEach(tx => txs.push(tx.data));
-        BlockchainActions.setTxs(txs);
-      }));
+      .getAccount(address));
+      // .then((acc) => {
+      //   const txs = [];
+      //   acc.account.data.txs_from.forEach(tx => txs.push(tx.data));
+      //   acc.account.data.txs_to.forEach(tx => txs.push(tx.data));
+      //   BlockchainActions.setTxs(txs);
+      // }));
   }
 
   render() {

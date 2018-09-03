@@ -87,12 +87,12 @@ const reducer = handleActions({
   [GET_MED_STATE]: (state, action) => ({ ...state, medState: action.payload }),
 
   [GET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload.account.data }),
-  [GET_ACCOUNTS]: (state, action) => {
-    const accList = [];
-    action.payload.accounts.forEach(res => accList.push(res.data));
-    return ({ ...state, accountList: sorter(accList, 'balance') });
+  [GET_ACCOUNTS]: (state, action) => ({ ...state, accountList: sorter(action.payload.accounts, 'balance') }),
+  [GET_ACCOUNT_DETAIL]: (state, action) => {
+    const txs = [];
+    action.payload.transactions.forEach(res => txs.push(res.data));
+    return ({ ...state, txs: sorter(txs, 'timestamp') });
   },
-  [GET_ACCOUNT_DETAIL]: (state, action) => ({ ...state, txList: sorter(action.payload.transactions, 'timestamp') }),
   [SET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload }),
 
   [GET_BLOCK]: (state, action) => ({ ...state, block: action.payload.blocks.data[0].data }),
@@ -161,11 +161,11 @@ const reducer = handleActions({
 
 // ACTION CREATORS
 export const getAccount = address => dispatch => accGetter(dispatch, GET_ACCOUNT, ERROR, address);
-export const getAccountDetail = address => dispatch => accDetailGetter(
+export const getAccountDetail = ({ address, from, to }) => dispatch => accDetailGetter(
   dispatch,
   GET_ACCOUNT_DETAIL,
   ERROR,
-  address,
+  { address, from, to },
 );
 export const getAccounts = ({ from, to }) => dispatch => accsGetter(
   dispatch,

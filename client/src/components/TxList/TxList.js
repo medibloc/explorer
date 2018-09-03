@@ -45,12 +45,17 @@ class TxList extends Component {
   }
 
   componentWillMount() {
-    if (this.props.type === 'tx') this.getTxs();
+    const { account, type } = this.props;
+    if (type === 'tx') this.getTxs();
   }
 
   componentDidUpdate(prevProps) {
-    const { page } = this.props;
-    if (page !== prevProps.page) this.getTxs();
+    const { account, page, type } = this.props;
+    if (page !== prevProps.page) {
+      if (type === 'tx') this.getTxs();
+      if (type === 'account' && account) this.getAccTxs();
+    };
+    if (prevProps.account !== account) this.getAccTxs();
   }
 
   componentWillUnmount() {
@@ -61,6 +66,17 @@ class TxList extends Component {
     const { page, medState: { numTx } } = this.props;
     const { from, to } = txRanger(page, numTx);
     w.loader(BlockchainActions.getTxs({ from, to }));
+  }
+
+  getAccTxs() {
+    const { account, page } = this.props;
+    // TODO @ggomma change 30 to account tx number
+    const { from, to } = txRanger(page, 30);
+    BlockchainActions.getAccountDetail({
+      address: account.address,
+      from,
+      to,
+    });
   }
 
   render() {

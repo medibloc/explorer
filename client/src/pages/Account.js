@@ -25,7 +25,7 @@ const Account = ({ location }) => {
       </div>
       <div className="blockDetailTx">
         <PageInfo title="transactions-list" />
-        <TxList type="account" />
+        <TxList type="account" address={subject} />
       </div>
       <div className="contentNavigation">
         <Navigation type="account" />

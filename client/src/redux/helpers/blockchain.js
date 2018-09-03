@@ -61,8 +61,14 @@ export const accGetter = (dispatch, actionType, ERROR, address) => simpleRequest
 });
 
 // get: "/v1/user/{address}/transactions"
-export const accDetailGetter = (dispatch, actionType, ERROR, address) => simpleRequester(dispatch, {
-  url: `${NODE_ENDPOINT}/v1/user/${address}/transactions`,
+export const accDetailGetter = (
+  dispatch,
+  actionType,
+  ERROR,
+  { address, from, to },
+) => simpleRequester(dispatch, {
+  url: `${NODE_ENDPOINT}/transactions`,
+  params: { account: address, from, to },
   actionType,
   ERROR,
 });

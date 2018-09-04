@@ -69,10 +69,12 @@ $tablet_width: 1200px;
 
     .navBarOpen {
       transform: translateX(0);
+      visibility: visible;
     }
 
     .navBarClose {
       transform: translateX($navBar-side-width);
+      visibility: hidden;
     }
 
     .navBarSide {

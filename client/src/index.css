@@ -15,7 +15,7 @@ body {
   -ms-overflow-style: none;
 }
 
-.root {
+#root {
   overflow-x: hidden;
   position: relative;
 }

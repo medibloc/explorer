@@ -16,6 +16,7 @@ import Accounts from './Accounts';
 import Block from './Block';
 import Blocks from './Blocks';
 import BP from './BP';
+import Err404 from './Err404';
 import Home from './Home';
 import Layout from './Layout';
 import Tx from './Tx';
@@ -74,14 +75,17 @@ class Pages extends Component {
               ) : (
                 <Switch>
                   <Layout loading={loading}>
-                    <Route exact path="/" component={Home} />
-                    <Route path="/account" component={Account} />
-                    <Route exact path="/accounts" component={Accounts} />
-                    <Route path="/block" component={Block} />
-                    <Route exact path="/blocks" component={Blocks} />
-                    <Route exact path="/bps" component={BP} />
-                    <Route path="/tx" component={Tx} />
-                    <Route exact path="/txs" component={Txs} />
+                    <Switch>
+                      <Route exact path="/" component={Home} />
+                      <Route path="/account" component={Account} />
+                      <Route exact path="/accounts" component={Accounts} />
+                      <Route path="/block" component={Block} />
+                      <Route exact path="/blocks" component={Blocks} />
+                      <Route exact path="/bps" component={BP} />
+                      <Route path="/tx" component={Tx} />
+                      <Route exact path="/txs" component={Txs} />
+                      <Route path="*" component={Err404} />
+                    </Switch>
                   </Layout>
                 </Switch>
               )

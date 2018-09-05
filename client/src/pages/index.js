@@ -35,6 +35,14 @@ import {
 addLocaleData([...en, ...ja, ...ko, ...zh]);
 
 
+const setLocale = () => {
+  const langList = ['ja', 'ko', 'zh'];
+  const browserLang = navigator.language || navigator.userLanguage;
+  let lang = browserLang.split('-')[0];
+  if (langList.indexOf(lang) === -1) lang = 'en';
+  GlobalActions.changeLanguage(lang);
+};
+
 const setWindowSize = () => {
   GlobalActions.setWindowSize(window.innerWidth);
   window.addEventListener(
@@ -45,6 +53,7 @@ const setWindowSize = () => {
 
 class Pages extends Component {
   componentWillMount() {
+    setLocale()
     w.loader(BlockchainActions
       .getMedState()
       .then(() => TickerActions.getMedxPrice())

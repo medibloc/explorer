@@ -60,10 +60,10 @@ const initialState = {
 
   account: null, // specific account
   accounts: [], // all accounts on the blockchain
-  accountList: [], // accounts from rpc call
+  accountList: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}], // accounts from rpc call
 
   block: null, // specific block
-  blockList: [], // blocks from rpc call
+  blockList: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}], // blocks from rpc call
   blocks: [], // blocks from event subscriber
   lib: null, // lib from event subscriber
   revertBlocks: [], // revert blocks from event subscriber
@@ -71,11 +71,11 @@ const initialState = {
 
   pendingTxs: [], // pending txs from event subscriber
   tx: null, // specific tx
-  txList: [], // transaction list set from local
+  txList: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}], // transaction list set from local
   txs: [], // executed txs from event subscriber
   txsFromBlock: [], // txs included in the specific block
 
-  bpList: [],
+  bpList: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
 
   subscribe: false,
 

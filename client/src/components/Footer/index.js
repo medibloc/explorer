@@ -4,6 +4,7 @@ import Footer from './Footer';
 
 
 const mapStateToProps = ({ global }) => ({
+  language: global.language,
   mode: global.mode,
 });
 

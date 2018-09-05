@@ -12,7 +12,7 @@ const imgChange = (sns, on) => (e) => {
 
 const sns = ['telegram', 'twitter', 'fb', 'medium', 'brunch', 'medi'];
 
-const Footer = ({ mode }) => (
+const Footer = ({ language, mode }) => (
   <div className="footer">
     <div className="footerContent">
       <div className="footerLogo">
@@ -27,23 +27,28 @@ const Footer = ({ mode }) => (
       }
       <div className="footerSNS">
         {
-          sns.map(service => (
-            <a
-              href={snsLink[service]}
-              target="_blank"
-              rel="noopener noreferrer"
-              key={service}
-            >
-              <img
-                src={`/image/icon/ico-${service}-off@3x.png`}
-                alt="sns"
-                onMouseOver={imgChange(service, true)}
-                onFocus={imgChange(service, true)}
-                onMouseOut={imgChange(service, false)}
-                onBlur={imgChange(service, false)}
-              />
-            </a>
-          ))
+          sns.map((service) => {
+            let snsRef = snsLink[service];
+            if (service === 'telegram') {
+              snsRef = snsLink[`${service}_${language}`];
+            }
+            return (
+              <a
+                href={snsRef}
+                target="_blank"
+                rel="noopener noreferrer"
+                key={service}
+              >
+                <img
+                  src={`/image/icon/ico-${service}-off@3x.png`}
+                  alt="sns"
+                  onMouseOver={imgChange(service, true)}
+                  onFocus={imgChange(service, true)}
+                  onMouseOut={imgChange(service, false)}
+                  onBlur={imgChange(service, false)}
+                />
+              </a>)
+          })
         }
       </div>
     </div>

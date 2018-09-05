@@ -6,7 +6,10 @@ export const COINMARKETCAP_MEDX_PRICE = 'https://api.coinmarketcap.com/v2/ticker
 
 // SNS LINK
 export const snsLink = {
-  telegram: 'https://t.me/medibloc',
+  telegram_en: 'https://t.me/medibloc',
+  telegram_ko: 'https://t.me/mediblockoreachat',
+  telegram_zh: 'https://t.me/medibloc_china',
+  telegram_ja: 'https://t.me/mediblocjapan',
   twitter: 'https://twitter.com/_MediBloc',
   fb: 'https://www.facebook.com/medibloc/',
   medium: 'https://medium.com/@medibloc',

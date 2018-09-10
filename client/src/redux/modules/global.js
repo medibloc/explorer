@@ -6,6 +6,7 @@ import { maxResult } from '../../config';
 // ACTION TYPES
 const SET_WINDOW_SIZE = 'global/SET_WINDOW_SIZE';
 
+const REMOVE_SEARCH_RESULT = 'global/REMOVE_SEARCH_RESULT';
 const SEARCH = 'global/SEARCH';
 const SET_SEARCH_TEXT = 'global/SET_SEARCH_TEXT';
 
@@ -68,6 +69,7 @@ const reducer = handleActions({
     };
   },
 
+  [REMOVE_SEARCH_RESULT]: (state, action) => ({ ...state, searchResult: [] }),
   [SEARCH]: (state, action) => {
     let result = [];
     if (state.searchResult.length >= maxResult) {
@@ -141,6 +143,7 @@ export const setSearchText = (searchText, searchFrom) => (dispatch) => {
   searchTextSetter(dispatch, SET_SEARCH_TEXT, null, searchText, searchFrom);
   if (searchText !== '') searcher(dispatch, SEARCH, null, searchText);
 };
+export const removeSearchResult = createAction(REMOVE_SEARCH_RESULT);
 export const setWindowSize = createAction(SET_WINDOW_SIZE);
 
 export default reducer;

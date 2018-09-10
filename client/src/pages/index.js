@@ -53,7 +53,8 @@ const setWindowSize = () => {
 
 class Pages extends Component {
   componentWillMount() {
-    setLocale()
+    setLocale();
+    setWindowSize();
     w.loader(BlockchainActions
       .getMedState()
       .then(() => TickerActions.getMedxPrice())
@@ -61,7 +62,6 @@ class Pages extends Component {
   }
 
   componentDidMount() {
-    setWindowSize();
     BlockchainActions.subscribe();
   }
 

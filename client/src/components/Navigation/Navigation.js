@@ -28,20 +28,6 @@ const pages = (currentPage, lastPage, pageDisplay, curPath) => {
 };
 
 class Navigation extends Component {
-  constructor(props) {
-    super(props);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-  }
-
-  handleKeyPress(e) {
-    if (e.key === 'Enter') {
-      let page = Math.floor(e.target.value);
-      if (page < 1) page = 1;
-      if (page > this.lastPage()) page = this.lastPage();
-      moveToPage(page);
-    }
-  }
-
   lastPage() {
     const {
       numAccounts,
@@ -75,30 +61,30 @@ class Navigation extends Component {
   render() {
     const { page } = this.props;
     const lastPage = this.lastPage();
-    const qpage = () => parseInt(qs.parse(window.location.search).page, 10) || 1;
-    const path = () => window.location.pathname;
+    const qpage = parseInt(qs.parse(window.location.search).page, 10) || 1;
+    const path = window.location.pathname;
 
     return (
       <div className="navigation">
-        <NavLink to={`${path()}?page=1`}>
+        <NavLink to={`${path}?page=1`}>
           <button onClick={() => moveToPage(1)} type="button">
             {'<<'}
           </button>
         </NavLink>
-        <NavLink to={`${path()}?page=${qpage() <= 1 ? 1 : qpage() - 1}`}>
+        <NavLink to={`${path}?page=${qpage <= 1 ? 1 : qpage - 1}`}>
           <button onClick={() => moveToPage(page - 1)} type="button" disabled={page === 1}>
             {'<'}
           </button>
         </NavLink>
         {
-          pages(page, lastPage, navigationDisplay, path())
+          pages(page, lastPage, navigationDisplay, path)
         }
-        <NavLink to={`${path()}?page=${qpage() === lastPage ? lastPage : qpage() + 1}`}>
+        <NavLink to={`${path}?page=${qpage === lastPage ? lastPage : qpage + 1}`}>
           <button onClick={() => moveToPage(page + 1)} type="button" disabled={page === lastPage}>
             {'>'}
           </button>
         </NavLink>
-        <NavLink to={`${path()}?page=${lastPage}`}>
+        <NavLink to={`${path}?page=${lastPage}`}>
           <button onClick={() => moveToPage(lastPage)} type="button">
             {'>>'}
           </button>
@@ -109,12 +95,13 @@ class Navigation extends Component {
 }
 
 Navigation.propTypes = {
-  accounts: PropTypes.array,
-  bpList: PropTypes.array,
-  last: PropTypes.number,
-  page: PropTypes.number.isRequired,
-  txList: PropTypes.array,
+  account: PropTypes.object,
+  numAccounts: PropTypes.number,
+  numCandidates: PropTypes.number,
+  numTxs: PropTypes.number,
+  numBlocks: PropTypes.number,
   txs: PropTypes.array,
+  page: PropTypes.number.isRequired,
   type: PropTypes.oneOf([
     'account',
     'accounts',
@@ -127,10 +114,11 @@ Navigation.propTypes = {
 };
 
 Navigation.defaultProps = {
-  accounts: [],
-  bpList: [],
-  last: 1,
-  txList: [],
+  account: {},
+  numAccounts: 0,
+  numCandidates: 0,
+  numTxs: 0,
+  numBlocks: 0,
   txs: [],
 };
 

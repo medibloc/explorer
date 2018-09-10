@@ -27,16 +27,12 @@ export const subscriber = (dispatch, actionTypes, ERROR) => {
   }, false);
 };
 
-// get: "/v1/block"
-// params: "hash[hash, 'genesis', 'confirmed', 'tail']"
 export const blockGetter = (dispatch, actionType, ERROR, hash) => simpleRequester(dispatch, {
   url: `${NODE_ENDPOINT}/blocks?q=${hash}`,
   actionType,
   ERROR,
 });
 
-// get: "/v1/blocks"
-// params: "from, to"
 export const blocksGetter = (
   dispatch,
   actionType,
@@ -52,15 +48,12 @@ export const blocksGetter = (
   ERROR,
 });
 
-// get: "/v1/user/accountstate"
-// params: "address / height[number, 'genesis', 'confirmed', 'tail']"
 export const accGetter = (dispatch, actionType, ERROR, address) => simpleRequester(dispatch, {
   url: `${NODE_ENDPOINT}/accounts/${address}`,
   actionType,
   ERROR,
 });
 
-// get: "/v1/user/{address}/transactions"
 export const accDetailGetter = (
   dispatch,
   actionType,
@@ -73,7 +66,6 @@ export const accDetailGetter = (
   ERROR,
 });
 
-// get: "/v1/user/accounts"
 export const accsGetter = (
   dispatch,
   actionType,
@@ -86,15 +78,12 @@ export const accsGetter = (
   ERROR,
 });
 
-// get: "/v1/node/medstate"
 export const medStateGetter = (dispatch, actionType, ERROR) => simpleRequester(dispatch, {
   url: `${NODE_ENDPOINT}/info`,
   actionType,
   ERROR,
 });
 
-// get: "/v1/transaction"
-// params: "hash"
 export const txGetter = (dispatch, actionType, ERROR, hash) => simpleRequester(dispatch, {
   url: `${NODE_ENDPOINT}/transactions?q=${hash}`,
   actionType,
@@ -113,7 +102,6 @@ export const txsGetter = (
   ERROR,
 });
 
-// get: "/v1/candidates"
 export const bpsGetter = (
   dispatch,
   actionType,

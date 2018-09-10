@@ -29,6 +29,8 @@ const initialState = {
   width: null,
 
   search: '',
+  // searchFrom : 'main', 'top', 'mobile'
+  searchFrom: '',
   searchResult: [],
 
   languageOpen: false,
@@ -81,7 +83,8 @@ const reducer = handleActions({
   },
   [SET_SEARCH_TEXT]: (state, action) => ({
     ...state,
-    search: action.payload,
+    search: action.payload.searchText,
+    searchFrom: action.payload.searchFrom,
     searchResult: [],
   }),
 
@@ -134,9 +137,9 @@ export const moveUrl = createAction(MOVE_URL);
 export const openLanguage = createAction(OPEN_LANGUAGE);
 export const openModal = createAction(OPEN_MODAL); // { modalData, modalType }
 export const openNavBar = createAction(OPEN_NAVBAR);
-export const setSearchText = searchText => dispatch => {
-  searchTextSetter(dispatch, SET_SEARCH_TEXT, null, searchText);
-  searcher(dispatch, SEARCH, null, searchText);
+export const setSearchText = (searchText, searchFrom) => (dispatch) => {
+  searchTextSetter(dispatch, SET_SEARCH_TEXT, null, searchText, searchFrom);
+  if (searchText !== '') searcher(dispatch, SEARCH, null, searchText);
 };
 export const setWindowSize = createAction(SET_WINDOW_SIZE);
 

@@ -12,8 +12,8 @@ import {
   txGetter,
   txsGetter,
 } from '../helpers/blockchain';
-import { simpleRequester } from '../helpers/common';
 import { divider, sorter } from '../../lib';
+import { bpsInPage, contentsInPage } from '../../config';
 
 
 // ACTION TYPES
@@ -22,21 +22,14 @@ const GET_MED_STATE = 'blockchain/GET_MED_STATE';
 const GET_ACCOUNT = 'blockchain/GET_ACCOUNT';
 const GET_ACCOUNTS = 'blockchain/GET_ACCOUNTS';
 const GET_ACCOUNT_DETAIL = 'blockchain/GET_ACCOUNT_DETAIL';
-const SET_ACCOUNT = 'blockchain/SET_ACCOUNT';
 
 const GET_BLOCK = 'blockchain/GET_BLOCK';
 const GET_BLOCKS = 'blockchain/GET_BLOCKS';
 const GET_INITIAL_BLOCKS = 'blockchain/GET_INITIAL_BLOCKS';
-const GET_LIB = 'blockchain/GET_LIB';
-const GET_REVERT_BLOCK = 'blockchain/GET_REVERT_BLOCK';
 const GET_TAIL_BLOCK = 'blockchain/GET_TAIL_BLOCK';
-const SET_BLOCK = 'blockchain/SET_BLOCK';
 
-const GET_EXECUTED_TX = 'blockchain/GET_EXECUTED_TX';
-const GET_PENDING_TX = 'blockchain/GET_PENDING_TX';
 const GET_TX = 'blockchain/GET_TX';
 const GET_TXS = 'blockchain/GET_TXS';
-const SET_TX = 'blockchain/SET_TX';
 const SET_TXS = 'blockchain/SET_TXS';
 
 const GET_BPS = 'blockchain/GET_BPS';
@@ -59,23 +52,18 @@ const initialState = {
   medState: null,
 
   account: null, // specific account
-  accounts: [], // all accounts on the blockchain
-  accountList: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}], // accounts from rpc call
+  accountList: Array(contentsInPage).fill({}), // accounts from rpc call
 
   block: null, // specific block
-  blockList: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}], // blocks from rpc call
+  blockList: Array(contentsInPage).fill({}), // blocks from rpc call
   blocks: [], // blocks from event subscriber
-  lib: null, // lib from event subscriber
-  revertBlocks: [], // revert blocks from event subscriber
   tailBlock: null, // tail block from event subscriber
 
-  pendingTxs: [], // pending txs from event subscriber
-  tx: null, // specific tx
-  txList: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}], // transaction list set from local
+  txList: Array(contentsInPage).fill({}), // transaction list set from local
   txs: [], // executed txs from event subscriber
   txsFromBlock: [], // txs included in the specific block
 
-  bpList: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+  bpList: Array(bpsInPage).fill({}),
 
   subscribe: false,
 
@@ -99,7 +87,6 @@ const reducer = handleActions({
     action.payload.transactions.forEach(res => txs.push(res.data));
     return ({ ...state, txs: sorter(txs, 'timestamp') });
   },
-  [SET_ACCOUNT]: (state, action) => ({ ...state, account: action.payload }),
 
   [GET_BLOCK]: (state, action) => ({ ...state, block: action.payload.blocks.data[0].data }),
   [GET_BLOCKS]: (state, action) => {
@@ -116,11 +103,6 @@ const reducer = handleActions({
       totalSupply: divider(blockList[0].supply, [10 ** 12]),
     };
   },
-  [GET_LIB]: (state, action) => ({ ...state, lib: action.payload }),
-  [GET_REVERT_BLOCK]: (state, action) => ({
-    ...state,
-    revertBlocks: [...state.revertBlocks, action.payload],
-  }),
   [GET_TAIL_BLOCK]: (state, action) => ({
     ...state,
     tailBlock: action.payload,
@@ -132,24 +114,13 @@ const reducer = handleActions({
       state.txsFromBlock
     ),
   }),
-  [SET_BLOCK]: (state, action) => ({ ...state, block: action.payload }),
 
-  [GET_EXECUTED_TX]: (state, action) => ({
-    ...state,
-    // txs: sorter([...state.txs, action.payload].slice(0, 5), 'timestamp'),
-    txs: sorter([...state.txs, action.payload], 'timestamp'),
-  }),
-  [GET_PENDING_TX]: (state, action) => ({
-    ...state,
-    pendingTxs: [...state.pendingTxs, action.payload],
-  }),
   [GET_TX]: (state, action) => ({ ...state, tx: action.payload.transactions[0].data }),
   [GET_TXS]: (state, action) => {
     const txList = [];
     action.payload.transactions.forEach(res => txList.push(res.data));
     return ({ ...state, txList });
   },
-  [SET_TX]: (state, action) => ({ ...state, tx: action.payload }),
   [SET_TXS]: (state, action) => ({
     ...state,
     txs: sorter(action.payload, 'timestamp'),
@@ -186,12 +157,6 @@ export const getBlocks = ({ from, to }) => dispatch => blocksGetter(
   ERROR,
   { from, to },
 );
-export const getBlocksFromServer = ({ from, to }) => dispatch => simpleRequester(dispatch, {
-  actionType: GET_BLOCKS,
-  ERROR,
-  params: { from, to },
-  url: '/api/v1/blocks',
-});
 export const getBPs = ({ from, to }) => dispatch => bpsGetter(
   dispatch,
   GET_BPS,
@@ -212,9 +177,6 @@ export const getTxs = ({ from, to }) => dispatch => txsGetter(
   ERROR,
   { from, to },
 );
-export const setAccount = createAction(SET_ACCOUNT);
-export const setBlock = createAction(SET_BLOCK);
-export const setTx = createAction(SET_TX);
 export const setTxs = createAction(SET_TXS);
 export const subscribe = () => dispatch => subscriber(dispatch, subsribeTypes, ERROR);
 

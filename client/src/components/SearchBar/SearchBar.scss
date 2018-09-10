@@ -1,6 +1,7 @@
 .searchBar {
   display: flex;
   justify-content: flex-end;
+  flex-direction: column;
   align-items: center;
   max-width: 300px;
   width: 100%;

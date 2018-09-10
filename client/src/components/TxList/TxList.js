@@ -4,39 +4,11 @@ import React, { Component } from 'react';
 import ListWrapper from '../ListWrapper';
 import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
 import TableWithIcon from '../TableWithIcon';
-import { spaceMapper, txMapper } from '../../lib';
-import { contentsInPage } from '../../config';
+import { listMapper, ranger, spaceMapper } from '../../lib';
+import { contentsInPage, txSpaceList, txTitleList } from '../../config';
 
 import './TxList.scss';
 
-
-const txRanger = (page, numTxs) => {
-  if (numTxs < contentsInPage) return { from: 0, to: numTxs };
-  let from = (page - 1) * contentsInPage;
-  let to = page * contentsInPage - 1;
-  if (from < 0) from = 0;
-  if (to < from) to = from;
-  return { from, to };
-};
-
-const mappedTxs = (txs) => {
-  if (txs.length < 1) return [];
-  const txList = [];
-  txs.forEach(tx => txList.push(txMapper(tx)));
-  return txList;
-};
-
-const titleList = {
-  account: ['Transaction Hash', 'Time Stamp', 'From', 'To', 'Amount'],
-  block: ['Transaction Hash', 'From', 'To', 'Amount'],
-  tx: ['Transaction Hash', 'Time Stamp', 'From', 'To', 'Amount'],
-};
-
-const spaceList = {
-  account: [2, 1, 2, 2, 1],
-  block: [28, 28, 28, 16],
-  tx: [20, 15, 20, 20, 15],
-};
 
 class TxList extends Component {
   constructor(props) {
@@ -45,14 +17,14 @@ class TxList extends Component {
   }
 
   componentWillMount() {
-    const { account, type } = this.props;
-    if (type === 'tx') this.getTxs();
+    const { type } = this.props;
+    if (type === 'txs') this.getTxs();
   }
 
   componentDidUpdate(prevProps) {
     const { account, page, type } = this.props;
     if (page !== prevProps.page) {
-      if (type === 'tx') this.getTxs();
+      if (type === 'txs') this.getTxs();
       if (type === 'account' && account) this.getAccTxs();
     }
     if (prevProps.account !== account) this.getAccTxs();
@@ -64,13 +36,13 @@ class TxList extends Component {
 
   getTxs() {
     const { page, medState: { numTx } } = this.props;
-    const { from, to } = txRanger(page, numTx);
+    const { from, to } = ranger(page, numTx, contentsInPage);
     w.loader(BlockchainActions.getTxs({ from, to }));
   }
 
   getAccTxs() {
     const { account, page } = this.props;
-    const { from, to } = txRanger(page, account.totalTxs);
+    const { from, to } = ranger(page, account.totalTxs, contentsInPage);
     BlockchainActions.getAccountDetail({
       address: account.address,
       from,
@@ -86,17 +58,17 @@ class TxList extends Component {
       txs,
       type,
     } = this.props;
-    const titles = type ? titleList[type] : [];
-    const spaces = type ? spaceList[type] : [];
-    const { from, to } = txRanger(page, txs.length);
+    const titles = txTitleList[type];
+    const spaces = txSpaceList[type];
+    const { from, to } = ranger(page, txs.length, contentsInPage);
 
     return (
       <div className="txList">
         {
-          (mode !== 2 && type !== 'tx') && (
+          (mode !== 2 && type !== 'txs') && (
             <ListWrapper
               titles={titles}
-              data={mappedTxs(type === 'block' ? txs.slice(from, to) : txs)}
+              data={listMapper(type === 'block' ? txs.slice(from, to) : txs, 'tx')}
               spacing={spaceMapper(spaces)}
               linkTo={['tx/hash', 'account/from', 'account/to']}
               centerList={['Amount']}
@@ -105,25 +77,25 @@ class TxList extends Component {
           )
         }
         {
-          (mode === 2 && type !== 'tx') && (
+          (mode === 2 && type !== 'txs') && (
             <ListWrapper
               titles={['Transaction Hash']}
-              data={mappedTxs(type === 'block' ? txs.slice(from, to) : txs)}
+              data={listMapper(type === 'block' ? txs.slice(from, to) : txs, 'tx')}
               spacing={spaceMapper([1])}
               linkTo={['tx/hash']}
             />
           )
         }
         {
-          (mode === 2 && type === 'tx') && (
+          (mode === 2 && type === 'txs') && (
             <TableWithIcon type="tx" data={txList} />
           )
         }
         {
-          (mode !== 2 && type === 'tx') && (
+          (mode !== 2 && type === 'txs') && (
             <ListWrapper
               titles={titles}
-              data={mappedTxs(txList)}
+              data={listMapper(txList, 'tx')}
               spacing={spaceMapper(spaces)}
               linkTo={['tx/hash', 'account/from', 'account/to']}
               centerList={['Amount']}
@@ -137,11 +109,19 @@ class TxList extends Component {
 }
 
 TxList.propTypes = {
-  mode: PropTypes.number.isRequired,
-  page: PropTypes.number.isRequired,
+  account: PropTypes.object,
+  medState: PropTypes.object,
   txList: PropTypes.array.isRequired,
   txs: PropTypes.array.isRequired,
+
+  mode: PropTypes.number.isRequired,
+  page: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
+};
+
+TxList.defaultProps = {
+  account: {},
+  medState: {},
 };
 
 export default TxList;

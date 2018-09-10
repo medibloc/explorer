@@ -2,6 +2,8 @@ import accountMapper from './accountMapper';
 import { adder, divider } from './bigNumCalculator';
 import blockMapper from './blockMapper';
 import bpMapper from './bpMapper';
+import listMapper from './listMapper';
+import ranger from './ranger';
 import sorter from './sorter';
 import spaceMapper from './spaceMapper';
 import subjectDistinguisher from './subjectDistinguisher';
@@ -17,6 +19,8 @@ export {
   accountMapper,
   blockMapper,
   bpMapper,
+  listMapper,
+  ranger,
   sorter,
   spaceMapper,
   subjectDistinguisher,

@@ -53,7 +53,6 @@ class Account extends Component {
 
 Account.propTypes = {
   account: PropTypes.object,
-  accounts: PropTypes.array.isRequired,
   address: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
 };

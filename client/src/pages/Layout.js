@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
+import qs from 'query-string';
 import React, { Component } from 'react';
 
 import { BlockchainActions, GlobalActions, WidgetActions as w } from '../redux/actionCreators';
-import qs from "query-string";
 
 
 class Layout extends Component {
@@ -37,7 +37,7 @@ class Layout extends Component {
 }
 
 Layout.propTypes = {
-  // children: PropTypes.arrayOf(PropTypes.element),
+  children: PropTypes.element,
   loading: PropTypes.bool.isRequired,
   location: PropTypes.object,
 };

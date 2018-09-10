@@ -7,7 +7,7 @@ import Language from '../Language';
 import LanguageBox from '../Language/LanguageBox';
 import Modal from '../Modal';
 import NavList from './NavList';
-import SearchBar from '../SearchBar/SearchBar';
+import SearchBar from '../SearchBar';
 import { GlobalActions } from '../../redux/actionCreators';
 
 import './NavBar.scss';
@@ -37,7 +37,7 @@ const NavBar = ({
               <div className="navNavigator">
                 <NavList pages={pages} currentUrl={currentUrl} />
               </div>
-              <SearchBar className={cx({ fullWidth: mode !== 0 })} />
+              <SearchBar className={cx({ fullWidth: mode !== 0 })} type="top" />
               <Language />
             </Fragment>
           ) : (
@@ -59,7 +59,7 @@ const NavBar = ({
                 }
               </button>
               <div className={`navBarSide ${navBarOpen ? 'navBarOpen' : 'navBarClose'}`}>
-                <SearchBar className="fullWidth" />
+                <SearchBar className="fullWidth" type="mobile" />
                 <div className="navBarSideMenu">
                   <img src="/image/icon/ico-all-menu.svg" alt="menu" />
                   Menu

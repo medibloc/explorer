@@ -1,34 +1,33 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import SimpleWrapper from '../SimpleWrapper';
 import { GlobalActions } from '../../redux/actionCreators';
 
 import './SearchBar.scss';
 
 
-const SearchBar = ({ modalType, search, type }) => {
-  const { setSearchText, openModal } = GlobalActions;
+const SearchBar = ({ search, searchFrom, searchResult, type }) => {
+  const { setSearchText } = GlobalActions;
 
   return (
     <div className="searchBar" id={type}>
       <div className="searchBarSearch">
         <input
-          autoFocus={modalType === 'Search'}
           placeholder="Enter Address, Tx hash, Block Height"
-          onClick={(e) => {
-            openModal({ modalType: 'Search' });
-            if (modalType !== 'Search') e.target.blur();
-          }}
           onChange={(e) => {
-            setSearchText(e.target.value);
+            setSearchText(e.target.value, type);
           }}
-          value={search}
-          disabled
+          onBlur={(e) => {
+            e.target.value = '';
+            setSearchText('', type);
+          }}
         />
         <div className="searchBarIcon">
           <img src={`/image/icon/ico-search-s${type ? '' : '-black'}.svg`} alt="searchLogo" />
         </div>
       </div>
+      <SimpleWrapper data={searchResult} searchFrom={searchFrom} type={type} />
     </div>
   );
 };

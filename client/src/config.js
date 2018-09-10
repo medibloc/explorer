@@ -37,3 +37,16 @@ export const countryName = {
 
 // SEARCH
 export const maxResult = 15;
+
+// SPACE_LIST (component_page)
+export const txSpaceList = {
+  account: [2, 1, 2, 2, 1],
+  block: [28, 28, 28, 16],
+  txs: [20, 15, 20, 20, 15],
+};
+
+export const txTitleList = {
+  account: ['Transaction Hash', 'Time Stamp', 'From', 'To', 'Amount'],
+  block: ['Transaction Hash', 'From', 'To', 'Amount'],
+  txs: ['Transaction Hash', 'Time Stamp', 'From', 'To', 'Amount'],
+};

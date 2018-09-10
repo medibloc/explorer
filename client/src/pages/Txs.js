@@ -9,7 +9,7 @@ const Txs = () => (
   <Fragment>
     <PageInfo title="transactions-list" />
     <div className="txsContents">
-      <TxList type="tx" />
+      <TxList type="txs" />
     </div>
     <div className="txsNavigation">
       <Navigation type="txs" />

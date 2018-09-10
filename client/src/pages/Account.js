@@ -5,17 +5,11 @@ import AccountContainer from '../components/Account';
 import Navigation from '../components/Navigation';
 import PageInfo from '../components/PageInfo';
 import TxList from '../components/TxList';
-import { subjectDistinguisher } from '../lib';
 
 
 const Account = ({ location }) => {
   const subject = location.pathname.split('/')[2];
-  const type = subjectDistinguisher(subject);
-
-  let AccountWrapper = <AccountContainer />;
-  if (type === 'account') {
-    AccountWrapper = <AccountContainer address={subject} />;
-  }
+  const AccountWrapper = <AccountContainer address={subject} />;
 
   return (
     <div className="account">

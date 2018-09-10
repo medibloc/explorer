@@ -6,10 +6,9 @@ import Navigation from './Navigation';
 const mapStateToProps = ({ blockchain, global }) => ({
   account: blockchain.account,
   numAccounts: blockchain.medState.numAccount,
+  numBlocks: blockchain.medState.height,
   numCandidates: blockchain.medState.numCandidate,
   numTxs: blockchain.medState.numTx,
-  numBlocks: blockchain.medState.height,
-  txList: blockchain.txList,
   txs: blockchain.txs,
 
   page: global.page,

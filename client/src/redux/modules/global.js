@@ -30,7 +30,7 @@ const initialState = {
   width: null,
 
   search: '',
-  // searchFrom : 'main', 'top', 'mobile'
+  // searchFrom : 'main', 'top', 'mobile', 'side'
   searchFrom: '',
   searchResult: [],
 
@@ -69,7 +69,7 @@ const reducer = handleActions({
     };
   },
 
-  [REMOVE_SEARCH_RESULT]: (state, action) => ({ ...state, searchResult: [] }),
+  [REMOVE_SEARCH_RESULT]: state => ({ ...state, searchResult: [] }),
   [SEARCH]: (state, action) => {
     let result = [];
     if (state.searchResult.length >= maxResult) {

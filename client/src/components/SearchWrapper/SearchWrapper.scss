@@ -1,16 +1,17 @@
 .searchWrapper {
-  width: 90vw;
-  max-width: 650px;
-  height: 600px;
-  border-radius: 2px;
-  background-color: rgba(0, 0, 0, 0.9);
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffff;
 
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding: 20px;
 
   .searchWrapperSearchBox {
+    height: 55px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    margin-bottom: 1px;
+
     width: 100%;
     max-width: 600px;
     display: flex;
@@ -18,10 +19,9 @@
     align-items: center;
 
     .searchBar {
-      max-width: 100% !important;
+      max-width: 100%;
       margin-left: 0px;
       margin-right: 0px;
-      margin-bottom: 20px;
 
       display: flex;
       justify-content: center;
@@ -40,9 +40,5 @@
     overflow-y: scroll;
     border-radius: 2px;
     background: rgba(244, 244, 244, 0.5);
-  }
-
-  * {
-    color: rgba(255, 255, 255, 0.8) !important;
   }
 }

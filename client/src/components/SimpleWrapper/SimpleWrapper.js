@@ -2,7 +2,7 @@ import cx from 'classnames';
 import { NavLink } from 'react-router-dom';
 import React, { Component } from 'react';
 
-import { GlobalActions } from "../../redux/actionCreators";
+import { GlobalActions } from '../../redux/actionCreators';
 
 import './SimpleWrapper.scss';
 

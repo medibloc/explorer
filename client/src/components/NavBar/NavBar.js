@@ -59,7 +59,7 @@ const NavBar = ({
                 }
               </button>
               <div className={`navBarSide ${navBarOpen ? 'navBarOpen' : 'navBarClose'}`}>
-                <SearchBar className="fullWidth" type="mobile" />
+                <SearchBar className="fullWidth" type="side" />
                 <div className="navBarSideMenu">
                   <img src="/image/icon/ico-all-menu.svg" alt="menu" />
                   Menu

@@ -15,6 +15,9 @@ const SearchBar = ({ search, searchFrom, searchResult, type }) => {
       <div className="searchBarSearch">
         <input
           placeholder="Enter Address, Tx hash, Block Height"
+          onClick={() => {
+            if (type === 'side') GlobalActions.openModal({ modalType: 'Search' });
+          }}
           onChange={(e) => {
             setSearchText(e.target.value, type);
           }}
@@ -23,7 +26,15 @@ const SearchBar = ({ search, searchFrom, searchResult, type }) => {
           }}
         />
         <div className="searchBarIcon">
-          <img src={`/image/icon/ico-search-s${type === 'main' ? '' : '-black'}.svg`} alt="searchLogo" />
+          {
+            type === 'mobile' ?
+              <img
+                src="/image/icon/back-btn.svg"
+                alt="backBtn"
+                onClick={GlobalActions.closeModal}
+              />
+              : <img src={`/image/icon/ico-search-s${type === 'main' ? '' : '-black'}.svg`} alt="searchLogo" />
+          }
         </div>
       </div>
       <SimpleWrapper data={searchResult} searchFrom={searchFrom} type={type} />

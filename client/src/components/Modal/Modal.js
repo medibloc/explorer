@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 
 import Loading from '../Loading';
 import QrCode from '../QrCode';
+import SearchWrapper from '../SearchWrapper';
 import { GlobalActions } from '../../redux/actionCreators';
 
 import './Modal.scss';
@@ -18,6 +19,8 @@ const modalContent = (type, data) => {
       return <Loading />;
     case 'QrCode':
       return <QrCode data={data} />;
+    case 'Search':
+      return <SearchWrapper />;
     default:
       return <div />;
   }

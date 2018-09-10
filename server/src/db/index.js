@@ -15,8 +15,8 @@ const connect = ({
     pool: {
       acquire: 30000,
       idle: 10000,
-      max: 10,
-      min: 0,
+      max: 50,
+      min: 10,
     },
   });
 

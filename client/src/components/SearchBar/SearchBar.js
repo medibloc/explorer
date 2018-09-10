@@ -20,11 +20,10 @@ const SearchBar = ({ search, searchFrom, searchResult, type }) => {
           }}
           onBlur={(e) => {
             e.target.value = '';
-            setSearchText('', type);
           }}
         />
         <div className="searchBarIcon">
-          <img src={`/image/icon/ico-search-s${type ? '' : '-black'}.svg`} alt="searchLogo" />
+          <img src={`/image/icon/ico-search-s${type === 'main' ? '' : '-black'}.svg`} alt="searchLogo" />
         </div>
       </div>
       <SimpleWrapper data={searchResult} searchFrom={searchFrom} type={type} />

@@ -49,7 +49,7 @@ class SimpleWrapper extends Component {
       <div className="simpleWrapper" id={`${type}Search`}>
         <div className={cx('simpleWrapperContentBox', { nothing: !dataExist || searchFrom !== type, top: type === 'top' })}>
           { data && data.map(datum => (
-            <div className="simpleWrapperContent" key={datum.data}>
+            <div className="simpleWrapperContent" key={datum.data} onClick={GlobalActions.closeModal}>
               <NavLink to={`/${datum.type}/${datum.data}`}>
                 {datum.type} : {datum.data}
               </NavLink>

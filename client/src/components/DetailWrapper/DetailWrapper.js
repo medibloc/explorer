@@ -12,7 +12,7 @@ import './DetailWrapper.scss';
 const titles = {
   block: ['Block Height', 'Time Stamp', 'Block Hash', 'Prev Hash', 'Amount', 'No.Tx', 'BP'],
   tx: ['Transaction Hash', 'Status', 'Time Stamp', 'From', 'To', 'Amount'],
-  account: ['Account', 'Balance', 'Transactions'],
+  account: ['Account', 'Balance', 'Staking', 'Transactions'],
 };
 
 const linkTo = {

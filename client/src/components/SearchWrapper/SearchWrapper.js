@@ -1,10 +1,10 @@
-import React  from 'react';
+import React from 'react';
 import SearchBar from '../SearchBar';
 
 import './SearchWrapper.scss';
 
 
-const SearchWrapper = ({ searchResult }) => (
+const SearchWrapper = () => (
   <div className="searchWrapper">
     <div className="searchWrapperSearchBox">
       <SearchBar type="mobile" />

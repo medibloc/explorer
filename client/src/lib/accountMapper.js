@@ -4,7 +4,7 @@ const accountMapper = (account, totalSupply = undefined) => {
   const tempAmount = divider(account.balance, [10 ** 12]).split('.');
   tempAmount[0] = tempAmount[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   const Balance = `${tempAmount.join('.')} MED`;
-  
+
   return {
     Account: account.address,
     Balance,

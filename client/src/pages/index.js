@@ -43,6 +43,19 @@ const setLocale = () => {
   GlobalActions.changeLanguage(lang);
 };
 
+const setFullScreen = () => {
+  const body = document.documentElement;
+  if (body.requestFullscreen) {
+    body.requestFullscreen();
+  } else if (body.webkitrequestFullscreen) {
+    body.webkitrequestFullscreen();
+  } else if (body.mozrequestFullscreen) {
+    body.mozrequestFullscreen();
+  } else if (body.msrequestFullscreen) {
+    body.msrequestFullscreen();
+  }
+};
+
 const setWindowSize = () => {
   GlobalActions.setWindowSize(window.innerWidth);
   window.addEventListener(
@@ -53,6 +66,7 @@ const setWindowSize = () => {
 
 class Pages extends Component {
   componentWillMount() {
+    setFullScreen();
     setLocale();
     setWindowSize();
     w.loader(BlockchainActions

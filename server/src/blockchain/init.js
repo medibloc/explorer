@@ -10,7 +10,7 @@ import { accountUpdater, handleBlockResponse, startSubscribe } from './handler';
 
 const { url } = config.blockchain;
 
-const REQUEST_STEP = 100;
+const REQUEST_STEP = 10;
 
 const sync = async () => {
   const [lastBlock, medState] = await Promise.all([

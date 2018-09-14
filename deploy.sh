@@ -6,4 +6,4 @@ cd ../
 cp ./polyfill.js server/build/static/js
 node inject_polyfill.js
 cd server/
-forever start -c "npm start" ./
+pm2 start npm -- start

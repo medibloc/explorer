@@ -57,7 +57,7 @@ class SimpleWrapper extends Component {
           }
         </div>
       </div>
-    );git 
+    );
   }
 };
 

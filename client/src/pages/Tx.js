@@ -6,7 +6,7 @@ import TxContainer from '../components/Tx';
 
 
 const Tx = ({ location }) => {
-  const subject = location.pathname.split('/')[2];
+  const subject = location.pathname.split('/')[3];
   const TxWrapper = <TxContainer hash={subject} />;
 
   return (

@@ -12,6 +12,7 @@ import './ListWrapper.scss';
 const linkDistributor = (
   centerList,
   datum,
+  lang,
   linkTo,
   rightList,
   spacing,
@@ -23,7 +24,7 @@ const linkDistributor = (
     if (title.toLowerCase().indexOf(seperator[1]) !== -1) {
       content = (
         <NavLink
-          to={`/${seperator[0]}/${datum[title]}`}
+          to={`/${lang}/${seperator[0]}/${datum[title]}`}
           style={{ width: `${spacing[i]}%` }}
           className={cx({
             center: centerList.indexOf(title) !== -1 && rightList.indexOf(title) === -1,
@@ -62,6 +63,7 @@ const linkDistributor = (
 const ListWrapper = ({
   centerList,
   data,
+  lang,
   linkTo,
   rightList,
   spacing,
@@ -87,7 +89,7 @@ const ListWrapper = ({
           // eslint-disable-next-line
           // <div className="listWrapperContentRow" key={i}>
           <div className={cx('listWrapperContentRow', { special: (datum.Ranking >= 1 && datum.Ranking <= 21) })} key={i}>
-            { linkDistributor(centerList, datum, linkTo, rightList, spacing, titles) }
+            { linkDistributor(centerList, datum, lang, linkTo, rightList, spacing, titles) }
           </div>
         ))
       }

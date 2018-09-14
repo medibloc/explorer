@@ -36,10 +36,12 @@ addLocaleData([...en, ...ja, ...ko, ...zh]);
 
 
 const setLocale = () => {
-  const langList = ['ja', 'ko', 'zh'];
+  const LangList = ['ja', 'ko', 'zh'];
   const browserLang = navigator.language || navigator.userLanguage;
   let lang = browserLang.split('-')[0];
-  if (langList.indexOf(lang) === -1) lang = 'en';
+  if (LangList.indexOf(lang) === -1) lang = 'en';
+  const additional = window.location.pathname.split('/')[1];
+  if (countryList.indexOf(additional) !== -1) lang = additional;
   GlobalActions.changeLanguage(lang);
 };
 
@@ -97,16 +99,16 @@ class Pages extends Component {
                 </div>
               ) : (
                 <Switch>
-                  <Layout loading={loading}>
+                  <Layout loading={loading} lang={language}>
                     <Switch>
-                      <Route exact path="/" component={Home} />
-                      <Route path="/account" component={Account} />
-                      <Route exact path="/accounts" component={Accounts} />
-                      <Route path="/block" component={Block} />
-                      <Route exact path="/blocks" component={Blocks} />
-                      <Route exact path="/bps" component={BP} />
-                      <Route path="/tx" component={Tx} />
-                      <Route exact path="/txs" component={Txs} />
+                      <Route exact path="/:lang/" component={Home} />
+                      <Route path="/:lang/account" component={Account} />
+                      <Route exact path="/:lang/accounts" component={Accounts} />
+                      <Route path="/:lang/block" component={Block} />
+                      <Route exact path="/:lang/blocks" component={Blocks} />
+                      <Route exact path="/:lang/bps" component={BP} />
+                      <Route path="/:lang/tx" component={Tx} />
+                      <Route exact path="/:lang/txs" component={Txs} />
                       <Route path="*" component={Err404} />
                     </Switch>
                   </Layout>

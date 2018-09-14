@@ -8,7 +8,7 @@ import TxList from '../components/TxList';
 
 
 const Account = ({ location }) => {
-  const subject = location.pathname.split('/')[2];
+  const subject = location.pathname.split('/')[3];
   const AccountWrapper = <AccountContainer address={subject} />;
 
   return (

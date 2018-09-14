@@ -17,6 +17,7 @@ const pages = ['Block', 'Transaction', 'Account', 'BP'];
 
 const NavBar = ({
   currentUrl,
+  lang,
   mode,
   navBarOpen,
 }) => {
@@ -27,7 +28,7 @@ const NavBar = ({
       <Modal />
       <div className="navBarContainer">
         <div className="navBarLogo">
-          <NavLink to="/">
+          <NavLink to={`/${lang}/`}>
             <img src="/image/icon/logo.svg" alt="logo" />
           </NavLink>
         </div>
@@ -35,7 +36,7 @@ const NavBar = ({
           mode === 0 ? (
             <Fragment>
               <div className="navNavigator">
-                <NavList pages={pages} currentUrl={currentUrl} />
+                <NavList pages={pages} currentUrl={currentUrl} lang={lang} />
               </div>
               <SearchBar className={cx({ fullWidth: mode !== 0 })} type="top" />
               <Language />
@@ -65,7 +66,7 @@ const NavBar = ({
                   Menu
                 </div>
                 <div className="navBarSideNavList">
-                  <NavList pages={pages} currentUrl={currentUrl} />
+                  <NavList pages={pages} currentUrl={currentUrl} lang={lang} />
                 </div>
                 <div className="navBarSideMenu">
                   <img src="/image/icon/ico-language.svg" alt="language" />

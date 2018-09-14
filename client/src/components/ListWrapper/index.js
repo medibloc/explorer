@@ -1,3 +1,10 @@
+import { connect } from 'react-redux';
+
 import ListWrapper from './ListWrapper';
 
-export default ListWrapper;
+
+const mapStateToProps = ({ global }) => ({
+  lang: global.language,
+});
+
+export default connect(mapStateToProps)(ListWrapper);

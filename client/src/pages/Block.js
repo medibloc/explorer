@@ -9,7 +9,7 @@ import { subjectDistinguisher } from '../lib';
 
 // location.pathname => /block/hash/e1197cb1845600ff30fcff3cca3bb2e6dd084981a9c7c235d629379df55e1b28
 const Block = ({ location }) => {
-  const subject = location.pathname.split('/')[2];
+  const subject = location.pathname.split('/')[3];
   const type = subjectDistinguisher(subject);
 
   let BlockWrapper = <BlockContainer />;

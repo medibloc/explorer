@@ -42,7 +42,7 @@ class SimpleWrapper extends Component {
   }
 
   render() {
-    const { data, searchFrom, type } = this.props;
+    const { data, lang, searchFrom, type } = this.props;
     const dataExist = data && data.length > 0;
 
     return (
@@ -50,14 +50,14 @@ class SimpleWrapper extends Component {
         <div className={cx('simpleWrapperContentBox', { nothing: !dataExist || searchFrom !== type, top: type === 'top' })}>
           { data && data.map(datum => (
             <div className="simpleWrapperContent" key={datum.data} onClick={GlobalActions.closeModal}>
-              <NavLink to={`/${datum.type}/${datum.data}`}>
+              <NavLink to={`/${lang}/${datum.type}/${datum.data}`}>
                 {datum.type} : {datum.data}
               </NavLink>
             </div>))
           }
         </div>
       </div>
-    );
+    );git 
   }
 };
 

@@ -13,7 +13,7 @@ const titleConverter = (title) => {
   return convertedTitle;
 };
 
-const ContentWrapper = ({ type, data, titles }) => {
+const ContentWrapper = ({ lang, type, data, titles }) => {
   const { 'Block Height': height } = data;
   let hash = '';
   titles.forEach((title) => {
@@ -22,7 +22,7 @@ const ContentWrapper = ({ type, data, titles }) => {
     if (ti.indexOf('number') !== -1) hash = data[title];
     if (ti.indexOf('account') !== -1) hash = data[title];
   });
-  const url = (type === 'bp') ? `/account/${hash}` : `/${type}/${hash}`;
+  const url = (type === 'bp') ? `/${lang}/account/${hash}` : `/${lang}/${type}/${hash}`;
 
 
   return (

@@ -6,13 +6,13 @@ import { NavLink } from 'react-router-dom';
 import './LiveInfoWrapper.scss';
 
 
-const LiveInfoWrapper = ({ title, type, children }) => (
+const LiveInfoWrapper = ({ lang, title, type, children }) => (
   <div className="liveInfoWrapper">
     <div className="liveInfoWrapperInfo">
       <span>
         {title}
       </span>
-      <NavLink to={`/${type}s`}>
+      <NavLink to={`/${lang}/${type}s`}>
         <button type="button">
           <FormattedMessage id="viewAll" />
         </button>

@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
 import qs from 'query-string';
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import { BlockchainActions, GlobalActions, WidgetActions as w } from '../redux/actionCreators';
+import { countryList } from '../config';
 
 
 class Layout extends Component {
@@ -25,7 +27,10 @@ class Layout extends Component {
   }
 
   render() {
+    const currentPath = window.location.pathname.split('/')[1];
     const { children } = this.props;
+    if (countryList.indexOf(currentPath) === -1) return <Redirect to="/en/" />;
+
     return (
       <div className="layout">
         <div className="layoutInner">

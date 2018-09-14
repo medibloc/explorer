@@ -21,7 +21,7 @@ const linkTo = {
   account: [],
 };
 
-const DetailWrapper = ({ data, type }) => {
+const DetailWrapper = ({ data, lang, type }) => {
   const titleList = type ? titles[type] : [];
   const linkList = type ? linkTo[type] : [];
 
@@ -56,7 +56,7 @@ const DetailWrapper = ({ data, type }) => {
                         </button>
                       )
                     }
-                    <NavLink to={`/${linkList[i].split('/')[0]}/${data[title]}`}>
+                    <NavLink to={`/${lang}/${linkList[i].split('/')[0]}/${data[title]}`}>
                       { data[title] }
                     </NavLink>
                   </span>

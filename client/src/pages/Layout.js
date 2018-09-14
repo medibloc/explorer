@@ -10,7 +10,7 @@ import { countryList } from '../config';
 class Layout extends Component {
   componentWillMount() {
     const { location: { pathname: path } } = this.props;
-    GlobalActions.moveUrl(path.split('/')[1]);
+    GlobalActions.moveUrl(path.split('/')[2]);
   }
 
   componentWillUpdate(nextProps) {
@@ -18,7 +18,7 @@ class Layout extends Component {
     const { location: { pathname: newPath, search: newSearch } } = nextProps;
     if (path !== newPath || prevSearch !== newSearch) {
       w.loader(BlockchainActions.getMedState());
-      GlobalActions.moveUrl(newPath.split('/')[1]);
+      GlobalActions.moveUrl(newPath.split('/')[2]);
     }
     if (!loading && nextProps.loading) GlobalActions.openModal({ modalType: 'Loading' });
     else if (loading && !nextProps.loading) GlobalActions.closeModal();

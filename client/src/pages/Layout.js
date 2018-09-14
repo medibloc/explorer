@@ -28,8 +28,8 @@ class Layout extends Component {
 
   render() {
     const currentPath = window.location.pathname.split('/')[1];
-    const { children } = this.props;
-    if (countryList.indexOf(currentPath) === -1) return <Redirect to="/en/" />;
+    const { children, lang } = this.props;
+    if (countryList.indexOf(currentPath) === -1) return <Redirect to={`/${lang}/`} />;
 
     return (
       <div className="layout">

@@ -1,5 +1,5 @@
-// export const NODE_ENDPOINT = '/api/v1';
-export const NODE_ENDPOINT = 'http://localhost:3001/api/v1';
+export const NODE_ENDPOINT = '/api/v1';
+// export const NODE_ENDPOINT = 'http://localhost:3001/api/v1';
 
 // COINMARKETCAP API
 export const COINMARKETCAP_MED_PRICE = 'https://api.coinmarketcap.com/v2/ticker/2303/';

@@ -58,6 +58,14 @@ $mobile_width: 800px;
         color: #4F8DF3;
       }
     }
+
+    .message {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      height: auto;
+      word-wrap: break-word;
+    }
   }
 }
 

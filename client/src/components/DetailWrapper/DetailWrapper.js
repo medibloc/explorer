@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -11,7 +12,7 @@ import './DetailWrapper.scss';
 
 const titles = {
   block: ['Block Height', 'Time Stamp', 'Block Hash', 'Prev Hash', 'Amount', 'No.Tx', 'BP'],
-  tx: ['Transaction Hash', 'Status', 'Time Stamp', 'From', 'To', 'Amount', 'Message', 'Nonce'],
+  tx: ['Transaction Hash', 'Status', 'Time Stamp', 'From', 'To', 'Amount', 'Nonce', 'Message'],
   account: ['Account', 'Balance', 'Staking', 'Transactions'],
 };
 
@@ -64,7 +65,7 @@ const DetailWrapper = ({ data, lang, type }) => {
               }
             }
             return (
-              <span key={title}>
+              <span key={title} className={cx({ message: title === 'Message' })}>
                 {
                   title === 'Time Stamp' ? (
                     timezoneMatcher(data[title])

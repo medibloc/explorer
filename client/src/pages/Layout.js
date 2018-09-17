@@ -10,7 +10,11 @@ import { countryList } from '../config';
 class Layout extends Component {
   componentWillMount() {
     const { location: { pathname: path } } = this.props;
-    GlobalActions.moveUrl(path.split('/')[2]);
+    if (path.split('/').length <= 2) {
+      GlobalActions.moveUrl(path.split('/')[1]);
+    } else {
+      GlobalActions.moveUrl(path.split('/')[2]);
+    }
   }
 
   componentWillUpdate(nextProps) {

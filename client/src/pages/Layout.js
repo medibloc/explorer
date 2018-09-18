@@ -3,7 +3,7 @@ import qs from 'query-string';
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { BlockchainActions, GlobalActions, WidgetActions as w } from '../redux/actionCreators';
+import { BlockchainActions, GlobalActions } from '../redux/actionCreators';
 import { countryList } from '../config';
 
 
@@ -21,7 +21,7 @@ class Layout extends Component {
     const { loading, location: { pathname: path, search: prevSearch } } = this.props;
     const { location: { pathname: newPath, search: newSearch } } = nextProps;
     if (path !== newPath || prevSearch !== newSearch) {
-      w.loader(BlockchainActions.getMedState());
+      BlockchainActions.getMedState();
       GlobalActions.moveUrl(newPath.split('/')[2]);
     }
     if (!loading && nextProps.loading) GlobalActions.openModal({ modalType: 'Loading' });

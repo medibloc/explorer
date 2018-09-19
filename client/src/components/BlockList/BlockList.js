@@ -1,26 +1,15 @@
 import PropTypes from 'prop-types';
 import qs from 'query-string';
 import React, { Component } from 'react';
-// import { location as LocationType, match as MatchType } from 'react-router-prop-types';
 
 import ListWrapper from '../ListWrapper';
-import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
 import TableWithIcon from '../TableWithIcon';
-import { contentsInPage } from '../../config';
-import { blockMapper, spaceMapper } from '../../lib';
-// import { getFromTo } from '../../lib/pagination';
+import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
+import { blockListConfig, contentsInPage } from '../../config';
+import { blockMapper, ranger, spaceMapper } from '../../lib';
 
 import './BlockList.scss';
 
-
-const blockRanger = (page, height) => {
-  if (height < contentsInPage) return { from: 0, to: height };
-  let from = (page - 1) * contentsInPage;
-  let to = page * contentsInPage - 1;
-  if (from < 0) from = 0;
-  if (to < from) to = from;
-  return { from, to };
-};
 
 const mappedBlocks = (blocks) => {
   const blockList = [];
@@ -28,29 +17,17 @@ const mappedBlocks = (blocks) => {
   return blockList;
 };
 
-const titles = ['Block Height', 'Time Stamp', 'Block Hash', 'No.Tx', 'BP'];
-const linkTo = ['block/height', 'block/hash', 'account/bp'];
-const centerList = ['Block Height', 'No.Tx'];
-
-// const loadData = (props) => {
-//   const { location: { search } } = props;
-//   const { page = 1, q } = qs.parse(search);
-//   const action = BlockchainActions.getBlocksFromServer({ ...getFromTo(+page, 20), q });
-//   w.loader(action);
-// }
-
 class BlockList extends Component {
   constructor(props) {
     super(props);
     this.getBlocks = this.getBlocks.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getBlocks(this.props);
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.props.language !== nextProps.language) return true;
     if (this.props.page !== nextProps.page) return true;
     if (this.props.blockList !== nextProps.blockList) return true;
     return false;
@@ -71,23 +48,21 @@ class BlockList extends Component {
     const { location: { search } } = props;
     const { page = 1 } = qs.parse(search);
     const { medState: { height } } = props;
-    const { from, to } = blockRanger(page, height);
+    const { from, to } = ranger(page, height, contentsInPage);
     w.loader(BlockchainActions.getBlocks({ from, to }));
   }
 
   render() {
-    // const { blockList: blockListInRedux, mode } = this.props;
-    // const blockList = blockListInRedux.map(item => ({ id: item.id, ...item.data }));
     const { blockList, mode } = this.props;
 
     return (
       mode !== 2 ? (
         <ListWrapper
-          titles={titles}
+          titles={blockListConfig.titles}
           data={mappedBlocks(blockList)}
-          spacing={spaceMapper([2, 4, 9, 2, 3])}
-          linkTo={linkTo}
-          centerList={centerList}
+          spacing={spaceMapper(blockListConfig.spaces)}
+          linkTo={blockListConfig.linkTo}
+          centerList={blockListConfig.centerList}
         />
       ) : (
         <div className="blockList">
@@ -100,7 +75,6 @@ class BlockList extends Component {
 
 BlockList.propTypes = {
   blockList: PropTypes.array.isRequired,
-  // location: LocationType.isRequired,
   medState: PropTypes.object.isRequired,
   mode: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,

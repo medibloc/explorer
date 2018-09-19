@@ -1,27 +1,15 @@
 import PropTypes from 'prop-types';
+import qs from 'query-string';
 import React, { Component } from 'react';
 
 import ListWrapper from '../ListWrapper';
-import {BlockchainActions, GlobalActions, WidgetActions as w} from '../../redux/actionCreators';
 import TableWithIcon from '../TableWithIcon';
-import { bpsInPage } from '../../config';
-import { bpMapper, spaceMapper, divider } from '../../lib';
+import { BlockchainActions, GlobalActions, WidgetActions as w} from '../../redux/actionCreators';
+import { bpListConfig, bpsInPage } from '../../config';
+import { bpMapper, divider, ranger, spaceMapper, } from '../../lib';
 
-import './BPList.scss';
 
-
-const bpRanger = (page, totalBPs) => {
-  if (totalBPs < bpsInPage) return { from: 0, to: totalBPs };
-  let from = (page - 1) * bpsInPage;
-  let to = (page) * bpsInPage - 1;
-  if (from < 0) from = 0;
-  if (to > totalBPs) to = totalBPs;
-  if (to < from) to = from;
-  return { from, to };
-};
-
-const mappedBPs = (BPs, page, totalSupply) => {
-  if (BPs === undefined) BPs = [];
+const mappedBPs = (BPs = [], page, totalSupply) => {
   const BPList = [];
   BPs.forEach((preBP, i) => {
     const BP = bpMapper(preBP);
@@ -32,33 +20,38 @@ const mappedBPs = (BPs, page, totalSupply) => {
   return BPList;
 };
 
-const titles = ['Ranking', 'Account', 'votes'];
-const linkTo = ['account/account'];
-const centerList = ['Ranking'];
-const rightList = ['votes'];
-
 class BPList extends Component {
   constructor(props) {
     super(props);
     this.getBPs = this.getBPs.bind(this);
   }
 
-  componentWillMount() {
-    this.getBPs();
+  componentDidMount() {
+    this.getBPs(this.props);
   }
 
-  componentDidUpdate(prevProps) {
-    const { page } = this.props;
-    if (page !== prevProps.page) this.getBPs(prevProps);
+  shouldComponentUpdate(nextProps) {
+    if (this.props.page !== nextProps.page) return true;
+    if (this.props.bpList !== nextProps.bpList) return true;
+    return false;
+  }
+
+  componentWillUpdate(nextProps) {
+    const { location: { search } } = this.props;
+    if (nextProps.location.search !== search) {
+      this.getBPs(nextProps);
+    }
   }
 
   componentWillUnmount() {
     GlobalActions.movePage(1);
   }
 
-  getBPs() {
-    const { page, medState: { numCandidate } } = this.props;
-    const { from, to } = bpRanger(page, numCandidate);
+  getBPs(props) {
+    const { location: { search } } = props;
+    const { page = 1 } = qs.parse(search);
+    const { medState: { numCandidate } } = props;
+    const { from, to } = ranger(page, numCandidate, bpsInPage);
     w.loader(BlockchainActions.getBPs({ from, to }));
   }
 
@@ -73,12 +66,12 @@ class BPList extends Component {
     return (
       mode !== 2 ? (
         <ListWrapper
-          titles={titles}
+          titles={bpListConfig.titles}
           data={mappedBPs(bpList, page, totalSupply)}
-          spacing={spaceMapper([10, 65, 10])}
-          linkTo={linkTo}
-          centerList={centerList}
-          rightList={rightList}
+          spacing={spaceMapper(bpListConfig.spaces)}
+          linkTo={bpListConfig.linkTo}
+          centerList={bpListConfig.centerList}
+          rightList={bpListConfig.rightList}
         />
       ) : (
         <div className="blockList">
@@ -93,7 +86,7 @@ BPList.propTypes = {
   bpList: PropTypes.array.isRequired,
   mode: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
-  // totalSupply: PropTypes.number.isRequired,
+  totalSupply: PropTypes.string.isRequired,
 };
 
 export default BPList;

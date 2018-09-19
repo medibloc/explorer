@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 
 import { timeConverter, titleConverter } from '../../lib';
+import { blindAddress } from '../../config';
 
 import './ListWrapper.scss';
 
@@ -33,7 +34,7 @@ const linkDistributor = (
           key={title}
         >
           {
-            (title === 'To' && datum[title] === '000000000000000000000000000000000000000000000000000000000000000000') ? '-' : datum[title]
+            (title === 'To' && datum[title] === blindAddress) ? '-' : datum[title]
           }
         </NavLink>
       );
@@ -87,7 +88,6 @@ const ListWrapper = ({
       {
         data.map((datum, i) => (
           // eslint-disable-next-line
-          // <div className="listWrapperContentRow" key={i}>
           <div className={cx('listWrapperContentRow', { special: (datum.Ranking >= 1 && datum.Ranking <= 21) })} key={i}>
             { linkDistributor(centerList, datum, lang, linkTo, rightList, spacing, titles) }
           </div>

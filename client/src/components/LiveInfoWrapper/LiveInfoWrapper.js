@@ -6,7 +6,12 @@ import { NavLink } from 'react-router-dom';
 import './LiveInfoWrapper.scss';
 
 
-const LiveInfoWrapper = ({ lang, title, type, children }) => (
+const LiveInfoWrapper = ({
+  lang,
+  title,
+  type,
+  children,
+}) => (
   <div className="liveInfoWrapper">
     <div className="liveInfoWrapperInfo">
       <span>
@@ -25,9 +30,10 @@ const LiveInfoWrapper = ({ lang, title, type, children }) => (
 );
 
 LiveInfoWrapper.propTypes = {
+  children: PropTypes.object.isRequired,
+  lang: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  children: PropTypes.object.isRequired,
 };
 
 export default LiveInfoWrapper;

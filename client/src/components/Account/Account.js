@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import { accountMapper } from '../../lib';
 import DetailWrapper from '../DetailWrapper';
+import { accountMapper } from '../../lib';
 import { BlockchainActions, WidgetActions as w } from '../../redux/actionCreators';
 
 

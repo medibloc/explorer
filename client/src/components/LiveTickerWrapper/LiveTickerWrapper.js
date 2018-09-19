@@ -4,7 +4,7 @@ import React from 'react';
 import './LiveTickerWrapper.scss';
 
 
-const injectComma = supply => supply.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+const injectComma = supply => supply.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 const LiveTickerWrapper = ({ title, suffix, medxPrice, totalSupply }) => (
   <div className="liveTickerWrapperGuide">
@@ -25,9 +25,8 @@ const LiveTickerWrapper = ({ title, suffix, medxPrice, totalSupply }) => (
 );
 
 LiveTickerWrapper.propTypes = {
-  title: PropTypes.string.isRequired,
-  // value: PropTypes.string.isRequired,
   suffix: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default LiveTickerWrapper;

@@ -5,11 +5,9 @@ import AccountList from './AccountList';
 
 const mapStateToProps = ({ blockchain, global }) => ({
   accountList: blockchain.accountList,
-  accounts: blockchain.accounts,
   totalSupply: blockchain.totalSupply,
   medState: blockchain.medState,
 
-  language: global.language,
   mode: global.mode,
   page: global.page,
 });

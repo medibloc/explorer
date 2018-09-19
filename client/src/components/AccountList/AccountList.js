@@ -1,23 +1,15 @@
 import PropTypes from 'prop-types';
+import qs from 'query-string';
 import React, { Component } from 'react';
 
 import ListWrapper from '../ListWrapper';
+import TableWithIcon from '../TableWithIcon';
 import { BlockchainActions, GlobalActions, WidgetActions as w } from '../../redux/actionCreators';
-import { contentsInPage } from '../../config';
-import { accountMapper, spaceMapper } from '../../lib';
+import { accountListConfig, contentsInPage } from '../../config';
+import { accountMapper, ranger, spaceMapper } from '../../lib';
 
-import './AccountList.scss';
-import TableWithIcon from "../TableWithIcon/TableWithIcon";
+import './accountList.scss';
 
-
-const accRanger = (page, numAccounts) => {
-  if (numAccounts < contentsInPage) return { from: 0, to: numAccounts };
-  let from = (page - 1) * contentsInPage;
-  let to = page * contentsInPage - 1;
-  if (from < 0) from = 0;
-  if (to < from) to = from;
-  return { from, to };
-}
 
 const mappedAccounts = (accs, totalSupply) => {
   const accList = [];
@@ -29,31 +21,38 @@ const mappedAccounts = (accs, totalSupply) => {
   return accList;
 };
 
-const titles = ['Account', 'Balance', 'Percentage', 'Transactions'];
-const linkTo = ['account/account'];
-
 class AccountList extends Component {
   constructor(props) {
     super(props);
     this.getAccounts = this.getAccounts.bind(this);
   }
 
-  componentWillMount() {
-    this.getAccounts();
+  componentDidMount() {
+    this.getAccounts(this.props);
   }
 
-  componentDidUpdate(prevProps) {
-    const { page } = this.props;
-    if (page !== prevProps.page) this.getAccounts();
+  shouldComponentUpdate(nextProps) {
+    if (this.props.page !== nextProps.page) return true;
+    if (this.props.accountList !== nextProps.accountList) return true;
+    return false;
+  }
+
+  componentWillUpdate(nextProps) {
+    const { location: { search } } = this.props;
+    if (nextProps.location.search !== search) {
+      this.getAccounts(nextProps);
+    }
   }
 
   componentWillUnmount() {
     GlobalActions.movePage(1);
   }
 
-  getAccounts() {
-    const { page, medState: { numAccount } } = this.props;
-    const { from, to } = accRanger(page, numAccount);
+  getAccounts(props) {
+    const { location: { search } } = props;
+    const { page = 1 } = qs.parse(search);
+    const { medState: { numAccount } } = props;
+    const { from, to } = ranger(page, numAccount, contentsInPage);
     w.loader(BlockchainActions.getAccounts({ from, to }));
   }
 
@@ -67,14 +66,13 @@ class AccountList extends Component {
     return (
       mode !== 2 ? (
         <ListWrapper
-          titles={titles}
+          titles={accountListConfig.titles}
           data={mappedAccounts(accountList, totalSupply)}
-          spacing={spaceMapper([8, 2, 2, 2])}
-          linkTo={linkTo}
+          spacing={spaceMapper(accountListConfig.spaces)}
+          linkTo={accountListConfig.linkTo}
         />
       ) : (
         <div className="accountList">
-          {/*<Accounts data={accountList} />*/}
           <TableWithIcon type="account" data={accountList} totalSupply={totalSupply} />
         </div>
       )
@@ -83,10 +81,15 @@ class AccountList extends Component {
 }
 
 AccountList.propTypes = {
-  accounts: PropTypes.array.isRequired,
+  accountList: PropTypes.array,
+  medState: PropTypes.object.isRequired,
   mode: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
-  // totalSupply: PropTypes.number.isRequired,
+  totalSupply: PropTypes.string.isRequired,
+};
+
+AccountList.defaultProps = {
+  accountList: [],
 };
 
 export default AccountList;

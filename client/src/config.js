@@ -1,11 +1,13 @@
-export const NODE_ENDPOINT = '/api/v1';
-// export const NODE_ENDPOINT = 'http://localhost:3001/api/v1';
+// export const NODE_ENDPOINT = '/api/v1';
+export const NODE_ENDPOINT = 'http://localhost:3000/api/v1';
 
 // COINMARKETCAP API
 export const COINMARKETCAP_MED_PRICE = 'https://api.coinmarketcap.com/v2/ticker/2303/';
 export const COINMARKETCAP_MEDX_PRICE = 'https://api.coinmarketcap.com/v2/ticker/2845/';
 
-// SNS LINK
+
+// SNS
+export const sns = ['telegram', 'twitter', 'fb', 'medium', 'brunch', 'medi'];
 export const snsLink = {
   telegram_en: 'https://t.me/medibloc',
   telegram_ko: 'https://t.me/mediblockoreachat',
@@ -18,6 +20,7 @@ export const snsLink = {
   medi: 'https://medibloc.org/',
 };
 
+export const blindAddress = '000000000000000000000000000000000000000000000000000000000000000000';
 
 // INTERNAL CONFIG
 export const contentsInPage = 20;
@@ -51,3 +54,39 @@ export const txTitleList = {
   block: ['Transaction Hash', 'From', 'To', 'Amount'],
   txs: ['Transaction Hash', 'Time Stamp', 'From', 'To', 'Amount'],
 };
+
+export const accountListConfig = {
+  titles: ['Account', 'Balance', 'Percentage', 'Transactions'],
+  linkTo: ['account/account'],
+  spaces: [8, 2, 2, 2],
+};
+
+export const blockListConfig = {
+  titles: ['Block Height', 'Time Stamp', 'Block Hash', 'No.Tx', 'BP'],
+  linkTo: ['block/height', 'block/hash', 'account/bp'],
+  centerList: ['Block Height', 'No.Tx'],
+  spaces: [2, 4, 9, 2, 3],
+};
+
+export const bpListConfig = {
+  titles: ['Ranking', 'Account', 'votes'],
+  linkTo: ['account/account'],
+  centerList: ['Ranking'],
+  rightList: ['votes'],
+  spaces: [10, 65, 10],
+};
+
+export const detailWrapperConfig = {
+  titles: {
+    block: ['Block Height', 'Time Stamp', 'Block Hash', 'Prev Hash', 'Amount', 'No.Tx', 'BP'],
+    tx: ['Transaction Hash', 'Status', 'Time Stamp', 'From', 'To', 'Amount', 'Nonce', 'Message'],
+    account: ['Account', 'Balance', 'Staking', 'Transactions'],
+  },
+  linkTo: {
+    block: ['block/Prev Hash', 'account/BP'],
+    tx: ['account/From', 'account/To'],
+    account: [],
+  },
+};
+
+export const navbarPages = ['Block', 'Transaction', 'Account', 'BP'];

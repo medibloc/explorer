@@ -6,14 +6,6 @@ import { blockMapper } from '../../lib';
 import { BlockchainActions, WidgetActions as w } from '../../redux/actionCreators';
 
 
-// const blockPicker = (pool, { hash, height }) => {
-//   let block = null;
-//   pool.forEach((bl) => {
-//     if (bl.hash === hash || bl.height === height) block = bl;
-//   });
-//   return block;
-// };
-
 class Block extends Component {
   constructor(props) {
     super(props);
@@ -57,6 +49,7 @@ class Block extends Component {
     w.loader(BlockchainActions
       .getBlock(subject)
       .then((bl) => {
+        // TODO @ggomma add GetBlockDetail call same as getAccountDetail
         BlockchainActions.setTxs(bl.blocks.data[0].data.transactions);
       }));
   }
@@ -71,7 +64,6 @@ class Block extends Component {
 
 Block.propTypes = {
   block: PropTypes.object,
-  blockList: PropTypes.array.isRequired,
   hash: PropTypes.string,
   height: PropTypes.string,
   language: PropTypes.string.isRequired,

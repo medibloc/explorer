@@ -9,11 +9,10 @@ import Modal from '../Modal';
 import NavList from './NavList';
 import SearchBar from '../SearchBar';
 import { GlobalActions } from '../../redux/actionCreators';
+import { navbarPages } from '../../config';
 
 import './NavBar.scss';
 
-
-const pages = ['Block', 'Transaction', 'Account', 'BP'];
 
 const NavBar = ({
   currentUrl,
@@ -36,7 +35,7 @@ const NavBar = ({
           mode === 0 ? (
             <Fragment>
               <div className="navNavigator">
-                <NavList pages={pages} currentUrl={currentUrl} lang={lang} />
+                <NavList pages={navbarPages} currentUrl={currentUrl} lang={lang} />
               </div>
               <SearchBar className={cx({ fullWidth: mode !== 0 })} type="top" />
               <Language />
@@ -66,7 +65,7 @@ const NavBar = ({
                   Menu
                 </div>
                 <div className="navBarSideNavList">
-                  <NavList pages={pages} currentUrl={currentUrl} lang={lang} />
+                  <NavList pages={navbarPages} currentUrl={currentUrl} lang={lang} />
                 </div>
                 <div className="navBarSideMenu">
                   <img src="/image/icon/ico-language.svg" alt="language" />
@@ -86,6 +85,7 @@ const NavBar = ({
 
 NavBar.propTypes = {
   currentUrl: PropTypes.string.isRequired,
+  lang: PropTypes.string.isRequired,
   mode: PropTypes.number.isRequired,
   navBarOpen: PropTypes.bool.isRequired,
 };

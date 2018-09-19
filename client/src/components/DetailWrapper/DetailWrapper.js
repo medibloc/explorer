@@ -6,25 +6,14 @@ import { NavLink } from 'react-router-dom';
 
 import { GlobalActions } from '../../redux/actionCreators';
 import { timezoneMatcher, titleConverter } from '../../lib';
+import { detailWrapperConfig } from '../../config';
 
 import './DetailWrapper.scss';
 
 
-const titles = {
-  block: ['Block Height', 'Time Stamp', 'Block Hash', 'Prev Hash', 'Amount', 'No.Tx', 'BP'],
-  tx: ['Transaction Hash', 'Status', 'Time Stamp', 'From', 'To', 'Amount', 'Nonce', 'Message'],
-  account: ['Account', 'Balance', 'Staking', 'Transactions'],
-};
-
-const linkTo = {
-  block: ['block/Prev Hash', 'account/BP'],
-  tx: ['account/From', 'account/To'],
-  account: [],
-};
-
 const DetailWrapper = ({ data, lang, type }) => {
-  const titleList = type ? titles[type] : [];
-  const linkList = type ? linkTo[type] : [];
+  const titleList = type ? detailWrapperConfig.titles[type] : [];
+  const linkList = type ? detailWrapperConfig.linkTo[type] : [];
 
   return (
     <div className="detailWrapper">
@@ -84,6 +73,7 @@ const DetailWrapper = ({ data, lang, type }) => {
 
 DetailWrapper.propTypes = {
   data: PropTypes.object.isRequired,
+  lang: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
 };
 

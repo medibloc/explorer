@@ -5,11 +5,11 @@ import Navigation from '../components/Navigation';
 import PageInfo from '../components/PageInfo';
 
 
-const BP = () => (
+const BP = props => (
   <Fragment>
     <PageInfo title="block-producer-list" />
     <div className="bpsContents">
-      <BPList />
+      <BPList {...props} />
     </div>
     <div className="bpsNavigation">
       <Navigation type="bps" />

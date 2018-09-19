@@ -1,16 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { snsLink } from '../../config';
+import { sns, snsLink } from '../../config';
 
 import './Footer.scss';
 
 
-const imgChange = (sns, on) => (e) => {
-  e.currentTarget.src = `/image/icon/ico-${sns}-${on ? 'on' : 'off'}@3x.png`;
+const imgChange = (targetSNS, on) => (e) => {
+  e.currentTarget.src = `/image/icon/ico-${targetSNS}-${on ? 'on' : 'off'}@3x.png`;
 };
-
-const sns = ['telegram', 'twitter', 'fb', 'medium', 'brunch', 'medi'];
 
 const Footer = ({ language, mode }) => (
   <div className="footer">
@@ -47,7 +45,8 @@ const Footer = ({ language, mode }) => (
                   onMouseOut={imgChange(service, false)}
                   onBlur={imgChange(service, false)}
                 />
-              </a>)
+              </a>
+            );
           })
         }
       </div>
@@ -56,6 +55,7 @@ const Footer = ({ language, mode }) => (
 );
 
 Footer.propTypes = {
+  language: PropTypes.string.isRequired,
   mode: PropTypes.number.isRequired,
 };
 

@@ -23,14 +23,18 @@ const NavBar = ({
   const { openNavBar, closeNavBar } = GlobalActions;
 
   return (
-    <div className="navBar">
+    <div className={cx('navBar', { mobile: mode === 2 })}>
       <Modal />
       <div className="navBarContainer">
-        <div className="navBarLogo">
-          <NavLink to={`/${lang}/`}>
-            <img src="/image/icon/logo.svg" alt="logo" />
-          </NavLink>
-        </div>
+        {
+          mode !== 2 && (
+            <div className="navBarLogo">
+              <NavLink to={`/${lang}/`}>
+                <img src="/image/icon/logo.svg" alt="logo" />
+              </NavLink>
+            </div>
+          )
+        }
         {
           mode === 0 ? (
             <Fragment>
@@ -75,6 +79,20 @@ const NavBar = ({
                   <LanguageBox />
                 </div>
               </div>
+            </Fragment>
+          )
+        }
+        {
+          mode === 2 && (
+            <Fragment>
+              <div className="navBarLogo">
+                <NavLink to={`/${lang}/`}>
+                  <img src="/image/icon/logo.svg" alt="logo" />
+                </NavLink>
+              </div>
+              <button className="searchBtn" onClick={() => GlobalActions.openModal({ modalType: 'Search' })}>
+                <img src="/image/icon/ico-search-s-black.svg" alt="search" />
+              </button>
             </Fragment>
           )
         }

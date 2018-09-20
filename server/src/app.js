@@ -1,10 +1,10 @@
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import express from 'express';
+import expressRequestId from 'express-request-id';
 import path from 'path';
 
 import route from './route';
-
 
 const sendError = (err, req, res) => {
   const code = err.status || 500;
@@ -45,6 +45,7 @@ const sseMiddleware = (req, res, next) => {
 export default () => {
   const app = express();
 
+  app.use(expressRequestId());
   app.use(compression());
   app.use(bodyParser.json());
   app.use(sseMiddleware);

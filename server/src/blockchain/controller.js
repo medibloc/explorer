@@ -7,6 +7,6 @@ export const subscribe = (req, res) => { // eslint-disable-line import/prefer-de
     throw new BadRequest('topic is empty');
   }
   res.sseSetup();
-  onSubscribe(res, { topics });
+  onSubscribe(req, res, { topics });
   return Promise.resolve();
 };

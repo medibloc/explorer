@@ -151,14 +151,20 @@ const topics = {
 };
 
 const clients = Object.keys(topics).reduce((obj, key) => {
-  obj[key] = []; // eslint-disable-line no-param-reassign
+  obj[key] = {}; // eslint-disable-line no-param-reassign
   return obj;
 }, {});
 
-export const onSubscribe = (client, options) => {
+export const onSubscribe = (req, res, options) => {
   const { topics: reqTopics } = options;
+  const requestId = res.get('X-Request-Id');
   (reqTopics || []).forEach((topic) => {
-    clients[topic].push(client);
+    clients[topic][requestId] = res;
+  });
+  req.on('close', () => {
+    (reqTopics || []).forEach((topic) => {
+      delete clients[topic][requestId];
+    });
   });
 };
 
@@ -167,7 +173,9 @@ export const pushEvent = (e) => {
   if (!clients[topic]) {
     throw new Error(`invalid topic ${topic}`);
   }
-  clients[topic].forEach((client) => {
+  const topicClients = Object.values(clients[topic]);
+  console.log(`there are ${topicClients.length} clients`); // eslint-disable-line no-console
+  topicClients.forEach((client) => {
     client.sseSend(e);
   });
 };

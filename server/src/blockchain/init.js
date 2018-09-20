@@ -42,11 +42,6 @@ const sync = async () => {
     })
       .then(() => {
         currentHeight = to;
-        /*
-        if (currentHeight < lastHeight) {
-          return getBlocks();
-        }
-        */
         return updateAccountsData(lastHeight);
       });
   });

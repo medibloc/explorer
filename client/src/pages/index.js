@@ -22,6 +22,7 @@ import Layout from './Layout';
 import Tx from './Tx';
 import Txs from './Txs';
 import Footer from '../components/Footer';
+import Modal from '../components/Modal';
 import NavBar from '../components/NavBar';
 
 import { countryList } from '../config';
@@ -80,9 +81,7 @@ class Pages extends Component {
             <NavBar />
             {
               isFirstLoad ? (
-                <div>
-                  LOADING
-                </div>
+                <Modal type="loading" />
               ) : (
                 <Switch>
                   <Layout loading={loading} lang={language}>

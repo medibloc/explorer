@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import qs from 'query-string';
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
 import { BlockchainActions, GlobalActions } from '../redux/actionCreators';
 import { countryList } from '../config';
@@ -27,6 +27,9 @@ class Layout extends Component {
     if (!loading && nextProps.loading) GlobalActions.openModal({ modalType: 'Loading' });
     else if (loading && !nextProps.loading) GlobalActions.closeModal();
     const page = parseInt(qs.parse(window.location.search).page, 10) || 1;
+    if (this.props.lang !== nextProps.lang) {
+      nextProps.history.push(`${newPath.replace(`/${this.props.lang}/`, `/${nextProps.lang}/`)}${newSearch}`);
+    }
     GlobalActions.movePage(page);
   }
 
@@ -47,6 +50,7 @@ class Layout extends Component {
 
 Layout.propTypes = {
   children: PropTypes.element,
+  lang: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
   location: PropTypes.object,
 };
@@ -56,4 +60,4 @@ Layout.defaultProps = {
   location: {},
 };
 
-export default Layout;
+export default withRouter(Layout);

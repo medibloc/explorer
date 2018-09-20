@@ -9,7 +9,7 @@ export const LOAD_FAIL = 'widgets/LOAD_FAIL';
 const initialState = {
   isFirstLoad: true,
   loaded: false,
-  loading: false,
+  loading: true,
 
   error: null,
 };

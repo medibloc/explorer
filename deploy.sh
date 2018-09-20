@@ -6,4 +6,5 @@ cd ../
 cp ./polyfill.js server/build/static/js
 node inject_polyfill.js
 cd server/
+npm install
 pm2 start npm -- start

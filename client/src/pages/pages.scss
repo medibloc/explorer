@@ -24,6 +24,13 @@ $footer-margin-height: 50px;
     align-items: center;
     flex-direction: column;
   }
+
+  &.mobile {
+    .layoutInner {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
 }
 
 @media (max-width: $mobile-width) {

@@ -70,7 +70,12 @@ class Pages extends Component {
   }
 
   render() {
-    const { isFirstLoad, language, loading } = this.props;
+    const {
+      isFirstLoad,
+      language,
+      loading,
+      mode,
+    } = this.props;
     return (
       <IntlProvider
         locale={language}
@@ -85,7 +90,7 @@ class Pages extends Component {
               <Fragment>
                 <NavBar />
                 <Switch>
-                  <Layout loading={loading} lang={language}>
+                  <Layout loading={loading} lang={language} mode={mode}>
                     <Switch>
                       <Route exact path="/:lang/" component={Home} />
                       <Route path="/:lang/account" component={Account} />
@@ -113,10 +118,12 @@ Pages.propTypes = {
   isFirstLoad: PropTypes.bool.isRequired,
   language: PropTypes.oneOf(countryList).isRequired,
   loading: PropTypes.bool.isRequired,
+  mode: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = ({ global, widget }) => ({
   language: global.language,
+  mode: global.mode,
 
   isFirstLoad: widget.isFirstLoad,
   loading: widget.loading,

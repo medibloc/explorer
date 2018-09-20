@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import PropTypes from 'prop-types';
 import qs from 'query-string';
 import React, { Component } from 'react';
@@ -35,11 +36,11 @@ class Layout extends Component {
 
   render() {
     const currentPath = window.location.pathname.split('/')[1];
-    const { children, lang } = this.props;
+    const { children, lang, mode } = this.props;
     if (countryList.indexOf(currentPath) === -1) return <Redirect to={`/${lang}/`} />;
 
     return (
-      <div className="layout">
+      <div className={cx('layout', { mobile: mode === 2 })}>
         <div className="layoutInner">
           { children }
         </div>
@@ -53,6 +54,7 @@ Layout.propTypes = {
   lang: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
   location: PropTypes.object,
+  mode: PropTypes.number.isRequired,
 };
 
 Layout.defaultProps = {

@@ -1,0 +1,57 @@
+$navBar_height: 85px;
+
+.tokenInfo {
+  max-width: 1100px;
+  width: 100%;
+  margin: auto;
+  margin-top: 20px;
+  overflow: hidden;
+  -ms-overflow: hidden;
+
+  display: flex;
+  justify-content: space-around;
+
+  .bg {
+    position: absolute;
+    z-index: -2;
+    top: $navBar_height;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 250px;
+
+    background-image: url("https://i.imgur.com/P1k5vK1.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .verticalLine {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+}
+
+.mobile {
+  margin: auto;
+  height: 200px;
+  border-radius: 6px;
+  flex-direction: column;
+  position: relative;
+
+  .bg {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-image: linear-gradient(118deg, rgba(81, 81, 224, 0.8), rgba(11, 122, 255, 0.9));
+  }
+
+  .verticalLine {
+    margin: auto;
+    width: 90%;
+    height: 0;
+    border: 0.5px solid #f4f4f4;
+  }
+}

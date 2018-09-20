@@ -3,27 +3,16 @@ import { injectIntl, intlShape } from 'react-intl';
 
 import LiveBlocks from '../components/LiveBlocks';
 import LiveInfoWrapper from '../components/LiveInfoWrapper';
-import LiveTickerWrapper from '../components/LiveTickerWrapper';
 import LiveTxs from '../components/LiveTxs';
 import SearchBar from '../components/SearchBar';
+import TokenInfo from '../components/TokenInfo';
 
 import './pages.scss';
 
 
 const Home = ({ intl }) => (
   <div className="homeContentWrapper">
-    <div className="homeTokenInfo">
-      <div className="bg" />
-      <LiveTickerWrapper
-        title={intl.formatMessage({ id: 'medPrice' })}
-        suffix="USD"
-      />
-      <div className="verticalLine" />
-      <LiveTickerWrapper
-        title={intl.formatMessage({ id: 'medSupply' })}
-        suffix="MED"
-      />
-    </div>
+    <TokenInfo />
     <div className="homeSearchBar">
       <div className="blur" />
       <hr />

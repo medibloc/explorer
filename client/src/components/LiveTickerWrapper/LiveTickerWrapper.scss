@@ -1,4 +1,4 @@
-$tablet-width: 800px;
+$tablet-width: 600px;
 
 .liveTickerWrapperGuide {
   flex: 1;
@@ -54,5 +54,26 @@ $tablet-width: 800px;
       }
     }
   }
+}
 
+.mobile {
+  & * {
+    color: #ffffff !important;
+  }
+
+  .liveTickerWrapper {
+    margin-top: auto;
+    margin-bottom: auto;
+    max-width: 100%;
+
+    .liveTickerWrapperTitle {
+      font-size: 16px;
+      font-weight: 300;
+      letter-spacing: -0.4px;
+    }
+
+    .liveTickerWrapperContent {
+      width: 100%;
+    }
+  }
 }

@@ -61,7 +61,8 @@ class Pages extends Component {
     w.loader(BlockchainActions
       .getMedState()
       .then(() => TickerActions.getMedxPrice())
-      .then(() => BlockchainActions.getInitialBlocks({ from: 0, to: 4 })));
+      .then(() => BlockchainActions.getInitialBlocks({ from: 0, to: 4 }))
+      .then(() => GlobalActions.closeModal()));
   }
 
   componentDidMount() {
@@ -77,12 +78,12 @@ class Pages extends Component {
         textComponent={React.Fragment}
       >
         <BrowserRouter>
-          <Fragment>
-            <NavBar />
-            {
-              isFirstLoad ? (
-                <Modal type="loading" />
-              ) : (
+          {
+            isFirstLoad ? (
+              <Modal />
+            ) : (
+              <Fragment>
+                <NavBar />
                 <Switch>
                   <Layout loading={loading} lang={language}>
                     <Switch>
@@ -98,10 +99,10 @@ class Pages extends Component {
                     </Switch>
                   </Layout>
                 </Switch>
-              )
-            }
-            <Footer />
-          </Fragment>
+                <Footer />
+              </Fragment>
+            )
+          }
         </BrowserRouter>
       </IntlProvider>
     );

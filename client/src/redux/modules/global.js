@@ -38,8 +38,8 @@ const initialState = {
   navBarOpen: false,
 
   modalData: null,
-  modalOpen: false,
-  modalType: null,
+  modalOpen: true,
+  modalType: 'Loading',
 
   language: 'en',
 

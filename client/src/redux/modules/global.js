@@ -53,9 +53,9 @@ const reducer = handleActions({
   [SET_WINDOW_SIZE]: (state, action) => {
     const width = action.payload;
     let mode = 0;
-    if (width < 800) {
+    if (width <= 600) {
       mode = 2;
-    } else if (width < 1200) {
+    } else if (width <= 1200) {
       mode = 1;
     } else {
       mode = 0;

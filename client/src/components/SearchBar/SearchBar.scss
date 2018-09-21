@@ -90,10 +90,16 @@
   .searchBarSearch {
     border: none;
     background-color: #ffffff;
+    flex-direction: row-reverse;
+
+    .searchBarIcon {
+      padding-left: 0;
+    }
   }
 
   input {
     background: none;
     color: #000000;
+    font-size: 14px;
   }
 }

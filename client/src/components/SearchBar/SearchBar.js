@@ -7,7 +7,7 @@ import { GlobalActions } from '../../redux/actionCreators';
 import './SearchBar.scss';
 
 
-const SearchBar = ({ search, searchFrom, searchResult, type }) => {
+const SearchBar = ({ mode, search, searchFrom, searchResult, type }) => {
   const { setSearchText } = GlobalActions;
 
   return (

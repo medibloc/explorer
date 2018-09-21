@@ -34,6 +34,10 @@ $footer-margin-height: 50px;
 }
 
 @media (max-width: $mobile-width) {
+  .homeSearchBar {
+    display: none !important;
+  }
+
   .homeLive {
     display: flex;
     flex-direction: column;

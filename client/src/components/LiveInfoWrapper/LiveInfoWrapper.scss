@@ -58,3 +58,13 @@ $tablet-width: 800px;
     width: 0;
   }
 }
+
+.liveInfoWrapper.mobile {
+  padding: 20px 10px 10px;
+
+  .liveInfoWrapperContentBox {
+    background-color: white;
+    border-top: 2px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  }
+}

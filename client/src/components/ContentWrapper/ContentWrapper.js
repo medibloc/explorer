@@ -13,7 +13,7 @@ const titleConverter = (title) => {
   return convertedTitle;
 };
 
-const ContentWrapper = ({ lang, type, data, titles }) => {
+const ContentWrapper = ({ lang, mode, type, data, titles }) => {
   const { 'Block Height': height } = data;
   let hash = '';
   titles.forEach((title) => {
@@ -26,16 +26,20 @@ const ContentWrapper = ({ lang, type, data, titles }) => {
 
 
   return (
-    <NavLink to={url} className={cx('contentWrapperLinker', { special: (data.Ranking >= 1 && data.Ranking <= 21) })}>
+    <NavLink to={url} className={cx('contentWrapperLinker', { special: (data.Ranking >= 1 && data.Ranking <= 21), mobile: mode === 2 })}>
       <div className="contentWrapper">
-        <div className="contentWrapperIcon">
-          <img src={`/image/icon/ico-${type}.svg`} alt="contentWrapperIcon" />
-          <img src={`/image/icon/ico-${type}-on.svg`} alt="contentWrapperIcon" />
-          <span>
-            { height }
-          </span>
-        </div>
-        <div className="contentWrapperInfoTitle">
+        {
+          mode !== 2 && (
+            <div className="contentWrapperIcon">
+              <img src={`/image/icon/ico-${type}.svg`} alt="contentWrapperIcon" />
+              <img src={`/image/icon/ico-${type}-on.svg`} alt="contentWrapperIcon" />
+              <span>
+                { height }
+              </span>
+            </div>
+          )
+        }
+        <div className={cx('contentWrapperInfoTitle', { mobile: mode === 2 })}>
           {
             titles.map(title => (
               <span key={title}>

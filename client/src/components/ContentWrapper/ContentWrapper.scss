@@ -43,7 +43,7 @@ $mobile_width: 800px;
   align-items: center;
 
   @media (max-width: $mobile_width) {
-    padding: 10px;
+    padding: 0;
   }
 
   &:hover {

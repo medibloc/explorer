@@ -3,8 +3,7 @@ $navBar_height: 85px;
 .tokenInfo {
   max-width: 1100px;
   width: 100%;
-  margin: auto;
-  margin-top: 20px;
+  margin: 20px auto auto;
   overflow: hidden;
   -ms-overflow: hidden;
 
@@ -20,10 +19,8 @@ $navBar_height: 85px;
     bottom: 0;
     height: 250px;
 
-    background-image: url("https://i.imgur.com/P1k5vK1.jpg");
     background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+    background: url("https://i.imgur.com/P1k5vK1.jpg") no-repeat center;
   }
 
   .verticalLine {
@@ -33,7 +30,8 @@ $navBar_height: 85px;
 }
 
 .tokenInfo.mobile {
-  margin: auto;
+  margin: auto auto auto -10px;
+  width: calc(100% + 20px);
   height: 200px;
   border-radius: 6px;
   flex-direction: column;

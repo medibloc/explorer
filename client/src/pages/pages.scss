@@ -27,8 +27,8 @@ $footer-margin-height: 50px;
 
   &.mobile {
     .layoutInner {
-      padding-left: 10px;
-      padding-right: 10px;
+      padding-left: 20px;
+      padding-right: 20px;
     }
   }
 }
@@ -221,10 +221,15 @@ $footer-margin-height: 50px;
   align-items: center;
   margin-top: 10%;
 
+  img {
+    max-width: 60%;
+    margin-top: 20%;
+  }
+
   span {
     //font-family: NotoSansCJKkr;
     margin-top: 45px;
-    font-size: 42px;
+    font-size: 2em;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;

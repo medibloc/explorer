@@ -58,3 +58,16 @@ $footer-margin-height: 50px;
     }
   }
 }
+
+.footer.mobile {
+  height: 63px;
+
+  .footerContent {
+    .footerSNS {
+      img {
+        width: 22px;
+        height: 22px;
+      }
+    }
+  }
+}

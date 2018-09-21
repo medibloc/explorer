@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -11,7 +12,7 @@ const imgChange = (targetSNS, on) => (e) => {
 };
 
 const Footer = ({ language, mode }) => (
-  <div className="footer">
+  <div className={cx('footer', { mobile: mode === 2 })}>
     <div className="footerContent">
       <div className="footerLogo">
         <img src="/image/icon/logo-footer.svg" alt="footerLogo" />

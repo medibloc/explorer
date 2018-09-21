@@ -14,7 +14,7 @@ const LiveInfoWrapper = ({
   type,
   children,
 }) => (
-  <div className={cx('liveInfoWrapper', { mobile: mode === 2 })}>
+  <div className={cx('liveInfoWrapper', { mobile: mode !== 0 })}>
     <div className="liveInfoWrapperInfo">
       <span>
         {title}

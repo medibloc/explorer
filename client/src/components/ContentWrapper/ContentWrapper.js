@@ -29,7 +29,7 @@ const ContentWrapper = ({ lang, mode, type, data, titles }) => {
     <NavLink to={url} className={cx('contentWrapperLinker', { special: (data.Ranking >= 1 && data.Ranking <= 21), mobile: mode === 2 })}>
       <div className="contentWrapper">
         {
-          mode !== 2 && (
+          mode === 0 && (
             <div className="contentWrapperIcon">
               <img src={`/image/icon/ico-${type}.svg`} alt="contentWrapperIcon" />
               <img src={`/image/icon/ico-${type}-on.svg`} alt="contentWrapperIcon" />

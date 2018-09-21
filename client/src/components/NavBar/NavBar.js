@@ -23,11 +23,11 @@ const NavBar = ({
   const { openNavBar, closeNavBar } = GlobalActions;
 
   return (
-    <div className={cx('navBar', { mobile: mode === 2 })}>
+    <div className={cx('navBar', { mobile: mode === 2, tablet: mode >= 1 })}>
       <Modal />
       <div className="navBarContainer">
         {
-          mode !== 2 && (
+          mode === 0 && (
             <div className="navBarLogo">
               <NavLink to={`/${lang}/`}>
                 <img src="/image/icon/logo.svg" alt="logo" />
@@ -63,7 +63,7 @@ const NavBar = ({
                 }
               </button>
               <div className={`navBarSide ${navBarOpen ? 'navBarOpen' : 'navBarClose'}`}>
-                <SearchBar className="fullWidth" type="side" />
+                {/*<SearchBar className="fullWidth" type="side" />*/}
                 <div className="navBarSideMenu">
                   <img src="/image/icon/ico-all-menu.svg" alt="menu" />
                   Menu
@@ -83,7 +83,7 @@ const NavBar = ({
           )
         }
         {
-          mode === 2 && (
+          mode !== 0 && (
             <Fragment>
               <div className="navBarLogo">
                 <NavLink to={`/${lang}/`}>

@@ -11,7 +11,6 @@ $mobile_width: 800px;
   text-decoration: none;
 
 
-
   &.special {
     .contentWrapperIcon {
       img {
@@ -41,10 +40,6 @@ $mobile_width: 800px;
   display: flex;
   flex-direction: row;
   align-items: center;
-
-  @media (max-width: $mobile_width) {
-    padding: 0;
-  }
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.5);
@@ -89,8 +84,7 @@ $mobile_width: 800px;
 
     img {
       display: none;
-      margin: auto;
-      margin-bottom: 5px;
+      margin: auto auto 5px;
       width: 36px;
       height: 40px;
     }
@@ -149,6 +143,8 @@ $mobile_width: 800px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.07);
 
   .contentWrapper {
+    padding-left: 0;
+
     &:hover {
       border: none;
     }

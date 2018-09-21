@@ -1,5 +1,6 @@
 $mobile_width: 800px;
 $navBar_height: 85px;
+$desktop-width: 1200px;
 $footer_height: 100px;
 $footer-margin-height: 50px;
 
@@ -33,11 +34,17 @@ $footer-margin-height: 50px;
   }
 }
 
-@media (max-width: $mobile-width) {
+@media (max-width: $desktop-width) {
   .homeSearchBar {
     display: none !important;
   }
 
+  .homeLive {
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+  }
+}
+
+@media (max-width: $mobile-width) {
   .homeLive {
     display: flex;
     flex-direction: column;
@@ -58,8 +65,7 @@ $footer-margin-height: 50px;
   .homeTokenInfo {
     max-width: 1100px;
     width: 100%;
-    margin: auto;
-    margin-top: 20px;
+    margin: 20px auto auto;
     overflow: hidden;
     -ms-overflow: hidden;
 
@@ -75,10 +81,8 @@ $footer-margin-height: 50px;
       bottom: 0;
       height: 250px;
 
-      background-image: url("https://i.imgur.com/P1k5vK1.jpg");
       background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
+      background: url("https://i.imgur.com/P1k5vK1.jpg") no-repeat center;
     }
 
     .verticalLine {

@@ -32,6 +32,7 @@ class AccountList extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
+    if (this.props.mode !== nextProps.mode) return true;
     if (this.props.page !== nextProps.page) return true;
     if (this.props.accountList !== nextProps.accountList) return true;
     return false;

@@ -31,6 +31,7 @@ class BPList extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
+    if (this.props.mode !== nextProps.mode) return true;
     if (this.props.page !== nextProps.page) return true;
     if (this.props.bpList !== nextProps.bpList) return true;
     return false;

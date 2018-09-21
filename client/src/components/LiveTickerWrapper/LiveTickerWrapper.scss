@@ -77,6 +77,12 @@ $tablet-width: 600px;
 
     .liveTickerWrapperContent {
       width: 100%;
+      font-size: 30px;
+
+      .liveTickerWrapperContentSuffix {
+        font-size: 26px;
+        padding-bottom: 0px;
+      }
     }
   }
 }

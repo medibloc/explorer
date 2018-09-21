@@ -74,7 +74,7 @@ $tablet_width: 1200px;
     }
 
     .navBarClose {
-      transform: translateX($navBar-side-width);
+      transform: translateX(-$navBar-side-width);
       visibility: hidden;
     }
 
@@ -83,8 +83,8 @@ $tablet_width: 1200px;
       z-index: 999;
       background-color: #ffffff;
       top: $navBar-height + $navBar-border-bottom;
-      // right: $navBar-side-width;
-      right: 0;
+      left: 0;
+      //right: 0;
       max-width: $navBar-side-width;
       width: calc(100% - 60px);
       height: calc(100% - 85px);
@@ -160,13 +160,26 @@ $tablet_width: 1200px;
   max-width: 400px;
 }
 
-.navBar.mobile {
-  height: $mobile-navbar-height;
-
+.navBar.tablet {
   .navBarContainer {
     padding: 0 20px;
     justify-content: space-between;
 
+    .navNavigator {
+      display: none;
+    }
+
+    .searchBtn {
+      padding-right: 0;
+      border: none;
+    }
+  }
+}
+
+.navBar.mobile {
+  height: $mobile-navbar-height;
+
+  .navBarContainer {
     .navBarOpener {
       padding-left: 0;
       min-width: 20px;
@@ -183,23 +196,12 @@ $tablet_width: 1200px;
       }
     }
 
-    .navNavigator {
-      display: none;
+    .dimmer {
+      top: $mobile-navbar-height;
     }
 
     .navBarSide {
       top: $mobile-navbar-height;
-      max-width: 100%;
-      width: 100%;
-    }
-
-    .dimmer {
-      display: none;
-    }
-
-    .searchBtn {
-      padding-right: 0;
-      border: none;
     }
   }
 }

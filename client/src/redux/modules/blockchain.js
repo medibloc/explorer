@@ -26,6 +26,7 @@ const GET_ACCOUNT_DETAIL = 'blockchain/GET_ACCOUNT_DETAIL';
 const GET_BLOCK = 'blockchain/GET_BLOCK';
 const GET_BLOCKS = 'blockchain/GET_BLOCKS';
 const GET_INITIAL_BLOCKS = 'blockchain/GET_INITIAL_BLOCKS';
+const GET_INITIAL_TXS = 'blockchain/GET_INITIAL_TXS';
 const GET_TAIL_BLOCK = 'blockchain/GET_TAIL_BLOCK';
 
 const GET_TX = 'blockchain/GET_TX';
@@ -59,6 +60,7 @@ const initialState = {
   blocks: [], // blocks from event subscriber
   tailBlock: null, // tail block from event subscriber
 
+  liveTxs: [],
   txList: Array(contentsInPage).fill({}), // transaction list set from local
   txs: [], // executed txs from event subscriber
   txsFromBlock: [], // txs included in the specific block
@@ -103,18 +105,32 @@ const reducer = handleActions({
       totalSupply: divider(blockList[0].supply, [10 ** 12]),
     };
   },
-  [GET_TAIL_BLOCK]: (state, action) => ({
-    ...state,
-    tailBlock: action.payload,
-    totalSupply: divider(action.payload.supply, [10 ** 12]),
-    blocks: sorter([...state.blocks, action.payload], 'height').slice(0, 5),
-    txsFromBlock: action.payload.transactions ? (
-      [...action.payload.transactions, ...state.txsFromBlock].slice(0, 5)
-    ) : (
-      state.txsFromBlock
-    ),
-  }),
-
+  [GET_INITIAL_TXS]: (state, action) => {
+    const txs = [];
+    action.payload.transactions.forEach(tx => txs.push(tx.data));
+    return {
+      ...state,
+      liveTxs: sorter(txs, 'timestamp'),
+    };
+  },
+  [GET_TAIL_BLOCK]: (state, action) => {
+    let { liveTxs } = state;
+    action.payload.transactions.forEach(tx => liveTxs.push(tx));
+    liveTxs = liveTxs.slice(0, 5);
+    return {
+      ...state,
+      liveTxs,
+      tailBlock: action.payload,
+      totalSupply: divider(action.payload.supply, [10 ** 12]),
+      blocks: sorter([...state.blocks, action.payload], 'height')
+        .slice(0, 5),
+      txsFromBlock: action.payload.transactions ? (
+        [...action.payload.transactions, ...state.txsFromBlock].slice(0, 5)
+      ) : (
+        state.txsFromBlock
+      ),
+    };
+  },
   [GET_TX]: (state, action) => ({ ...state, tx: action.payload.transactions[0].data }),
   [GET_TXS]: (state, action) => {
     const txList = [];
@@ -163,12 +179,20 @@ export const getBPs = ({ from, to }) => dispatch => bpsGetter(
   ERROR,
   { from, to },
 );
-export const getInitialBlocks = ({ from, to }) => dispatch => blocksGetter(
-  dispatch,
-  GET_INITIAL_BLOCKS,
-  ERROR,
-  { from, to },
-);
+export const getInitialBlocks = ({ from, to }) => (dispatch) => {
+  blocksGetter(
+    dispatch,
+    GET_INITIAL_BLOCKS,
+    ERROR,
+    { from, to },
+  );
+  txsGetter(
+    dispatch,
+    GET_INITIAL_TXS,
+    ERROR,
+    { from: 0, to: 4 },
+  );
+};
 export const getMedState = () => dispatch => medStateGetter(dispatch, GET_MED_STATE, ERROR);
 export const getTx = hash => dispatch => txGetter(dispatch, GET_TX, ERROR, hash);
 export const getTxs = ({ from, to }) => dispatch => txsGetter(

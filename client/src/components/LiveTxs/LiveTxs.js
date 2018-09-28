@@ -5,20 +5,16 @@ import { sorter } from '../../lib';
 import TableWithIcon from '../TableWithIcon';
 
 
-const Txs = ({ blocks }) => {
-  let txs = [];
-  blocks.forEach((block) => {
-    txs = txs.concat(block.transactions);
-  });
-  return <TableWithIcon type="tx" data={sorter(txs, 'timestamp')} />;
-};
+const Txs = ({ liveTxs }) => (
+  <TableWithIcon type="tx" data={sorter(liveTxs, 'timestamp')} />
+);
 
 Txs.propTypes = {
-  blocks: PropTypes.array,
+  liveTxs: PropTypes.array,
 };
 
 Txs.defaultProps = {
-  blocks: [],
+  liveTxs: [],
 };
 
 export default Txs;

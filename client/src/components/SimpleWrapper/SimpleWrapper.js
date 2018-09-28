@@ -44,14 +44,15 @@ class SimpleWrapper extends Component {
 
   render() {
     const {
-      data, lang, searchFrom, type,
+      data, lang, search, searchFrom, type,
     } = this.props;
     const dataExist = data && data.length > 0;
+    console.log(search)
 
     return (
       <div className="simpleWrapper" id={`${type}Search`}>
         <div className={cx('simpleWrapperContentBox', {
-          nothing: searchFrom !== type,
+          nothing: searchFrom !== type || (!dataExist && search === ''),
           top: type === 'top',
         })}
         >
@@ -64,8 +65,11 @@ class SimpleWrapper extends Component {
               <NavLink to={`/${lang}/${datum.type}/${datum.data}`}>
                 {datum.type} : {datum.data}
               </NavLink>
-            </div>)) : (
-              <div className="simpleWrapperContent">
+            </div>)) : search !== '' && (
+              <div
+                className="simpleWrapperContent"
+                onClick={() => GlobalActions.setSearchText('')}
+              >
                 <span>
                   No matches found
                 </span>

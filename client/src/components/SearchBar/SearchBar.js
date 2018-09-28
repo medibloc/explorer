@@ -9,6 +9,7 @@ import './SearchBar.scss';
 
 const SearchBar = ({
   focus = false,
+  search,
   searchFrom,
   searchResult,
   type,
@@ -29,7 +30,6 @@ const SearchBar = ({
           }}
           onBlur={(e) => {
             e.target.value = '';
-            GlobalActions.setSearchText('');
           }}
         />
         <div className="searchBarIcon">
@@ -46,6 +46,7 @@ const SearchBar = ({
       </div>
       <SimpleWrapper
         data={searchResult}
+        search={search}
         searchFrom={searchFrom}
         type={type}
       />

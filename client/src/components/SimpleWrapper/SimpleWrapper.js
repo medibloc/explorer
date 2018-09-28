@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import { GlobalActions } from '../../redux/actionCreators';
@@ -10,7 +11,7 @@ import './SimpleWrapper.scss';
 const clickOutside = (targetId, handler, on = true) => {
   const targetElement = document.getElementById(targetId);
   if (on) {
-    document.addEventListener('click', (e) => handler(e, targetElement));
+    document.addEventListener('click', e => handler(e, targetElement));
   } else {
     document.removeEventListener('click', handler, true);
   }
@@ -18,7 +19,7 @@ const clickOutside = (targetId, handler, on = true) => {
 
 
 class SimpleWrapper extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.handleClickOutside = this.handleClickOutside.bind(this);
   }
@@ -42,23 +43,45 @@ class SimpleWrapper extends Component {
   }
 
   render() {
-    const { data, lang, searchFrom, type } = this.props;
+    const {
+      data, lang, searchFrom, type,
+    } = this.props;
     const dataExist = data && data.length > 0;
 
     return (
       <div className="simpleWrapper" id={`${type}Search`}>
-        <div className={cx('simpleWrapperContentBox', { nothing: !dataExist || searchFrom !== type, top: type === 'top' })}>
-          { data && data.map(datum => (
-            <div className="simpleWrapperContent" key={datum.data} onClick={GlobalActions.closeModal}>
+        <div className={cx('simpleWrapperContentBox', {
+          nothing: searchFrom !== type,
+          top: type === 'top',
+        })}
+        >
+          {dataExist ? data.map(datum => (
+            <div
+              className="simpleWrapperContent"
+              onClick={GlobalActions.closeModal}
+              key={datum.data}
+            >
               <NavLink to={`/${lang}/${datum.type}/${datum.data}`}>
                 {datum.type} : {datum.data}
               </NavLink>
-            </div>))
+            </div>)) : (
+              <div className="simpleWrapperContent">
+                <span>
+                  No matches found
+                </span>
+              </div>)
           }
         </div>
       </div>
     );
   }
+}
+
+SimpleWrapper.propTypes = {
+  data: PropTypes.array.isRequired,
+  lang: PropTypes.string.isRequired,
+  searchFrom: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default SimpleWrapper;

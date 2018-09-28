@@ -29,6 +29,7 @@ const SearchBar = ({
           }}
           onBlur={(e) => {
             e.target.value = '';
+            GlobalActions.setSearchText('');
           }}
         />
         <div className="searchBarIcon">
@@ -43,7 +44,11 @@ const SearchBar = ({
           }
         </div>
       </div>
-      <SimpleWrapper data={searchResult} searchFrom={searchFrom} type={type} />
+      <SimpleWrapper
+        data={searchResult}
+        searchFrom={searchFrom}
+        type={type}
+      />
     </div>
   );
 };

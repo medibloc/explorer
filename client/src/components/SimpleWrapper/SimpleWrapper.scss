@@ -19,7 +19,7 @@
     .simpleWrapperContent {
       width: 100%;
 
-      padding-left: 10px;
+      padding-left: 20px;
       padding-right: 10px;
       height: 40px;
 
@@ -31,7 +31,7 @@
         cursor: pointer;
       }
 
-      a {
+      a, span {
         height: 100%;
         overflow: hidden;
         text-overflow: ellipsis;

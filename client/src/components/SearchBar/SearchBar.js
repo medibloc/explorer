@@ -7,13 +7,19 @@ import { GlobalActions } from '../../redux/actionCreators';
 import './SearchBar.scss';
 
 
-const SearchBar = ({ mode, search, searchFrom, searchResult, type }) => {
+const SearchBar = ({
+  focus = false,
+  searchFrom,
+  searchResult,
+  type,
+}) => {
   const { setSearchText } = GlobalActions;
 
   return (
     <div className="searchBar" id={type}>
       <div className="searchBarSearch">
         <input
+          autoFocus={focus} // eslint-disable-line
           placeholder="Enter Address, Tx hash, Block Height"
           onClick={() => {
             if (type === 'side') GlobalActions.openModal({ modalType: 'Search' });
@@ -43,10 +49,15 @@ const SearchBar = ({ mode, search, searchFrom, searchResult, type }) => {
 };
 
 SearchBar.propTypes = {
+  focus: PropTypes.bool,
+  searchFrom: PropTypes.string.isRequired,
+  searchResult: PropTypes.array,
   type: PropTypes.string,
 };
 
 SearchBar.defaultProps = {
+  focus: false,
+  searchResult: [],
   type: null,
 };
 

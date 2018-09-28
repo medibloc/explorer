@@ -20,7 +20,7 @@ const modalContent = (type, data) => {
     case 'QrCode':
       return <QrCode data={data} />;
     case 'Search':
-      return <SearchWrapper />;
+      return <SearchWrapper focus />;
     default:
       return <div />;
   }

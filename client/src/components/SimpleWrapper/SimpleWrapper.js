@@ -47,7 +47,6 @@ class SimpleWrapper extends Component {
       data, lang, search, searchFrom, type,
     } = this.props;
     const dataExist = data && data.length > 0;
-    console.log(search)
 
     return (
       <div className="simpleWrapper" id={`${type}Search`}>
@@ -84,6 +83,7 @@ class SimpleWrapper extends Component {
 SimpleWrapper.propTypes = {
   data: PropTypes.array.isRequired,
   lang: PropTypes.string.isRequired,
+  search: PropTypes.string.isRequired,
   searchFrom: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
 };

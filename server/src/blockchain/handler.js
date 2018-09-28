@@ -95,14 +95,12 @@ export const accountUpdater = (t) => {
       AccountLog.create(toLog, { transaction: t }),
     ]);
   };
-  const updateAccountsData = height => Promise.all(
-    Object.values(accountMap).map(dbAccount => axios({
-      params: { address: dbAccount.address, height },
-      url: `${url}/v1/account`,
-    }).then(({ data }) => dbAccount
-      .update(parseAccount(data), { where: { id: dbAccount.id }, transaction: t }))
-      .catch(() => { console.log(`failed to update account ${dbAccount.address}`); })), // eslint-disable-line no-console
-  );
+  const updateAccountsData = height => Promise.all(Object.values(accountMap).map(dbAccount => axios({
+    params: { address: dbAccount.address, height },
+    url: `${url}/v1/account`,
+  }).then(({ data }) => dbAccount
+    .update(parseAccount(data), { where: { id: dbAccount.id }, transaction: t }))
+    .catch(() => { console.log(`failed to update account ${dbAccount.address}`); }))); // eslint-disable-line no-console
 
   return { handleBlock, handleTx, updateAccountsData };
 };
@@ -135,17 +133,23 @@ export const handleBlockResponse = (blocks, handleTx, t) => Block
 
 const topics = {
   'chain.newTailBlock': {
-    onEvent: ({ hash, topic }) => axios({
+    onEvent: ({ hash, topic }, onReset) => axios({
       method: 'get',
       url: `${url}/v1/block?hash=${hash}`,
-    }).then(({ data: block }) => db.transaction((t) => {
-      const { handleBlock, handleTx, updateAccountsData } = accountUpdater(t);
-      return handleBlockResponse([block], handleTx, t)
-        .then(([dbBlock]) => Promise.all([
-          updateAccountsData(block.height),
-          handleBlock(dbBlock),
-        ]).then(() => dbBlock));
-    }))
+    }).then(async ({ data: block }) => {
+      const { data: { height: lastHeight } } = await Block.findOne({ order: [['id', 'desc']] });
+      if (+lastHeight + 1 < +block.height) {
+        return onReset();
+      }
+      return db.transaction((t) => {
+        const { handleBlock, handleTx, updateAccountsData } = accountUpdater(t);
+        return handleBlockResponse([block], handleTx, t)
+          .then(([dbBlock]) => Promise.all([
+            updateAccountsData(block.height),
+            handleBlock(dbBlock),
+          ]).then(() => dbBlock));
+      });
+    })
       .then(block => pushEvent({ data: block.dataValues, topic })), // eslint-disable-line no-use-before-define, max-len
   },
 };
@@ -180,25 +184,90 @@ export const pushEvent = (e) => {
   });
 };
 
+const REQUEST_STEP = 10;
+
+export const sync = async () => {
+  const [lastBlock, medState] = await Promise.all([
+    Block.findOne({ order: [['id', 'desc']] }),
+    axios.get(`${url}/v1/node/medstate`),
+  ]);
+  let currentHeight = 0;
+  if (lastBlock) {
+    currentHeight = +lastBlock.data.height;
+  }
+  const lastHeight = +medState.data.height;
+  console.log(`current height ${currentHeight}, last height ${lastHeight}`); // eslint-disable-line no-console
+  if (currentHeight >= lastHeight) {
+    return Promise.resolve();
+  }
+  const getBlocks = () => db.transaction((t) => {
+    const { handleBlock, handleTx, updateAccountsData } = accountUpdater(t);
+    const from = currentHeight + 1;
+    const step = Math.min(REQUEST_STEP, lastHeight - from + 1);
+    const to = from + step - 1;
+    return axios({
+      method: 'get',
+      params: { from, to },
+      url: `${url}/v1/blocks`,
+    }).then((res) => {
+      const blocks = res.data.blocks || [];
+      return handleBlockResponse(blocks, handleTx, t)
+        .then(dbBlocks => Promise.all(dbBlocks.map(handleBlock)));
+    })
+      .then(() => {
+        currentHeight = to;
+        return updateAccountsData(lastHeight);
+      });
+  });
+
+  const work = () => getBlocks().then(() => {
+    if (currentHeight < lastHeight) {
+      return work();
+    }
+    return Promise.resolve();
+  });
+
+  return work().catch((err) => {
+    console.error(err); // eslint-disable-line no-console
+    process.exit(1);
+  });
+};
+
 export const startSubscribe = (promise) => {
-  axios({
+  const reset = () => startSubscribe(sync());
+  const source = axios.CancelToken.source();
+  return axios({
+    cancelToken: source.token,
     data: {
       topics: Object.keys(topics),
     },
     method: 'post',
+    cancelPreviousRequest: true,
     responseType: 'stream',
     url: `${url}/v1/subscribe`,
   }).then(({ data }) => {
     data.on('data', (buf) => {
       const { result } = JSON.parse(buf.toString());
+      if (!result) {
+        source.cancel();
+        reset();
+        return;
+      }
       const { topic } = result;
       if (!topics[topic]) {
         console.log(`topic ${topic} does not exist`); // eslint-disable-line no-console
         return;
       }
       console.log(`event ${topic} received`); // eslint-disable-line no-console
-      promise = promise.then(() => topics[topic].onEvent(result) // eslint-disable-line no-param-reassign, max-len
-        .catch(err => console.log(err.message))); // eslint-disable-line no-console
+      promise = promise // eslint-disable-line no-param-reassign
+        .then(() => topics[topic].onEvent(result, reset))
+        .catch((err) => {
+          console.log(err.message);
+          return err;
+        });
     });
+  }).catch(() => {
+    source.cancel();
+    setTimeout(reset, 1000);
   });
 };

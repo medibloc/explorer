@@ -3,8 +3,12 @@ import compression from 'compression';
 import express from 'express';
 import expressRequestId from 'express-request-id';
 import path from 'path';
+import cors from 'cors';
 
 import route from './route';
+
+
+const ENV = process.env.NODE_ENV;
 
 const sendError = (err, req, res) => {
   const code = err.status || 500;
@@ -46,6 +50,7 @@ export default () => {
   const app = express();
 
   app.use(expressRequestId());
+  if (ENV === 'development') app.use(cors());
   app.use(compression());
   app.use(bodyParser.json());
   app.use(sseMiddleware);

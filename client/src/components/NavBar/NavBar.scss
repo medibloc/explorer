@@ -176,9 +176,12 @@ $tablet_width: 1200px;
   }
 }
 
+.navBar.mobile.home {
+  border-bottom: none;
+}
+
 .navBar.mobile {
   height: $mobile-navbar-height;
-  border-bottom: none;
 
   .navBarContainer {
     .navBarOpener {

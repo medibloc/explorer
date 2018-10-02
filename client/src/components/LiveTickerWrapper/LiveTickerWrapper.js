@@ -26,16 +26,16 @@ const LiveTickerWrapper = ({ title, suffix, medxPrice, mode, totalSupply }) => (
 );
 
 LiveTickerWrapper.propTypes = {
-  medxPrice: PropTypes.string,
+  medxPrice: PropTypes.number,
   mode: PropTypes.number.isRequired,
-  totalSupply: PropTypes.string,
+  totalSupply: PropTypes.number,
   suffix: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
 };
 
 LiveTickerWrapper.defaultProps = {
-  medxPrice: '0',
-  totalSupply: '0',
+  medxPrice: 0,
+  totalSupply: 0,
 };
 
 export default LiveTickerWrapper;

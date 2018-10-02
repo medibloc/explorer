@@ -23,7 +23,7 @@ const NavBar = ({
   const { openNavBar, closeNavBar } = GlobalActions;
 
   return (
-    <div className={cx('navBar', { mobile: mode === 2, tablet: mode >= 1 })}>
+    <div className={cx('navBar', { mobile: mode === 2, tablet: mode >= 1, home: currentUrl === '' })}>
       <Modal />
       <div className="navBarContainer">
         {

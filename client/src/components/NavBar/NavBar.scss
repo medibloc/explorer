@@ -25,6 +25,7 @@ $tablet_width: 1200px;
 
   &.home {
     background-color: rgba(0, 0, 0, 0.1);
+    border-bottom: none;
     .navNavigator {
       a {
         color: white;

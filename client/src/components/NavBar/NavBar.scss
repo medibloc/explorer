@@ -23,6 +23,25 @@ $tablet_width: 1200px;
   justify-content: center;
   align-items: center;
 
+  &.home {
+    background-color: rgba(0, 0, 0, 0.1);
+    .navNavigator {
+      a {
+        color: white;
+      }
+    }
+
+    .language {
+      & > button {
+        color: white;
+      }
+
+      & > img {
+        filter: brightness(0) invert(1);
+      }
+    }
+  }
+
   .navBarContainer {
     max-width: $desktop-width;
     width: 100%;
@@ -83,6 +102,7 @@ $tablet_width: 1200px;
       z-index: 999;
       background-color: #ffffff;
       top: $navBar-height + $navBar-border-bottom;
+      border-top: 1px solid rgba(0, 0, 0, 0.2);
       left: 0;
       //right: 0;
       max-width: $navBar-side-width;
@@ -161,6 +181,10 @@ $tablet_width: 1200px;
 }
 
 .navBar.tablet {
+  &.home {
+    background-color: white;
+  }
+
   .navBarContainer {
     padding: 0 20px;
     justify-content: space-between;

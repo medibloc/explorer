@@ -7,8 +7,15 @@ import './LiveTickerWrapper.scss';
 
 const injectComma = supply => supply.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-const LiveTickerWrapper = ({ title, suffix, medxPrice, mode, totalSupply }) => (
-  <div className={cx('liveTickerWrapperGuide', { mobile: mode === 2 })}>
+const LiveTickerWrapper = ({
+  title,
+  suffix,
+  medxPrice,
+  mode,
+  totalSupply,
+  side,
+}) => (
+  <div className={cx('liveTickerWrapperGuide', { mobile: mode === 2, [side]: true })}>
     <div className="liveTickerWrapper">
       <div className="liveTickerWrapperTitle">
         {title}
@@ -29,6 +36,7 @@ LiveTickerWrapper.propTypes = {
   medxPrice: PropTypes.number,
   mode: PropTypes.number.isRequired,
   totalSupply: PropTypes.number,
+  side: PropTypes.string.isRequired,
   suffix: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
 };

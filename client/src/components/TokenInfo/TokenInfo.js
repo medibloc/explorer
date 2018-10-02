@@ -11,14 +11,19 @@ import './tokenInfo.scss';
 const TokenInfo = ({ intl, mode }) => (
   <div className={cx('tokenInfo', { mobile: mode === 2 })}>
     <div className="bg" />
+    {
+      mode !== 2 && <img src="/image/icon/bg-chain@3x.png" alt="backgroundImg" />
+    }
     <LiveTickerWrapper
       title={intl.formatMessage({ id: 'medPrice' })}
       suffix="USD"
+      side="left"
     />
     <div className="verticalLine" />
     <LiveTickerWrapper
       title={intl.formatMessage({ id: 'medSupply' })}
       suffix="MED"
+      side="right"
     />
   </div>
 );

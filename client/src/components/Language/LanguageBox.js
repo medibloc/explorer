@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import { GlobalActions } from '../../redux/actionCreators';
 import { countryList, countryName } from '../../config';
@@ -24,4 +23,4 @@ const LanguageBox = () => (
   </div>
 );
 
-export default connect()(LanguageBox);
+export default LanguageBox;

@@ -30,7 +30,7 @@ const NavBar = ({
           mode === 0 && (
             <div className="navBarLogo">
               <NavLink to={`/${lang}/`}>
-                <img src="/image/icon/logo.svg" alt="logo" />
+                <img src={`/image/icon/logo${currentUrl === '' ? '-white' : ''}.svg`} alt="logo" />
               </NavLink>
             </div>
           )
@@ -63,7 +63,6 @@ const NavBar = ({
                 }
               </button>
               <div className={`navBarSide ${navBarOpen ? 'navBarOpen' : 'navBarClose'}`}>
-                {/*<SearchBar className="fullWidth" type="side" />*/}
                 <div className="navBarSideMenu">
                   <img src="/image/icon/ico-all-menu.svg" alt="menu" />
                   Menu

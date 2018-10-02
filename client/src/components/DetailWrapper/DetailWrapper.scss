@@ -88,3 +88,16 @@ $mobile_width: 800px;
     }
   }
 }
+
+.detailWrapper.mobile {
+  border-radius: 10px;
+  border-right: 1px solid rgba(0, 0, 0, 0.4);
+
+  .detailWrapperKey {
+    border-radius: 10px 0 0 10px;
+  }
+
+  .detailWrapperValue {
+    padding-right: 15px;
+  }
+}

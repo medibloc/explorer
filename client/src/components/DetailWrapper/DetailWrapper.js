@@ -11,12 +11,12 @@ import { detailWrapperConfig } from '../../config';
 import './DetailWrapper.scss';
 
 
-const DetailWrapper = ({ data, lang, type }) => {
+const DetailWrapper = ({ data, lang, mode, type }) => {
   const titleList = type ? detailWrapperConfig.titles[type] : [];
   const linkList = type ? detailWrapperConfig.linkTo[type] : [];
 
   return (
-    <div className="detailWrapper">
+    <div className={cx('detailWrapper', { mobile: mode === 2 })}>
       <div className="detailWrapperKey">
         {
           titleList.map(title => (

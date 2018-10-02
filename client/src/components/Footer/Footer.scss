@@ -64,6 +64,10 @@ $footer-mobile-margin-height: 80px;
       border-left: 1px solid #d8d8d8;
       font-size: 14px;
       letter-spacing: -0.6px;
+
+      a {
+        color: #3c3e41;
+      }
     }
   }
 
@@ -92,6 +96,10 @@ $footer-mobile-margin-height: 80px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
+    a {
+      color: #3c3e41;
+    }
   }
 }
 

@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -14,14 +15,15 @@ const titlize = (string) => {
 };
 
 // title : block-list
-const PageInfo = ({ title }) => (
-  <div className="pageInfo">
+const PageInfo = ({ mode, title }) => (
+  <div className={cx('pageInfo', { mobile: mode === 2 })}>
     <img src={`/image/icon/ico-${title}.svg`} alt={title} />
     <FormattedMessage id={titlize(title)} />
   </div>
 );
 
 PageInfo.propTypes = {
+  mode: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
 };
 

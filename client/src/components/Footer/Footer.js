@@ -2,7 +2,7 @@ import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { sns, snsLink } from '../../config';
+import { privacyPolicyLink, sns, snsLink } from '../../config';
 
 import './Footer.scss';
 
@@ -12,7 +12,7 @@ const imgChange = (targetSNS, on) => (e) => {
 };
 
 const Footer = ({ language, mode }) => (
-  <div className={cx('footer', { mobile: mode === 2 })}>
+  <div className={cx('footer', { mobile: mode === 2, tablet: mode >= 1 })}>
     <div className="footerContent">
       <div className="footerLogo">
         <img src="/image/icon/logo-footer.svg" alt="footerLogo" />
@@ -24,6 +24,17 @@ const Footer = ({ language, mode }) => (
           </div>
         )
       }
+      { mode === 0 && (
+        <div className="footerPrivacyPolicy">
+          <a
+            href={privacyPolicyLink[language === 'ko' ? 'ko' : 'en']}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Privacy Policy
+          </a>
+        </div>
+      )}
       <div className="footerSNS">
         {
           sns.map((service) => {
@@ -51,6 +62,15 @@ const Footer = ({ language, mode }) => (
           })
         }
       </div>
+    </div>
+    <div className="privacyPolicy">
+      <a
+        href={privacyPolicyLink[language === 'ko' ? 'ko' : 'en']}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Privacy Policy
+      </a>
     </div>
   </div>
 );

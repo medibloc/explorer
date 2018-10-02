@@ -20,6 +20,11 @@ export const snsLink = {
   medi: 'https://medibloc.org/',
 };
 
+export const privacyPolicyLink = {
+  en: 'https://docs.medibloc.org/PrivacyPolicy_ENG.pdf',
+  ko: 'https://docs.medibloc.org/PrivacyPolicy_KR.pdf',
+};
+
 export const blindAddress = '000000000000000000000000000000000000000000000000000000000000000000';
 
 // INTERNAL CONFIG

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component, Fragment } from 'react';
+import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
@@ -34,7 +35,13 @@ import {
 } from '../redux/actionCreators';
 
 addLocaleData([...en, ...ja, ...ko, ...zh]);
+ReactGA.initialize('GTM-M83MRRH');
 
+
+const logPageView = () => {
+  ReactGA.set({ page: window.location.pathname });
+  ReactGA.pageview(window.location.pathname);
+};
 
 const setLocale = () => {
   const LangList = ['ja', 'ko', 'zh'];
@@ -92,15 +99,15 @@ class Pages extends Component {
                 <Switch>
                   <Layout loading={loading} lang={language} mode={mode}>
                     <Switch>
-                      <Route exact path="/:lang/" component={Home} />
-                      <Route path="/:lang/account" component={Account} />
-                      <Route exact path="/:lang/accounts" component={Accounts} />
-                      <Route path="/:lang/block" component={Block} />
-                      <Route exact path="/:lang/blocks" component={Blocks} />
-                      <Route exact path="/:lang/bps" component={BP} />
-                      <Route path="/:lang/tx" component={Tx} />
-                      <Route exact path="/:lang/txs" component={Txs} />
-                      <Route path="*" component={Err404} />
+                      <Route exact path="/:lang/" component={Home} onUpdate={logPageView} />
+                      <Route path="/:lang/account" component={Account} onUpdate={logPageView} />
+                      <Route exact path="/:lang/accounts" component={Accounts} onUpdate={logPageView} />
+                      <Route path="/:lang/block" component={Block} onUpdate={logPageView} />
+                      <Route exact path="/:lang/blocks" component={Blocks} onUpdate={logPageView} />
+                      <Route exact path="/:lang/bps" component={BP} onUpdate={logPageView} />
+                      <Route path="/:lang/tx" component={Tx} onUpdate={logPageView} />
+                      <Route exact path="/:lang/txs" component={Txs} onUpdate={logPageView} />
+                      <Route path="*" component={Err404} onUpdate={logPageView} />
                     </Switch>
                   </Layout>
                 </Switch>

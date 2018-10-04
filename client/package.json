@@ -17,6 +17,7 @@
     "react": "^16.4.1",
     "react-collapse": "^4.0.3",
     "react-dom": "^16.4.1",
+    "react-ga": "^2.5.3",
     "react-intl": "^2.4.0",
     "react-loading": "^2.0.3",
     "react-modal": "^3.5.1",

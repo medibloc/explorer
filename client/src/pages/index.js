@@ -35,7 +35,7 @@ import {
 } from '../redux/actionCreators';
 
 addLocaleData([...en, ...ja, ...ko, ...zh]);
-ReactGA.initialize('GTM-M83MRRH');
+ReactGA.initialize('UA-103757205-4');
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 

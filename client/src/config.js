@@ -95,3 +95,16 @@ export const detailWrapperConfig = {
 };
 
 export const navbarPages = ['Block', 'Transaction', 'Account', 'BP'];
+
+
+export const txTypes = {
+  ADD_CERTIFICATION: 'add_certification',
+  BECOME_CANDIDATE: 'become_candidate',
+  DATA_UPLOAD: 'add_record',
+  QUIT_CANDIDATE: 'quit_candidacy',
+  REVOKE_CERTIFICATION: 'revoke_certification',
+  VALUE_TRANSFER: 'transfer',
+  VEST: 'vest',
+  VOTE: 'vote',
+  WITHDRAW_VESTING: 'withdraw_vesting',
+};

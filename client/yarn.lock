@@ -5817,10 +5817,10 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
 
-medjs@^0.2.9:
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/medjs/-/medjs-0.2.9.tgz#71396a61adbc0b48b0240b8223ab4b1923bcf6ef"
-  integrity sha512-zuKs+BR09ofpO3cY6ZABGEE23JwBnhf/XsVCxSkVS9lEINKJsIZnHNVdjn6v22zpH7RQG0S6uyI0bL2AnFCqmQ==
+medjs@^0.2.15:
+  version "0.2.15"
+  resolved "https://registry.yarnpkg.com/medjs/-/medjs-0.2.15.tgz#49e6c363f02053b6dd5ea3c984cd67d58fe028c7"
+  integrity sha512-gHjB10kcaMtza9IXWzP7kHUQXO6YqlPPjA27RqqAtxpZzB+4bD+R9xkychYS7R4tOkDgYQ5av0PsNb4VMYLSIg==
   dependencies:
     axios "^0.18.0"
     babel-runtime "^6.26.0"

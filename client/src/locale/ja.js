@@ -32,6 +32,7 @@ const ja = {
   transactions: '取引詳細',
   transactionsInTheBlock: 'ブロックに含まれたトランザクションの内訳',
   transactionsList: '取引リスト',
+  type: 'タイプ',
   tx: '取引',
   txHash: '取引コード',
   viewAll: 'もっと見る',

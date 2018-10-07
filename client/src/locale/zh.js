@@ -32,6 +32,7 @@ const zh = {
   transactions: '交易明细',
   transactionsInTheBlock: '包含区块的交易明细',
   transactionsList: '交易目录',
+  type: '类型',
   tx: '交易',
   txHash: '交易代码',
   viewAll: '查看全部内容',

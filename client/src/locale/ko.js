@@ -32,6 +32,7 @@ const ko = {
   transactions: '거래내역',
   transactionsInTheBlock: '블록에 포함된 거래내역',
   transactionsList: '거래 목록',
+  type: '유형',
   tx: '거래',
   txHash: '거래 코드',
   viewAll: '더보기',

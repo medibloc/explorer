@@ -32,6 +32,7 @@ const en = {
   transactions: 'Transactions',
   transactionsInTheBlock: 'Transactions in the block',
   transactionsList: 'Transactions List',
+  type: 'Type',
   tx: 'Transaction',
   txHash: 'Transaction Hash',
   viewAll: 'View All',

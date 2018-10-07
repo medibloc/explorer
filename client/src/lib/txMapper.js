@@ -23,13 +23,13 @@ const txMapper = (tx) => {
         payload = recoverAddCertificationPayload(tx.payload);
         break;
       case txTypes.DATA_UPLOAD:
-        payload = recoverDataPayload(tx.payload);
+        payload = recoverDataPayload(tx.payload).hash;
         break;
       case txTypes.REVOKE_CERTIFICATION:
         payload = recoverRevokeCertificationPayload(tx.payload);
         break;
       case txTypes.VALUE_TRANSFER:
-        payload = recoverDefaultPayload(tx.payload);
+        payload = recoverDefaultPayload(tx.payload).message.slice(1, -1);
         break;
       case txTypes.VOTE:
         payload = recoverVotePayload(tx.payload);
@@ -45,6 +45,7 @@ const txMapper = (tx) => {
     'Time Stamp': tx.timestamp,
     From: tx.from,
     To: tx.to,
+    Type: tx.tx_type,
     Amount,
     Message: payload,
     Nonce: tx.nonce,

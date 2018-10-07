@@ -11,7 +11,9 @@ import { detailWrapperConfig } from '../../config';
 import './DetailWrapper.scss';
 
 
-const DetailWrapper = ({ data, lang, mode, type }) => {
+const DetailWrapper = ({
+  data, lang, mode, type,
+}) => {
   const titleList = type ? detailWrapperConfig.titles[type] : [];
   const linkList = type ? detailWrapperConfig.linkTo[type] : [];
 
@@ -74,6 +76,7 @@ const DetailWrapper = ({ data, lang, mode, type }) => {
 DetailWrapper.propTypes = {
   data: PropTypes.object.isRequired,
   lang: PropTypes.string.isRequired,
+  mode: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
 };
 

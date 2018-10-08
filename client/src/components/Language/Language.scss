@@ -12,7 +12,8 @@ $navBar-height: 85px;
     outline: none;
     letter-spacing: -0.6px;
     font-size: 14px;
-    color: #0b0b0b;
+    //color: #0b0b0b;
+    color: white;
 
     display: flex;
     align-items: center;
@@ -25,6 +26,7 @@ $navBar-height: 85px;
   }
 
   & > img {
+    filter: brightness(0) invert(1);
     margin: auto;
     width: 12px;
     height: 10px;

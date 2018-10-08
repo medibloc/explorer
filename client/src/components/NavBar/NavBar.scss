@@ -17,11 +17,12 @@ $tablet_width: 1200px;
 .navBar {
   width: 100%;
   height: $navBar-height;
-  border-bottom: $navBar-border-bottom solid rgba(0, 0, 0, 0.2);
+  background-color: #4f8df3;
 
   display: flex;
   justify-content: center;
   align-items: center;
+  border-bottom: none;
 
   &.home {
     background-color: rgba(0, 0, 0, 0.1);
@@ -57,6 +58,10 @@ $tablet_width: 1200px;
       display: flex;
       align-items: center;
       justify-content: flex-end;
+
+      a {
+        color: white;
+      }
 
       div {
         margin-left: 20px;
@@ -179,12 +184,18 @@ $tablet_width: 1200px;
 .fullWidth {
   width: 100%;
   max-width: 400px;
+
+  &.home {
+    border: none;
+  }
 }
 
 .navBar.tablet {
-  &.home {
-    background-color: white;
-  }
+  background-color: white;
+  border-bottom: $navBar-border-bottom solid rgba(0, 0, 0, 0.2);
+  //&.home {
+  //  background-color: white;
+  //}
 
   .navBarContainer {
     padding: 0 20px;

@@ -6,6 +6,7 @@ import db from '../db';
 import Block from '../block/model';
 
 export default db.define('transactions', {
+  blockHeight: { allowNull: false, type: Sequelize.INTEGER },
   data,
   fromAccount: { allowNull: false, type: Sequelize.STRING },
   id,

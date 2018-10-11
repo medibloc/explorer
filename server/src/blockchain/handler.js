@@ -19,6 +19,7 @@ export const parseBlock = block => ({
 });
 
 const parseTx = (block, tx) => ({
+  blockHeight: block.height,
   blockId: block.id,
   data: tx,
   fromAccount: tx.from,

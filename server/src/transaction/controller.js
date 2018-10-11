@@ -1,5 +1,4 @@
 import { NotFound } from 'http-errors';
-import { Op } from 'sequelize';
 
 import Transaction from './model';
 

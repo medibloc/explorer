@@ -11,11 +11,13 @@ import './Language.scss';
 
 const Language = ({ language, languageOpen }) => (
   <div className="language">
-    <button type="button" onClick={GlobalActions.openLanguage}>
-      <img src={`/image/icon/ico-country-${language}@3x.png`} alt="language" />
-      { countryName[language] }
-    </button>
-    <img src="/image/icon/triangle.svg" alt="opener" />
+    <span onClick={GlobalActions.openLanguage}>
+      <button type="button">
+        <img src={`/image/icon/ico-country-${language}@3x.png`} alt="language" />
+        { countryName[language] }
+      </button>
+      <img src="/image/icon/triangle.svg" alt="opener" />
+    </span>
     {
       // eslint-disable-next-line
       languageOpen && <div className="languageCloser" onClick={GlobalActions.closeLanguage} />

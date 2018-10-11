@@ -3,9 +3,13 @@ $navBar-height: 85px;
 .language {
   width: 158px;
   position: relative;
+  //display: flex;
+  //justify-content: space-between;
 
-  display: flex;
-  justify-content: space-between;
+  & > span {
+    display: flex;
+    //flex-direction: column;
+  }
 
   button {
     border: none;
@@ -19,13 +23,13 @@ $navBar-height: 85px;
     align-items: center;
   }
 
-  button img {
+  & > span > button > img {
     width: 36px;
     height: 36px;
     margin-right: 10px;
   }
 
-  & > img {
+  & > span > img {
     filter: brightness(0) invert(1);
     margin: auto;
     width: 12px;

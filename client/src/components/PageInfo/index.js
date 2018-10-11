@@ -4,6 +4,7 @@ import PageInfo from './PageInfo';
 
 
 const mapStateToProps = ({ global }) => ({
+  lang: global.language,
   mode: global.mode,
 });
 

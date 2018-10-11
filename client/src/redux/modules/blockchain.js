@@ -131,7 +131,13 @@ const reducer = handleActions({
       ),
     };
   },
-  [GET_TX]: (state, action) => ({ ...state, tx: action.payload.transactions[0].data }),
+  [GET_TX]: (state, action) => {
+    const tx = {
+      ...action.payload.transactions[0].data,
+      block_height: action.payload.transactions[0].blockHeight,
+    };
+    return { ...state, tx };
+  },
   [GET_TXS]: (state, action) => {
     const txList = [];
     action.payload.transactions.forEach(res => txList.push(res.data));

@@ -21,13 +21,12 @@ export const get = async (req, res) => { // eslint-disable-line import/prefer-de
     res.json({ candidates });
     return;
   }
-
   const accounts = await Account.findAll({
-    where: { address: { [Op.in]: candidates.map(c => c.address) } },
+    where: { candidateId: { [Op.in]: candidates.map(c => c.candidate_id) } },
   });
-  const accountMap = keyBy(accounts, 'address');
+  const accountMap = keyBy(accounts, 'candidateId');
   candidates.forEach((candidate) => {
-    candidate.account = accountMap[candidate.address]; // eslint-disable-line no-param-reassign
+    candidate.account = accountMap[candidate.candidate_id]; // eslint-disable-line no-param-reassign
   });
 
   res.json({ candidates });

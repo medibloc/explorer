@@ -28,7 +28,9 @@ const parseTx = (block, tx) => ({
 });
 
 const parseAccount = account => ({
+  alias: account.alias || null,
   balance: account.balance,
+  candidateId: account.candidate_id || null,
   data: account,
   vesting: account.vesting,
 });
@@ -237,12 +239,14 @@ export const sync = async () => {
 export const startSubscribe = (promise) => {
   const reset = () => startSubscribe(sync());
   const source = axios.CancelToken.source();
+  const params = new URLSearchParams();
+  for (const t of Object.keys(topics)) {
+    params.append('topics', t);
+  }
   return axios({
     cancelToken: source.token,
-    data: {
-      topics: Object.keys(topics),
-    },
-    method: 'post',
+    params,
+    method: 'get',
     cancelPreviousRequest: true,
     responseType: 'stream',
     url: `${url}/v1/subscribe`,

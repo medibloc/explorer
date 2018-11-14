@@ -1,6 +1,6 @@
 export default {
   blockchain: {
-    url: 'http://node.medibloc.org',
+    url: 'http://testnet-node.medibloc.org',
   },
   db: {
     database: 'medi_explorer',

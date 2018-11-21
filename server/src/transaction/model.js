@@ -8,8 +8,10 @@ import Block from '../block/model';
 export default db.define('transactions', {
   blockHeight: { allowNull: false, type: Sequelize.INTEGER },
   data,
+  executed: { type: Sequelize.BOOLEAN },
   fromAccount: { allowNull: false, type: Sequelize.STRING },
   id,
+  onChain: { type: Sequelize.BOOLEAN },
   toAccount: { type: Sequelize.STRING },
   txHash: { allowNull: false, type: Sequelize.STRING, unique: true },
   ...refer(Block),

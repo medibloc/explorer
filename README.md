@@ -51,7 +51,7 @@ export EXPLORER_DB_PASSWORD={password}
 ```
 
 Then,
-`cd server && npm start`
+`cd server && npm run syncdb && npm start`
 
 
 ## Start(Client)

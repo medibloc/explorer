@@ -40,7 +40,7 @@ const txMapper = (tx) => {
   return {
     'Block Height': tx.block_height,
     'Transaction Hash': tx.hash,
-    Status: tx.executed ? 'Confirm' : 'Pending',
+    Status: tx.on_chain ? (tx.receipt && tx.receipt.executed ? 'Success' : 'Fail') : 'Pending',
     'Time Stamp': tx.timestamp,
     From: tx.from,
     To: tx.to,

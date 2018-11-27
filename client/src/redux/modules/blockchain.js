@@ -150,7 +150,7 @@ const reducer = handleActions({
 
   [GET_BPS]: (state, action) => ({
     ...state,
-    bpList: sorter(action.payload.candidates, 'votePower'),
+    bpList: sorter(action.payload.candidates, 'vote_power'),
   }),
 
   [SUBSCRIBE]: state => ({ ...state, subscribe: true }),

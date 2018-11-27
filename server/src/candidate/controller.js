@@ -10,7 +10,7 @@ import { getCandidates } from '../blockchain/client';
 export const get = async (req, res) => { // eslint-disable-line import/prefer-default-export
   let { data: { candidates } } = await getCandidates();
   candidates.sort((c1, c2) => {
-    const diff = new BigNumber(c1.votePower).minus(new BigNumber(c2.votePower));
+    const diff = new BigNumber(c1.vote_power).minus(new BigNumber(c2.vote_power));
     if (diff.isNegative()) return 1;
     if (diff.isPositive()) return -1;
     return 0;

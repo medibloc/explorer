@@ -4,11 +4,7 @@ import { txTypes } from '../config';
 
 
 const {
-  recoverAddCertificationPayload,
-  recoverDataPayload,
-  recoverDefaultPayload,
-  recoverRevokeCertificationPayload,
-  recoverVotePayload,
+  recoverPayloadWithType,
 } = local.transaction;
 
 const txMapper = (tx) => {
@@ -18,21 +14,23 @@ const txMapper = (tx) => {
 
   let payload = '';
   if (tx.payload !== '' && tx.payload !== undefined) {
+    const recoveredPayload = recoverPayloadWithType(tx.payload, tx.tx_type);
     switch (tx.tx_type) {
       case txTypes.ADD_CERTIFICATION:
-        payload = recoverAddCertificationPayload(tx.payload);
+        payload = recoveredPayload;
         break;
       case txTypes.DATA_UPLOAD:
-        payload = recoverDataPayload(tx.payload).hash;
+        payload = recoveredPayload.hash;
         break;
       case txTypes.REVOKE_CERTIFICATION:
-        payload = recoverRevokeCertificationPayload(tx.payload);
+        payload = recoveredPayload;
         break;
       case txTypes.VALUE_TRANSFER:
-        payload = recoverDefaultPayload(tx.payload).message.slice(1, -1);
+        payload = recoveredPayload.message.slice(1, -1);
         break;
       case txTypes.VOTE:
-        payload = recoverVotePayload(tx.payload);
+        const candidates = recoveredPayload.candidates.map((cid) => Buffer.from(cid).toString('hex'));
+        payload = JSON.stringify(candidates);
         break;
       default:
         break;

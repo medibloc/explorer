@@ -20,13 +20,13 @@ const txMapper = (tx) => {
         payload = recoveredPayload;
         break;
       case txTypes.DATA_UPLOAD:
-        payload = recoveredPayload.hash;
+        payload = recoveredPayload.hash.toString('hex');
         break;
       case txTypes.REVOKE_CERTIFICATION:
         payload = recoveredPayload;
         break;
       case txTypes.VALUE_TRANSFER:
-        payload = recoveredPayload.message.slice(1, -1);
+        payload = recoveredPayload.message;
         break;
       case txTypes.VOTE:
         const candidates = recoveredPayload.candidates.map((cid) => Buffer.from(cid).toString('hex'));

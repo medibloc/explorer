@@ -125,6 +125,21 @@ export const accountUpdater = (t) => {
     ]);
   };
 
+  const handleRevertBlock = async (block) => {
+    const { data: { coinbase, reward } } = block;
+
+    const coinbaseAccount = await getAccount(coinbase);
+    if (!accountMap[coinbaseAccount.address]) accountMap[coinbaseAccount.address] = coinbaseAccount;
+
+    return Promise.all([
+      coinbaseAccount.update({
+        totalAmount: new BigNumber(coinbaseAccount.totalAmount)
+          .minus(new BigNumber(reward)).toString(),
+      }, { transaction: t }),
+      block.destroy({ transaction: t }),
+    ]);
+  };
+
   const updateAccountsData = height => Promise.all(Object.values(accountMap).map(dbAccount => axios({
     params: { address: dbAccount.address, height },
     url: `${url}/v1/account`,
@@ -132,7 +147,7 @@ export const accountUpdater = (t) => {
     .update(parseAccount(data), { where: { id: dbAccount.id }, transaction: t }))
     .catch(() => { console.log(`failed to update account ${dbAccount.address}`); }))); // eslint-disable-line no-console
 
-  return { handleBlock, handleRevertTx, handleTx, updateAccountsData };
+  return { handleBlock, handleRevertBlock, handleRevertTx, handleTx, updateAccountsData };
 };
 
 export const handleBlockResponse = (blocks, handleTx, t) => Block
@@ -194,7 +209,7 @@ const topics = {
         return onReset();
       }
       return db.transaction((t) => {
-        const { handleRevertTx, updateAccountsData } = accountUpdater(t);
+        const { handleRevertBlock, handleRevertTx, updateAccountsData } = accountUpdater(t);
 
         return Transaction.findAll({
           where: { blockHeight: block.height },
@@ -204,8 +219,8 @@ const topics = {
             handleRevertTx(dbTx),
             dbTx.destroy({ transaction: t }),
           ]))
+          .then(() => handleRevertBlock(savedBlock))
           .then(() => updateAccountsData(block.height))
-          .then(() => savedBlock.destroy({ transaction: t }))
           .then(() => block.height);
       });
     }),

@@ -109,9 +109,6 @@ export const accountUpdater = (t) => {
     const fromAccount = await getAccount(from);
     const toAccount = await getAccount(to);
 
-    if (!accountMap[fromAccount.address]) accountMap[fromAccount.address] = fromAccount;
-    if (!accountMap[toAccount.address]) accountMap[toAccount.address] = toAccount;
-
     // TODO @ggomma handle accountLogs
     return Promise.all([
       fromAccount.update({
@@ -129,7 +126,6 @@ export const accountUpdater = (t) => {
     const { data: { coinbase, reward } } = block;
 
     const coinbaseAccount = await getAccount(coinbase);
-    if (!accountMap[coinbaseAccount.address]) accountMap[coinbaseAccount.address] = coinbaseAccount;
 
     return Promise.all([
       coinbaseAccount.update({
@@ -204,10 +200,7 @@ const topics = {
       url: `${url}/v1/block?hash=${hash}`,
     }).then(async ({ data: block }) => {
       const savedBlock = await Block.findOne({ order: [['id', 'desc']] });
-      // Revert blocks from the latest
-      if (+savedBlock.height !== +block.height) {
-        return onReset();
-      }
+
       return db.transaction((t) => {
         const { handleRevertBlock, handleRevertTx, updateAccountsData } = accountUpdater(t);
 
@@ -215,10 +208,13 @@ const topics = {
           where: { blockHeight: block.height },
           transaction: t,
         })
-          .then(([dbTx]) => Promise.all([
-            handleRevertTx(dbTx),
-            dbTx.destroy({ transaction: t }),
-          ]))
+          .then((dbTxs) => {
+            const promises = dbTxs.map(dbTx => Promise.all([
+              handleRevertTx(dbTx),
+              dbTx.destroy({ transaction: t }),
+            ]));
+            return Promise.all(promises);
+          })
           .then(() => handleRevertBlock(savedBlock))
           .then(() => updateAccountsData(block.height))
           .then(() => block.height);

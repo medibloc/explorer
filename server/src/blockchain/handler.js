@@ -101,6 +101,30 @@ export const accountUpdater = (t) => {
       AccountLog.create(toLog, { transaction: t }),
     ]);
   };
+
+  const handleRevertTx = async (dbTx) => {
+    const { data: { from, to, value: valueStr } } = dbTx;
+
+    const value = new BigNumber(valueStr);
+    const fromAccount = await getAccount(from);
+    const toAccount = await getAccount(to);
+
+    if (!accountMap[fromAccount.address]) accountMap[fromAccount.address] = fromAccount;
+    if (!accountMap[toAccount.address]) accountMap[toAccount.address] = toAccount;
+
+    // TODO @ggomma handle accountLogs
+    return Promise.all([
+      fromAccount.update({
+        totalTxs: fromAccount.totalTxs - 1,
+        totalAmount: new BigNumber(fromAccount.totalAmount).plus(value).toString(),
+      }, { transaction: t }),
+      toAccount.update({
+        totalTxs: toAccount.totalTxs - 1,
+        totalAmount: new BigNumber(toAccount.totalAmount).minus(value).toString(),
+      }, { transaction: t }),
+    ]);
+  };
+
   const updateAccountsData = height => Promise.all(Object.values(accountMap).map(dbAccount => axios({
     params: { address: dbAccount.address, height },
     url: `${url}/v1/account`,
@@ -108,7 +132,7 @@ export const accountUpdater = (t) => {
     .update(parseAccount(data), { where: { id: dbAccount.id }, transaction: t }))
     .catch(() => { console.log(`failed to update account ${dbAccount.address}`); }))); // eslint-disable-line no-console
 
-  return { handleBlock, handleTx, updateAccountsData };
+  return { handleBlock, handleRevertTx, handleTx, updateAccountsData };
 };
 
 export const handleBlockResponse = (blocks, handleTx, t) => Block
@@ -157,6 +181,34 @@ const topics = {
       });
     })
       .then(block => pushEvent({ data: block.dataValues, topic })), // eslint-disable-line no-use-before-define, max-len
+  },
+
+  'chain.revertBlock': {
+    onEvent: ({ hash }, onReset) => axios({
+      method: 'get',
+      url: `${url}/v1/block?hash=${hash}`,
+    }).then(async ({ data: block }) => {
+      const savedBlock = await Block.findOne({ order: [['id', 'desc']] });
+      // Revert blocks from the latest
+      if (+savedBlock.height !== +block.height) {
+        return onReset();
+      }
+      return db.transaction((t) => {
+        const { handleRevertTx, updateAccountsData } = accountUpdater(t);
+
+        return Transaction.findAll({
+          where: { blockHeight: block.height },
+          transaction: t,
+        })
+          .then(([dbTx]) => Promise.all([
+            handleRevertTx(dbTx),
+            dbTx.destroy({ transaction: t }),
+          ]))
+          .then(() => updateAccountsData(block.height))
+          .then(() => savedBlock.destroy({ transaction: t }))
+          .then(() => block.height);
+      });
+    }),
   },
 };
 

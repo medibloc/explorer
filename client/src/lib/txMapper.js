@@ -15,12 +15,13 @@ const txMapper = (tx) => {
   let payload = '';
   if (tx.payload !== '' && tx.payload !== undefined) {
     const recoveredPayload = recoverPayloadWithType(tx.payload, tx.tx_type);
+
     switch (tx.tx_type) {
       case txTypes.ADD_CERTIFICATION:
         payload = recoveredPayload;
         break;
       case txTypes.DATA_UPLOAD:
-        payload = recoveredPayload.hash.toString('hex');
+        payload = Buffer.from(recoveredPayload.hash).toString('hex');
         break;
       case txTypes.REVOKE_CERTIFICATION:
         payload = recoveredPayload;
@@ -29,8 +30,7 @@ const txMapper = (tx) => {
         payload = recoveredPayload.message;
         break;
       case txTypes.VOTE:
-        const candidates = recoveredPayload.candidates.map((cid) => Buffer.from(cid).toString('hex'));
-        payload = JSON.stringify(candidates);
+        payload = JSON.stringify(recoveredPayload.candidates.map(cid => Buffer.from(cid).toString('hex')));
         break;
       default:
         break;

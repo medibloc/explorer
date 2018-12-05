@@ -4,173 +4,162 @@ import { URLSearchParams } from 'url';
 
 import config from '../../config';
 import db from '../db';
+// import { isRevert } from '../utils/checker';
+import { parseBlock, parseTx, parseAccount } from '../utils/parser';
 
-import AccountLog from '../accountLog/model';
 import Account from '../account/model';
 import Block from '../block/model';
 import Transaction from '../transaction/model';
 
 const { url } = config.blockchain;
 
-export const parseBlock = block => ({
-  data: block,
-  hash: block.hash,
-  height: +block.height,
-  id: +block.height,
-});
 
-const parseTx = (block, tx) => ({
-  blockHeight: block.height,
-  blockId: block.id,
-  data: tx,
-  executed: tx.receipt ? tx.receipt.executed : false,
-  fromAccount: tx.from,
-  onChain: tx.on_chain,
-  toAccount: tx.to,
-  txHash: tx.hash,
-});
+const requestBlockByHeight = height => axios({
+  method: 'get',
+  params: { height },
+  url: `${url}/v1/block`,
+}).then(res => res.data);
 
-const parseAccount = account => ({
-  alias: account.alias || null,
-  balance: account.balance,
-  candidateId: account.candidate_id || null,
-  data: account,
-  vesting: account.vesting,
-});
+const requestBlocks = ({ from, to }) => axios({
+  method: 'get',
+  params: { from, to },
+  url: `${url}/v1/blocks`,
+}).then(res => res.data.blocks);
 
-export const accountUpdater = (t) => {
-  const accountMap = {};
-  const accountPromise = {};
-  const getAccount = (address) => {
-    if (accountMap[address]) {
-      return Promise.resolve(accountMap[address]);
-    }
-    if (accountPromise[address]) {
-      return accountPromise[address];
-    }
-    const promise = Account.findOrCreate({ transaction: t, where: { address } })
-      .then(([account]) => {
-        delete accountPromise[address];
-        accountMap[address] = account;
-        return account;
-      });
-    accountPromise[address] = promise;
-    return promise;
-  };
-  const handleBlock = async (block) => {
-    const { id, data: { coinbase, reward } } = block;
-    const coinbaseAccount = await getAccount(coinbase);
-    return Promise.all([
-      coinbaseAccount.update({
-        totalAmount: new BigNumber(coinbaseAccount.totalAmount)
-          .plus(new BigNumber(reward)).toString(),
-      }, { transaction: t }),
-      AccountLog.create({
-        accountId: coinbaseAccount.id,
-        blockId: id,
-        data: { amount: `+${reward}` },
-      }, { transaction: t }),
-    ]);
-  };
-  const handleTx = async (dbTx) => {
-    const { data: { from, to, value: valueStr } } = dbTx;
+// const requestTransaction = hash => axios({
+//   method: 'get',
+//   params: { hash },
+//   url: `${url}/v1/transaction`,
+// }).then(res => res.data);
 
-    const value = new BigNumber(valueStr);
-    const fromAccount = await getAccount(from);
-    const toAccount = await getAccount(to);
-    const fromLog = {
-      accountId: fromAccount.id,
-      data: { amount: `-${value}` },
-      transactionId: dbTx.id,
-    };
-    const toLog = {
-      accountId: toAccount.id,
-      data: { amount: `+${value}` },
-      transactionId: dbTx.id,
-    };
-    return Promise.all([
-      fromAccount.update({
-        totalTxs: fromAccount.totalTxs + 1,
-        totalAmount: new BigNumber(fromAccount.totalAmount).minus(value).toString(),
-      }, { transaction: t }),
-      AccountLog.create(fromLog, { transaction: t }),
-      toAccount.update({
-        totalTxs: toAccount.totalTxs + 1,
-        totalAmount: new BigNumber(toAccount.totalAmount).plus(value).toString(),
-      }, { transaction: t }),
-      AccountLog.create(toLog, { transaction: t }),
-    ]);
-  };
+const requestAccount = ({ address, height }) => axios({
+  method: 'get',
+  params: { address, height },
+  url: `${url}/v1/account`,
+}).then(res => res.data);
 
-  const handleRevertTx = async (dbTx) => {
-    const { data: { from, to, value: valueStr } } = dbTx;
+const getAccountFromDB = (address, t) => Account
+  .findOrCreate({ where: { address }, transaction: t })
+  .then(accounts => accounts[0]);
 
-    const value = new BigNumber(valueStr);
-    const fromAccount = await getAccount(from);
-    const toAccount = await getAccount(to);
+const updateTxToAccounts = async (rawTx, t, revert = false) => {
+  const { from, to, value: valueStr } = rawTx;
+  const value = new BigNumber(revert ? `-${valueStr}` : valueStr);
+  const fromAccount = await getAccountFromDB(from, t);
+  const toAccount = await getAccountFromDB(to, t);
 
-    // TODO @ggomma handle accountLogs
-    return Promise.all([
-      fromAccount.update({
-        totalTxs: fromAccount.totalTxs - 1,
-        totalAmount: new BigNumber(fromAccount.totalAmount).plus(value).toString(),
-      }, { transaction: t }),
-      toAccount.update({
-        totalTxs: toAccount.totalTxs - 1,
-        totalAmount: new BigNumber(toAccount.totalAmount).minus(value).toString(),
-      }, { transaction: t }),
-    ]);
-  };
-
-  const handleRevertBlock = async (block) => {
-    const { data: { coinbase, reward } } = block;
-
-    const coinbaseAccount = await getAccount(coinbase);
-
-    return Promise.all([
-      coinbaseAccount.update({
-        totalAmount: new BigNumber(coinbaseAccount.totalAmount)
-          .minus(new BigNumber(reward)).toString(),
-      }, { transaction: t }),
-      block.destroy({ transaction: t }),
-    ]);
-  };
-
-  const updateAccountsData = height => Promise.all(Object.values(accountMap).map(dbAccount => axios({
-    params: { address: dbAccount.address, height },
-    url: `${url}/v1/account`,
-  }).then(({ data }) => dbAccount
-    .update(parseAccount(data), { where: { id: dbAccount.id }, transaction: t }))
-    .catch(() => { console.log(`failed to update account ${dbAccount.address}`); }))); // eslint-disable-line no-console
-
-  return { handleBlock, handleRevertBlock, handleRevertTx, handleTx, updateAccountsData };
+  return Promise.all([
+    fromAccount.update({
+      totalTxs: fromAccount.totalTxs + (revert ? -1 : 1),
+      totalAmount: new BigNumber(fromAccount.totalAmount).minus(value).toString(),
+    }, { transaction: t }),
+    toAccount.update({
+      totalTxs: toAccount.totalTxs + (revert ? -1 : 1),
+      totalAmount: new BigNumber(toAccount.totalAmount).plus(value).toString(),
+    }, { transaction: t }),
+  ])
+    .catch(() => console.log(`failed to update tx to accounts ${rawTx.hash}`));
 };
 
-export const handleBlockResponse = (blocks, handleTx, t) => Block
-  .bulkCreate(blocks.map(parseBlock), { transaction: t })
-  .then((dbBlocks) => {
-    console.log(`blocks from ${dbBlocks[0].height} to ${dbBlocks[dbBlocks.length - 1].height} added`); // eslint-disable-line no-console
-    let txs = [];
-    const blockMap = blocks.reduce((obj, b) => {
-      obj[+b.height] = b; // eslint-disable-line no-param-reassign
-      return obj;
-    }, {});
-    dbBlocks.forEach((block) => {
-      const { transactions = [] } = blockMap[block.height];
-      txs = txs.concat(transactions.map(tx => parseTx(block, tx)));
-    });
+const updateCoinbaseAccount = async (rawBlock, t, revert = false) => {
+  const { coinbase, reward: rewardStr } = rawBlock;
+  const reward = new BigNumber(revert ? `-${rewardStr}` : rewardStr);
+  const coinbaseAccount = await getAccountFromDB(coinbase, t);
 
-    const txCount = txs.length;
-    if (txCount) {
-      console.log(`add ${txCount} transactions`); // eslint-disable-line no-console
-      return Transaction
-        .bulkCreate(txs, { transaction: t })
-        .then(dbTxs => dbTxs
-          .reduce((promise, dbTx) => promise.then(() => handleTx(dbTx)), Promise.resolve()))
-        .then(() => dbBlocks);
-    }
-    return dbBlocks;
+  return coinbaseAccount.update({
+    totalAmount: new BigNumber(coinbaseAccount.totalAmount).plus(reward).toString(),
+  }, { transaction: t })
+    .catch(() => console.log(`failed to update coinbase account ${coinbaseAccount.address}`));
+};
+
+const updateAccountData = (address, height, t) => requestAccount({ address, height })
+  .then(async (rawAcc) => {
+    const acc = await getAccountFromDB(address, t);
+    return acc.update(parseAccount(rawAcc), { where: { id: acc.id }, transaction: t })
+      .catch(() => console.log(`failed to update account ${acc.address}`));
   });
+
+const handleTxsInBlockResponse = async (block, txs, t) => {
+  const parsedTxs = [];
+  txs.map(tx => parsedTxs.push(parseTx(block, tx)));
+  await updateCoinbaseAccount(block.data, t);
+
+  return Transaction
+    .bulkCreate(parsedTxs, { transaction: t })
+    .then(async (dbTxs) => {
+      await dbTxs.reduce((p, dbTx) => p.then(
+        () => updateTxToAccounts(dbTx.data, t),
+      ), Promise.resolve());
+      /*
+      const promises = dbTxs.map(async (dbTx) => {
+        await updateTxToAccounts(dbTx.data, t);
+      });
+      await Promise.all(promises);
+      */
+      return dbTxs;
+    });
+};
+
+const retrieveAffectedAccountsFromTxs = (txs) => {
+  const affectedAccounts = [];
+  txs.forEach(tx => affectedAccounts.push(tx.from, tx.to));
+  return affectedAccounts;
+};
+
+const handleBlocksResponse = async (blocks, t) => {
+  const parentHeight = +blocks[0].height - 1;
+  const parentBlock = await Block.findById(parentHeight);
+  if (parentBlock === null && parentHeight !== 0) {
+    requestBlockByHeight(parentHeight)
+      .then(block => db.transaction(T => handleBlocksResponse(block, T)));
+  }
+
+  return Block
+    .bulkCreate(blocks.map(parseBlock), { transaction: t })
+    .then(async (dbBlocks) => {
+      console.log(`blocks from ${dbBlocks[0].height} to ${dbBlocks[dbBlocks.length - 1].height} added`);
+
+      let txCount = 0;
+      const affectedAccounts = [];
+      const promise = dbBlocks.reduce((p, dbBlock) => p
+        .then(async () => {
+          txCount += dbBlock.data.transactions.length;
+          await handleTxsInBlockResponse(dbBlock, dbBlock.data.transactions, t);
+          affectedAccounts.push(...retrieveAffectedAccountsFromTxs(dbBlock.data.transactions));
+        }), Promise.resolve());
+      /*
+      let promises = dbBlocks.map(async (dbBlock) => {
+        txCount += dbBlock.data.transactions.length;
+        await handleTxsInBlockResponse(dbBlock, dbBlock.data.transactions, t);
+        affectedAccounts.push(...retrieveAffectedAccountsFromTxs(dbBlock.data.transactions));
+      });
+      await Promise.all(promises);
+      */
+      await promise;
+
+      const promises = affectedAccounts.map(async address => updateAccountData(
+        address, dbBlocks[dbBlocks.length - 1].height, t,
+      ));
+      await Promise.all(promises);
+
+      if (txCount) {
+        console.log(`add ${txCount} transactions`);
+      }
+      return dbBlocks;
+    });
+};
+
+export const pushEvent = (e) => {
+  const { topic } = e;
+  if (!clients[topic]) {
+    throw new Error(`invalid topic ${topic}`);
+  }
+  const topicClients = Object.values(clients[topic]);
+  console.log(`there are ${topicClients.length} clients`); // eslint-disable-line no-console
+  topicClients.forEach((client) => {
+    client.sseSend(e);
+  });
+};
 
 const topics = {
   'chain.newTailBlock': {
@@ -179,47 +168,10 @@ const topics = {
       url: `${url}/v1/block?hash=${hash}`,
     }).then(async ({ data: block }) => {
       const { data: { height: lastHeight } } = await Block.findOne({ order: [['id', 'desc']] });
-      if (+lastHeight + 1 < +block.height) {
-        return onReset();
-      }
-      return db.transaction((t) => {
-        const { handleBlock, handleTx, updateAccountsData } = accountUpdater(t);
-        return handleBlockResponse([block], handleTx, t)
-          .then(([dbBlock]) => Promise.all([
-            updateAccountsData(block.height),
-            handleBlock(dbBlock),
-          ]).then(() => dbBlock));
-      });
-    })
-      .then(block => pushEvent({ data: block.dataValues, topic })), // eslint-disable-line no-use-before-define, max-len
-  },
+      if (+lastHeight + 1 < +block.height) return onReset();
 
-  'chain.revertBlock': {
-    onEvent: ({ hash }, onReset) => axios({
-      method: 'get',
-      url: `${url}/v1/block?hash=${hash}`,
-    }).then(async ({ data: block }) => {
-      const savedBlock = await Block.findOne({ order: [['id', 'desc']] });
-
-      return db.transaction((t) => {
-        const { handleRevertBlock, handleRevertTx, updateAccountsData } = accountUpdater(t);
-
-        return Transaction.findAll({
-          where: { blockHeight: block.height },
-          transaction: t,
-        })
-          .then((dbTxs) => {
-            const promises = dbTxs.map(dbTx => Promise.all([
-              handleRevertTx(dbTx),
-              dbTx.destroy({ transaction: t }),
-            ]));
-            return Promise.all(promises);
-          })
-          .then(() => handleRevertBlock(savedBlock))
-          .then(() => updateAccountsData(block.height))
-          .then(() => block.height);
-      });
-    }),
+      return db.transaction(t => handleBlocksResponse(block, t));
+    }).then(dbBlocks => pushEvent({ data: dbBlocks[0].dataValues, topic })),
   },
 };
 
@@ -241,18 +193,6 @@ export const onSubscribe = (req, res, options) => {
   });
 };
 
-export const pushEvent = (e) => {
-  const { topic } = e;
-  if (!clients[topic]) {
-    throw new Error(`invalid topic ${topic}`);
-  }
-  const topicClients = Object.values(clients[topic]);
-  console.log(`there are ${topicClients.length} clients`); // eslint-disable-line no-console
-  topicClients.forEach((client) => {
-    client.sseSend(e);
-  });
-};
-
 const REQUEST_STEP = 10;
 
 export const sync = async () => {
@@ -270,22 +210,16 @@ export const sync = async () => {
     return Promise.resolve();
   }
   const getBlocks = () => db.transaction((t) => {
-    const { handleBlock, handleTx, updateAccountsData } = accountUpdater(t);
     const from = currentHeight + 1;
     const step = Math.min(REQUEST_STEP, lastHeight - from + 1);
     const to = from + step - 1;
-    return axios({
-      method: 'get',
-      params: { from, to },
-      url: `${url}/v1/blocks`,
-    }).then((res) => {
-      const blocks = res.data.blocks || [];
-      return handleBlockResponse(blocks, handleTx, t)
-        .then(dbBlocks => Promise.all(dbBlocks.map(handleBlock)));
-    })
+    return requestBlocks({ from, to })
+      .then(blocks => handleBlocksResponse(blocks, t))
       .then(() => {
         currentHeight = to;
-        return updateAccountsData(lastHeight);
+      })
+      .catch((err) => {
+        throw err;
       });
   });
 
@@ -306,7 +240,7 @@ export const startSubscribe = (promise) => {
   const reset = () => startSubscribe(sync());
   const source = axios.CancelToken.source();
   const params = new URLSearchParams();
-  for (const t of Object.keys(topics)) {
+  for (const t of Object.keys(topics)) { // eslint-disable-line
     params.append('topics', t);
   }
   return axios({

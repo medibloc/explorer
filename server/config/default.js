@@ -7,5 +7,8 @@ export default {
     dialect: 'mysql',
     host: 'localhost',
   },
+  request: {
+    REQUEST_STEP: 10,
+  },
   port: 3000,
 };

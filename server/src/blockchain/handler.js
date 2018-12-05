@@ -13,6 +13,7 @@ import Block from '../block/model';
 import Transaction from '../transaction/model';
 
 const { url } = config.blockchain;
+const { REQUEST_STEP } = config.request;
 
 const getAccountFromDB = (address, t) => Account
   .findOrCreate({ where: { address }, transaction: t })
@@ -168,8 +169,6 @@ export const onSubscribe = (req, res, options) => {
     });
   });
 };
-
-const REQUEST_STEP = 10;
 
 export const sync = async () => {
   const [lastBlock, medState] = await Promise.all([

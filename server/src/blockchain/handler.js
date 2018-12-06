@@ -64,10 +64,11 @@ const handleTxsInBlockResponse = async (dbBlock, t) => {
 
   // getBlock contains all transaction data
   if (block.transactions.length !== 0) {
-    block.transactions.map(tx => parsedTxs.push(parseTx(block, tx)));
+    block.transactions.map(tx => parsedTxs.push(parseTx(dbBlock, tx)));
   } else if (block.tx_hashes.length !== 0) { // getBlocks only contains hashes
-    block.tx_hashes.reduce((p, txHash) => p.then(async () => {
-      const parsedTx = parseTx(block, await requestTransaction(txHash));
+    await block.tx_hashes.reduce((p, txHash) => p.then(async () => {
+      const tx = await requestTransaction(txHash);
+      const parsedTx = parseTx(dbBlock, tx);
       parsedTxs.push(parsedTx);
     }), Promise.resolve());
   }
@@ -305,7 +306,7 @@ export const startSubscribe = (promise) => {
           return err;
         });
     });
-  }).catch((err) => {
+  }).catch(() => {
     source.cancel();
     stopSync = true;
     setTimeout(reset, 1000);

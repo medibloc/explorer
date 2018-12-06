@@ -78,7 +78,7 @@ const reducer = handleActions({
 
   [GET_ACCOUNT]: (state, action) => {
     const account = {
-      ...action.payload.account.data,
+      ...action.payload.account,
       totalTxs: action.payload.account.totalTxs,
     };
     return { ...state, account };

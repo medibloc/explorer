@@ -54,7 +54,7 @@ const updateCoinbaseAccount = async (rawBlock, t, revert = false) => {
 const updateAccountData = (address, height, t) => requestAccount({ address, height })
   .then(async (rawAcc) => {
     const acc = await getAccountFromDB(address, t);
-    return acc.update(parseAccount(rawAcc), { where: { id: acc.id }, transaction: t })
+    return acc.update({ data: parseAccount(rawAcc) }, { where: { id: acc.id }, transaction: t })
       .catch(() => console.log(`failed to update account ${acc.address}`));
   });
 
@@ -92,7 +92,7 @@ const handleTxsInBlockResponse = async (dbBlock, t) => {
 
 const retrieveAffectedAccountsFromTxs = (txs) => {
   const affectedAccounts = [];
-  txs.forEach(tx => affectedAccounts.push(tx.from, tx.to));
+  txs.forEach(tx => affectedAccounts.push(tx.fromAccount, tx.toAccount));
   return affectedAccounts;
 };
 
@@ -150,8 +150,12 @@ const handleBlocksResponse = async (blocks, t) => {
       const promise = dbBlocks.reduce((p, dbBlock) => p
         .then(async () => {
           txCount += dbBlock.data.transactions.length;
-          await handleTxsInBlockResponse(dbBlock, t);
-          affectedAccounts.push(...retrieveAffectedAccountsFromTxs(dbBlock.data.transactions));
+          const txs = await handleTxsInBlockResponse(dbBlock, t);
+
+          const accs = retrieveAffectedAccountsFromTxs(txs);
+          accs.forEach((acc) => {
+            if (affectedAccounts.indexOf(acc) === -1) affectedAccounts.push(acc);
+          });
         }), Promise.resolve());
       /*
       let promises = dbBlocks.map(async (dbBlock) => {

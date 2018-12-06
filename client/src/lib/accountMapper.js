@@ -6,7 +6,7 @@ const accountMapper = (account, totalSupply = undefined) => {
   const Balance = `${tempAmount.join('.')} MED`;
 
   return {
-    Account: account.address,
+    Account: account.data.address,
     Balance,
     Transactions: account.totalTxs,
     Percentage: totalSupply ? `${divider(account.balance, [totalSupply, 10 ** 12 / 100], 5)}` : 0,

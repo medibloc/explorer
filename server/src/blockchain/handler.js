@@ -92,7 +92,6 @@ const handleBlocksResponse = async (blocks, t) => {
     requestBlockByHeight(parentHeight)
       .then(block => db.transaction(T => handleBlocksResponse(block, T)));
   }
-
   // Check if the block is already saved
   const verifiedBlocks = [];
   await blocks.reduce(async (p, block) => {
@@ -170,7 +169,7 @@ const topics = {
       const { data: { height: lastHeight } } = await Block.findOne({ order: [['id', 'desc']] });
       if (+lastHeight + 1 < +block.height) return onReset();
 
-      return db.transaction(t => handleBlocksResponse(block, t));
+      return db.transaction(t => handleBlocksResponse([block], t));
     }).then(dbBlocks => pushEvent({ data: dbBlocks[0].dataValues, topic })),
   },
 };

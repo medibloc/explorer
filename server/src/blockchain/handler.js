@@ -98,8 +98,8 @@ const handleBlocksResponse = async (blocks, t) => {
   const parentHeight = +blocks[0].height - 1;
   const parentBlock = await Block.findById(parentHeight);
   if (parentBlock === null && parentHeight !== 0) {
-    requestBlockByHeight(parentHeight)
-      .then(block => db.transaction(T => handleBlocksResponse(block, T)));
+    await requestBlockByHeight(parentHeight)
+      .then(block => handleBlocksResponse(block, t));
   }
   // Check if the block is already saved
   const verifiedBlocks = [];
@@ -117,7 +117,7 @@ const handleBlocksResponse = async (blocks, t) => {
       return p;
     }
     // Existed block
-    if (isIdentical(block, blockInDB)) {
+    if (isIdentical(block, blockInDB.data)) {
       console.log(`identical block received : ${block.height}`);
       return p;
     }
@@ -127,8 +127,9 @@ const handleBlocksResponse = async (blocks, t) => {
   }, Promise.resolve());
 
   return Block
-    .bulkCreate(verifiedBlocks.map(parseBlock), { transaction: t })
+    .bulkCreate(verifiedBlocks.map(parseBlock), { transaction: t, updateOnDuplicate: ['data', 'hash'] })
     .then(async (dbBlocks) => {
+      if (dbBlocks.length === 0) return [];
       console.log(`blocks from ${dbBlocks[0].height} to ${dbBlocks[dbBlocks.length - 1].height} added`);
 
       let txCount = 0;
@@ -205,6 +206,8 @@ export const onSubscribe = (req, res, options) => {
   });
 };
 
+
+let stopSync = false;
 export const sync = async () => {
   const [lastBlock, medState] = await Promise.all([
     Block.findOne({ order: [['id', 'desc']] }),
@@ -235,6 +238,7 @@ export const sync = async () => {
 
   const work = () => getBlocks().then(() => {
     if (currentHeight < lastHeight) {
+      if (stopSync) return Promise.resolve();
       return work();
     }
     return Promise.resolve();
@@ -247,7 +251,10 @@ export const sync = async () => {
 };
 
 export const startSubscribe = (promise) => {
-  const reset = () => startSubscribe(sync());
+  const reset = () => {
+    stopSync = false;
+    return startSubscribe(sync());
+  };
   const source = axios.CancelToken.source();
   const params = new URLSearchParams();
   for (const t of Object.keys(topics)) { // eslint-disable-line
@@ -281,8 +288,9 @@ export const startSubscribe = (promise) => {
           return err;
         });
     });
-  }).catch(() => {
+  }).catch((err) => {
     source.cancel();
+    stopSync = true;
     setTimeout(reset, 1000);
   });
 };

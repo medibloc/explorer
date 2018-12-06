@@ -6,7 +6,9 @@ import config from '../../config';
 import db from '../db';
 import { isIdentical, isReverted } from '../utils/checker';
 import { parseBlock, parseTx, parseAccount } from '../utils/parser';
-import { requestBlockByHeight, requestBlocks, requestAccount } from '../utils/requester';
+import {
+  requestBlockByHeight, requestBlocks, requestAccount, requestTransaction,
+} from '../utils/requester';
 
 import Account from '../account/model';
 import Block from '../block/model';
@@ -56,10 +58,21 @@ const updateAccountData = (address, height, t) => requestAccount({ address, heig
       .catch(() => console.log(`failed to update account ${acc.address}`));
   });
 
-const handleTxsInBlockResponse = async (block, txs, t) => {
+const handleTxsInBlockResponse = async (dbBlock, t) => {
+  const block = dbBlock.data;
   const parsedTxs = [];
-  txs.map(tx => parsedTxs.push(parseTx(block, tx)));
-  await updateCoinbaseAccount(block.data, t);
+
+  // getBlock contains all transaction data
+  if (block.transactions.length !== 0) {
+    block.transactions.map(tx => parsedTxs.push(parseTx(block, tx)));
+  } else if (block.tx_hashes.length !== 0) { // getBlocks only contains hashes
+    block.tx_hashes.reduce((p, txHash) => p.then(async () => {
+      const parsedTx = parseTx(block, await requestTransaction(txHash));
+      parsedTxs.push(parsedTx);
+    }), Promise.resolve());
+  }
+
+  await updateCoinbaseAccount(block, t);
 
   return Transaction
     .bulkCreate(parsedTxs, { transaction: t })
@@ -137,7 +150,7 @@ const handleBlocksResponse = async (blocks, t) => {
       const promise = dbBlocks.reduce((p, dbBlock) => p
         .then(async () => {
           txCount += dbBlock.data.transactions.length;
-          await handleTxsInBlockResponse(dbBlock, dbBlock.data.transactions, t);
+          await handleTxsInBlockResponse(dbBlock, t);
           affectedAccounts.push(...retrieveAffectedAccountsFromTxs(dbBlock.data.transactions));
         }), Promise.resolve());
       /*

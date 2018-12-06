@@ -11,6 +11,7 @@ import { requestBlockByHeight, requestBlocks, requestAccount } from '../utils/re
 import Account from '../account/model';
 import Block from '../block/model';
 import Transaction from '../transaction/model';
+import { isIdentical } from '../utils/checker';
 
 const { url } = config.blockchain;
 const { REQUEST_STEP } = config.request;
@@ -84,6 +85,7 @@ const retrieveAffectedAccountsFromTxs = (txs) => {
 };
 
 const handleBlocksResponse = async (blocks, t) => {
+  // Check if the parent block exists
   const parentHeight = +blocks[0].height - 1;
   const parentBlock = await Block.findById(parentHeight);
   if (parentBlock === null && parentHeight !== 0) {
@@ -91,8 +93,29 @@ const handleBlocksResponse = async (blocks, t) => {
       .then(block => db.transaction(T => handleBlocksResponse(block, T)));
   }
 
+  // Check if the block is already saved
+  const verifiedBlocks = [];
+  await blocks.reduce(async (p, block) => {
+    const blockInDB = await Block.findById(block.height);
+    // New block
+    if (!blockInDB) {
+      verifiedBlocks.push(block);
+      return p;
+    }
+    // Existed block
+    if (isIdentical(block, blockInDB)) {
+      console.log(`identical block received : ${block.height}`);
+      return p;
+    }
+    // Revert case
+    verifiedBlocks.push(block);
+    console.log(`REVERT : same height but different block is received ${block.height}`);
+    // TODO @ggomma add revert case
+    return p;
+  }, Promise.resolve());
+
   return Block
-    .bulkCreate(blocks.map(parseBlock), { transaction: t })
+    .bulkCreate(verifiedBlocks.map(parseBlock), { transaction: t })
     .then(async (dbBlocks) => {
       console.log(`blocks from ${dbBlocks[0].height} to ${dbBlocks[dbBlocks.length - 1].height} added`);
 

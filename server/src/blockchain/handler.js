@@ -4,14 +4,13 @@ import { URLSearchParams } from 'url';
 
 import config from '../../config';
 import db from '../db';
-// import { isRevert } from '../utils/checker';
+import { isIdentical, isReverted } from '../utils/checker';
 import { parseBlock, parseTx, parseAccount } from '../utils/parser';
 import { requestBlockByHeight, requestBlocks, requestAccount } from '../utils/requester';
 
 import Account from '../account/model';
 import Block from '../block/model';
 import Transaction from '../transaction/model';
-import { isIdentical } from '../utils/checker';
 
 const { url } = config.blockchain;
 const { REQUEST_STEP } = config.request;
@@ -84,6 +83,16 @@ const retrieveAffectedAccountsFromTxs = (txs) => {
   return affectedAccounts;
 };
 
+const handleRevertBlocks = async (block, newBlocks) => {
+  const parentHeight = +block.height - 1;
+  const parentBlock = await Block.findById(parentHeight);
+  if (parentBlock.hash !== block.parent_hash) {
+    return requestBlockByHeight(parentHeight)
+      .then(newParentBlock => handleRevertBlocks(newParentBlock, [newParentBlock, ...newBlocks]));
+  }
+  return newBlocks;
+};
+
 const handleBlocksResponse = async (blocks, t) => {
   // Check if the parent block exists
   const parentHeight = +blocks[0].height - 1;
@@ -94,6 +103,12 @@ const handleBlocksResponse = async (blocks, t) => {
   }
   // Check if the block is already saved
   const verifiedBlocks = [];
+  if (parentBlock !== null && isReverted(blocks[0], parentBlock)) {
+    console.log(`revert block received ${blocks[0].height}`);
+    const newBlocks = handleRevertBlocks(blocks[0], []);
+    blocks = [...newBlocks, ...blocks]; // eslint-disable-line no-param-reassign
+  }
+
   await blocks.reduce(async (p, block) => {
     const blockInDB = await Block.findById(block.height);
     // New block
@@ -108,8 +123,6 @@ const handleBlocksResponse = async (blocks, t) => {
     }
     // Revert case
     verifiedBlocks.push(block);
-    console.log(`REVERT : same height but different block is received ${block.height}`);
-    // TODO @ggomma add revert case
     return p;
   }, Promise.resolve());
 

@@ -90,7 +90,7 @@ const reducer = handleActions({
     return ({ ...state, txs: sorter(txs, 'timestamp') });
   },
 
-  [GET_BLOCK]: (state, action) => ({ ...state, block: action.payload.blocks.data[0].data }),
+  [GET_BLOCK]: (state, action) => ({ ...state, block: action.payload.block.data }),
   [GET_BLOCKS]: (state, action) => {
     const blockList = [];
     action.payload.blocks.data.forEach(res => blockList.push(res.data));

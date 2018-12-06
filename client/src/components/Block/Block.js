@@ -50,7 +50,7 @@ class Block extends Component {
       .getBlock(subject)
       .then((bl) => {
         // TODO @ggomma add GetBlockDetail call same as getAccountDetail
-        BlockchainActions.setTxs(bl.blocks.data[0].data.transactions);
+        BlockchainActions.setTxs(bl.block.data.transactions);
       }));
   }
 

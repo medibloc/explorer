@@ -28,7 +28,7 @@ export const subscriber = (dispatch, actionTypes, ERROR) => {
 };
 
 export const blockGetter = (dispatch, actionType, ERROR, hash) => simpleRequester(dispatch, {
-  url: `${NODE_ENDPOINT}/blocks?q=${hash}`,
+  url: `${NODE_ENDPOINT}/blocks/${hash}`,
   actionType,
   ERROR,
 });

@@ -11,6 +11,10 @@ const blockMapper = (block) => {
     block.transactions = [];
   }
 
+  let noTx = 0;
+  if (block.transactions.length !== 0) noTx = block.transactions.length;
+  else if (block.tx_hashes && block.tx_hashes.length !== 0) noTx = block.tx_hashes.length;
+
   const tempAmount = divider(amount, [10 ** 12]).split('.');
   tempAmount[0] = tempAmount[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   amount = `${tempAmount.join('.')} MED`;
@@ -20,7 +24,7 @@ const blockMapper = (block) => {
     'Time Stamp': block.timestamp,
     'Block Hash': block.hash,
     'Prev Hash': block.parent_hash,
-    'No.Tx': block.transactions.length,
+    'No.Tx': noTx,
     BP: block.coinbase,
     Amount: amount,
   };

@@ -51,7 +51,7 @@ export const maxResult = 15;
 export const txSpaceList = {
   account: [2, 1, 2, 2, 1],
   block: [28, 28, 28, 16],
-  txs: [20, 10, 15, 15, 10, 10],
+  txs: [20, 10, 10, 15, 15, 10],
 };
 
 export const txTitleList = {
@@ -74,11 +74,11 @@ export const blockListConfig = {
 };
 
 export const bpListConfig = {
-  titles: ['Ranking', 'Account', 'votes'],
+  titles: ['Ranking', 'Alias', 'Account', 'votes'],
   linkTo: ['account/account'],
   centerList: ['Ranking'],
   rightList: ['votes'],
-  spaces: [10, 65, 10],
+  spaces: [10, 10, 65, 10],
 };
 
 export const detailWrapperConfig = {

@@ -25,7 +25,7 @@ const ko = {
   ranking: '순위',
   recentBlock: '최근 생성블록',
   recentTx: '최근 거래내역',
-  staking: '예치 MED',
+  staking: 'MED 예치량',
   status: '거래 상태',
   timeStamp: '생성시간',
   to: '받는 사람',

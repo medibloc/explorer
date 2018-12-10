@@ -13,16 +13,18 @@ export const get = async (req, res) => {
     block = await Block.findOne({ where: { hash: id } });
   }
 
-  const txList = [];
-  if (block.data.transactions.length === 0) {
-    const txs = await Transaction.findAll({ where: { blockHeight: block.data.height } });
-    txs.forEach(tx => txList.push(tx.dataValues.data));
-  }
-
   if (!block) {
     throw new NotFound('block not exists');
   }
-  block.data.transactions = txList;
+
+  const txList = [];
+  if (block && block.data.transactions.length === 0) {
+    const txs = await Transaction.findAll({ where: { blockHeight: block.data.height } });
+    txs.forEach(tx => txList.push(tx.dataValues.data));
+    block.data.transactions = txList;
+    res.json({ block });
+    return;
+  }
   res.json({ block });
 };
 

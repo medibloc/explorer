@@ -27,9 +27,15 @@ const requestAccount = ({ address, height }) => axios({
   url: `${url}/v1/account`,
 }).then(res => res.data);
 
+const requestCandidates = () => axios({
+  method: 'get',
+  url: `${url}/v1/candidates`,
+}).then(res => res.data.candidates);
+
 export {
   requestBlockByHeight,
   requestBlocks,
   requestTransaction,
   requestAccount,
+  requestCandidates,
 };

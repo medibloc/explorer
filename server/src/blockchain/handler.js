@@ -54,7 +54,7 @@ const updateCoinbaseAccount = async (rawBlock, t, revert = false) => {
 const updateAccountData = (address, height, t) => requestAccount({ address, height })
   .then(async (rawAcc) => {
     const acc = await getAccountFromDB(address, t);
-    return acc.update({ data: parseAccount(rawAcc) }, { where: { id: acc.id }, transaction: t })
+    return acc.update(parseAccount(rawAcc), { where: { id: acc.id }, transaction: t })
       .catch(() => console.log(`failed to update account ${acc.address}`));
   });
 
@@ -286,6 +286,7 @@ export const startSubscribe = (promise) => {
     responseType: 'stream',
     url: `${url}/v1/subscribe`,
   }).then(({ data }) => {
+    console.log('start subscribing');
     data.on('data', (buf) => {
       const { result } = JSON.parse(buf.toString());
       if (!result) {

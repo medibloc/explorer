@@ -6,7 +6,9 @@ import ListWrapper from '../ListWrapper';
 import TableWithIcon from '../TableWithIcon';
 import { BlockchainActions, GlobalActions, WidgetActions as w} from '../../redux/actionCreators';
 import { bpListConfig, bpsInPage } from '../../config';
-import { bpMapper, divider, ranger, spaceMapper, } from '../../lib';
+import {
+  bpMapper, divider, ranger, spaceMapper,
+} from '../../lib';
 
 
 const mappedBPs = (BPs = [], page, totalSupply) => {

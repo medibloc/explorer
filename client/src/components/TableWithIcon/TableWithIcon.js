@@ -13,7 +13,7 @@ import './TableWithIcon.scss';
 
 
 const titles = {
-  block: ['Block Hash', 'BP', 'Time Stamp'],
+  block: ['Block Height', 'Block Hash', 'BP', 'Time Stamp'],
   tx: ['Time Stamp', 'Transaction Hash', 'Type'],
   account: ['Account', 'Balance', 'Percentage', 'Transactions'],
   bp: ['Ranking', 'Account', 'votes'],

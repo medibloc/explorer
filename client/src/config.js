@@ -86,11 +86,13 @@ export const detailWrapperConfig = {
     block: ['Block Height', 'Time Stamp', 'Block Hash', 'Prev Hash', 'Amount', 'No.Tx', 'BP'],
     tx: ['Transaction Hash', 'Block Height', 'Status', 'Time Stamp', 'Type', 'From', 'To', 'Amount', 'Nonce', 'Message'],
     account: ['Account', 'Balance', 'Staking', 'Transactions'],
+    bp: ['Collateral', 'url'],
   },
   linkTo: {
     block: ['block/Prev Hash', 'account/BP'],
     tx: ['account/From', 'account/To'],
     account: [],
+    bp: [],
   },
 };
 

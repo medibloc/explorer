@@ -11,6 +11,7 @@ const en = {
   blockHeight: 'Block Height',
   blockList: 'Block List',
   bp: 'BP',
+  bpDetail: 'BP Detail',
   blockProducerList: 'Block Producer List',
   from: 'From',
   marketCap: 'Market Cap',

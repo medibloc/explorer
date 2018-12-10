@@ -11,6 +11,7 @@ const ko = {
   blockHeight: '블록번호',
   blockList: '블록 리스트',
   bp: '블록 생산자',
+  bpDetail: '블록 생산자 정보',
   blockProducerList: '블록 생산자 목록',
   from: '보낸 사람',
   marketCap: '시장 가격',

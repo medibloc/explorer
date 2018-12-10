@@ -11,6 +11,7 @@ const ja = {
   blockHeight: 'ブロック番号',
   blockList: 'ブロックリスト',
   bp: 'ブロック生産者',
+  bpDetail: 'ブロック生産者 情報',
   blockProducerList: 'ブロック生産者リスト',
   from: '送信者',
   marketCap: '市場価格',

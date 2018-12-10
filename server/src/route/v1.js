@@ -2,8 +2,8 @@ import { Router } from 'express';
 
 import account from '../account/route';
 import block from '../block/route';
+import candidate from '../candidate/route';
 import { subscribe } from '../blockchain/controller';
-import { get as getCandidates } from '../candidate/controller';
 import info from '../infoController';
 import transaction from '../transaction/route';
 import wrap from '../utils/controller';
@@ -11,7 +11,7 @@ import wrap from '../utils/controller';
 export default Router()
   .use('/accounts', account)
   .use('/blocks', block)
-  .use('/candidates', wrap(getCandidates))
+  .use('/candidates', candidate)
   .use('/info', wrap(info))
   .use('/transactions', transaction)
   .use('/subscribe', wrap(subscribe))

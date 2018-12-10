@@ -1,13 +1,24 @@
 import BigNumber from 'bignumber.js';
+import { BadRequest } from 'http-errors';
 import { keyBy } from 'lodash';
 import { Op } from 'sequelize';
 
 import Account from '../account/model';
 import { toPagination } from '../db/query';
 
-import { requestCandidates } from '../utils/requester';
+import { requestCandidate, requestCandidates } from '../utils/requester';
 
-export const get = async (req, res) => { // eslint-disable-line import/prefer-default-export
+export const get = async (req, res) => {
+  const { id } = req.params;
+  if (id.length !== 64) {
+    throw new BadRequest('candidate id is not valid');
+  }
+
+  const candidate = await requestCandidate(id);
+  res.json({ candidate });
+};
+
+export const list = async (req, res) => { // eslint-disable-line import/prefer-default-export
   let candidates = await requestCandidates();
   candidates.sort((c1, c2) => {
     const diff = new BigNumber(c1.vote_power).minus(new BigNumber(c2.vote_power));

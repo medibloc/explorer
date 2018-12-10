@@ -27,6 +27,13 @@ const requestAccount = ({ address, height }) => axios({
   url: `${url}/v1/account`,
 }).then(res => res.data);
 
+// eslint-disable-next-line camelcase
+const requestCandidate = candidate_id => axios({
+  method: 'get',
+  params: { candidate_id },
+  url: `${url}/v1/candidate`,
+}).then(res => res.data);
+
 const requestCandidates = () => axios({
   method: 'get',
   url: `${url}/v1/candidates`,
@@ -37,5 +44,6 @@ export {
   requestBlocks,
   requestTransaction,
   requestAccount,
+  requestCandidate,
   requestCandidates,
 };

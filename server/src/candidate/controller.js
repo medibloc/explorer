@@ -5,10 +5,10 @@ import { Op } from 'sequelize';
 import Account from '../account/model';
 import { toPagination } from '../db/query';
 
-import { getCandidates } from '../blockchain/client';
+import { requestCandidates } from '../utils/requester';
 
 export const get = async (req, res) => { // eslint-disable-line import/prefer-default-export
-  let { data: { candidates } } = await getCandidates();
+  let candidates = await requestCandidates();
   candidates.sort((c1, c2) => {
     const diff = new BigNumber(c1.vote_power).minus(new BigNumber(c2.vote_power));
     if (diff.isNegative()) return 1;
@@ -21,13 +21,19 @@ export const get = async (req, res) => { // eslint-disable-line import/prefer-de
     res.json({ candidates });
     return;
   }
+
+  const candidateIds = candidates.reduce(
+    (accumulator, candidate) => [...accumulator, candidate.candidate_id],
+    [],
+  );
+
   const accounts = await Account.findAll({
-    where: { candidateId: { [Op.in]: candidates.map(c => c.candidate_id) } },
+    where: { candidateId: { [Op.in]: candidateIds } },
   });
   const accountMap = keyBy(accounts, 'candidateId');
   candidates.forEach((candidate) => {
-    candidate.account = accountMap[candidate.candidate_id]; // eslint-disable-line no-param-reassign
+    // eslint-disable-next-line no-param-reassign
+    candidate.alias = accountMap[candidate.candidate_id].alias;
   });
-
   res.json({ candidates });
 };

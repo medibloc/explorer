@@ -13,6 +13,7 @@ const zh = {
   bp: '区块生产者',
   bpDetail: '区块生产者 信息',
   blockProducerList: '区块生产者目录',
+  collateral: '预存MED',
   from: '发送人',
   marketCap: '市场价格',
   medPrice: 'MED市场价格',
@@ -39,7 +40,8 @@ const zh = {
   tx: '交易',
   txHash: '交易代码',
   viewAll: '查看全部内容',
-  votes: '投票权股份',
+  votes: '票量',
+  voteRate: '投票权股份',
 };
 
 export default zh;

@@ -2,7 +2,7 @@ const ko = {
   account: '계정',
   accountDetail: '계정 상세페이지',
   accountList: '등록계정 목록',
-  alias: '이름',
+  alias: '닉네임',
   amount: '값',
   balance: 'MED 보유량',
   block: '블록',
@@ -10,9 +10,10 @@ const ko = {
   blockHash: '블록 해시',
   blockHeight: '블록번호',
   blockList: '블록 리스트',
-  bp: '블록 생산자',
-  bpDetail: '블록 생산자 정보',
-  blockProducerList: '블록 생산자 목록',
+  bp: '블록 생성자',
+  bpDetail: '블록 생성자 정보',
+  blockProducerList: '블록 생성자 목록',
+  collateral: '담보 MED',
   from: '보낸 사람',
   marketCap: '시장 가격',
   medPrice: '메디 시장 가격',
@@ -39,7 +40,8 @@ const ko = {
   tx: '거래',
   txHash: '거래 코드',
   viewAll: '더보기',
-  votes: '투표지분',
+  votes: '투표량',
+  voteRate: '투표지분',
 };
 
 export default ko;

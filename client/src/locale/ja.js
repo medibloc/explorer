@@ -13,6 +13,7 @@ const ja = {
   bp: 'ブロック生産者',
   bpDetail: 'ブロック生産者 情報',
   blockProducerList: 'ブロック生産者リスト',
+  collateral: '担保であるMED',
   from: '送信者',
   marketCap: '市場価格',
   medPrice: 'MED成行値段',
@@ -39,7 +40,8 @@ const ja = {
   tx: '取引',
   txHash: '取引コード',
   viewAll: 'もっと見る',
-  votes: '投票重量',
+  votes: '得票数',
+  voteRate: '得票率',
 };
 
 export default ja;

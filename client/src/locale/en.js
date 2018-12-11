@@ -13,6 +13,7 @@ const en = {
   bp: 'BP',
   bpDetail: 'BP Detail',
   blockProducerList: 'Block Producer List',
+  collateral: 'Collateral',
   from: 'From',
   marketCap: 'Market Cap',
   medPrice: 'MED Price',
@@ -39,7 +40,8 @@ const en = {
   tx: 'Transaction',
   txHash: 'Transaction Hash',
   viewAll: 'View All',
-  votes: 'Votes Weight',
+  votes: 'Votes',
+  voterate: 'Votes Weight',
 };
 
 export default en;

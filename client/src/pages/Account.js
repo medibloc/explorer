@@ -19,10 +19,7 @@ const Account = ({ location }) => {
         <PageInfo title="account-detail" />
         { AccountWrapper }
       </div>
-      <div className="bpDetail">
-        <PageInfo title="bp-detail" />
-        { BPWrapper }
-      </div>
+      { BPWrapper }
       <div className="blockDetailTx">
         <PageInfo title="transactions-list" />
         <TxList type="account" address={subject} />

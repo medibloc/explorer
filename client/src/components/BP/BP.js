@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import DetailWrapper from '../DetailWrapper';
 import { bpMapper } from '../../lib';
 import { BlockchainActions, WidgetActions as w } from '../../redux/actionCreators';
+import PageInfo from '../PageInfo';
 
 
 class BP extends Component {
@@ -44,9 +45,12 @@ class BP extends Component {
   }
 
   render() {
-    const { bp } = this.props;
-    return bp && (
-      <DetailWrapper data={bpMapper(bp)} type="bp" />
+    const { bp, address } = this.props;
+    return (bp && bp.address === address) && (
+      <div className="bpDetail">
+        <PageInfo title="bp-detail" />
+        <DetailWrapper data={bpMapper(bp)} type="bp" />
+      </div>
     );
   }
 }

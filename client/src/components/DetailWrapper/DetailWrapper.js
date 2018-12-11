@@ -48,9 +48,18 @@ const DetailWrapper = ({
                         </button>
                       )
                     }
-                    <NavLink to={`/${lang}/${linkList[i].split('/')[0]}/${data[title]}`}>
-                      { data[title] }
-                    </NavLink>
+                    {
+                      title === 'url'
+                        ? (
+                          <a href={data[title]}>
+                            { data[title] }
+                          </a>
+                        ) : (
+                          <NavLink to={`/${lang}/${linkList[i].split('/')[0]}/${data[title]}`}>
+                            { data[title] }
+                          </NavLink>
+                        )
+                    }
                   </span>
                 );
               }

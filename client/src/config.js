@@ -92,7 +92,7 @@ export const detailWrapperConfig = {
     block: ['block/Prev Hash', 'account/BP'],
     tx: ['account/From', 'account/To'],
     account: [],
-    bp: [],
+    bp: ['url'],
   },
 };
 

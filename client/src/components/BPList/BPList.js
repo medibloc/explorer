@@ -16,7 +16,8 @@ const mappedBPs = (BPs = [], page, totalSupply) => {
   BPs.forEach((preBP, i) => {
     const BP = bpMapper(preBP);
     BP.Ranking = (page - 1) * bpsInPage + i + 1;
-    BP.votes = `${divider(BP.votes, [totalSupply, 10 ** 12 / 100], 4)}%`;
+    BP.voteRate = `${divider(BP.votes, [totalSupply, 10 ** 12 / 100], 4)}%`;
+    BP.votes = `${divider(BP.votes, [10 ** 12]).split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')} MED`;
     BPList.push(BP);
   });
   return BPList;

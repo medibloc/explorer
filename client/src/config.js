@@ -74,11 +74,11 @@ export const blockListConfig = {
 };
 
 export const bpListConfig = {
-  titles: ['Ranking', 'Alias', 'Account', 'votes'],
+  titles: ['Ranking', 'Alias', 'Account', 'votes', 'voteRate'],
   linkTo: ['account/account'],
   centerList: ['Ranking'],
-  rightList: ['votes'],
-  spaces: [10, 10, 65, 10],
+  rightList: ['voteRate'],
+  spaces: [10, 10, 65, 20, 15],
 };
 
 export const detailWrapperConfig = {

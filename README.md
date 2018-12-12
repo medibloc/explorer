@@ -6,7 +6,7 @@ MediBloc Explorer works with [go-medibloc](https://github.com/medibloc/go-medibl
 
 To run MediBloc Explorer following resources are required.
 
-- Node.js v8.11.3 or higher (<https://nodejs.org/>)
+- Node.js v10.13.0 or higher (<https://nodejs.org/>)
 
 - Yarn v1.9.2 (<https://yarnpkg.com/en/docs/install>)
 

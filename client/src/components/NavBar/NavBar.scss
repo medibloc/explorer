@@ -115,6 +115,7 @@ $tablet_width: 1200px;
       width: calc(100% - 60px);
       height: calc(100% - 85px);
       padding: 30px;
+      padding-top: 10px;
 
       transition: transform 0.5s ease-in-out;
 
@@ -128,7 +129,7 @@ $tablet_width: 1200px;
 
       .navBarSideMenu {
         margin-top: 20px;
-        height: 70px;
+        height: 50px;
         border-top: 1px solid rgba(0, 0, 0, 0.8);
         border-bottom: 1px solid rgba(0, 0, 0, 0.8);
         font-size: 18px;

@@ -21,7 +21,7 @@ const parseAccount = account => ({
   balance: account.balance,
   candidateId: account.candidate_id || null,
   data: account,
-  vesting: account.vesting,
+  staking: account.staking,
 });
 
 export {

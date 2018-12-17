@@ -13,5 +13,5 @@ export default db.define('accounts', {
   id,
   totalTxs: { defaultValue: 0, type: Sequelize.INTEGER },
   totalAmount: { ...value },
-  vesting: { ...value },
+  staking: { ...value },
 });

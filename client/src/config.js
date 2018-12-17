@@ -106,7 +106,7 @@ export const txTypes = {
   QUIT_CANDIDATE: 'quit_candidacy',
   REVOKE_CERTIFICATION: 'revoke_certification',
   VALUE_TRANSFER: 'transfer',
-  VEST: 'vest',
+  VEST: 'stake',
   VOTE: 'vote',
-  WITHDRAW_VESTING: 'withdraw_vesting',
+  WITHDRAW_VESTING: 'unstake',
 };

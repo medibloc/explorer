@@ -268,18 +268,22 @@ export const sync = async () => {
   });
 };
 
+let call = null;
 export const startSubscribe = (promise) => {
   const reset = () => {
     stopSync = false;
     return startSubscribe(sync());
   };
-  const source = axios.CancelToken.source();
+  if (call) {
+    call.cancel('Previous request is canceled');
+  }
+  call = axios.CancelToken.source();
   const params = new URLSearchParams();
   for (const t of Object.keys(topics)) { // eslint-disable-line
     params.append('topics', t);
   }
   return axios({
-    cancelToken: source.token,
+    cancelToken: call.token,
     params,
     method: 'get',
     cancelPreviousRequest: true,
@@ -290,7 +294,7 @@ export const startSubscribe = (promise) => {
     data.on('data', (buf) => {
       const { result } = JSON.parse(buf.toString());
       if (!result) {
-        source.cancel();
+        call.cancel('Reset syncing because server got empty response.');
         reset();
         return;
       }
@@ -308,7 +312,7 @@ export const startSubscribe = (promise) => {
         });
     });
   }).catch(() => {
-    source.cancel();
+    console.log('Something is wrong while subscribing,');
     stopSync = true;
     setTimeout(reset, 1000);
   });

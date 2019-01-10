@@ -31,6 +31,6 @@ export const get = async (req, res) => {
 const searchColumns = [Block.tableAttributes.hash];
 
 export const list = async (req, res) => {
-  const blocks = await listQueryWithCount(Block, req.query, searchColumns);
-  res.json({ blocks });
+  const { data, pagination } = await listQueryWithCount(Block, req.query, searchColumns);
+  res.json({ blocks: data, pagination });
 };

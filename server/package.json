@@ -26,7 +26,7 @@
     "glob-fs": "^0.1.7",
     "http-errors": "^1.6.3",
     "lodash": "^4.17.10",
-    "medjs": "^0.2.0",
+    "medjs": "^1.0.0",
     "mysql2": "^1.5.3",
     "pluralize": "^7.0.0",
     "sequelize": "^4.38.0",

@@ -1560,10 +1560,10 @@ browserify-zlib@^0.2.0, browserify-zlib@~0.2.0:
   dependencies:
     pako "~1.0.5"
 
-browserify@^16.2.0:
-  version "16.2.2"
-  resolved "https://registry.yarnpkg.com/browserify/-/browserify-16.2.2.tgz#4b1f66ba0e54fa39dbc5aa4be9629142143d91b0"
-  integrity sha512-fMES05wq1Oukts6ksGUU2TMVHHp06LyQt0SIwbXIHm7waSrQmNBZePsU0iM/4f94zbvb/wHma+D1YrdzWYnF/A==
+browserify@^16.2.3:
+  version "16.2.3"
+  resolved "https://registry.yarnpkg.com/browserify/-/browserify-16.2.3.tgz#7ee6e654ba4f92bce6ab3599c3485b1cc7a0ad0b"
+  integrity sha512-zQt/Gd1+W+IY+h/xX2NYMW4orQWhqSwyV+xsblycTtpOuB27h1fZhhNQuipJ4t79ohw4P4mMem0jp/ZkISQtjQ==
   dependencies:
     JSONStream "^1.0.3"
     assert "^1.4.0"
@@ -5817,19 +5817,19 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
 
-medjs@^0.2.15:
-  version "0.2.15"
-  resolved "https://registry.yarnpkg.com/medjs/-/medjs-0.2.15.tgz#49e6c363f02053b6dd5ea3c984cd67d58fe028c7"
-  integrity sha512-gHjB10kcaMtza9IXWzP7kHUQXO6YqlPPjA27RqqAtxpZzB+4bD+R9xkychYS7R4tOkDgYQ5av0PsNb4VMYLSIg==
+medjs@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/medjs/-/medjs-1.0.0.tgz#f5bf870a2d4b82ba0846d06464249f52fdde7beb"
+  integrity sha512-+d9W93CXynGpdJBTTL0/C3hepjtPzJGRD9Kyrg6Llxl7VKFKC7Ie4XsFprgVIiJpzEVjjdefbs8lB+FPlOZedA==
   dependencies:
     axios "^0.18.0"
     babel-runtime "^6.26.0"
     bignumber.js "^7.0.1"
     bops "^1.0.0"
-    browserify "^16.2.0"
+    browserify "^16.2.3"
     js-sha3 "^0.7.0"
     jsonfile "^4.0.0"
-    protobufjs "^6.8.6"
+    protobufjs "~6.8.6"
     scrypt.js "^0.2.0"
     secp256k1 "^3.5.0"
     underscore "^1.9.1"
@@ -7234,7 +7234,7 @@ prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1,
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
-protobufjs@^6.8.6:
+protobufjs@~6.8.6:
   version "6.8.8"
   resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-6.8.8.tgz#c8b4f1282fd7a90e6f5b109ed11c84af82908e7c"
   integrity sha512-AAmHtD5pXgZfi7GMpllpO3q1Xw1OYldr+dMUlAnffGTAhqkg72WdmSY71uKBF/JuyiKs8psYbtKrhi0ASCD8qw==

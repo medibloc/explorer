@@ -806,6 +806,11 @@ balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
 
+base64-js@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.0.2.tgz#474211c95e6cf2a547db461e4f6778b51d08fa65"
+  integrity sha1-R0IRyV5s8qVH20YeT2d4tR0I+mU=
+
 base64-js@^1.0.2:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.3.0.tgz#cab1e6118f051095e58b5281aea8c1cd22bfc0e3"
@@ -869,6 +874,14 @@ body-parser@^1.18.3:
     qs "6.5.2"
     raw-body "2.3.3"
     type-is "~1.6.16"
+
+bops@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/bops/-/bops-1.0.0.tgz#631a8928f1178417eb6f706cf69acdb5e5a4eaad"
+  integrity sha1-YxqJKPEXhBfrb3Bs9prNteWk6q0=
+  dependencies:
+    base64-js "1.0.2"
+    to-utf8 "0.0.1"
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -963,9 +976,10 @@ browserify-zlib@~0.2.0:
   dependencies:
     pako "~1.0.5"
 
-browserify@^16.2.0:
-  version "16.2.2"
-  resolved "https://registry.yarnpkg.com/browserify/-/browserify-16.2.2.tgz#4b1f66ba0e54fa39dbc5aa4be9629142143d91b0"
+browserify@^16.2.3:
+  version "16.2.3"
+  resolved "https://registry.yarnpkg.com/browserify/-/browserify-16.2.3.tgz#7ee6e654ba4f92bce6ab3599c3485b1cc7a0ad0b"
+  integrity sha512-zQt/Gd1+W+IY+h/xX2NYMW4orQWhqSwyV+xsblycTtpOuB27h1fZhhNQuipJ4t79ohw4P4mMem0jp/ZkISQtjQ==
   dependencies:
     JSONStream "^1.0.3"
     assert "^1.4.0"
@@ -1765,6 +1779,13 @@ export-files@^2.0.1:
   resolved "https://registry.yarnpkg.com/export-files/-/export-files-2.1.1.tgz#bbf64574053a09e4eb98e5f43501d572b2c3ce7f"
   dependencies:
     lazy-cache "^1.0.3"
+
+express-request-id@^1.4.0:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/express-request-id/-/express-request-id-1.4.1.tgz#66feaf1f0be3deca13f3abfe1c098e49b12f2c28"
+  integrity sha512-qpxK6XhDYtdx9FvxwCHkUeZVWtkGbWR87hBAzGECfwYF/QQCPXEwwB2/9NGkOR1tT7/aLs9mma3CT0vjSzuZVw==
+  dependencies:
+    uuid "^3.3.2"
 
 express@^4.16.3:
   version "4.16.3"
@@ -2715,17 +2736,19 @@ media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
 
-medjs@^0.2.0:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/medjs/-/medjs-0.2.4.tgz#0ace1c820dc87a0f1788eb0a8735943e3b7bc5e7"
+medjs@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/medjs/-/medjs-1.0.0.tgz#f5bf870a2d4b82ba0846d06464249f52fdde7beb"
+  integrity sha512-+d9W93CXynGpdJBTTL0/C3hepjtPzJGRD9Kyrg6Llxl7VKFKC7Ie4XsFprgVIiJpzEVjjdefbs8lB+FPlOZedA==
   dependencies:
     axios "^0.18.0"
     babel-runtime "^6.26.0"
     bignumber.js "^7.0.1"
-    browserify "^16.2.0"
+    bops "^1.0.0"
+    browserify "^16.2.3"
     js-sha3 "^0.7.0"
     jsonfile "^4.0.0"
-    protobufjs "^6.8.6"
+    protobufjs "~6.8.6"
     scrypt.js "^0.2.0"
     secp256k1 "^3.5.0"
     underscore "^1.9.1"
@@ -2758,7 +2781,7 @@ micromatch@^2.1.5, micromatch@^2.3.11, micromatch@^2.3.7:
     parse-glob "^3.0.4"
     regex-cache "^0.4.2"
 
-"micromatch@github:jonschlinkert/micromatch#2.2.0":
+micromatch@jonschlinkert/micromatch#2.2.0:
   version "2.2.0"
   resolved "https://codeload.github.com/jonschlinkert/micromatch/tar.gz/5017fd78202e04c684cc31d3c2fb1f469ea222ff"
   dependencies:
@@ -3308,9 +3331,10 @@ prop-types@^15.6.2:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
-protobufjs@^6.8.6:
+protobufjs@~6.8.6:
   version "6.8.8"
   resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-6.8.8.tgz#c8b4f1282fd7a90e6f5b109ed11c84af82908e7c"
+  integrity sha512-AAmHtD5pXgZfi7GMpllpO3q1Xw1OYldr+dMUlAnffGTAhqkg72WdmSY71uKBF/JuyiKs8psYbtKrhi0ASCD8qw==
   dependencies:
     "@protobufjs/aspromise" "^1.1.2"
     "@protobufjs/base64" "^1.1.2"
@@ -4046,6 +4070,11 @@ to-fast-properties@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-1.0.3.tgz#b83571fa4d8c25b82e231b06e3a3055de4ca1a47"
 
+to-utf8@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/to-utf8/-/to-utf8-0.0.1.tgz#d17aea72ff2fba39b9e43601be7b3ff72e089852"
+  integrity sha1-0Xrqcv8vujm55DYBvns/9y4ImFI=
+
 toidentifier@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"
@@ -4118,7 +4147,7 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-url@~0.11.0:
+url@^0.11.0, url@~0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/url/-/url-0.11.0.tgz#3838e97cfc60521eb73c525a8e55bfdd9e2e28f1"
   dependencies:
@@ -4149,9 +4178,10 @@ utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
 
-uuid@^3.2.1:
+uuid@^3.2.1, uuid@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
+  integrity sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==
 
 v8flags@^2.1.1:
   version "2.1.1"

@@ -7,6 +7,7 @@
     "lint": "eslint src",
     "start": "babel-node src/server",
     "syncdb": "babel-node src/db/sync",
+    "syncdb:test": "NODE_ENV=test babel-node src/db/sync",
     "test": "NODE_ENV=test mocha --require babel-register src/**/test.js"
   },
   "keywords": [

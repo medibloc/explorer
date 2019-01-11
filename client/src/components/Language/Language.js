@@ -11,7 +11,7 @@ import './Language.scss';
 
 const Language = ({ language, languageOpen }) => (
   <div className="language">
-    <span onClick={GlobalActions.openLanguage}>
+    <span onClick={() => GlobalActions.openLanguage()}>
       <button type="button">
         <img src={`/image/icon/ico-country-${language}@3x.png`} alt="language" />
         { countryName[language] }

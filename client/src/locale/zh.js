@@ -39,6 +39,7 @@ const zh = {
   type: '类型',
   tx: '交易',
   txHash: '交易代码',
+  url: 'url',
   viewAll: '查看全部内容',
   votes: '票量',
   voteRate: '投票权股份',

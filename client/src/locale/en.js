@@ -39,6 +39,7 @@ const en = {
   type: 'Type',
   tx: 'Transaction',
   txHash: 'Transaction Hash',
+  url: 'url',
   viewAll: 'View All',
   votes: 'Votes',
   voterate: 'Votes Weight',

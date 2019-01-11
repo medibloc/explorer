@@ -39,6 +39,7 @@ const ko = {
   type: '유형',
   tx: '거래',
   txHash: '거래 코드',
+  url: 'url',
   viewAll: '더보기',
   votes: '투표량',
   voteRate: '투표지분',

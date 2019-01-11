@@ -39,6 +39,7 @@ const ja = {
   type: 'タイプ',
   tx: '取引',
   txHash: '取引コード',
+  url: 'url',
   viewAll: 'もっと見る',
   votes: '得票数',
   voteRate: '得票率',

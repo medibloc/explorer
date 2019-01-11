@@ -6,7 +6,7 @@ import TableWithIcon from '../TableWithIcon';
 
 
 const Txs = ({ liveTxs }) => (
-  <TableWithIcon type="tx" data={sorter(liveTxs, 'timestamp')} />
+  <TableWithIcon type="tx" data={sorter(liveTxs, 'receipt.timestamp')} />
 );
 
 Txs.propTypes = {

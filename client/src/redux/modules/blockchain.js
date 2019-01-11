@@ -90,7 +90,7 @@ const reducer = handleActions({
   [GET_ACCOUNT_DETAIL]: (state, action) => {
     const txs = [];
     action.payload.transactions.forEach(res => txs.push(res.data));
-    return ({ ...state, txs: sorter(txs, 'timestamp') });
+    return ({ ...state, txs: sorter(txs, 'receipt.timestamp') });
   },
 
   [GET_BLOCK]: (state, action) => ({ ...state, block: action.payload.block.data }),
@@ -113,7 +113,7 @@ const reducer = handleActions({
     action.payload.transactions.forEach(tx => txs.push(tx.data));
     return {
       ...state,
-      liveTxs: sorter(txs, 'timestamp'),
+      liveTxs: sorter(txs, 'receipt.timestamp'),
     };
   },
   [GET_TAIL_BLOCK]: (state, action) => {
@@ -148,7 +148,7 @@ const reducer = handleActions({
   },
   [SET_TXS]: (state, action) => ({
     ...state,
-    txs: sorter(action.payload, 'timestamp'),
+    txs: sorter(action.payload, 'receipt.timestamp'),
   }),
 
   [GET_BP]: (state, action) => ({

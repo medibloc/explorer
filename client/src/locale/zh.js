@@ -42,7 +42,7 @@ const zh = {
   url: 'url',
   viewAll: '查看全部内容',
   votes: '票量',
-  voteRate: '投票权股份',
+  voterate: '投票权股份',
 };
 
 export default zh;

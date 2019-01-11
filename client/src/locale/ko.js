@@ -42,7 +42,7 @@ const ko = {
   url: 'url',
   viewAll: '더보기',
   votes: '투표량',
-  voteRate: '투표지분',
+  voterate: '투표지분',
 };
 
 export default ko;

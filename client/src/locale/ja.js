@@ -42,7 +42,7 @@ const ja = {
   url: 'url',
   viewAll: 'もっと見る',
   votes: '得票数',
-  voteRate: '得票率',
+  voterate: '得票率',
 };
 
 export default ja;

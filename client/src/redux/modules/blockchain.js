@@ -50,7 +50,7 @@ const subsribeTypes = {
 };
 
 const initialState = {
-  totalSupply: 10000000000,
+  totalSupply: '0',
 
   medState: null,
 

@@ -5,7 +5,7 @@ import React from 'react';
 import './LiveTickerWrapper.scss';
 
 
-const injectComma = supply => supply.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+const injectComma = supply => supply.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 const LiveTickerWrapper = ({
   title,
@@ -35,7 +35,7 @@ const LiveTickerWrapper = ({
 LiveTickerWrapper.propTypes = {
   medxPrice: PropTypes.number,
   mode: PropTypes.number.isRequired,
-  totalSupply: PropTypes.number,
+  totalSupply: PropTypes.string,
   side: PropTypes.string.isRequired,
   suffix: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
@@ -43,7 +43,7 @@ LiveTickerWrapper.propTypes = {
 
 LiveTickerWrapper.defaultProps = {
   medxPrice: 0,
-  totalSupply: 0,
+  totalSupply: '0',
 };
 
 export default LiveTickerWrapper;

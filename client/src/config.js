@@ -49,15 +49,15 @@ export const maxResult = 15;
 
 // SPACE_LIST (component_page)
 export const txSpaceList = {
-  account: [2, 1, 2, 2, 1],
+  account: [2, 2, 2, 1],
   block: [28, 28, 28, 16],
-  txs: [20, 10, 10, 15, 15, 10],
+  txs: [20, 10, 15, 15, 10],
 };
 
 export const txTitleList = {
-  account: ['Transaction Hash', 'Time Stamp', 'From', 'To', 'Amount'],
+  account: ['Transaction Hash', 'From', 'To', 'Amount'],
   block: ['Transaction Hash', 'From', 'To', 'Amount'],
-  txs: ['Transaction Hash', 'Type', 'Time Stamp', 'From', 'To', 'Amount'],
+  txs: ['Transaction Hash', 'Type', 'From', 'To', 'Amount'],
 };
 
 export const accountListConfig = {
@@ -84,7 +84,7 @@ export const bpListConfig = {
 export const detailWrapperConfig = {
   titles: {
     block: ['Block Height', 'Time Stamp', 'Block Hash', 'Prev Hash', 'Amount', 'No.Tx', 'BP'],
-    tx: ['Transaction Hash', 'Block Height', 'Status', 'Time Stamp', 'Type', 'From', 'To', 'Amount', 'Nonce', 'Message'],
+    tx: ['Transaction Hash', 'Block Height', 'Status', 'Type', 'From', 'To', 'Amount', 'Nonce', 'Message'],
     account: ['Account', 'Balance', 'Staking', 'Transactions'],
     bp: ['Collateral', 'url'],
   },

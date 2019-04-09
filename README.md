@@ -15,8 +15,9 @@ To run MediBloc Explorer following resources are required.
   ```
   git clone https://github.com/medibloc/go-medibloc.git
   cd go-medibloc
+  make dep
   make build
-  build/medi conf/test/3nodes/node1.conf
+  build/medi conf/local/single_node/node.conf
   ```
 
 ## Installation

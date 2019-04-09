@@ -1,6 +1,6 @@
 # MediBloc Blockchain Explorer
 
-MediBloc Explorer works with [go-medibloc](https://github.com/medibloc/go-medibloc). Current version of MediBloc Explorer does not have a server feature.
+MediBloc Explorer works with [go-medibloc](https://github.com/medibloc/go-medibloc).
 
 ## Prerequisites
 
@@ -42,7 +42,7 @@ General : https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/
 
 Mac : https://github.com/rajivkanaujia/alphaworks/wiki/Install-MySQL-using-Homebrew
 
-Default database name is "medi_explorer". You can change database name in server/config/default.js. Create this database with mysql command-line.
+Default database name is "medi_explorer". You can change database name in `server/config/default.js`. Create this database with mysql command-line.
 
 And then, You must configure ENVIRONMNET VARIABLES with your DB username & password
 

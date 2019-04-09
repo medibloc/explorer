@@ -10,7 +10,7 @@ To run MediBloc Explorer following resources are required.
 
 - Yarn v1.9.2 (<https://yarnpkg.com/en/docs/install>)
 
-- go-medibloc v0.2 (<https://github.com/medibloc/go-medibloc>) - You need to install all required resources written in [go-medibloc](https://github.com/medibloc/go-medibloc).
+- go-medibloc v1.0 (<https://github.com/medibloc/go-medibloc>) - You need to install all required resources written in [go-medibloc](https://github.com/medibloc/go-medibloc).
 
   ```
   git clone https://github.com/medibloc/go-medibloc.git

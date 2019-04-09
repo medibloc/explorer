@@ -54,6 +54,20 @@ export EXPLORER_DB_PASSWORD={password}
 Then,
 `cd server && npm run syncdb && npm start`
 
+## Configuration(Server)
+
+The `server/config/default.js` file contains configuration settings for MediBloc Explorer Server.
+
+#### Blockchain endpoint
+
+To connect with custom MediBloc blockchain, blockchain.url should be set.
+```
+export default {
+  blockchain: {
+    url: 'http://localhost:9921',
+  },
+  ...
+```
 
 ## Start(Client)
 
@@ -67,19 +81,6 @@ To generate the minified files, run the following command.
 
 `yarn build`
 
-## Configuration
-
-The `config.js` file contains configuration settings for MediBloc Explorer.
-
-#### Node IP address
-
-To connect with custom MediBloc blockchain, Node IP address should be set (or changed):
-
-  ```
-  export const NODE_ENDPOINT = 'http://localhost:9921';
-  ```
-
-`NODE_ENDPOINT` should be set with the custom node address. By default, `node1` in [go-medibloc](https://github.com/medibloc/go-medibloc) uses 9921 port.
 
 ## License
 ```

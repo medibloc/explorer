@@ -234,21 +234,27 @@ export const onSubscribe = (req, res, options) => {
 
 let stopSync = false;
 export const sync = async () => {
-  const [lastBlock, medState] = await Promise.all([
-    Block.findOne({ order: [['id', 'desc']] }),
-    requestMedState(),
-  ]);
+  const lastBlock = await Block.findOne({ order: [['id', 'desc']] });
+  const medState = await requestMedState();
+
+  // CASE A : If DB is empty
   let currentHeight = 0;
-  if (lastBlock) {
-    currentHeight = +lastBlock.data.height;
-  }
+  // CASE B : If DB already holds block data
+  if (lastBlock) currentHeight = +lastBlock.data.height;
+
   const lastHeight = +medState.height;
   console.log(`current height ${currentHeight}, last height ${lastHeight}`); // eslint-disable-line no-console
-  if (currentHeight >= lastHeight) {
+  if (currentHeight === lastHeight) {
     return Promise.resolve();
   }
+  // If db holds old data because tail block height does not reached to currentHeight yet
+  if (currentHeight > lastHeight) {
+    throw new Error('DB Initialization is required');
+  }
+
+  // getBlocks is used only for sync
   const getBlocks = () => db.transaction((t) => {
-    const from = currentHeight + 1;
+    const from = currentHeight + 1; // TODO consider revert block case
     const step = Math.min(REQUEST_STEP, lastHeight - from + 1);
     const to = from + step - 1;
     return requestBlocks({ from, to })

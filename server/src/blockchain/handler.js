@@ -7,7 +7,8 @@ import db from '../db';
 import { isIdentical, isReverted } from '../utils/checker';
 import { parseBlock, parseTx, parseAccount } from '../utils/parser';
 import {
-  requestBlockByHeight, requestBlocks, requestAccount, requestTransaction,
+  requestBlockByHeight, requestBlocks,
+  requestAccount, requestTransaction, requestMedState,
 } from '../utils/requester';
 
 import Account from '../account/model';
@@ -235,13 +236,13 @@ let stopSync = false;
 export const sync = async () => {
   const [lastBlock, medState] = await Promise.all([
     Block.findOne({ order: [['id', 'desc']] }),
-    axios.get(`${url}/v1/node/medstate`),
+    requestMedState(),
   ]);
   let currentHeight = 0;
   if (lastBlock) {
     currentHeight = +lastBlock.data.height;
   }
-  const lastHeight = +medState.data.height;
+  const lastHeight = +medState.height;
   console.log(`current height ${currentHeight}, last height ${lastHeight}`); // eslint-disable-line no-console
   if (currentHeight >= lastHeight) {
     return Promise.resolve();

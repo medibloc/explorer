@@ -39,6 +39,11 @@ const requestCandidates = () => axios({
   url: `${url}/v1/candidates`,
 }).then(res => res.data.candidates);
 
+const requestMedState = () => axios({
+  method: 'get',
+  url: `${url}/v1/node/medstate`,
+}).then(res => res.data);
+
 export {
   requestBlockByHeight,
   requestBlocks,
@@ -46,4 +51,5 @@ export {
   requestAccount,
   requestCandidate,
   requestCandidates,
+  requestMedState,
 };

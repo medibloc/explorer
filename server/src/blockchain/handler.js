@@ -65,7 +65,7 @@ const updateAccountData = (address, height, t) => requestAccount({ address, heig
       .catch(() => console.log(`failed to update account ${acc.address}`));
   });
 
-const handleTxsInBlockResponse = async (dbBlock, t) => {
+const handleTxsInDbBlock = async (dbBlock, t) => {
   const block = dbBlock.data;
   const parsedTxs = [];
 
@@ -158,7 +158,7 @@ const handleBlocksResponse = async (blocks, t) => {
       const promise = dbBlocks.reduce((p, dbBlock) => p
         .then(async () => {
           txCount += dbBlock.data.transactions.length;
-          const txs = await handleTxsInBlockResponse(dbBlock, t);
+          const txs = await handleTxsInDbBlock(dbBlock, t);
 
           const accs = retrieveAffectedAccountsFromTxs(txs);
           accs.forEach((acc) => {
@@ -168,7 +168,7 @@ const handleBlocksResponse = async (blocks, t) => {
       /*
       let promises = dbBlocks.map(async (dbBlock) => {
         txCount += dbBlock.data.transactions.length;
-        await handleTxsInBlockResponse(dbBlock, dbBlock.data.transactions, t);
+        await handleTxsInDbBlock(dbBlock, dbBlock.data.transactions, t);
         affectedAccounts.push(...retrieveAffectedAccountsFromTxs(dbBlock.data.transactions));
       });
       await Promise.all(promises);

@@ -1,6 +1,7 @@
 export default {
   blockchain: {
     url: 'http://testnet-node.medibloc.org',
+    GENESIS_ACCOUNT: '000000000000000000000000000000000000000000000000000000000000000000',
   },
   db: {
     database: 'medi_explorer',

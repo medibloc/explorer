@@ -15,7 +15,7 @@ import Account from '../account/model';
 import Block from '../block/model';
 import Transaction from '../transaction/model';
 
-const { url } = config.blockchain;
+const { url, GENESIS_ACCOUNT } = config.blockchain;
 const { REQUEST_STEP } = config.request;
 
 const getAccountFromDB = (address, t) => Account
@@ -58,8 +58,8 @@ const updateAccountData = (address, height, t) => requestAccount({ address, heig
     const parsedAccount = parseAccount(rawAcc);
 
     // Init genesis account balance
-    if (address === '000000000000000000000000000000000000000000000000000000000000000000' && height <= REQUEST_STEP) {
-      parsedAccount.totalAmount = new BigNumber('0').toString()
+    if (address === GENESIS_ACCOUNT && height <= REQUEST_STEP) {
+      parsedAccount.totalAmount = new BigNumber('0').toString();
     }
     return acc.update(parsedAccount, { where: { id: acc.id }, transaction: t })
       .catch(() => console.log(`failed to update account ${acc.address}`));
@@ -112,62 +112,58 @@ const handleBlocksResponse = async (blocks, t) => {
   // Check if the parent block exists
   const parentHeight = +blocks[0].height - 1;
   const parentBlock = await Block.findById(parentHeight);
+  // If parentBlock doesn't exist
   if (parentBlock === null && parentHeight !== 0) {
     await requestBlockByHeight(parentHeight)
       .then(block => handleBlocksResponse([block], t));
   }
+
   // Check if the block is already saved
-  const verifiedBlocks = [];
   if (parentBlock !== null && isReverted(blocks[0], parentBlock)) {
     console.log(`revert block received ${blocks[0].height}`);
     const newBlocks = handleRevertBlocks(blocks[0], []);
     blocks = [...newBlocks, ...blocks]; // eslint-disable-line no-param-reassign
   }
 
-  await blocks.reduce(async (p, block) => {
-    const blockInDB = await Block.findById(block.height);
-    // New block
-    if (!blockInDB) {
-      verifiedBlocks.push(block);
-      return p;
-    }
-    // Existed block
-    if (isIdentical(block, blockInDB.data)) {
-      console.log(`identical block received : ${block.height}`);
-      return p;
-    }
-    // Revert case
-    verifiedBlocks.push(block);
-    return p;
-  }, Promise.resolve());
+  const verifiedBlocks = await Promise.all(
+    blocks.map(async (block) => {
+      const blockInDB = await Block.findById(block.height);
+
+      if (!blockInDB) {
+        return block;
+      }
+
+      if (isIdentical(block, blockInDB.data)) {
+        console.log(`identical block received : ${block.height}`);
+        return block;
+      }
+
+      return block;
+    }),
+  );
 
   return Block
-    .bulkCreate(verifiedBlocks.map(parseBlock), { transaction: t, updateOnDuplicate: ['data', 'hash'] })
+    .bulkCreate(verifiedBlocks.map(parseBlock), {
+      transaction: t,
+      updateOnDuplicate: ['data', 'hash'],
+    })
     .then(async (dbBlocks) => {
       if (dbBlocks.length === 0) return [];
       console.log(`blocks from ${dbBlocks[0].height} to ${dbBlocks[dbBlocks.length - 1].height} added`);
 
       let txCount = 0;
       const affectedAccounts = [];
-      const promise = dbBlocks.reduce((p, dbBlock) => p
+
+      await dbBlocks.reduce((p, dbBlock) => p
         .then(async () => {
           txCount += dbBlock.data.transactions.length;
-          const txs = await handleTxsInDbBlock(dbBlock, t);
+          const dbTxs = await handleTxsInDbBlock(dbBlock, t);
+          const accounts = retrieveAffectedAccountsFromDbTxs(dbTxs);
 
-          const accs = retrieveAffectedAccountsFromDbTxs(dbTxs);
-          accs.forEach((acc) => {
-            if (affectedAccounts.indexOf(acc) === -1) affectedAccounts.push(acc);
+          accounts.forEach((acc) => {
+            if (!affectedAccounts.includes(acc)) affectedAccounts.push(acc);
           });
         }), Promise.resolve());
-      /*
-      let promises = dbBlocks.map(async (dbBlock) => {
-        txCount += dbBlock.data.transactions.length;
-        await handleTxsInDbBlock(dbBlock, dbBlock.data.transactions, t);
-        affectedAccounts.push(...retrieveAffectedAccountsFromTxs(dbBlock.data.transactions));
-      });
-      await Promise.all(promises);
-      */
-      await promise;
 
       const promises = affectedAccounts.map(async address => updateAccountData(
         address, dbBlocks[dbBlocks.length - 1].height, t,

@@ -120,7 +120,7 @@ const handleBlocksResponse = async (blocks, t) => {
   const parentBlock = await Block.findById(parentHeight);
   if (parentBlock === null && parentHeight !== 0) {
     await requestBlockByHeight(parentHeight)
-      .then(block => handleBlocksResponse(block, t));
+      .then(block => handleBlocksResponse([block], t));
   }
   // Check if the block is already saved
   const verifiedBlocks = [];

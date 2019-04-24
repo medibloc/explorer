@@ -84,9 +84,9 @@ const handleTxsInDbBlock = async (dbBlock, t) => {
   return Transaction
     .bulkCreate(parsedTxs, { transaction: t })
     .then(async (dbTxs) => {
-      await Promise.all(dbTxs.map(dbTx => (
-        updateTxToAccounts(dbTx.data, t)
-      )));
+      await dbTxs.reduce((p, dbTx) => p.then(
+        () => updateTxToAccounts(dbTx.data, t),
+      ), Promise.resolve());
 
       return dbTxs;
     });

@@ -92,9 +92,9 @@ const handleTxsInDbBlock = async (dbBlock, t) => {
     });
 };
 
-const retrieveAffectedAccountsFromTxs = (txs) => {
+const retrieveAffectedAccountsFromDbTxs = (DbTxs) => {
   const affectedAccounts = [];
-  txs.forEach(tx => affectedAccounts.push(tx.fromAccount, tx.toAccount));
+  DbTxs.forEach(dbTx => affectedAccounts.push(dbTx.fromAccount, dbTx.toAccount));
   return affectedAccounts;
 };
 
@@ -154,7 +154,7 @@ const handleBlocksResponse = async (blocks, t) => {
           txCount += dbBlock.data.transactions.length;
           const txs = await handleTxsInDbBlock(dbBlock, t);
 
-          const accs = retrieveAffectedAccountsFromTxs(txs);
+          const accs = retrieveAffectedAccountsFromDbTxs(dbTxs);
           accs.forEach((acc) => {
             if (affectedAccounts.indexOf(acc) === -1) affectedAccounts.push(acc);
           });

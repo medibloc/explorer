@@ -67,33 +67,27 @@ const updateAccountData = (address, height, t) => requestAccount({ address, heig
 
 const handleTxsInDbBlock = async (dbBlock, t) => {
   const block = dbBlock.data;
-  const parsedTxs = [];
+  let parsedTxs = [];
 
   // getBlock contains all transaction data
   if (block.transactions.length !== 0) {
-    block.transactions.map(tx => parsedTxs.push(parseTx(dbBlock, tx)));
+    parsedTxs = block.transactions.map(tx => parseTx(dbBlock, tx));
   } else if (block.tx_hashes.length !== 0) { // getBlocks only contains hashes
-    await block.tx_hashes.reduce((p, txHash) => p.then(async () => {
+    parsedTxs = await Promise.all(block.tx_hashes.map(async (txHash) => {
       const tx = await requestTransaction(txHash);
-      const parsedTx = parseTx(dbBlock, tx);
-      parsedTxs.push(parsedTx);
-    }), Promise.resolve());
+      return parseTx(dbBlock, tx);
+    }));
   }
 
-  await updateCoinbaseAccount(block, t);
+  await updateCoinbaseAccount(block, t); // TODO consider revert block case
 
   return Transaction
     .bulkCreate(parsedTxs, { transaction: t })
     .then(async (dbTxs) => {
-      await dbTxs.reduce((p, dbTx) => p.then(
-        () => updateTxToAccounts(dbTx.data, t),
-      ), Promise.resolve());
-      /*
-      const promises = dbTxs.map(async (dbTx) => {
-        await updateTxToAccounts(dbTx.data, t);
-      });
-      await Promise.all(promises);
-      */
+      await Promise.all(dbTxs.map(dbTx => (
+        updateTxToAccounts(dbTx.data, t)
+      )));
+
       return dbTxs;
     });
 };

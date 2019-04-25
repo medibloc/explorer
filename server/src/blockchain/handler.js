@@ -65,6 +65,20 @@ const updateAccountData = (address, height, t) => requestAccount({ address, heig
       .catch(() => console.log(`failed to update account ${acc.address}`));
   });
 
+const updateAllAccountsDataAfterSync = async () => db.transaction(async (t) => {
+  const accounts = await Account.findAll({ transaction: t });
+  const { height } = await Block.findOne({ order: [['id', 'desc']], transaction: t });
+
+  const promises = accounts.map(async (account) => {
+    const acc = await requestAccount({ address: account.address, height });
+    const parsedAccount = parseAccount(acc);
+
+    return account.update(parsedAccount, { where: { id: account.id }, transaction: t })
+      .catch(() => console.log(`failed to update account ${acc.address}`));
+  });
+  await Promise.all(promises);
+});
+
 const handleTxsInDbBlock = async (dbBlock, t) => {
   const block = dbBlock.data;
   let parsedTxs = [];
@@ -273,6 +287,11 @@ export const sync = async () => {
 
 let call = null;
 export const startSubscribe = (promise) => {
+  promise = promise.then(async () => {
+    console.log('SYNC IS DONE');
+    await updateAllAccountsDataAfterSync();
+  });
+
   const reset = () => {
     stopSync = false;
     return startSubscribe(sync());

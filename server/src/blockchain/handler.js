@@ -248,7 +248,7 @@ export const sync = async () => {
 
   const lastHeight = +medState.height;
   console.log(`current height ${currentHeight}, last height ${lastHeight}`); // eslint-disable-line no-console
-  if (currentHeight === lastHeight) {
+  if (currentHeight === lastHeight && medState.tail === lastBlock.hash) {
     return Promise.resolve();
   }
   // If db holds old data because tail block height does not reached to currentHeight yet

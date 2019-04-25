@@ -253,7 +253,8 @@ export const sync = async () => {
   }
   // If db holds old data because tail block height does not reached to currentHeight yet
   if (currentHeight > lastHeight) {
-    throw new Error('DB Initialization is required');
+    console.error('DB Initialization is required');
+    process.exit(1);
   }
 
   // getBlocks is used only for sync

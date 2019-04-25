@@ -121,7 +121,7 @@ const handleBlocksResponse = async (blocks, t) => {
   // Check if the block is already saved
   if (parentBlock !== null && isReverted(blocks[0], parentBlock)) {
     console.log(`revert block received ${blocks[0].height}`);
-    const newBlocks = handleRevertBlocks(blocks[0], []);
+    const newBlocks = await handleRevertBlocks(blocks[0], []);
     blocks = [...newBlocks, ...blocks]; // eslint-disable-line no-param-reassign
   }
 

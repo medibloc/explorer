@@ -12,7 +12,6 @@ export const get = async (req, res) => {
   if (!account) {
     account = await Account.findOne({ where: { address: id } });
   }
-  // TODO use accountLogs
   if (!account) {
     throw new BadRequest('account not found');
   }

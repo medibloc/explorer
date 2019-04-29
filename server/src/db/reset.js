@@ -4,7 +4,7 @@ import Account from '../account/model';
 import Block from '../block/model';
 import Transaction from '../transaction/model';
 
-const reset = () => [Account, Block, Transaction].reduce(
+const reset = () => [Transaction, Account, Block].reduce(
   (promise, model) => promise.then(() => model.destroy({
     where: {},
     // truncate: true,

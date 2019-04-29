@@ -8,7 +8,7 @@ export const get = async (req, res) => {
   const { id } = req.params;
   let block;
   if (+id) {
-    block = await Block.findById(id);
+    block = await Block.findByPk(id);
   } else {
     block = await Block.findOne({ where: { hash: id } });
   }

@@ -7,7 +7,7 @@ export const get = async (req, res) => {
   const { id } = req.params;
   let account;
   if (+id) {
-    account = await Account.findById(req.params.id);
+    account = await Account.findByPk(req.params.id);
   }
   if (!account) {
     account = await Account.findOne({ where: { address: id } });

@@ -114,7 +114,7 @@ const retrieveAffectedAccountsFromDbTxs = (DbTxs) => {
 
 const handleRevertBlocks = async (block, newBlocks) => {
   const parentHeight = +block.height - 1;
-  const parentBlock = await Block.findById(parentHeight);
+  const parentBlock = await Block.findByPk(parentHeight);
   if (parentBlock.hash !== block.parent_hash) {
     return requestBlockByHeight(parentHeight)
       .then(newParentBlock => handleRevertBlocks(newParentBlock, [newParentBlock, ...newBlocks]));
@@ -125,7 +125,7 @@ const handleRevertBlocks = async (block, newBlocks) => {
 const handleBlocksResponse = async (blocks, t) => {
   // Check if the parent block exists
   const parentHeight = +blocks[0].height - 1;
-  const parentBlock = await Block.findById(parentHeight);
+  const parentBlock = await Block.findByPk(parentHeight);
   // If parentBlock doesn't exist
   if (parentBlock === null && parentHeight !== 0) {
     await requestBlockByHeight(parentHeight)
@@ -141,7 +141,7 @@ const handleBlocksResponse = async (blocks, t) => {
 
   const verifiedBlocks = await Promise.all(
     blocks.map(async (block) => {
-      const blockInDB = await Block.findById(block.height);
+      const blockInDB = await Block.findByPk(block.height);
 
       if (!blockInDB) {
         return block;

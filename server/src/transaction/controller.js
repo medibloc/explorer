@@ -6,7 +6,7 @@ import { listQueryWithCount } from '../db/query';
 
 export const get = async (req, res) => {
   const { id } = req.params;
-  const transaction = await Transaction.findById(id);
+  const transaction = await Transaction.findByPk(id);
   if (!transaction) {
     throw new NotFound('transaction not exists');
   }

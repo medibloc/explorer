@@ -27,11 +27,11 @@
     "express-request-id": "^1.4.0",
     "glob-fs": "^0.1.7",
     "http-errors": "^1.6.3",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.11",
     "medjs": "^1.0.0",
     "mysql2": "^1.5.3",
     "pluralize": "^7.0.0",
-    "sequelize": "^4.38.0",
+    "sequelize": "^5.7.6",
     "url": "^0.11.0"
   },
   "devDependencies": {
@@ -41,7 +41,7 @@
     "babel-preset-stage-3": "^6.24.1",
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
-    "eslint": "^5.4.0",
+    "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",

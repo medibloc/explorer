@@ -8,7 +8,7 @@ import { requestMedState } from '../utils/requester';
 import Block from '../block/model';
 
 import { updateAllAccountsDataAfterSync } from '../account/handler';
-import { handleBlocksResponse, getBlocks } from '../block/handler';
+import { handleBlocksResponse, getBlocks, getLastBlock } from '../block/handler';
 
 const { url } = config.blockchain;
 
@@ -47,7 +47,7 @@ export const onSubscribe = (req, res, options) => {
 
 let stopSync = false;
 export const sync = async () => {
-  const lastBlock = await Block.findOne({ order: [['id', 'desc']] });
+  const lastBlock = await getLastBlock();
   const medState = await requestMedState();
 
   // CASE A : If DB is empty

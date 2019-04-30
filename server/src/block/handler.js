@@ -110,3 +110,5 @@ export const getBlocks = (currentHeight, lastHeight) => db.transaction((t) => {
       throw err;
     });
 });
+
+export const getLastBlock = () => Block.findOne({ order: [['id', 'desc']] });

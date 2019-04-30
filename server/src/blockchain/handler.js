@@ -52,19 +52,6 @@ const updateCoinbaseAccount = async (rawBlock, t, revert = false) => {
     .catch(() => console.log(`failed to update coinbase account ${coinbaseAccount.address}`));
 };
 
-const updateAccountData = (address, height, t) => requestAccount({ address, height })
-  .then(async (rawAcc) => {
-    const acc = await getAccountFromDB(address, t);
-    const parsedAccount = parseAccount(rawAcc);
-
-    // Init genesis account balance
-    if (address === GENESIS_ACCOUNT && height <= REQUEST_STEP) {
-      parsedAccount.balance = new BigNumber('0').toString();
-    }
-    return acc.update(parsedAccount, { where: { id: acc.id }, transaction: t })
-      .catch(() => console.log(`failed to update account ${acc.address}`));
-  });
-
 const updateAllAccountsDataAfterSync = async () => db.transaction(async (t) => {
   const accounts = await Account.findAll({ transaction: t });
   const { height } = await Block.findOne({ order: [['id', 'desc']], transaction: t });

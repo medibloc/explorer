@@ -21,16 +21,11 @@ import {
 } from '../account/handler';
 import {
   handleTxsInDbBlock,
+  retrieveAffectedAccountsFromDbTxs,
 } from '../transaction/handler';
 
 const { url } = config.blockchain;
 const { REQUEST_STEP } = config.request;
-
-const retrieveAffectedAccountsFromDbTxs = (DbTxs) => {
-  const affectedAccounts = [];
-  DbTxs.forEach(dbTx => affectedAccounts.push(dbTx.fromAccount, dbTx.toAccount));
-  return affectedAccounts;
-};
 
 const handleRevertBlocks = async (block, newBlocks, t) => {
   const parentHeight = +block.height - 1;

@@ -30,3 +30,9 @@ export const handleTxsInDbBlock = async (dbBlock, t) => {
       return dbTxs;
     });
 };
+
+export const retrieveAffectedAccountsFromDbTxs = (DbTxs) => {
+  const affectedAccounts = [];
+  DbTxs.forEach(dbTx => affectedAccounts.push(dbTx.fromAccount, dbTx.toAccount));
+  return affectedAccounts;
+};

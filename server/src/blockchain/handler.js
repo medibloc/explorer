@@ -103,12 +103,12 @@ const handleRevertBlocks = async (block, newBlocks, t) => {
   const parentHeight = +block.height - 1;
   const parentBlock = await Block.findByPk(parentHeight);
   if (parentBlock.hash !== block.parent_hash) {
-    // Remove transactions from parentBlock.
     const transactions = await Transaction.findAll({
       where: { blockHeight: parentHeight },
       transaction: t,
     });
 
+    // Revert account state from revert transactions
     await transactions.reduce((p, dbTx) => p.then(
       () => updateTxToAccounts(dbTx.data, t, true),
     ), Promise.resolve());

@@ -29,10 +29,12 @@
     "http-errors": "^1.6.3",
     "lodash": "^4.17.11",
     "medjs": "^1.0.0",
+    "morgan": "^1.9.1",
     "mysql2": "^1.5.3",
     "pluralize": "^7.0.0",
     "sequelize": "^5.7.6",
-    "url": "^0.11.0"
+    "url": "^0.11.0",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

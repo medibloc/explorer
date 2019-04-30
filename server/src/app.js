@@ -4,6 +4,7 @@ import express from 'express';
 import expressRequestId from 'express-request-id';
 import path from 'path';
 import cors from 'cors';
+import morgan from 'morgan';
 
 import route from './route';
 
@@ -54,6 +55,8 @@ export default () => {
   app.use(compression());
   app.use(bodyParser.json());
   app.use(sseMiddleware);
+  app.use(morgan('combined'));
+
   app.use('/api', route);
   app.use('/', express.static('build'));
   app.use('*', (req, res) => {

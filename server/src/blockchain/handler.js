@@ -5,18 +5,18 @@ import config from '../../config';
 import db from '../db';
 import { requestBlockByHash, requestMedState } from '../utils/requester';
 
-import Block from '../block/model';
-
 import { updateAllAccountsDataAfterSync } from '../account/handler';
 import { handleBlocksResponse, getBlocks, getLastBlock } from '../block/handler';
 
 const { url } = config.blockchain;
 
+
 const topics = {
   'chain.newTailBlock': {
     onEvent: ({ hash, topic }, onReset) => requestBlockByHash(hash)
       .then(async (block) => {
-        const { data: { height: lastHeight } } = await Block.findOne({ order: [['id', 'desc']] });
+        const { height: lastHeight } = await getLastBlock();
+        // if explorer does not have full blocks
         if (+lastHeight + 1 < +block.height) return onReset();
 
         return db.transaction(t => handleBlocksResponse([block], t));

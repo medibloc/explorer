@@ -31,11 +31,11 @@ const updateTxToAccounts = async (rawTx, t, revert = false) => {
   return Promise.all([
     fromAccount.update({
       totalTxs: fromAccount.totalTxs + (revert ? -1 : 1),
-      totalAmount: new BigNumber(fromAccount.totalAmount).minus(value).toString(),
+      balance: new BigNumber(fromAccount.balance).minus(value).toString(),
     }, { transaction: t }),
     toAccount.update({
       totalTxs: toAccount.totalTxs + (revert ? -1 : 1),
-      totalAmount: new BigNumber(toAccount.totalAmount).plus(value).toString(),
+      balance: new BigNumber(toAccount.balance).plus(value).toString(),
     }, { transaction: t }),
   ])
     .catch(() => console.log(`failed to update tx to accounts ${rawTx.hash}`));
@@ -47,7 +47,7 @@ const updateCoinbaseAccount = async (rawBlock, t, revert = false) => {
   const coinbaseAccount = await getAccountFromDB(coinbase, t);
 
   return coinbaseAccount.update({
-    totalAmount: new BigNumber(coinbaseAccount.totalAmount).plus(reward).toString(),
+    balance: new BigNumber(coinbaseAccount.balance).plus(reward).toString(),
   }, { transaction: t })
     .catch(() => console.log(`failed to update coinbase account ${coinbaseAccount.address}`));
 };
@@ -59,7 +59,7 @@ const updateAccountData = (address, height, t) => requestAccount({ address, heig
 
     // Init genesis account balance
     if (address === GENESIS_ACCOUNT && height <= REQUEST_STEP) {
-      parsedAccount.totalAmount = new BigNumber('0').toString();
+      parsedAccount.balance = new BigNumber('0').toString();
     }
     return acc.update(parsedAccount, { where: { id: acc.id }, transaction: t })
       .catch(() => console.log(`failed to update account ${acc.address}`));

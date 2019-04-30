@@ -3,7 +3,6 @@ import { requestTransaction } from '../utils/requester';
 import { updateCoinbaseAccount, updateTxToAccounts } from '../account/handler';
 import Transaction from './model';
 
-// eslint-disable-next-line import/prefer-default-export
 export const handleTxsInDbBlock = async (dbBlock, t) => {
   const block = dbBlock.data;
   let parsedTxs = [];

@@ -99,12 +99,26 @@ const retrieveAffectedAccountsFromDbTxs = (DbTxs) => {
   return affectedAccounts;
 };
 
-const handleRevertBlocks = async (block, newBlocks) => {
+const handleRevertBlocks = async (block, newBlocks, t) => {
   const parentHeight = +block.height - 1;
   const parentBlock = await Block.findByPk(parentHeight);
   if (parentBlock.hash !== block.parent_hash) {
+    // Remove transactions from parentBlock.
+    const transactions = await Transaction.findAll({
+      where: { blockHeight: parentHeight },
+      transaction: t,
+    });
+
+    await transactions.reduce((p, dbTx) => p.then(
+      () => updateTxToAccounts(dbTx.data, t, true),
+    ), Promise.resolve());
+
+    await Transaction.destroy({ where: { blockHeight: parentHeight }, transaction: t });
+
     return requestBlockByHeight(parentHeight)
-      .then(newParentBlock => handleRevertBlocks(newParentBlock, [newParentBlock, ...newBlocks]));
+      .then(newParentBlock => (
+        handleRevertBlocks(newParentBlock, [newParentBlock, ...newBlocks], t)
+      ));
   }
   return newBlocks;
 };
@@ -125,7 +139,7 @@ const handleBlocksResponse = async (blocks, t) => {
   if (parentBlock !== null && isReverted(blocks[0], parentBlock)) {
     reverted = true;
     console.log(`revert block received ${blocks[0].height}`);
-    const newBlocks = await handleRevertBlocks(blocks[0], []);
+    const newBlocks = await handleRevertBlocks(blocks[0], [], t);
     blocks = [...newBlocks, ...blocks]; // eslint-disable-line no-param-reassign
   }
 

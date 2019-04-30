@@ -42,9 +42,7 @@ export const onSubscribe = (req, res, options) => {
   });
 };
 
-
-let stopSync = false;
-export const sync = async () => {
+export const sync = async (stopSync = false) => {
   const lastBlock = await getLastBlock();
   const medState = await requestMedState();
 
@@ -86,10 +84,8 @@ export const startSubscribe = (promise) => {
     await updateAllAccountsDataAfterSync();
   });
 
-  const reset = () => {
-    stopSync = false;
-    return startSubscribe(sync());
-  };
+  const reset = stopSync => startSubscribe(sync(stopSync));
+
   if (call) {
     call.cancel('Previous request is canceled');
   }
@@ -130,7 +126,6 @@ export const startSubscribe = (promise) => {
     });
   }).catch(() => {
     console.log('Something is wrong while subscribing,');
-    stopSync = true;
-    setTimeout(reset, 1000);
+    setTimeout(() => reset(true), 1000);
   });
 };

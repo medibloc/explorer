@@ -110,6 +110,8 @@ const handleRevertBlocks = async (block, newBlocks) => {
 };
 
 const handleBlocksResponse = async (blocks, t) => {
+  let reverted = false;
+
   // Check if the parent block exists
   const parentHeight = +blocks[0].height - 1;
   const parentBlock = await Block.findByPk(parentHeight);
@@ -121,6 +123,7 @@ const handleBlocksResponse = async (blocks, t) => {
 
   // Check if the block is already saved
   if (parentBlock !== null && isReverted(blocks[0], parentBlock)) {
+    reverted = true;
     console.log(`revert block received ${blocks[0].height}`);
     const newBlocks = await handleRevertBlocks(blocks[0], []);
     blocks = [...newBlocks, ...blocks]; // eslint-disable-line no-param-reassign
@@ -159,17 +162,14 @@ const handleBlocksResponse = async (blocks, t) => {
         .then(async () => {
           txCount += dbBlock.data.transactions.length;
           const dbTxs = await handleTxsInDbBlock(dbBlock, t);
-          const accounts = retrieveAffectedAccountsFromDbTxs(dbTxs);
+          if (reverted) {
+            const accounts = retrieveAffectedAccountsFromDbTxs(dbTxs);
 
-          accounts.forEach((acc) => {
-            if (!affectedAccounts.includes(acc)) affectedAccounts.push(acc);
-          });
+            accounts.forEach((acc) => {
+              if (!affectedAccounts.includes(acc)) affectedAccounts.push(acc);
+            });
+          }
         }), Promise.resolve());
-
-      const promises = affectedAccounts.map(async address => updateAccountData(
-        address, dbBlocks[dbBlocks.length - 1].height, t,
-      ));
-      await Promise.all(promises);
 
       if (txCount) {
         console.log(`add ${txCount} transactions`);
@@ -292,6 +292,7 @@ export const startSubscribe = (promise) => {
   for (const t of Object.keys(topics)) { // eslint-disable-line
     params.append('topics', t);
   }
+
   return axios({
     cancelToken: call.token,
     params,

@@ -22,6 +22,7 @@ import {
 } from '../transaction/handler';
 import {
   handleRevertBlocks,
+  verifyBlocks,
 } from '../block/handler';
 
 const { url } = config.blockchain;
@@ -47,22 +48,7 @@ const handleBlocksResponse = async (blocks, t) => {
     blocks = [...newBlocks, ...blocks]; // eslint-disable-line no-param-reassign
   }
 
-  const verifiedBlocks = await Promise.all(
-    blocks.map(async (block) => {
-      const blockInDB = await Block.findByPk(block.height);
-
-      if (!blockInDB) {
-        return block;
-      }
-
-      if (isIdentical(block, blockInDB.data)) {
-        console.log(`identical block received : ${block.height}`);
-        return block;
-      }
-
-      return block;
-    }),
-  );
+  const verifiedBlocks = await verifyBlocks(blocks);
 
   return Block
     .bulkCreate(verifiedBlocks.map(parseBlock), {

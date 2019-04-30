@@ -36,7 +36,7 @@ const handleTxsInDbBlock = async (dbBlock, t) => {
     }));
   }
 
-  await updateCoinbaseAccount(block, t); // TODO consider revert block case
+  await updateCoinbaseAccount(block, t);
 
   return Transaction
     .bulkCreate(parsedTxs, { transaction: t })

@@ -63,7 +63,9 @@ const handleBlocksResponse = async (blocks, t) => {
 
       await dbBlocks.reduce((p, dbBlock) => p
         .then(async () => {
-          txCount += dbBlock.data.transactions.length;
+          txCount += Math.max(
+            dbBlock.data.transactions.length, dbBlock.data.tx_hashes.length,
+          );
           const dbTxs = await handleTxsInDbBlock(dbBlock, t);
           if (reverted) {
             const accounts = retrieveAffectedAccountsFromDbTxs(dbTxs);

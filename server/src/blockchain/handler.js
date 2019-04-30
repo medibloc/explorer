@@ -3,7 +3,7 @@ import { URLSearchParams } from 'url';
 
 import config from '../../config';
 import db from '../db';
-import { requestMedState } from '../utils/requester';
+import { requestBlockByHash, requestMedState } from '../utils/requester';
 
 import Block from '../block/model';
 
@@ -14,15 +14,13 @@ const { url } = config.blockchain;
 
 const topics = {
   'chain.newTailBlock': {
-    onEvent: ({ hash, topic }, onReset) => axios({
-      method: 'get',
-      url: `${url}/v1/block?hash=${hash}`,
-    }).then(async ({ data: block }) => {
-      const { data: { height: lastHeight } } = await Block.findOne({ order: [['id', 'desc']] });
-      if (+lastHeight + 1 < +block.height) return onReset();
+    onEvent: ({ hash, topic }, onReset) => requestBlockByHash(hash)
+      .then(async (block) => {
+        const { data: { height: lastHeight } } = await Block.findOne({ order: [['id', 'desc']] });
+        if (+lastHeight + 1 < +block.height) return onReset();
 
-      return db.transaction(t => handleBlocksResponse([block], t));
-    }).then(dbBlocks => pushEvent({ data: dbBlocks[0].dataValues, topic })),
+        return db.transaction(t => handleBlocksResponse([block], t));
+      }).then(dbBlocks => pushEvent({ data: dbBlocks[0].dataValues, topic })),
   },
 };
 

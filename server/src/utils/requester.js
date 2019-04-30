@@ -3,6 +3,12 @@ import config from '../../config';
 
 const { url } = config.blockchain;
 
+const requestBlockByHash = hash => axios({
+  method: 'get',
+  params: { hash },
+  url: `${url}/v1/block`,
+}).then(res => res.data);
+
 const requestBlockByHeight = height => axios({
   method: 'get',
   params: { height },
@@ -45,6 +51,7 @@ const requestMedState = () => axios({
 }).then(res => res.data);
 
 export {
+  requestBlockByHash,
   requestBlockByHeight,
   requestBlocks,
   requestTransaction,

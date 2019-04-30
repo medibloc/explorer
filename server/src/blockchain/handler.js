@@ -29,8 +29,6 @@ const { url } = config.blockchain;
 const { REQUEST_STEP } = config.request;
 
 const handleBlocksResponse = async (blocks, t) => {
-  let reverted = false;
-
   // Check if the parent block exists
   const parentHeight = +blocks[0].height - 1;
   const parentBlock = await Block.findByPk(parentHeight);
@@ -42,7 +40,6 @@ const handleBlocksResponse = async (blocks, t) => {
 
   // Check if the block is already saved
   if (parentBlock !== null && isReverted(blocks[0], parentBlock)) {
-    reverted = true;
     const newBlocks = await handleRevertBlocks(blocks[0], [], t);
     blocks = [...newBlocks, ...blocks]; // eslint-disable-line no-param-reassign
   }

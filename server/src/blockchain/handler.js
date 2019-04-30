@@ -15,7 +15,7 @@ import Account from '../account/model';
 import Block from '../block/model';
 import Transaction from '../transaction/model';
 
-const { url, GENESIS_ACCOUNT } = config.blockchain;
+const { url } = config.blockchain;
 const { REQUEST_STEP } = config.request;
 
 const getAccountFromDB = (address, t) => Account

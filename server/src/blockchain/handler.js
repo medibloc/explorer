@@ -59,7 +59,6 @@ const handleBlocksResponse = async (blocks, t) => {
       console.log(`blocks from ${dbBlocks[0].height} to ${dbBlocks[dbBlocks.length - 1].height} added`);
 
       let txCount = 0;
-      const affectedAccounts = [];
 
       await dbBlocks.reduce((p, dbBlock) => p
         .then(async () => {
@@ -67,13 +66,6 @@ const handleBlocksResponse = async (blocks, t) => {
             dbBlock.data.transactions.length, dbBlock.data.tx_hashes.length,
           );
           const dbTxs = await handleTxsInDbBlock(dbBlock, t);
-          if (reverted) {
-            const accounts = retrieveAffectedAccountsFromDbTxs(dbTxs);
-
-            accounts.forEach((acc) => {
-              if (!affectedAccounts.includes(acc)) affectedAccounts.push(acc);
-            });
-          }
         }), Promise.resolve());
 
       if (txCount) {

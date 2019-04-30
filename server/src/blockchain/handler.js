@@ -17,10 +17,7 @@ import {
   updateAllAccountsDataAfterSync,
 } from '../account/handler';
 import {
-  handleTxsInDbBlock,
-  retrieveAffectedAccountsFromDbTxs,
-} from '../transaction/handler';
-import {
+  applyBlockData,
   handleRevertBlocks,
   verifyBlocks,
 } from '../block/handler';
@@ -52,22 +49,7 @@ const handleBlocksResponse = async (blocks, t) => {
       updateOnDuplicate: ['data', 'hash'],
     })
     .then(async (dbBlocks) => {
-      if (dbBlocks.length === 0) return [];
-      console.log(`blocks from ${dbBlocks[0].height} to ${dbBlocks[dbBlocks.length - 1].height} added`);
-
-      let txCount = 0;
-
-      await dbBlocks.reduce((p, dbBlock) => p
-        .then(async () => {
-          txCount += Math.max(
-            dbBlock.data.transactions.length, dbBlock.data.tx_hashes.length,
-          );
-          await handleTxsInDbBlock(dbBlock, t);
-        }), Promise.resolve());
-
-      if (txCount) {
-        console.log(`add ${txCount} transactions`);
-      }
+      await applyBlockData(dbBlocks, t);
       return dbBlocks;
     });
 };

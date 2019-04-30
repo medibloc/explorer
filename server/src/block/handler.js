@@ -1,7 +1,7 @@
 import Block from './model';
 import { updateCoinbaseAccount, updateTxToAccounts } from '../account/handler';
 import {
-  getTransactionsWithBlockHeight,
+  getTransactionsWithBlockHeight, handleTxsInDbBlock,
   removeTransactionsWithBlockHeight,
 } from '../transaction/handler';
 import { requestBlockByHeight } from '../utils/requester';
@@ -46,3 +46,18 @@ export const verifyBlocks = blocks => (
     return block;
   }))
 );
+
+export const applyBlockData = async (dbBlocks, t) => {
+  let txCount = 0;
+  await dbBlocks.reduce((p, dbBlock) => p
+    .then(async () => {
+      txCount += Math.max(
+        dbBlock.data.transactions.length, dbBlock.data.tx_hashes.length,
+      );
+
+      await handleTxsInDbBlock(dbBlock, t);
+      return true;
+    }), Promise.resolve());
+
+  if (txCount) console.log(`add ${txCount} transactions`);
+};

@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
-
 import config from '../../config';
+
+const { DB } = config;
 
 const USERNAME = process.env.EXPLORER_DB_USERNAME;
 const PASSWORD = process.env.EXPLORER_DB_PASSWORD;
@@ -29,7 +30,7 @@ const connect = ({
 };
 
 const conn = connect({
-  ...config.db,
+  ...DB,
   user: USERNAME,
   password: PASSWORD,
 });

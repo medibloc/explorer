@@ -8,8 +8,7 @@ import { requestBlockByHash, requestMedState } from '../utils/requester';
 import { updateAllAccountsDataAfterSync } from '../account/handler';
 import { handleBlocksResponse, getBlocks, getLastBlock } from '../block/handler';
 
-const { url } = config.blockchain;
-
+const { URL } = config.BLOCKCHAIN;
 
 const topics = {
   'chain.newTailBlock': {
@@ -101,7 +100,7 @@ export const startSubscribe = (promise) => {
     method: 'get',
     cancelPreviousRequest: true,
     responseType: 'stream',
-    url: `${url}/v1/subscribe`,
+    url: `${URL}/v1/subscribe`,
   }).then(({ data }) => {
     console.log('start subscribing');
     data.on('data', (buf) => {

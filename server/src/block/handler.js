@@ -10,7 +10,7 @@ import { isIdentical, isReverted } from '../utils/checker';
 import { parseBlock } from '../utils/parser';
 import config from '../../config';
 
-const { REQUEST_STEP } = config.request;
+const { REQUEST_STEP } = config.REQUEST;
 
 
 const handleRevertBlocks = async (block, newBlocks, t) => {

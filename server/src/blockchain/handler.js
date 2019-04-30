@@ -113,6 +113,10 @@ const handleRevertBlocks = async (block, newBlocks, t) => {
       () => updateTxToAccounts(dbTx.data, t, true),
     ), Promise.resolve());
 
+    // Revert coinbase account
+    await updateCoinbaseAccount(parentBlock.data, t, true);
+
+    // Remove transactions from parentBlock.
     await Transaction.destroy({ where: { blockHeight: parentHeight }, transaction: t });
 
     return requestBlockByHeight(parentHeight)

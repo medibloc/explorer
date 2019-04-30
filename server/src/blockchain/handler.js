@@ -65,7 +65,7 @@ const handleBlocksResponse = async (blocks, t) => {
           txCount += Math.max(
             dbBlock.data.transactions.length, dbBlock.data.tx_hashes.length,
           );
-          const dbTxs = await handleTxsInDbBlock(dbBlock, t);
+          await handleTxsInDbBlock(dbBlock, t);
         }), Promise.resolve());
 
       if (txCount) {

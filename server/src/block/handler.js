@@ -11,6 +11,7 @@ export const handleRevertBlocks = async (block, newBlocks, t) => {
   const parentHeight = +block.height - 1;
   const parentBlock = await Block.findByPk(parentHeight);
   if (parentBlock.hash !== block.parent_hash) {
+    console.log(`revert block received ${parentHeight}`);
     const transactions = await getTransactionsWithBlockHeight(parentHeight, t);
 
     // Remove transactions from parentBlock.

@@ -30,12 +30,6 @@ export const handleTxsInDbBlock = async (dbBlock, t) => {
     });
 };
 
-export const retrieveAffectedAccountsFromDbTxs = (DbTxs) => {
-  const affectedAccounts = [];
-  DbTxs.forEach(dbTx => affectedAccounts.push(dbTx.fromAccount, dbTx.toAccount));
-  return affectedAccounts;
-};
-
 export const getTransactionsWithBlockHeight = (blockHeight, t) => (
   Transaction.findAll({
     where: { blockHeight },

@@ -3,10 +3,7 @@ import { URLSearchParams } from 'url';
 
 import config from '../../config';
 import db from '../db';
-import { isIdentical, isReverted } from '../utils/checker';
-import { parseBlock } from '../utils/parser';
 import {
-  requestBlockByHeight,
   requestBlocks,
   requestMedState,
 } from '../utils/requester';
@@ -16,55 +13,10 @@ import Block from '../block/model';
 import {
   updateAllAccountsDataAfterSync,
 } from '../account/handler';
-import {
-  applyBlockData,
-  handleRevertBlocks,
-  verifyBlocks,
-} from '../block/handler';
+import { handleBlocksResponse } from '../block/handler';
 
 const { url } = config.blockchain;
 const { REQUEST_STEP } = config.request;
-
-const handleBlocksResponse = async (blocks, t) => {
-  // Check if the parent block exists
-  const parentHeight = +blocks[0].height - 1;
-  const parentBlock = await Block.findByPk(parentHeight);
-  // If parentBlock doesn't exist
-  if (parentBlock === null && parentHeight !== 0) {
-    await requestBlockByHeight(parentHeight)
-      .then(block => handleBlocksResponse([block], t));
-  }
-
-  // Check if the block is already saved
-  if (parentBlock !== null && isReverted(blocks[0], parentBlock)) {
-    const newBlocks = await handleRevertBlocks(blocks[0], [], t);
-    blocks = [...newBlocks, ...blocks]; // eslint-disable-line no-param-reassign
-  }
-
-  const verifiedBlocks = await verifyBlocks(blocks);
-
-  return Block
-    .bulkCreate(verifiedBlocks.map(parseBlock), {
-      transaction: t,
-      updateOnDuplicate: ['data', 'hash'],
-    })
-    .then(async (dbBlocks) => {
-      await applyBlockData(dbBlocks, t);
-      return dbBlocks;
-    });
-};
-
-export const pushEvent = (e) => {
-  const { topic } = e;
-  if (!clients[topic]) {
-    throw new Error(`invalid topic ${topic}`);
-  }
-  const topicClients = Object.values(clients[topic]);
-  console.log(`there are ${topicClients.length} clients`); // eslint-disable-line no-console
-  topicClients.forEach((client) => {
-    client.sseSend(e);
-  });
-};
 
 const topics = {
   'chain.newTailBlock': {

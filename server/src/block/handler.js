@@ -5,7 +5,8 @@ import {
   removeTransactionsWithBlockHeight,
 } from '../transaction/handler';
 import { requestBlockByHeight } from '../utils/requester';
-import { isIdentical } from '../utils/checker';
+import { isIdentical, isReverted } from '../utils/checker';
+import { parseBlock } from '../utils/parser';
 
 export const handleRevertBlocks = async (block, newBlocks, t) => {
   const parentHeight = +block.height - 1;
@@ -60,4 +61,33 @@ export const applyBlockData = async (dbBlocks, t) => {
     }), Promise.resolve());
 
   if (txCount) console.log(`add ${txCount} transactions`);
+};
+
+export const handleBlocksResponse = async (blocks, t) => {
+  // Check if the parent block exists
+  const parentHeight = +blocks[0].height - 1;
+  const parentBlock = await Block.findByPk(parentHeight);
+  // If parentBlock doesn't exist
+  if (parentBlock === null && parentHeight !== 0) {
+    await requestBlockByHeight(parentHeight)
+      .then(block => handleBlocksResponse([block], t));
+  }
+
+  // Check if the block is already saved
+  if (parentBlock !== null && isReverted(blocks[0], parentBlock)) {
+    const newBlocks = await handleRevertBlocks(blocks[0], [], t);
+    blocks = [...newBlocks, ...blocks]; // eslint-disable-line no-param-reassign
+  }
+
+  const verifiedBlocks = await verifyBlocks(blocks);
+
+  return Block
+    .bulkCreate(verifiedBlocks.map(parseBlock), {
+      transaction: t,
+      updateOnDuplicate: ['data', 'hash'],
+    })
+    .then(async (dbBlocks) => {
+      await applyBlockData(dbBlocks, t);
+      return dbBlocks;
+    });
 };

@@ -8,25 +8,31 @@ import { requestBlockByHash, requestMedState } from '../utils/requester';
 import { updateAllAccountsDataAfterSync } from '../account/handler';
 import { handleBlocksResponse, getBlocks, getLastBlock } from '../block/handler';
 
-const { URL } = config.BLOCKCHAIN;
+const { URL, TOPICS } = config.BLOCKCHAIN;
 
-const topics = {
-  'chain.newTailBlock': {
-    onEvent: ({ hash, topic }, onReset) => requestBlockByHash(hash)
-      .then(async (block) => {
-        const { height: lastHeight } = await getLastBlock();
-        // if explorer does not have full blocks
-        if (+lastHeight + 1 < +block.height) return onReset();
-
-        return db.transaction(t => handleBlocksResponse([block], t));
-      }).then(dbBlocks => pushEvent({ data: dbBlocks[0].dataValues, topic })),
-  },
-};
-
-const clients = Object.keys(topics).reduce((obj, key) => {
+const clients = Object.keys(TOPICS).reduce((obj, key) => {
   obj[key] = {}; // eslint-disable-line no-param-reassign
   return obj;
 }, {});
+
+const pushEventToClient = (e) => {
+  const { topic } = e;
+  if (!clients[topic]) throw new Error(`invalid topic ${topic}`);
+
+  const topicClients = Object.values(clients[topic]);
+  console.log(`there are ${topicClients.length} clients`); // eslint-disable-line no-console
+  topicClients.forEach(client => client.sseSend(e));
+};
+
+TOPICS['chain.newTailBlock'].onEvent = ({ hash, topic }, onReset) => requestBlockByHash(hash)
+  .then(async (block) => {
+    const { height: lastHeight } = await getLastBlock();
+    // if explorer does not have full blocks
+    if (+lastHeight + 1 < +block.height) return onReset();
+
+    return db.transaction(t => handleBlocksResponse([block], t));
+  }).then(dbBlocks => pushEventToClient({ data: dbBlocks[0].dataValues, topic }));
+
 
 export const onSubscribe = (req, res, options) => {
   const { topics: reqTopics } = options;
@@ -90,7 +96,7 @@ export const startSubscribe = (promise) => {
   }
   call = axios.CancelToken.source();
   const params = new URLSearchParams();
-  for (const t of Object.keys(topics)) { // eslint-disable-line
+  for (const t of Object.keys(TOPICS)) { // eslint-disable-line
     params.append('topics', t);
   }
 
@@ -111,13 +117,13 @@ export const startSubscribe = (promise) => {
         return;
       }
       const { topic } = result;
-      if (!topics[topic]) {
-        console.log(`topic ${topic} does not exist`); // eslint-disable-line no-console
+      if (!TOPICS[topic]) {
+        console.log(`topic ${topic} does not exist`);
         return;
       }
       console.log(`event ${topic} received`); // eslint-disable-line no-console
       promise = promise // eslint-disable-line no-param-reassign
-        .then(() => topics[topic].onEvent(result, reset))
+        .then(() => TOPICS[topic].onEvent(result, reset))
         .catch((err) => {
           console.log(err.message);
           return err;

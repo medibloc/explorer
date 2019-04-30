@@ -4,10 +4,11 @@ import { URLSearchParams } from 'url';
 import config from '../../config';
 import db from '../db';
 import { isIdentical, isReverted } from '../utils/checker';
-import { parseBlock, parseTx } from '../utils/parser';
+import { parseBlock } from '../utils/parser';
 import {
-  requestBlockByHeight, requestBlocks,
-  requestTransaction, requestMedState,
+  requestBlockByHeight,
+  requestBlocks,
+  requestMedState,
 } from '../utils/requester';
 
 import Block from '../block/model';
@@ -18,36 +19,12 @@ import {
   updateCoinbaseAccount,
   updateAllAccountsDataAfterSync,
 } from '../account/handler';
+import {
+  handleTxsInDbBlock,
+} from '../transaction/handler';
 
 const { url } = config.blockchain;
 const { REQUEST_STEP } = config.request;
-
-const handleTxsInDbBlock = async (dbBlock, t) => {
-  const block = dbBlock.data;
-  let parsedTxs = [];
-
-  // getBlock contains all transaction data
-  if (block.transactions.length !== 0) {
-    parsedTxs = block.transactions.map(tx => parseTx(dbBlock, tx));
-  } else if (block.tx_hashes.length !== 0) { // getBlocks only contains hashes
-    parsedTxs = await Promise.all(block.tx_hashes.map(async (txHash) => {
-      const tx = await requestTransaction(txHash);
-      return parseTx(dbBlock, tx);
-    }));
-  }
-
-  await updateCoinbaseAccount(block, t);
-
-  return Transaction
-    .bulkCreate(parsedTxs, { transaction: t })
-    .then(async (dbTxs) => {
-      await dbTxs.reduce((p, dbTx) => p.then(
-        () => updateTxToAccounts(dbTx.data, t),
-      ), Promise.resolve());
-
-      return dbTxs;
-    });
-};
 
 const retrieveAffectedAccountsFromDbTxs = (DbTxs) => {
   const affectedAccounts = [];

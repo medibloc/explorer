@@ -3,20 +3,14 @@ import { URLSearchParams } from 'url';
 
 import config from '../../config';
 import db from '../db';
-import {
-  requestBlocks,
-  requestMedState,
-} from '../utils/requester';
+import { requestMedState } from '../utils/requester';
 
 import Block from '../block/model';
 
-import {
-  updateAllAccountsDataAfterSync,
-} from '../account/handler';
-import { handleBlocksResponse } from '../block/handler';
+import { updateAllAccountsDataAfterSync } from '../account/handler';
+import { handleBlocksResponse, getBlocks } from '../block/handler';
 
 const { url } = config.blockchain;
-const { REQUEST_STEP } = config.request;
 
 const topics = {
   'chain.newTailBlock': {
@@ -71,21 +65,6 @@ export const sync = async () => {
     console.error('DB Initialization is required');
     process.exit(1);
   }
-
-  // getBlocks is used only for sync
-  const getBlocks = (prevCurrentHeight, prevLastHeight) => db.transaction((t) => {
-    const from = prevCurrentHeight + 1;
-    const step = Math.min(REQUEST_STEP, prevLastHeight - from + 1);
-    const to = from + step - 1;
-
-    return requestBlocks({ from, to })
-      .then(blocks => handleBlocksResponse(blocks, t))
-      .then(() => to)
-      .catch((err) => {
-        throw err;
-      });
-  });
-
 
   const work = prevCurrentHeight => getBlocks(prevCurrentHeight, lastHeight)
     .then((postCurrentHeight) => {

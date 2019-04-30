@@ -1,12 +1,16 @@
 import Block from './model';
+import db from '../db';
 import { updateCoinbaseAccount, updateTxToAccounts } from '../account/handler';
 import {
   getTransactionsWithBlockHeight, handleTxsInDbBlock,
   removeTransactionsWithBlockHeight,
 } from '../transaction/handler';
-import { requestBlockByHeight } from '../utils/requester';
+import { requestBlockByHeight, requestBlocks } from '../utils/requester';
 import { isIdentical, isReverted } from '../utils/checker';
 import { parseBlock } from '../utils/parser';
+import config from '../../config';
+
+const { REQUEST_STEP } = config.request;
 
 
 const handleRevertBlocks = async (block, newBlocks, t) => {
@@ -93,3 +97,16 @@ export const handleBlocksResponse = async (blocks, t) => {
       return dbBlocks;
     });
 };
+
+export const getBlocks = (currentHeight, lastHeight) => db.transaction((t) => {
+  const from = currentHeight + 1;
+  const step = Math.min(REQUEST_STEP, lastHeight - from + 1);
+  const to = from + step - 1;
+
+  return requestBlocks({ from, to })
+    .then(blocks => handleBlocksResponse(blocks, t))
+    .then(() => to)
+    .catch((err) => {
+      throw err;
+    });
+});

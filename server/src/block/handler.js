@@ -8,7 +8,8 @@ import { requestBlockByHeight } from '../utils/requester';
 import { isIdentical, isReverted } from '../utils/checker';
 import { parseBlock } from '../utils/parser';
 
-export const handleRevertBlocks = async (block, newBlocks, t) => {
+
+const handleRevertBlocks = async (block, newBlocks, t) => {
   const parentHeight = +block.height - 1;
   const parentBlock = await Block.findByPk(parentHeight);
   if (parentBlock.hash !== block.parent_hash) {
@@ -34,7 +35,7 @@ export const handleRevertBlocks = async (block, newBlocks, t) => {
   return newBlocks;
 };
 
-export const verifyBlocks = blocks => (
+const verifyBlocks = blocks => (
   Promise.all(blocks.map(async (block) => {
     const blockInDB = await Block.findByPk(block.height);
 
@@ -48,7 +49,7 @@ export const verifyBlocks = blocks => (
   }))
 );
 
-export const applyBlockData = async (dbBlocks, t) => {
+const applyBlockData = async (dbBlocks, t) => {
   let txCount = 0;
   await dbBlocks.reduce((p, dbBlock) => p
     .then(async () => {
@@ -63,6 +64,7 @@ export const applyBlockData = async (dbBlocks, t) => {
   if (txCount) console.log(`add ${txCount} transactions`);
 };
 
+// eslint-disable-next-line import/prefer-default-export
 export const handleBlocksResponse = async (blocks, t) => {
   // Check if the parent block exists
   const parentHeight = +blocks[0].height - 1;

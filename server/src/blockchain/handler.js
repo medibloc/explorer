@@ -73,29 +73,30 @@ export const sync = async () => {
   }
 
   // getBlocks is used only for sync
-  const getBlocks = () => db.transaction((t) => {
-    const from = currentHeight + 1; // TODO consider revert block case
-    const step = Math.min(REQUEST_STEP, lastHeight - from + 1);
+  const getBlocks = (prevCurrentHeight, prevLastHeight) => db.transaction((t) => {
+    const from = prevCurrentHeight + 1;
+    const step = Math.min(REQUEST_STEP, prevLastHeight - from + 1);
     const to = from + step - 1;
+
     return requestBlocks({ from, to })
       .then(blocks => handleBlocksResponse(blocks, t))
-      .then(() => {
-        currentHeight = to;
-      })
+      .then(() => to)
       .catch((err) => {
         throw err;
       });
   });
 
-  const work = () => getBlocks().then(() => {
-    if (currentHeight < lastHeight) {
-      if (stopSync) return Promise.resolve();
-      return work();
-    }
-    return Promise.resolve();
-  });
 
-  return work().catch((err) => {
+  const work = prevCurrentHeight => getBlocks(prevCurrentHeight, lastHeight)
+    .then((postCurrentHeight) => {
+      if (postCurrentHeight < lastHeight) {
+        if (stopSync) return Promise.resolve();
+        return work(postCurrentHeight);
+      }
+      return Promise.resolve();
+    });
+
+  return work(currentHeight).catch((err) => {
     console.error(err); // eslint-disable-line no-console
     process.exit(1);
   });

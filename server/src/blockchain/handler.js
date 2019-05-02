@@ -85,6 +85,7 @@ export const sync = async (stopSync = false) => {
 
 let call = null;
 export const startSubscribe = (promise) => {
+  // eslint-disable-next-line no-param-reassign
   promise = promise.then(async () => {
     await updateAllAccountsDataAfterSync();
     logger.debug('SYNC IS DONE');
@@ -92,9 +93,7 @@ export const startSubscribe = (promise) => {
 
   const reset = stopSync => startSubscribe(sync(stopSync));
 
-  if (call) {
-    call.cancel('Previous request is canceled');
-  }
+  if (call) call.cancel('Previous request is canceled');
   call = axios.CancelToken.source();
   const params = new URLSearchParams();
   for (const t of Object.keys(TOPICS)) { // eslint-disable-line

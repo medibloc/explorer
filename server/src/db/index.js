@@ -25,7 +25,7 @@ const connect = ({
   sequelize.authenticate()
     .catch((err) => {
       logger.error('Unable to connect to the database');
-      logger.error(err);
+      logger.error(err.stack);
       process.exit(1);
     });
   return sequelize;

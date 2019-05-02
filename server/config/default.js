@@ -1,3 +1,5 @@
+import path from 'path';
+
 const config = {
   BLOCKCHAIN: {
     URL: 'http://localhost:9921',
@@ -16,6 +18,9 @@ const config = {
   },
   SERVER: {
     PORT: 3000,
+  },
+  LOGGER: {
+    DIR: path.join(__dirname, '../logs'),
   },
 };
 

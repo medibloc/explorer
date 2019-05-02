@@ -43,7 +43,7 @@ const logger = winston.createLogger({
   exitOnError: false,
 });
 
-logger.stream = {
+export const stream = {
   write: message => logger
     .info(message.substring(0, message.lastIndexOf('\n'))),
 };

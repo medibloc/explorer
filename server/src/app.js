@@ -7,7 +7,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 
 import route from './route';
-import logger from './logger';
+import logger, { stream } from './logger';
 
 
 const ENV = process.env.NODE_ENV;
@@ -56,7 +56,7 @@ export default () => {
   app.use(compression());
   app.use(bodyParser.json());
   app.use(sseMiddleware);
-  app.use(morgan('tiny', { stream: logger.stream }));
+  app.use(morgan('tiny', { stream }));
 
   app.use('/api', route);
   app.use('/', express.static('build'));

@@ -13,12 +13,12 @@ import logger from './logger';
 const ENV = process.env.NODE_ENV;
 
 const sendError = (err, req, res) => {
+  logger.error(err.stack);
   const code = err.status || 500;
   let { message } = err;
   if (code >= 500 && process.env.NODE_ENV === 'production') {
     message = 'Internal Server Error'; // hide error message on production
   }
-  console.log(err.stack); // eslint-disable-line no-console
 
   res.status(code).send(message);
 };

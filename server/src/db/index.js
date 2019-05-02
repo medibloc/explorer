@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize';
+import logger from '../logger';
 import config from '../../config';
 
 const { DB } = config;
@@ -23,7 +24,8 @@ const connect = ({
 
   sequelize.authenticate()
     .catch((err) => {
-      console.error('Unable to connect to the database:', err); // eslint-disable-line no-console
+      logger.error('Unable to connect to the database');
+      logger.error(err);
       process.exit(1);
     });
   return sequelize;

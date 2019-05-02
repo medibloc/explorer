@@ -9,6 +9,7 @@ import { requestBlockByHeight, requestBlocks } from '../utils/requester';
 import { isIdentical, isReverted } from '../utils/checker';
 import { parseBlock } from '../utils/parser';
 import config from '../../config';
+import logger from '../logger';
 
 const { REQUEST_STEP } = config.REQUEST;
 
@@ -17,7 +18,7 @@ const handleRevertBlocks = async (block, newBlocks, t) => {
   const parentHeight = +block.height - 1;
   const parentBlock = await Block.findByPk(parentHeight);
   if (parentBlock.hash !== block.parent_hash) {
-    console.log(`revert block received ${parentHeight}`);
+    logger.warn(`revert block received ${parentHeight}`);
     const transactions = await getTransactionsWithBlockHeight(parentHeight, t);
 
     // Remove transactions from parentBlock.
@@ -45,7 +46,7 @@ const verifyBlocks = blocks => (
 
     if (!blockInDB) return block;
     if (isIdentical(block, blockInDB.data)) {
-      console.log(`identical block received : ${block.height}`);
+      logger.warn(`identical block received : ${block.height}`);
       return block;
     }
 
@@ -65,7 +66,7 @@ const applyBlockData = async (dbBlocks, t) => {
       return true;
     }), Promise.resolve());
 
-  if (txCount) console.log(`add ${txCount} transactions`);
+  if (txCount) logger.debug(`add ${txCount} transactions`);
 };
 
 // eslint-disable-next-line import/prefer-default-export

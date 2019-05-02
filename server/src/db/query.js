@@ -1,5 +1,6 @@
 import { BadRequest } from 'http-errors';
 import { Op } from 'sequelize';
+import logger from '../logger';
 
 const MAX_PAGINATION_COUNT = 100;
 
@@ -13,7 +14,7 @@ export const toPagination = (option) => {
   }
   if (limit) {
     if (to) {
-      console.log('limit is ignored'); // eslint-disable-line no-console
+      logger.warn('limit is ignored');
     } else {
       limit = Math.min(limit, MAX_PAGINATION_COUNT);
     }

@@ -3,6 +3,7 @@ import { URLSearchParams } from 'url';
 
 import config from '../../config';
 import db from '../db';
+import logger from '../logger';
 import { requestBlockByHash, requestMedState } from '../utils/requester';
 
 import { updateAllAccountsDataAfterSync } from '../account/handler';
@@ -20,7 +21,7 @@ const pushEventToClient = (e) => {
   if (!clients[topic]) throw new Error(`invalid topic ${topic}`);
 
   const topicClients = Object.values(clients[topic]);
-  console.log(`there are ${topicClients.length} clients`); // eslint-disable-line no-console
+  logger.debug(`there are ${topicClients.length} clients`);
   topicClients.forEach(client => client.sseSend(e));
 };
 
@@ -57,13 +58,13 @@ export const sync = async (stopSync = false) => {
   if (lastBlock) currentHeight = +lastBlock.data.height;
 
   const lastHeight = +medState.height;
-  console.log(`current height ${currentHeight}, last height ${lastHeight}`); // eslint-disable-line no-console
+  logger.debug(`current height ${currentHeight}, last height ${lastHeight}`);
   if (currentHeight === lastHeight && medState.tail === lastBlock.hash) {
     return Promise.resolve();
   }
   // If db holds old data because tail block height does not reached to currentHeight yet
   if (currentHeight > lastHeight) {
-    console.error('DB Initialization is required');
+    logger.error('DB Initialization is required');
     process.exit(1);
   }
 
@@ -77,7 +78,7 @@ export const sync = async (stopSync = false) => {
     });
 
   return work(currentHeight).catch((err) => {
-    console.error(err); // eslint-disable-line no-console
+    logger.error(err.stack);
     process.exit(1);
   });
 };
@@ -85,8 +86,8 @@ export const sync = async (stopSync = false) => {
 let call = null;
 export const startSubscribe = (promise) => {
   promise = promise.then(async () => {
-    console.log('SYNC IS DONE');
     await updateAllAccountsDataAfterSync();
+    logger.debug('SYNC IS DONE');
   });
 
   const reset = stopSync => startSubscribe(sync(stopSync));
@@ -108,29 +109,30 @@ export const startSubscribe = (promise) => {
     responseType: 'stream',
     url: `${URL}/v1/subscribe`,
   }).then(({ data }) => {
-    console.log('start subscribing');
+    logger.debug('start subscribing');
     data.on('data', (buf) => {
       const { result } = JSON.parse(buf.toString());
       if (!result) {
+        logger.error('Reset syncing because server got empty response.');
         call.cancel('Reset syncing because server got empty response.');
         reset();
         return;
       }
       const { topic } = result;
       if (!TOPICS[topic]) {
-        console.log(`topic ${topic} does not exist`);
+        logger.warn(`topic ${topic} does not exist`);
         return;
       }
-      console.log(`event ${topic} received`); // eslint-disable-line no-console
+      logger.debug(`event ${topic} received`);
       promise = promise // eslint-disable-line no-param-reassign
         .then(() => TOPICS[topic].onEvent(result, reset))
         .catch((err) => {
-          console.log(err.message);
+          logger.error(err.stack);
           return err;
         });
     });
-  }).catch(() => {
-    console.log('Something is wrong while subscribing,');
+  }).catch((e) => {
+    logger.error(e.stack);
     setTimeout(() => reset(true), 1000);
   });
 };

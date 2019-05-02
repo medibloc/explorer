@@ -1,4 +1,5 @@
 import config from '../config';
+import logger from './logger';
 
 import app from './app';
 import initBlockChain from './blockchain/init';
@@ -7,9 +8,9 @@ const { PORT } = config.SERVER;
 
 const run = () => initBlockChain()
   .then(() => {
-    console.log('sync blockchain completed'); // eslint-disable-line no-console
+    logger.info('sync blockchain completed');
     app().listen(PORT, () => {
-      console.log(`Listening on ${PORT}`); // eslint-disable-line no-console
+      logger.info(`Listening on ${PORT}`);
     });
   });
 

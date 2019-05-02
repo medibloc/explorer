@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js';
 import Account from './model';
 import db from '../db';
+import logger from '../logger';
 import Block from '../block/model';
 import { requestAccount } from '../utils/requester';
 import { parseAccount } from '../utils/parser';
@@ -25,7 +26,7 @@ export const updateTxToAccounts = async (rawTx, t, revert = false) => {
       balance: new BigNumber(toAccount.balance).plus(value).toString(),
     }, { transaction: t }),
   ])
-    .catch(() => console.log(`failed to update tx to accounts ${rawTx.hash}`));
+    .catch(() => logger.error(`failed to update tx to accounts ${rawTx.hash}`));
 };
 
 export const updateCoinbaseAccount = async (rawBlock, t, revert = false) => {
@@ -36,7 +37,7 @@ export const updateCoinbaseAccount = async (rawBlock, t, revert = false) => {
   return coinbaseAccount.update({
     balance: new BigNumber(coinbaseAccount.balance).plus(reward).toString(),
   }, { transaction: t })
-    .catch(() => console.log(`failed to update coinbase account ${coinbaseAccount.address}`));
+    .catch(() => logger.error(`failed to update coinbase account ${coinbaseAccount.address}`));
 };
 
 export const updateAllAccountsDataAfterSync = async () => (
@@ -49,7 +50,7 @@ export const updateAllAccountsDataAfterSync = async () => (
       const parsedAccount = parseAccount(acc);
 
       return account.update(parsedAccount, { where: { id: account.id }, transaction: t })
-        .catch(() => console.log(`failed to update account ${acc.address}`));
+        .catch(() => logger.error(`failed to update account ${acc.address}`));
     });
     await Promise.all(promises);
   })

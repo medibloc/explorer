@@ -118,8 +118,11 @@ const reducer = handleActions({
   },
   [GET_TAIL_BLOCK]: (state, action) => {
     let { liveTxs } = state;
-    action.payload.transactions.forEach(tx => liveTxs.push(tx));
-    liveTxs = liveTxs.slice(0, 5);
+    liveTxs = sorter(
+      [...liveTxs, ...action.payload.transactions],
+      'receipt.timestamp',
+    ).splice(0, 5);
+
     return {
       ...state,
       liveTxs,

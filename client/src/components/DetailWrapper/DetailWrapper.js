@@ -12,6 +12,18 @@ import { detailWrapperConfig } from '../../config';
 import './DetailWrapper.scss';
 
 
+const DetailWrapperKey = ({ titleList }) => (
+  <div className="detailWrapperKey">
+    {
+      titleList.map(title => (
+        <span key={title}>
+          <FormattedMessage id={titleConverter(title)} />
+        </span>
+      ))
+    }
+  </div>
+);
+
 const DetailWrapper = ({
   data, lang, mode, type,
 }) => {
@@ -20,15 +32,7 @@ const DetailWrapper = ({
 
   return (
     <div className={cx('detailWrapper', { mobile: mode === 2 })}>
-      <div className="detailWrapperKey">
-        {
-          titleList.map(title => (
-            <span key={title}>
-              <FormattedMessage id={titleConverter(title)} />
-            </span>
-          ))
-        }
-      </div>
+      <DetailWrapperKey titleList={titleList} />
       <div className="detailWrapperValue">
         {
           titleList.map((title) => {
@@ -73,6 +77,10 @@ const DetailWrapper = ({
       </div>
     </div>
   );
+};
+
+DetailWrapperKey.propTypes = {
+  titleList: PropTypes.array.isRequired,
 };
 
 DetailWrapper.propTypes = {

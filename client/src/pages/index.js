@@ -61,15 +61,14 @@ class Pages extends Component {
   componentWillMount() {
     setLocale();
     setWindowSize();
-    w.loader(BlockchainActions
-      .getMedState()
-      .then(() => TickerActions.getMedxPrice())
-      .then(() => BlockchainActions.getInitialBlocks({ from: 0, to: 4 }))
-      .then(() => GlobalActions.closeModal()));
-  }
-
-  componentDidMount() {
-    BlockchainActions.subscribe();
+    WidgetActions.loader(
+      BlockchainActions
+        .getMedState()
+        .then(() => TickerActions.getMedxPrice())
+        .then(() => BlockchainActions.subscribe())
+        .then(() => BlockchainActions.getInitialBlocks({ from: 0, to: 4 }))
+        .then(() => GlobalActions.closeModal()),
+    );
   }
 
   render() {

@@ -4,7 +4,8 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 
-import { GlobalActions } from '../../redux/actionCreators';
+import QrButton from '../QrButton';
+
 import { timezoneMatcher, titleConverter } from '../../lib';
 import { detailWrapperConfig } from '../../config';
 
@@ -36,16 +37,8 @@ const DetailWrapper = ({
                 return (
                   <span key={title}>
                     {
-                      (title === 'From' || title === 'To') && (
-                        <button
-                          type="button"
-                          onClick={() => GlobalActions.openModal({ modalData: data[title], modalType: 'QrCode' })}
-                        >
-                          <img
-                            src="/image/icon/ico-qr.png"
-                            alt="qr"
-                          />
-                        </button>
+                      (['From', 'To'].includes(title)) && (
+                        <QrButton modalData={data[title]} />
                       )
                     }
                     {

@@ -56,17 +56,18 @@ const verifyBlocks = blocks => (
 
 const applyBlockData = async (dbBlocks, t) => {
   let txCount = 0;
-  await dbBlocks.reduce((p, dbBlock) => p
-    .then(async () => {
+  const dbTxs = await dbBlocks.reduce((p, dbBlock) => p
+    .then(async (txList) => {
       txCount += Math.max(
         dbBlock.data.transactions.length, dbBlock.data.tx_hashes.length,
       );
 
-      await handleTxsInDbBlock(dbBlock, t);
-      return true;
-    }), Promise.resolve());
+      const txs = await handleTxsInDbBlock(dbBlock, t);
+      return [...txList, ...txs];
+    }), Promise.resolve([]));
 
   if (txCount) logger.debug(`add ${txCount} transactions`);
+  return dbTxs;
 };
 
 // eslint-disable-next-line import/prefer-default-export
@@ -94,7 +95,19 @@ export const handleBlocksResponse = async (blocks, t) => {
       updateOnDuplicate: ['data', 'hash'],
     })
     .then(async (dbBlocks) => {
-      await applyBlockData(dbBlocks, t);
+      const dbTxs = await applyBlockData(dbBlocks, t);
+
+      const promises = dbBlocks.map(async (dbBlock) => {
+        const targetTxs = dbTxs
+          .filter(({ blockHeight }) => blockHeight === dbBlock.height)
+          .map(dbTx => dbTx.data);
+        await dbBlock.update(
+          { data: { ...dbBlock.data, transactions: targetTxs } },
+          { transaction: t },
+        );
+      });
+      await Promise.all(promises);
+
       return dbBlocks;
     });
 };

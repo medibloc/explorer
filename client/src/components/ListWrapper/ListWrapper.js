@@ -22,14 +22,14 @@ const linkDistributor = (
   let content = null;
   linkTo.forEach((link) => {
     const seperator = link.split('/');
-    if (title.toLowerCase().indexOf(seperator[1]) !== -1) {
+    if (title.toLowerCase().includes(seperator[1])) {
       content = (
         <NavLink
           to={`/${lang}/${seperator[0]}/${datum[title]}`}
           style={{ width: `${spacing[i]}%` }}
           className={cx({
-            center: centerList.indexOf(title) !== -1 && rightList.indexOf(title) === -1,
-            right: rightList.indexOf(title) !== -1,
+            center: centerList.includes(title) && !rightList.includes(title),
+            right: rightList.includes(title),
           })}
           key={title}
         >
@@ -49,8 +49,8 @@ const linkDistributor = (
       <span
         style={{ width: `${spacing[i]}%` }}
         className={cx({
-          center: centerList.indexOf(title) !== -1 && rightList.indexOf(title) === -1,
-          right: rightList.indexOf(title) !== -1,
+          center: centerList.includes(title) && !rightList.includes(title),
+          right: rightList.includes(title),
         })}
         key={title}
       >
@@ -76,7 +76,7 @@ const ListWrapper = ({
         titles.map((title, i) => (
           <span
             style={{ width: `${spacing[i]}%` }}
-            className={cx({ center: centerList.indexOf(title) !== -1 })}
+            className={cx({ center: centerList.includes(title) })}
             key={title}
           >
             <FormattedMessage id={titleConverter(title)} />

@@ -14,7 +14,7 @@ const NavList = ({ currentUrl, intl, lang, pages }) => pages.map((page) => {
         className={cx(
           'navListBtn',
           {
-            navSelected: currentUrl.indexOf(PAGE) !== -1,
+            navSelected: currentUrl.includes(PAGE),
           },
         )}
         to={`/${lang}/${PAGE}s`}

@@ -32,7 +32,7 @@ const DetailWrapper = ({
         {
           titleList.map((title) => {
             for (let i = 0; i < linkList.length; i += 1) {
-              if (linkList[i].indexOf(title) !== -1) {
+              if (linkList[i].includes(title)) {
                 return (
                   <span key={title}>
                     {

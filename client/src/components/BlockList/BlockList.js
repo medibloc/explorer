@@ -28,9 +28,10 @@ class BlockList extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.props.mode !== nextProps.mode) return true;
-    if (this.props.page !== nextProps.page) return true;
-    if (this.props.blockList !== nextProps.blockList) return true;
+    const { props } = this;
+    if (props.mode !== nextProps.mode) return true;
+    if (props.page !== nextProps.page) return true;
+    if (props.blockList !== nextProps.blockList) return true;
     return false;
   }
 
@@ -45,12 +46,16 @@ class BlockList extends Component {
     GlobalActions.movePage(1);
   }
 
-  getBlocks(props) {
+  getBlocks(nextProps) {
+    const props = nextProps || this.props;
     const { location: { search } } = props;
     const { page = 1 } = qs.parse(search);
     const { medState: { height } } = props;
     const { from, to } = ranger(page, height, contentsInPage);
-    w.loader(BlockchainActions.getBlocks({ from, to }));
+    w.loader(
+      BlockchainActions
+        .getBlocks({ from, to }),
+    );
   }
 
   render() {
@@ -76,9 +81,9 @@ class BlockList extends Component {
 
 BlockList.propTypes = {
   blockList: PropTypes.array.isRequired,
-  medState: PropTypes.object.isRequired,
   mode: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 export default BlockList;

@@ -33,25 +33,23 @@ class Block extends Component {
   }
 
   callBlock(nextProps) {
-    let hash = '';
-    let height = '';
-    if (nextProps) {
-      ({ hash, height } = nextProps);
-    } else {
-      ({ hash, height } = this.props);
-    }
+    let hash = null;
+    let height = null;
+    if (nextProps) ({ hash, height } = nextProps);
+    else ({ hash, height } = this.props);
 
     let subject = null;
     if (height) subject = height;
     if (hash) subject = hash;
     if (subject === null) throw new Error('Invalid block info');
 
-    w.loader(BlockchainActions
-      .getBlock(subject)
-      .then((bl) => {
-        // TODO @ggomma add GetBlockDetail call same as getAccountDetail
-        BlockchainActions.setTxs(bl.block.data.transactions);
-      }));
+    w.loader(
+      BlockchainActions
+        .getBlock(subject)
+        .then((bl) => {
+          BlockchainActions.setTxsFromBlock(bl.block.data.transactions);
+        }),
+    );
   }
 
   render() {

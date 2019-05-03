@@ -96,6 +96,7 @@ export const handleBlocksResponse = async (blocks, t) => {
     })
     .then(async (dbBlocks) => {
       const dbTxs = await applyBlockData(dbBlocks, t);
+      logger.debug(`blocks from ${dbBlocks[0].height} to ${dbBlocks[dbBlocks.length - 1].height} added`);
 
       const promises = dbBlocks.map(async (dbBlock) => {
         const targetTxs = dbTxs

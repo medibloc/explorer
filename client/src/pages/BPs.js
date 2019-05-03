@@ -5,7 +5,7 @@ import Navigation from '../components/Navigation';
 import PageInfo from '../components/PageInfo';
 
 
-const BP = props => (
+const BPs = props => (
   <Fragment>
     <PageInfo title="block-producer-list" />
     <div className="bpsContents">
@@ -17,4 +17,4 @@ const BP = props => (
   </Fragment>
 );
 
-export default BP;
+export default BPs;

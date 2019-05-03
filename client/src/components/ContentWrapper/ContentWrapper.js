@@ -13,8 +13,45 @@ const titleConverter = (title) => {
   return convertedTitle;
 };
 
-const ContentWrapper = ({ lang, mode, type, data, titles }) => {
+const ContentWrapperIcon = ({ type, height }) => (
+  <div className="contentWrapperIcon">
+    <img src={`/image/icon/ico-${type}.svg`} alt="contentWrapperIcon" />
+    <img src={`/image/icon/ico-${type}-on.svg`} alt="contentWrapperIcon" />
+    <span>
+      { height }
+    </span>
+  </div>
+);
+
+const ContentWrapperTitle = ({ mode, titles }) => (
+  <div className={cx('contentWrapperInfoTitle', { mobile: mode === 2 })}>
+    {
+      titles.map(title => (
+        <span key={title}>
+          <FormattedMessage id={titleConverter(title)} />
+        </span>
+      ))
+    }
+  </div>
+);
+
+const ContentWrapperContent = ({ titles, data }) => (
+  <div className="contentWrapperInfoContent">
+    {
+      titles.map(title => (
+        <span className={title === 'Time Stamp' ? 'special' : null} key={title}>
+          {data[title]}
+        </span>
+      ))
+    }
+  </div>
+);
+
+const ContentWrapper = ({
+  lang, mode, type, data, titles,
+}) => {
   const { 'Block Height': height } = data;
+
   let hash = '';
   titles.forEach((title) => {
     const ti = title.toLowerCase();
@@ -22,47 +59,39 @@ const ContentWrapper = ({ lang, mode, type, data, titles }) => {
     if (ti.includes('number')) hash = data[title];
     if (ti.includes('account')) hash = data[title];
   });
-  const url = (type === 'bp') ? `/${lang}/account/${hash}` : `/${lang}/${type}/${hash}`;
+  const url = `/${lang}/${type === 'bp' ? 'bp' : 'account'}/${hash}`;
 
+  const isTopRanker = data.Ranking >= 1 && data.Ranking <= 21;
 
   return (
-    <NavLink to={url} className={cx('contentWrapperLinker', { special: (data.Ranking >= 1 && data.Ranking <= 21), mobile: mode === 2 })}>
+    <NavLink to={url} className={cx('contentWrapperLinker', { special: isTopRanker, mobile: mode === 2 })}>
       <div className="contentWrapper">
-        {
-          mode === 0 && (
-            <div className="contentWrapperIcon">
-              <img src={`/image/icon/ico-${type}.svg`} alt="contentWrapperIcon" />
-              <img src={`/image/icon/ico-${type}-on.svg`} alt="contentWrapperIcon" />
-              <span>
-                { height }
-              </span>
-            </div>
-          )
-        }
-        <div className={cx('contentWrapperInfoTitle', { mobile: mode === 2 })}>
-          {
-            titles.map(title => (
-              <span key={title}>
-                <FormattedMessage id={titleConverter(title)} />
-              </span>
-            ))
-          }
-        </div>
-        <div className="contentWrapperInfoContent">
-          {
-            titles.map(title => (
-              <span className={title === 'Time Stamp' ? 'special' : null} key={title}>
-                {data[title]}
-              </span>
-            ))
-          }
-        </div>
+        { mode === 0 && <ContentWrapperIcon type={type} height={height} /> }
+        <ContentWrapperTitle mode={mode} titles={titles} />
+        <ContentWrapperContent titles={titles} data={data} />
       </div>
     </NavLink>
   );
 };
 
+ContentWrapperIcon.propTypes = {
+  type: PropTypes.string.isRequired,
+  height: PropTypes.number.isRequired,
+};
+
+ContentWrapperTitle.propTypes = {
+  mode: PropTypes.number.isRequired,
+  titles: PropTypes.array.isRequired,
+};
+
+ContentWrapperContent.propTypes = {
+  titles: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
+};
+
 ContentWrapper.propTypes = {
+  lang: PropTypes.string.isRequired,
+  mode: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
   titles: PropTypes.array.isRequired,

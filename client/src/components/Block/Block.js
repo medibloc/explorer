@@ -33,10 +33,8 @@ class Block extends Component {
   }
 
   callBlock(nextProps) {
-    let hash = null;
-    let height = null;
+    let { hash, height } = this.props;
     if (nextProps) ({ hash, height } = nextProps);
-    else ({ hash, height } = this.props);
 
     let subject = null;
     if (height) subject = height;

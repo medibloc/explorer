@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import DetailWrapper from '../DetailWrapper';
 import { bpMapper } from '../../lib';
@@ -40,8 +40,10 @@ class BP extends Component {
     const { candidateId } = account;
     if (!candidateId || candidateId.length !== 64) return;
 
-    w.loader(BlockchainActions
-      .getBP(candidateId));
+    w.loader(
+      BlockchainActions
+        .getBP(candidateId),
+    );
   }
 
   render() {
@@ -49,7 +51,7 @@ class BP extends Component {
       bp, address, language, mode,
     } = this.props;
     return (bp && bp.address === address) && (
-      <div className="bpDetail">
+      <Fragment>
         <PageInfo title="bp-detail" />
         <DetailWrapper
           data={bpMapper(bp)}
@@ -57,7 +59,7 @@ class BP extends Component {
           mode={mode}
           type="bp"
         />
-      </div>
+      </Fragment>
     );
   }
 }

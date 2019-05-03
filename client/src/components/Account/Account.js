@@ -33,8 +33,10 @@ class Account extends Component {
       ({ address } = nextProps);
     }
 
-    w.loader(BlockchainActions
-      .getAccount(address));
+    w.loader(
+      BlockchainActions
+        .getAccount(address),
+    );
   }
 
   render() {

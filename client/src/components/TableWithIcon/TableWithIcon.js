@@ -31,7 +31,9 @@ const mappedData = ({ data, type, totalSupply }) => {
   return [];
 };
 
-const TableWithIcon = ({ data, type, totalSupply }) => {
+const TableWithIcon = ({
+  lang, mode, data, type, totalSupply,
+}) => {
   const titleList = type ? tableWithIconConfig.titles[type] : [];
   const dataList = mappedData({ data, type, totalSupply });
 
@@ -45,6 +47,8 @@ const TableWithIcon = ({ data, type, totalSupply }) => {
 
           return (
             <ContentWrapper
+              lang={lang}
+              mode={mode}
               type={type}
               data={d}
               titles={titleList}
@@ -58,6 +62,8 @@ const TableWithIcon = ({ data, type, totalSupply }) => {
 };
 
 TableWithIcon.propTypes = {
+  lang: PropTypes.string.isRequired,
+  mode: PropTypes.number.isRequired,
   data: PropTypes.array.isRequired,
   type: PropTypes.oneOf(['block', 'tx', 'account', 'bp']).isRequired,
   totalSupply: PropTypes.string,

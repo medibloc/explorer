@@ -62,6 +62,7 @@ class AccountList extends Component {
       accountList,
       mode,
       totalSupply,
+      lang,
     } = this.props;
 
     return (
@@ -74,7 +75,13 @@ class AccountList extends Component {
         />
       ) : (
         <div className="accountList">
-          <TableWithIcon type="account" data={accountList} totalSupply={totalSupply} />
+          <TableWithIcon
+            type="account"
+            data={accountList}
+            totalSupply={totalSupply}
+            mode={mode}
+            lang={lang}
+          />
         </div>
       )
     );
@@ -87,6 +94,7 @@ AccountList.propTypes = {
   mode: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
   totalSupply: PropTypes.string.isRequired,
+  lang: PropTypes.string.isRequired,
 };
 
 AccountList.defaultProps = {

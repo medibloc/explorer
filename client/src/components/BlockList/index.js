@@ -7,6 +7,7 @@ const mapStateToProps = ({ blockchain, global }) => ({
   blockList: blockchain.blockList,
   medState: blockchain.medState,
 
+  lang: global.language,
   mode: global.mode,
   page: global.page,
 });

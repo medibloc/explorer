@@ -59,7 +59,7 @@ class BlockList extends Component {
   }
 
   render() {
-    const { blockList, mode } = this.props;
+    const { blockList, lang, mode } = this.props;
 
     return (
       mode !== 2 ? (
@@ -72,7 +72,12 @@ class BlockList extends Component {
         />
       ) : (
         <div className="blockList">
-          <TableWithIcon type="block" data={blockList} />
+          <TableWithIcon
+            type="block"
+            data={blockList}
+            lang={lang}
+            mode={mode}
+          />
         </div>
       )
     );
@@ -80,6 +85,7 @@ class BlockList extends Component {
 }
 
 BlockList.propTypes = {
+  lang: PropTypes.string.isRequired,
   blockList: PropTypes.array.isRequired,
   mode: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,

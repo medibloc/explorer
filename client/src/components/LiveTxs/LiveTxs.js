@@ -5,11 +5,18 @@ import { sorter } from '../../lib';
 import TableWithIcon from '../TableWithIcon';
 
 
-const Txs = ({ liveTxs }) => (
-  <TableWithIcon type="tx" data={sorter(liveTxs, 'receipt.timestamp')} />
+const Txs = ({ liveTxs, lang, mode }) => (
+  <TableWithIcon
+    lang={lang}
+    mode={mode}
+    type="tx"
+    data={sorter(liveTxs, 'receipt.timestamp')}
+  />
 );
 
 Txs.propTypes = {
+  lang: PropTypes.string.isRequired,
+  mode: PropTypes.number.isRequired,
   liveTxs: PropTypes.array,
 };
 

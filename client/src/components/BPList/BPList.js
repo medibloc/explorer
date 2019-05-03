@@ -65,6 +65,7 @@ class BPList extends Component {
       mode,
       page,
       totalSupply,
+      lang,
     } = this.props;
 
     return (
@@ -79,7 +80,12 @@ class BPList extends Component {
         />
       ) : (
         <div className="blockList">
-          <TableWithIcon type="bp" data={mappedBPs(bpList, page, totalSupply)} />
+          <TableWithIcon
+            type="bp"
+            data={mappedBPs(bpList, page, totalSupply)}
+            lang={lang}
+            mode={mode}
+          />
         </div>
       )
     );
@@ -89,6 +95,7 @@ class BPList extends Component {
 BPList.propTypes = {
   bpList: PropTypes.array.isRequired,
   mode: PropTypes.number.isRequired,
+  lang: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
   totalSupply: PropTypes.string.isRequired,
 };

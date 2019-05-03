@@ -57,6 +57,7 @@ class TxList extends Component {
       txList,
       txs,
       type,
+      lang,
     } = this.props;
     const titles = txTitleList[type];
     const spaces = txSpaceList[type];
@@ -88,7 +89,12 @@ class TxList extends Component {
         }
         {
           (mode === 2 && type === 'txs') && (
-            <TableWithIcon type="tx" data={txList} />
+            <TableWithIcon
+              type="tx"
+              data={txList}
+              lang={lang}
+              mode={mode}
+            />
           )
         }
         {
@@ -114,6 +120,7 @@ TxList.propTypes = {
   txList: PropTypes.array.isRequired,
   txs: PropTypes.array.isRequired,
 
+  lang: PropTypes.string.isRequired,
   mode: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,

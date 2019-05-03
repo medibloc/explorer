@@ -32,13 +32,11 @@ export const list = async (req, res) => {
 };
 
 export const blind = async (req, res) => {
-  // TODO check authorization
   const { id } = req.params;
   const transaction = await Transaction.findOne({ where: { txHash: id } });
   if (!transaction) {
     throw new NotFound('transaction not exists');
   }
-
 
   const { data } = transaction;
   data.payload = '';

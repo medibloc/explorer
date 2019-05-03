@@ -18,6 +18,9 @@ const config = {
   },
   SERVER: {
     PORT: 3000,
+    SECRET: null,
+    PASSWORD_HASH: null,
+    HASH_ALG: 'sha256',
   },
   LOGGER: {
     DIR: path.join(__dirname, '../logs'),

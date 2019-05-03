@@ -3,10 +3,10 @@ import Sequelize from 'sequelize';
 
 export const data = {
   type: Sequelize.TEXT('long'),
-  get: function () {
+  get() {
     return JSON.parse(this.dataValues.data);
   },
-  set: function (value) {
+  set(value) {
     this.setDataValue('data', JSON.stringify(value));
   },
 };

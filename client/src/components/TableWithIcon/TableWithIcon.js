@@ -8,20 +8,14 @@ import {
   timeConverter,
   txMapper,
 } from '../../lib';
+import { tableWithIconConfig } from '../../config';
 
 import './TableWithIcon.scss';
 
 
-const titles = {
-  block: ['Block Height', 'Block Hash', 'BP', 'Time Stamp'],
-  tx: ['Time Stamp', 'Transaction Hash', 'Type'],
-  account: ['Account', 'Balance', 'Percentage', 'Transactions'],
-  bp: ['Ranking', 'Account', 'Alias', 'votes'],
-};
-
 const TableWithIcon = ({ data, type, totalSupply = undefined }) => {
   let dataList = [];
-  const titleList = type ? titles[type] : [];
+  const titleList = type ? tableWithIconConfig.titles[type] : [];
   if (data) {
     switch (type) {
       case 'account':

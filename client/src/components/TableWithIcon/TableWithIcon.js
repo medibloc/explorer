@@ -13,35 +13,36 @@ import { tableWithIconConfig } from '../../config';
 import './TableWithIcon.scss';
 
 
-const TableWithIcon = ({ data, type, totalSupply = undefined }) => {
-  let dataList = [];
-  const titleList = type ? tableWithIconConfig.titles[type] : [];
+const mappedData = ({ data, type, totalSupply }) => {
   if (data) {
     switch (type) {
       case 'account':
-        data.forEach(datum => dataList.push(accountMapper(datum, totalSupply)));
-        break;
+        return data.map(datum => accountMapper(datum, totalSupply));
       case 'block':
-        data.forEach(datum => dataList.push(blockMapper(datum)));
-        break;
+        return data.map(datum => blockMapper(datum));
       case 'tx':
-        data.forEach(datum => dataList.push(txMapper(datum)));
-        break;
+        return data.map(datum => txMapper(datum));
       case 'bp':
-        dataList = data;
-        break;
+        return data;
       default:
-        break;
+        return [];
     }
   }
+  return [];
+};
+
+const TableWithIcon = ({ data, type, totalSupply }) => {
+  const titleList = type ? tableWithIconConfig.titles[type] : [];
+  const dataList = mappedData({ data, type, totalSupply });
 
   return (
-    <div className="blocks">
+    <div className="tableWithIcon">
       {
         dataList.map((datum, i) => {
-          const d = datum['Time Stamp'] !== undefined ? Object.assign({}, datum, {
-            'Time Stamp': timeConverter(datum['Time Stamp']),
-          }) : datum;
+          const d = datum['Time Stamp']
+            ? { ...datum, 'Time Stamp': timeConverter(datum['Time Stamp']) }
+            : datum;
+
           return (
             <ContentWrapper
               type={type}
@@ -58,7 +59,12 @@ const TableWithIcon = ({ data, type, totalSupply = undefined }) => {
 
 TableWithIcon.propTypes = {
   data: PropTypes.array.isRequired,
-  type: PropTypes.oneOf(['block', 'tx', 'account']).isRequired,
+  type: PropTypes.oneOf(['block', 'tx', 'account', 'bp']).isRequired,
+  totalSupply: PropTypes.string,
+};
+
+TableWithIcon.defaultProps = {
+  totalSupply: null,
 };
 
 export default TableWithIcon;

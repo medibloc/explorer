@@ -1,4 +1,4 @@
-.blocks {
+.tableWithIcon {
   margin: auto;
   max-width: 1200px;
   width: 100%;
@@ -7,25 +7,4 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  .blocksTitle {
-    align-self: flex-start;
-    font-size: 24px;
-    font-weight: 500;
-    color: #0b0b0b;
-    letter-spacing: -1px;
-    margin-top: 50px;
-    margin-bottom: 20px;
-
-    display: flex;
-    align-items: center;
-
-    img {
-      margin-right: 20px;
-    }
-  }
-
-  .blocksNavigation {
-    margin-top: 30px;
-  }
 }

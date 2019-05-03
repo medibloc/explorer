@@ -55,6 +55,7 @@ export default () => {
   if (ENV === 'development') app.use(cors());
   app.use(compression());
   app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded());
   app.use(sseMiddleware);
   app.use(morgan('tiny', { stream }));
 

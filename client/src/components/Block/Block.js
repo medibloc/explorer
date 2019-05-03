@@ -53,9 +53,14 @@ class Block extends Component {
   }
 
   render() {
-    const { block } = this.props;
+    const { block, language, mode } = this.props;
     return block && (
-      <DetailWrapper data={blockMapper(block)} type="block" />
+      <DetailWrapper
+        data={blockMapper(block)}
+        lang={language}
+        mode={mode}
+        type="block"
+      />
     );
   }
 }
@@ -65,6 +70,7 @@ Block.propTypes = {
   hash: PropTypes.string,
   height: PropTypes.string,
   language: PropTypes.string.isRequired,
+  mode: PropTypes.number.isRequired,
 };
 
 Block.defaultProps = {

@@ -45,11 +45,18 @@ class BP extends Component {
   }
 
   render() {
-    const { bp, address } = this.props;
+    const {
+      bp, address, language, mode,
+    } = this.props;
     return (bp && bp.address === address) && (
       <div className="bpDetail">
         <PageInfo title="bp-detail" />
-        <DetailWrapper data={bpMapper(bp)} type="bp" />
+        <DetailWrapper
+          data={bpMapper(bp)}
+          lang={language}
+          mode={mode}
+          type="bp"
+        />
       </div>
     );
   }
@@ -60,6 +67,7 @@ BP.propTypes = {
   account: PropTypes.object,
   address: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
+  mode: PropTypes.number.isRequired,
 };
 
 BP.defaultProps = {

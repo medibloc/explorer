@@ -8,6 +8,7 @@ const mapStateToProps = ({ blockchain, global }) => ({
   bp: blockchain.bp,
 
   language: global.language,
+  mode: global.mode,
 });
 
 export default connect(mapStateToProps)(BP);

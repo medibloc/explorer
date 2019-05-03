@@ -13,9 +13,14 @@ class Tx extends Component {
   }
 
   render() {
-    const { tx } = this.props;
+    const { tx, language, mode } = this.props;
     return tx && (
-      <DetailWrapper data={txMapper(tx)} type="tx" />
+      <DetailWrapper
+        data={txMapper(tx)}
+        lang={language}
+        mode={mode}
+        type="tx"
+      />
     );
   }
 }
@@ -23,6 +28,8 @@ class Tx extends Component {
 Tx.propTypes = {
   hash: PropTypes.string.isRequired,
   tx: PropTypes.object,
+  language: PropTypes.string.isRequired,
+  mode: PropTypes.number.isRequired,
 };
 
 Tx.defaultProps = {

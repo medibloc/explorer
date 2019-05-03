@@ -38,9 +38,14 @@ class Account extends Component {
   }
 
   render() {
-    const { account } = this.props;
+    const { account, language, mode } = this.props;
     return account && (
-      <DetailWrapper data={accountMapper(account)} type="account" />
+      <DetailWrapper
+        data={accountMapper(account)}
+        lang={language}
+        mode={mode}
+        type="account"
+      />
     );
   }
 }
@@ -49,6 +54,7 @@ Account.propTypes = {
   account: PropTypes.object,
   address: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
+  mode: PropTypes.number.isRequired,
 };
 
 Account.defaultProps = {

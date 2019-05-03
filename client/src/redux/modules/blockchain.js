@@ -32,7 +32,7 @@ const GET_TAIL_BLOCK = 'blockchain/GET_TAIL_BLOCK';
 
 const GET_TX = 'blockchain/GET_TX';
 const GET_TXS = 'blockchain/GET_TXS';
-const SET_TXS = 'blockchain/SET_TXS';
+const SET_TXS_FROM_BLOCK = 'blockchain/SET_TXS_FROM_BLOCK';
 
 const GET_BP = 'blockchain/GET_BP';
 const GET_BPS = 'blockchain/GET_BPS';
@@ -149,9 +149,9 @@ const reducer = handleActions({
     action.payload.transactions.forEach(res => txList.push(res.data));
     return ({ ...state, txList });
   },
-  [SET_TXS]: (state, action) => ({
+  [SET_TXS_FROM_BLOCK]: (state, action) => ({
     ...state,
-    txs: sorter(action.payload, 'receipt.timestamp'),
+    txs: sorter(action.payload, 'receipt.timestamp'), // TODO Use txsFromBlock instead of txs
   }),
 
   [GET_BP]: (state, action) => ({
@@ -223,7 +223,7 @@ export const getTxs = ({ from, to }) => dispatch => txsGetter(
   ERROR,
   { from, to },
 );
-export const setTxs = createAction(SET_TXS);
+export const setTxsFromBlock = createAction(SET_TXS_FROM_BLOCK);
 export const subscribe = () => dispatch => subscriber(dispatch, subsribeTypes, ERROR);
 
 export default reducer;

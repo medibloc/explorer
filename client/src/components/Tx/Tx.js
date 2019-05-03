@@ -7,9 +7,20 @@ import { BlockchainActions, WidgetActions as w } from '../../redux/actionCreator
 
 
 class Tx extends Component {
-  componentWillMount() {
+  constructor(props) {
+    super(props);
+    this.callTx = this.callTx.bind(this);
+  }
+
+  componentDidMount() {
+    this.callTx();
+  }
+
+  callTx() {
     const { hash } = this.props;
-    w.loader(BlockchainActions.getTx(hash));
+    w.loader(
+      BlockchainActions.getTx(hash),
+    );
   }
 
   render() {

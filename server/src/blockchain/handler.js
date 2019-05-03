@@ -20,6 +20,9 @@ const pushEventToClient = (e) => {
   const { topic } = e;
   if (!clients[topic]) throw new Error(`invalid topic ${topic}`);
 
+  // now data field is stored as a string because of mysql v5.6
+  e.data.data = JSON.parse(e.data.data);
+
   const topicClients = Object.values(clients[topic]);
   logger.debug(`there are ${topicClients.length} clients`);
   topicClients.forEach(client => client.sseSend(e));

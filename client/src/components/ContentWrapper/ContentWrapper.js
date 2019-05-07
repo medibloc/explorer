@@ -76,7 +76,11 @@ const ContentWrapper = ({
 
 ContentWrapperIcon.propTypes = {
   type: PropTypes.string.isRequired,
-  height: PropTypes.number.isRequired,
+  height: PropTypes.string,
+};
+
+ContentWrapperIcon.defaultProps = {
+  height: null,
 };
 
 ContentWrapperTitle.propTypes = {

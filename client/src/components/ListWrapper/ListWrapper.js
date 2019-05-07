@@ -10,7 +10,7 @@ import { blindAddress } from '../../config';
 import './ListWrapper.scss';
 
 
-const linkDistributor = (
+const linkDistributor = ({
   centerList,
   datum,
   lang,
@@ -18,19 +18,22 @@ const linkDistributor = (
   rightList,
   spacing,
   titles,
-) => titles.map((title, i) => {
+}) => titles.map((title, i) => {
   let content = null;
-  linkTo.forEach((link) => {
-    const seperator = link.split('/');
-    if (title.toLowerCase().includes(seperator[1])) {
+  const className = cx({
+    center: centerList.includes(title) && !rightList.includes(title),
+    right: rightList.includes(title),
+  });
+  const style = { width: `${spacing[i]}%` };
+
+  linkTo.some((link) => {
+    const separator = link.split('/');
+    if (title.toLowerCase().includes(separator[1])) {
       content = (
         <NavLink
-          to={`/${lang}/${seperator[0]}/${datum[title]}`}
-          style={{ width: `${spacing[i]}%` }}
-          className={cx({
-            center: centerList.includes(title) && !rightList.includes(title),
-            right: rightList.includes(title),
-          })}
+          to={`/${lang}/${separator[0]}/${datum[title]}`}
+          style={style}
+          className={className}
           key={title}
         >
           {
@@ -38,20 +41,17 @@ const linkDistributor = (
           }
         </NavLink>
       );
+      return true;
     }
+    return false;
   });
 
   if (!content) {
-    const d = Object.assign({}, datum, {
-      'Time Stamp': datum['Time Stamp'] && timeConverter(datum['Time Stamp']),
-    });
+    const d = { ...datum, 'Time Stamp': datum['Time Stamp'] && timeConverter(datum['Time Stamp']) };
     content = (
       <span
-        style={{ width: `${spacing[i]}%` }}
-        className={cx({
-          center: centerList.includes(title) && !rightList.includes(title),
-          right: rightList.includes(title),
-        })}
+        style={style}
+        className={className}
         key={title}
       >
         {d[title]}
@@ -60,6 +60,48 @@ const linkDistributor = (
   }
   return content;
 });
+
+const ListWrapperTitle = ({ titles, spacing, centerList }) => (
+  <div className="listWrapperTitles">
+    {
+      titles.map((title, i) => (
+        <span
+          style={{ width: `${spacing[i]}%` }}
+          className={cx({ center: centerList.includes(title) })}
+          key={title}
+        >
+          <FormattedMessage id={titleConverter(title)} />
+        </span>
+      ))
+    }
+  </div>
+);
+
+const ListWrapperContents = ({
+  centerList, data, lang, linkTo, rightList, spacing, titles,
+}) => {
+  const className = (datum) => {
+    if (datum.Ranking >= 1 && datum.Ranking <= 21) {
+      return cx('listWrapperContentRow', 'special');
+    }
+    return cx('listWrapperContentRow');
+  };
+
+  return (
+    <div className="listWrapperContents">
+      {
+        data.map((datum, i) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <div className={className(datum)} key={i}>
+            { linkDistributor({
+              centerList, datum, lang, linkTo, rightList, spacing, titles,
+            }) }
+          </div>
+        ))
+      }
+    </div>
+  );
+};
 
 const ListWrapper = ({
   centerList,
@@ -71,31 +113,35 @@ const ListWrapper = ({
   titles,
 }) => (
   <div className="listWrapper">
-    <div className="listWrapperTitles">
-      {
-        titles.map((title, i) => (
-          <span
-            style={{ width: `${spacing[i]}%` }}
-            className={cx({ center: centerList.includes(title) })}
-            key={title}
-          >
-            <FormattedMessage id={titleConverter(title)} />
-          </span>
-        ))
-      }
-    </div>
-    <div className="listWrapperContents">
-      {
-        data.map((datum, i) => (
-          // eslint-disable-next-line
-          <div className={cx('listWrapperContentRow', { special: (datum.Ranking >= 1 && datum.Ranking <= 21) })} key={i}>
-            { linkDistributor(centerList, datum, lang, linkTo, rightList, spacing, titles) }
-          </div>
-        ))
-      }
-    </div>
+    <ListWrapperTitle titles={titles} spacing={spacing} centerList={centerList} />
+    <ListWrapperContents
+      centerList={centerList}
+      data={data}
+      lang={lang}
+      linkTo={linkTo}
+      rightList={rightList}
+      spacing={spacing}
+      titles={titles}
+    />
   </div>
 );
+
+ListWrapperTitle.propTypes = {
+  titles: PropTypes.array.isRequired,
+  spacing: PropTypes.array.isRequired,
+  centerList: PropTypes.array.isRequired,
+};
+
+ListWrapperContents.propTypes = {
+  centerList: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+  lang: PropTypes.string.isRequired,
+  linkTo: PropTypes.array.isRequired,
+  rightList: PropTypes.array.isRequired,
+  spacing: PropTypes.array.isRequired,
+  titles: PropTypes.array.isRequired,
+};
+
 
 ListWrapper.propTypes = {
   centerList: PropTypes.array,
@@ -104,6 +150,7 @@ ListWrapper.propTypes = {
   rightList: PropTypes.array,
   spacing: PropTypes.array.isRequired,
   titles: PropTypes.array.isRequired,
+  lang: PropTypes.string.isRequired,
 };
 
 ListWrapper.defaultProps = {

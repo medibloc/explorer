@@ -64,6 +64,7 @@ class BlockList extends Component {
     return (
       mode !== 2 ? (
         <ListWrapper
+          lang={lang}
           titles={blockListConfig.titles}
           data={mappedBlocks(blockList)}
           spacing={spaceMapper(blockListConfig.spaces)}

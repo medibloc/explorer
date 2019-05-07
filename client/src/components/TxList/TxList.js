@@ -68,6 +68,7 @@ class TxList extends Component {
         {
           (mode !== 2 && type !== 'txs') && (
             <ListWrapper
+              lang={lang}
               titles={titles}
               data={listMapper(type === 'block' ? txs.slice(from, to) : txs, 'tx')}
               spacing={spaceMapper(spaces)}
@@ -80,6 +81,7 @@ class TxList extends Component {
         {
           (mode === 2 && type !== 'txs') && (
             <ListWrapper
+              lang={lang}
               titles={['Transaction Hash']}
               data={listMapper(type === 'block' ? txs.slice(from, to) : txs, 'tx')}
               spacing={spaceMapper([1])}
@@ -100,6 +102,7 @@ class TxList extends Component {
         {
           (mode !== 2 && type === 'txs') && (
             <ListWrapper
+              lang={lang}
               titles={titles}
               data={listMapper(txList, 'tx')}
               spacing={spaceMapper(spaces)}

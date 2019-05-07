@@ -68,6 +68,7 @@ class AccountList extends Component {
     return (
       mode !== 2 ? (
         <ListWrapper
+          lang={lang}
           titles={accountListConfig.titles}
           data={mappedAccounts(accountList, totalSupply)}
           spacing={spaceMapper(accountListConfig.spaces)}

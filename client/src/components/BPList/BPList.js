@@ -71,6 +71,7 @@ class BPList extends Component {
     return (
       mode !== 2 ? (
         <ListWrapper
+          lang={lang}
           titles={bpListConfig.titles}
           data={mappedBPs(bpList, page, totalSupply)}
           spacing={spaceMapper(bpListConfig.spaces)}

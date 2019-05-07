@@ -43,11 +43,11 @@ class TxList extends Component {
   getAccTxs() {
     const { account, page } = this.props;
     const { from, to } = ranger(page, account.totalTxs, contentsInPage);
-    BlockchainActions.getAccountDetail({
+    w.loader(BlockchainActions.getAccountDetail({
       address: account.address,
       from,
       to,
-    });
+    }));
   }
 
   render() {

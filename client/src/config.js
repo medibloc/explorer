@@ -105,7 +105,7 @@ export const tableWithIconConfig = {
   },
 };
 
-export const navbarPages = ['Block', 'Transaction', 'Account', 'BP'];
+export const navBarPages = ['Block', 'Transaction', 'Account', 'BP'];
 
 
 export const txTypes = {

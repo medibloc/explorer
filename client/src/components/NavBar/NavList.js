@@ -6,7 +6,9 @@ import { NavLink } from 'react-router-dom';
 import './NavList.scss';
 
 
-const NavList = ({ currentUrl, intl, lang, pages }) => pages.map((page) => {
+const NavList = ({
+  currentUrl, intl, lang, pages,
+}) => pages.map((page) => {
   const PAGE = page === 'Transaction' ? 'tx' : page.toLowerCase();
   return (
     <div key={page}>

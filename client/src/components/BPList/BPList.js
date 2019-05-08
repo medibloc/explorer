@@ -4,11 +4,17 @@ import React, { Component } from 'react';
 
 import ListWrapper from '../ListWrapper';
 import TableWithIcon from '../TableWithIcon';
-import { BlockchainActions, GlobalActions, WidgetActions as w} from '../../redux/actionCreators';
+import {
+  BlockchainActions,
+  GlobalActions,
+  WidgetActions as w,
+} from '../../redux/actionCreators';
 import { bpListConfig, bpsInPage } from '../../config';
 import {
   bpMapper, divider, ranger, spaceMapper,
 } from '../../lib';
+
+import './BPList.scss';
 
 
 const mappedBPs = (BPs = [], page, totalSupply) => {
@@ -16,7 +22,7 @@ const mappedBPs = (BPs = [], page, totalSupply) => {
   BPs.forEach((preBP, i) => {
     const BP = bpMapper(preBP);
     BP.Ranking = (page - 1) * bpsInPage + i + 1;
-    BP.voteRate = `${divider(BP.votes, [totalSupply, 10 ** 12 / 100], 4)}%`;
+    BP.voteRate = `${divider(BP.votes, [totalSupply, (10 ** 12) / 100], 4)}%`;
     BP.votes = `${divider(BP.votes, [10 ** 12]).split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')} MED`;
     BPList.push(BP);
   });
@@ -34,9 +40,10 @@ class BPList extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.props.mode !== nextProps.mode) return true;
-    if (this.props.page !== nextProps.page) return true;
-    if (this.props.bpList !== nextProps.bpList) return true;
+    const { mode, page, bpList } = this.props;
+    if (mode !== nextProps.mode) return true;
+    if (page !== nextProps.page) return true;
+    if (bpList !== nextProps.bpList) return true;
     return false;
   }
 
@@ -51,7 +58,8 @@ class BPList extends Component {
     GlobalActions.movePage(1);
   }
 
-  getBPs(props) {
+  getBPs(nextProps) {
+    const props = nextProps || this.props;
     const { location: { search } } = props;
     const { page = 1 } = qs.parse(search);
     const { medState: { numCandidate } } = props;
@@ -80,7 +88,7 @@ class BPList extends Component {
           rightList={bpListConfig.rightList}
         />
       ) : (
-        <div className="blockList">
+        <div className="bpList">
           <TableWithIcon
             type="bp"
             data={mappedBPs(bpList, page, totalSupply)}
@@ -99,6 +107,7 @@ BPList.propTypes = {
   lang: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
   totalSupply: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
 };
 
 export default BPList;

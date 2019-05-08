@@ -65,8 +65,8 @@ class Pages extends Component {
       BlockchainActions
         .getMedState()
         .then(() => TickerActions.getMedxPrice())
-        .then(() => BlockchainActions.subscribe())
         .then(() => BlockchainActions.getInitialBlocks({ from: 0, to: 4 }))
+        .then(() => BlockchainActions.subscribe())
         .then(() => GlobalActions.closeModal()),
     );
   }

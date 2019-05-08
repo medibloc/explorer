@@ -22,19 +22,15 @@ const mappedAccounts = (accs, totalSupply) => {
 };
 
 class AccountList extends Component {
-  constructor(props) {
-    super(props);
-    this.getAccounts = this.getAccounts.bind(this);
-  }
-
   componentDidMount() {
     this.getAccounts(this.props);
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.props.mode !== nextProps.mode) return true;
-    if (this.props.page !== nextProps.page) return true;
-    if (this.props.accountList !== nextProps.accountList) return true;
+    const { mode, page, accountList } = this.props;
+    if (mode !== nextProps.mode) return true;
+    if (page !== nextProps.page) return true;
+    if (accountList !== nextProps.accountList) return true;
     return false;
   }
 
@@ -49,7 +45,8 @@ class AccountList extends Component {
     GlobalActions.movePage(1);
   }
 
-  getAccounts(props) {
+  getAccounts(nextProps) {
+    const props = nextProps || this.props;
     const { location: { search } } = props;
     const { page = 1 } = qs.parse(search);
     const { medState: { numAccount } } = props;
@@ -91,11 +88,11 @@ class AccountList extends Component {
 
 AccountList.propTypes = {
   accountList: PropTypes.array,
-  medState: PropTypes.object.isRequired,
   mode: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
   totalSupply: PropTypes.string.isRequired,
   lang: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
 };
 
 AccountList.defaultProps = {

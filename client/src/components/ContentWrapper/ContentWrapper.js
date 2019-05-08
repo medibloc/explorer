@@ -55,9 +55,9 @@ const ContentWrapper = ({
   let hash = '';
   titles.forEach((title) => {
     const ti = title.toLowerCase();
-    if (ti.includes('hash')) hash = data[title];
-    if (ti.includes('number')) hash = data[title];
-    if (ti.includes('account')) hash = data[title];
+    if (ti.indexOf('hash') !== -1) hash = data[title];
+    if (ti.indexOf('number') !== -1) hash = data[title];
+    if (ti.indexOf('account') !== -1) hash = data[title];
   });
   const url = `/${lang}/${type === 'bp' ? 'account' : type}/${hash}`;
 

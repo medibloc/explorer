@@ -16,7 +16,7 @@ const NavList = ({
         className={cx(
           'navListBtn',
           {
-            navSelected: currentUrl.includes(PAGE),
+            navSelected: currentUrl.indexOf(PAGE) !== -1,
           },
         )}
         to={`/${lang}/${PAGE}s`}

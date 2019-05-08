@@ -43,9 +43,9 @@ const setLocale = () => {
   const LangList = ['ja', 'ko', 'zh'];
   const browserLang = navigator.language || navigator.userLanguage;
   let lang = browserLang.split('-')[0];
-  if (!LangList.includes(lang)) lang = 'en';
+  if (LangList.indexOf(lang) === -1) lang = 'en';
   const additional = window.location.pathname.split('/')[1];
-  if (countryList.includes(additional)) lang = additional;
+  if (countryList.indexOf(additional) !== -1) lang = additional;
   GlobalActions.changeLanguage(lang);
 };
 

@@ -37,7 +37,7 @@ class SimpleWrapper extends Component {
   handleClickOutside(e, targetElement) {
     const { searchFrom } = this.props;
     const isClickInside = targetElement.contains(e.target);
-    const isTarget = targetElement.id.includes(searchFrom);
+    const isTarget = targetElement.id.indexOf(searchFrom) !== -1;
 
     if (!isClickInside && isTarget) GlobalActions.removeSearchResult();
   }

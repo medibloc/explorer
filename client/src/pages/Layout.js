@@ -37,7 +37,7 @@ class Layout extends Component {
   render() {
     const currentPath = window.location.pathname.split('/')[1];
     const { children, lang, mode } = this.props;
-    if (!countryList.includes(currentPath)) return <Redirect to={`/${lang}/`} />;
+    if (countryList.indexOf(currentPath) === -1) return <Redirect to={`/${lang}/`} />;
 
     return (
       <div className={cx('layout', { mobile: mode === 2 })}>

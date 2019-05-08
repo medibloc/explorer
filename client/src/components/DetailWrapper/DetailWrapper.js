@@ -31,13 +31,13 @@ const DetailWrapperValue = ({
     {
       titleList.map((title) => {
         for (let i = 0; i < linkList.length; i += 1) {
-          if (linkList[i].includes(title)) {
+          if (linkList[i].indexOf(title) !== -1) {
             const linkTo = `/${lang}/${linkList[i].split('/')[0]}/${data[title]}`;
 
             return (
               <span key={title}>
                 {
-                  ['From', 'To'].includes(title) && (<QrButton modalData={data[title]} />)
+                  ['From', 'To'].indexOf(title) !== -1 && (<QrButton modalData={data[title]} />)
                 }
                 {
                   title === 'url'

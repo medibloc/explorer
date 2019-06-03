@@ -18,7 +18,7 @@ const connect = ({
       acquire: 30000,
       idle: 10000,
       max: 50,
-      min: 10,
+      min: 0,
     },
   });
 

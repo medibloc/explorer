@@ -11,22 +11,30 @@ const getAccountFromDB = (address, t) => Account
   .then(accounts => accounts[0]);
 
 export const updateTxToAccounts = async (rawTx, t, revert = false) => {
-  const { from, to, value: valueStr } = rawTx;
-  const value = new BigNumber(revert ? `-${valueStr}` : valueStr);
-  const fromAccount = await getAccountFromDB(from, t);
-  const toAccount = await getAccountFromDB(to, t);
+  const {
+    from, to, value: valueStr, receipt,
+  } = rawTx;
+  const { executed } = receipt;
 
-  return Promise.all([
-    fromAccount.update({
-      totalTxs: fromAccount.totalTxs + (revert ? -1 : 1),
-      balance: new BigNumber(fromAccount.balance).minus(value).toString(),
-    }, { transaction: t }),
-    toAccount.update({
-      totalTxs: toAccount.totalTxs + (revert ? -1 : 1),
-      balance: new BigNumber(toAccount.balance).plus(value).toString(),
-    }, { transaction: t }),
-  ])
-    .catch(() => logger.error(`failed to update tx to accounts ${rawTx.hash}`));
+  if (executed) {
+    const value = new BigNumber(revert ? `-${valueStr}` : valueStr);
+    const fromAccount = await getAccountFromDB(from, t);
+    const toAccount = await getAccountFromDB(to, t);
+
+    return Promise.all([
+      fromAccount.update({
+        totalTxs: fromAccount.totalTxs + (revert ? -1 : 1),
+        balance: new BigNumber(fromAccount.balance).minus(value).toString(),
+      }, { transaction: t }),
+      toAccount.update({
+        totalTxs: toAccount.totalTxs + (revert ? -1 : 1),
+        balance: new BigNumber(toAccount.balance).plus(value).toString(),
+      }, { transaction: t }),
+    ])
+      .catch(() => logger.error(`failed to update tx to accounts ${rawTx.hash}`));
+  }
+
+  return Promise.all([]);
 };
 
 export const updateCoinbaseAccount = async (rawBlock, t, revert = false) => {

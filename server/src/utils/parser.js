@@ -9,11 +9,11 @@ const parseTx = (block, tx) => ({
   blockHeight: block.height,
   blockId: block.id,
   data: tx,
-  executed: tx.receipt ? tx.receipt.executed : false,
-  fromAccount: tx.from,
-  onChain: tx.on_chain,
-  toAccount: tx.to,
-  txHash: tx.hash,
+  executed: tx.executed,
+  fromAccount: tx.fromAccount,
+  onChain: tx.onChain,
+  toAccount: tx.toAccount,
+  txHash: tx.txHash,
 });
 
 const parseAccount = account => ({

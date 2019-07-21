@@ -1,4 +1,5 @@
 import axios from 'axios';
+import websocket from 'websocket';
 import { URLSearchParams } from 'url';
 
 import config from '../../config';
@@ -8,6 +9,10 @@ import { requestBlockByHash, requestMedState } from '../utils/requester';
 
 import { updateAllAccountsDataAfterSync } from '../account/handler';
 import { handleBlocksResponse, getBlocks, getLastBlock } from '../block/handler';
+import { blockConverter } from '../converter';
+
+const { TOPICS, TENDERMINT_URL } = config.BLOCKCHAIN;
+const WebSocket = websocket.client;
 
 const { URL, TOPICS } = config.BLOCKCHAIN;
 
@@ -90,7 +95,7 @@ let call = null;
 export const startSubscribe = (promise) => {
   // eslint-disable-next-line no-param-reassign
   promise = promise.then(async () => {
-    await updateAllAccountsDataAfterSync();
+    // await updateAllAccountsDataAfterSync();
     logger.debug('SYNC IS DONE');
   });
 
@@ -103,38 +108,50 @@ export const startSubscribe = (promise) => {
     params.append('topics', t);
   }
 
-  return axios({
-    cancelToken: call.token,
-    params,
-    method: 'get',
-    cancelPreviousRequest: true,
-    responseType: 'stream',
-    url: `${URL}/v1/subscribe`,
-  }).then(({ data }) => {
-    logger.debug('start subscribing');
-    data.on('data', (buf) => {
-      const { result } = JSON.parse(buf.toString());
-      if (!result) {
-        logger.error('Reset syncing because server got empty response.');
-        call.cancel('Reset syncing because server got empty response.');
-        reset();
-        return;
-      }
-      const { topic } = result;
-      if (!TOPICS[topic]) {
-        logger.warn(`topic ${topic} does not exist`);
-        return;
-      }
-      logger.debug(`event ${topic} received`);
-      promise = promise // eslint-disable-line no-param-reassign
-        .then(() => TOPICS[topic].onEvent(result, reset))
-        .catch((err) => {
-          logger.error(err.stack);
-          return err;
-        });
+  let initialResponse = true;
+
+  return new Promise((resolve, reject) => {
+    const client = new WebSocket();
+    client.on('connectFailed', err => console.log('connection failed : ', err));
+    client.on('connect', (conn) => {
+      console.log('connected to the blockchain');
+      conn.on('error', (err) => {
+        logger.error(err.stack);
+        reject(err);
+      });
+      conn.on('close', () => logger.debug('close websocket'));
+      conn.on('message', ({ utf8Data }) => {
+        if (initialResponse) {
+          initialResponse = false; // to ignore initial setup response
+        } else {
+          if (!utf8Data) {
+            logger.error('Reset syncing because server got empty response.');
+            reset();
+            return;
+          }
+
+          const block = blockConverter(JSON.parse(utf8Data).result.data.value);
+          logger.debug(`newTailBlock received | height : ${block.height}`);
+          promise = promise // eslint-disable-line no-param-reassign
+            .then(() => TOPICS.newTailBlock.onEvent(block, reset))
+            .catch((err) => {
+              logger.error(err.stack);
+              return err;
+            });
+          if (!isSyncing) {
+            resolve();
+          }
+        }
+      });
+
+      const subscriptionData = {
+        method: 'subscribe',
+        params: {
+          query: "tm.event='NewBlock'",
+        },
+      };
+      conn.send(JSON.stringify(subscriptionData));
     });
-  }).catch((e) => {
-    logger.error(e.stack);
-    setTimeout(() => reset(true), 1000);
+    client.connect(TENDERMINT_URL.ws);
   });
 };

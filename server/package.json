@@ -35,6 +35,7 @@
     "pluralize": "^7.0.0",
     "sequelize": "^5.7.6",
     "url": "^0.11.0",
+    "websocket": "^1.0.29",
     "winston": "^3.2.1"
   },
   "devDependencies": {

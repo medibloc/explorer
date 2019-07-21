@@ -5,16 +5,20 @@ import { URLSearchParams } from 'url';
 import config from '../../config';
 import db from '../db';
 import logger from '../logger';
-import { requestBlockByHash, requestMedState } from '../utils/requester';
+import {
+  requestBlockByHeight,
+  requestMedState,
+  requestTransactionsByHeight,
+} from '../utils/requester';
 
-import { updateAllAccountsDataAfterSync } from '../account/handler';
 import { handleBlocksResponse, getBlocks, getLastBlock } from '../block/handler';
 import { blockConverter } from '../converter';
 
 const { TOPICS, TENDERMINT_URL } = config.BLOCKCHAIN;
 const WebSocket = websocket.client;
 
-const { URL, TOPICS } = config.BLOCKCHAIN;
+
+let isSyncing = true;
 
 const clients = Object.keys(TOPICS).reduce((obj, key) => {
   obj[key] = {}; // eslint-disable-line no-param-reassign
@@ -33,15 +37,21 @@ const pushEventToClient = (e) => {
   topicClients.forEach(client => client.sseSend(e));
 };
 
-TOPICS['chain.newTailBlock'].onEvent = ({ hash, topic }, onReset) => requestBlockByHash(hash)
-  .then(async (block) => {
-    const { height: lastHeight } = await getLastBlock();
-    // if explorer does not have full blocks
-    if (+lastHeight + 1 < +block.height) return onReset();
+TOPICS.newTailBlock.onEvent = async (block, onReset) => {
+  const { height: lastHeight } = await getLastBlock();
+  // if explorer does not have full blocks
+  if (+lastHeight + 1 < +block.height) return onReset();
 
-    return db.transaction(t => handleBlocksResponse([block], t));
-  }).then(dbBlocks => pushEventToClient({ data: dbBlocks[0].dataValues, topic }));
+  const detailedBlock = await requestBlockByHeight(block.height);
+  detailedBlock.txs = await requestTransactionsByHeight(block.height);
 
+  return db
+    .transaction(t => handleBlocksResponse([detailedBlock], t))
+    .then(dbBlocks => pushEventToClient({
+      data: dbBlocks[0].dataValues,
+      topic: 'newTailBlock',
+    }));
+};
 
 export const onSubscribe = (req, res, options) => {
   const { topics: reqTopics } = options;
@@ -65,7 +75,7 @@ export const sync = async (stopSync = false) => {
   // CASE B : If DB already holds block data
   if (lastBlock) currentHeight = +lastBlock.data.height;
 
-  const lastHeight = +medState.height;
+  const lastHeight = +medState.last_block_height;
   logger.debug(`current height ${currentHeight}, last height ${lastHeight}`);
   if (currentHeight === lastHeight && medState.tail === lastBlock.hash) {
     return Promise.resolve();
@@ -82,13 +92,15 @@ export const sync = async (stopSync = false) => {
         if (stopSync) return Promise.resolve();
         return work(postCurrentHeight);
       }
+      isSyncing = false;
       return Promise.resolve();
     });
 
-  return work(currentHeight).catch((err) => {
-    logger.error(err.stack);
-    process.exit(1);
-  });
+  return work(currentHeight)
+    .catch((err) => {
+      logger.error(err.stack);
+      process.exit(1);
+    });
 };
 
 let call = null;

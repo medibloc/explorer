@@ -1,23 +1,22 @@
 import { parseTx } from '../utils/parser';
-import { requestTransaction } from '../utils/requester';
-import { updateCoinbaseAccount, updateTxToAccounts } from '../account/handler';
+import { updateTxToAccounts } from '../account/handler';
 import Transaction from './model';
+import { requestTransactionsByHeight } from '../utils/requester';
 
+// eslint-disable-next-line import/prefer-default-export
 export const handleTxsInDbBlock = async (dbBlock, t) => {
   const block = dbBlock.data;
   let parsedTxs = [];
 
   // getBlock contains all transaction data
-  if (block.transactions.length !== 0) {
-    parsedTxs = block.transactions.map(tx => parseTx(dbBlock, tx));
-  } else if (block.tx_hashes.length !== 0) { // getBlocks only contains hashes
-    parsedTxs = await Promise.all(block.tx_hashes.map(async (txHash) => {
-      const tx = await requestTransaction(txHash);
-      return parseTx(dbBlock, tx);
-    }));
+  if (block.txs.length !== 0) {
+    if (block.txs[0].blockHeight) {
+      parsedTxs = block.txs.map(tx => parseTx(dbBlock, tx));
+    } else {
+      const txs = await requestTransactionsByHeight(block.height);
+      parsedTxs = txs.map(tx => parseTx(dbBlock, tx));
+    }
   }
-
-  await updateCoinbaseAccount(block, t);
 
   return Transaction
     .bulkCreate(parsedTxs, { transaction: t })

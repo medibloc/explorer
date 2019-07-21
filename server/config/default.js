@@ -1,11 +1,19 @@
 import path from 'path';
 
+const endpoint = 'localhost';
 const config = {
   BLOCKCHAIN: {
     URL: 'http://localhost:9921',
+    TENDERMINT_URL: {
+      http: `http://${endpoint}:26657`,
+      ws: `ws://${endpoint}:26657/websocket`,
+    },
+    SERVER_URL: {
+      http: `http://${endpoint}:1317`,
+    },
     GENESIS_ACCOUNT: '000000000000000000000000000000000000000000000000000000000000000000',
     TOPICS: {
-      'chain.newTailBlock': {},
+      newTailBlock: {},
     },
   },
   DB: {

@@ -1,38 +1,35 @@
 import axios from 'axios';
 import config from '../../config';
+import {
+  balanceConverter, blockConverter,
+  txConverter, stakingConverter,
+} from '../converter';
 
-const { URL } = config.BLOCKCHAIN;
+const { URL, TENDERMINT_URL, SERVER_URL } = config.BLOCKCHAIN;
 
-
-const requestBlockByHash = hash => axios({
-  method: 'get',
-  params: { hash },
-  url: `${URL}/v1/block`,
-}).then(res => res.data);
 
 const requestBlockByHeight = height => axios({
   method: 'get',
-  params: { height },
-  url: `${URL}/v1/block`,
-}).then(res => res.data);
+  url: `${SERVER_URL.http}/blocks/${height}`,
+}).then(({ data }) => blockConverter(data));
 
-const requestBlocks = ({ from, to }) => axios({
+const requestTransactionsByHeight = height => axios({
   method: 'get',
-  params: { from, to },
-  url: `${URL}/v1/blocks`,
-}).then(res => res.data.blocks);
+  params: {
+    'tx.height': height,
+  },
+  url: `${SERVER_URL.http}/txs`,
+}).then(({ data }) => data.reduce((acc, tx) => [...acc, ...txConverter(tx)], []));
 
-const requestTransaction = hash => axios({
+const requestAccountBalance = address => axios({
   method: 'get',
-  params: { hash },
-  url: `${URL}/v1/transaction`,
-}).then(res => res.data);
+  url: `${SERVER_URL.http}/bank/balances/${address}`,
+}).then(({ data }) => balanceConverter(data));
 
-const requestAccount = ({ address, height }) => axios({
+const requestAccountStakingBalance = address => axios({
   method: 'get',
-  params: { address, height },
-  url: `${URL}/v1/account`,
-}).then(res => res.data);
+  url: `${SERVER_URL.http}/staking/delegators/${address}`,
+}).then(({ data }) => stakingConverter(data));
 
 // eslint-disable-next-line camelcase
 const requestCandidate = candidate_id => axios({
@@ -43,20 +40,19 @@ const requestCandidate = candidate_id => axios({
 
 const requestCandidates = () => axios({
   method: 'get',
-  url: `${URL}/v1/candidates`,
-}).then(res => res.data.candidates);
+  url: `${SERVER_URL.http}/validatorsets/latest`,
+}).then(({ data }) => data.validators);
 
 const requestMedState = () => axios({
   method: 'get',
-  url: `${URL}/v1/node/medstate`,
-}).then(res => res.data);
+  url: `${TENDERMINT_URL.http}/abci_info`,
+}).then(res => res.data.result.response);
 
 export {
-  requestBlockByHash,
   requestBlockByHeight,
-  requestBlocks,
-  requestTransaction,
-  requestAccount,
+  requestTransactionsByHeight,
+  requestAccountBalance,
+  requestAccountStakingBalance,
   requestCandidate,
   requestCandidates,
   requestMedState,

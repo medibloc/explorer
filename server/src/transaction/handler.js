@@ -29,15 +29,3 @@ export const handleTxsInDbBlock = async (dbBlock, t) => {
       return dbTxs;
     });
 };
-
-export const getTransactionsWithBlockHeight = (blockHeight, t) => (
-  Transaction.findAll({
-    where: { blockHeight },
-    transaction: t,
-  }));
-
-export const removeTransactionsWithBlockHeight = (blockHeight, t) => (
-  Transaction.destroy({
-    where: { blockHeight },
-    transaction: t,
-  }));

@@ -4,12 +4,6 @@ const isIdentical = (block1, block2) => {
   return block1.hash === block2.hash;
 };
 
-const isReverted = (block, parentBlock) => {
-  if (+block.height - 1 !== +parentBlock.height) return true;
-  return block.parent_hash !== parentBlock.hash;
-};
-
 export {
-  isIdentical,
-  isReverted,
+  isIdentical, // eslint-disable-line
 };

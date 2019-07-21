@@ -25,7 +25,7 @@ const blockMapper = (block) => {
     'Block Hash': block.hash,
     'Prev Hash': block.parent_hash,
     'No.Tx': noTx,
-    BP: block.coinbase,
+    BP: block.validator,
     Amount: amount,
   };
 };

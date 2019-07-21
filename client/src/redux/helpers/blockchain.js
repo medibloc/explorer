@@ -3,7 +3,7 @@ import { NODE_ENDPOINT } from '../../config';
 
 
 export const subscriber = (dispatch, actionTypes, ERROR) => {
-  const source = new EventSource(`${NODE_ENDPOINT}/subscribe?topics=chain.newTailBlock`);
+  const source = new EventSource(`${NODE_ENDPOINT}/subscribe?topics=newTailBlock`);
   source.addEventListener('message', (e) => {
     const data = JSON.parse(e.data);
     dispatch({

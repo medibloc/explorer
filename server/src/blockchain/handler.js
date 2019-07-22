@@ -59,7 +59,7 @@ TOPICS.newTailBlock.onEvent = async (block, onReset) => {
     .then(dbBlocks => pushEventToClient({
       data: {
         ...dbBlocks[0].dataValues,
-        supply: MEM_FIELDS.totalSupply,
+        supply: MEM_FIELDS,
       },
       topic: 'newTailBlock',
     }));

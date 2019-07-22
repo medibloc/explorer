@@ -11,9 +11,8 @@ export default async (req, res) => {
   const { height } = await Block.findOne({ order: [['id', 'DESC']] });
   const numTx = await Transaction.count();
   const numCandidate = await Candidate.count();
-  const { totalSupply } = MEM_FIELDS;
 
   res.json({
-    height, numAccount, numCandidate, numTx, totalSupply,
+    height, numAccount, numCandidate, numTx, supply: MEM_FIELDS,
   });
 };

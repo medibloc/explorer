@@ -51,6 +51,7 @@ const subsribeTypes = {
 
 const initialState = {
   totalSupply: '0',
+  bondedTokens: '0',
 
   medState: null,
 
@@ -80,7 +81,8 @@ const reducer = handleActions({
   [GET_MED_STATE]: (state, action) => ({
     ...state,
     medState: action.payload,
-    totalSupply: divider(action.payload.totalSupply, [10 ** 9]),
+    totalSupply: divider(action.payload.supply.totalSupply, [10 ** 9]),
+    bondedTokens: action.payload.supply.bondedTokens,
   }),
 
   [GET_ACCOUNT]: (state, action) => {
@@ -130,7 +132,8 @@ const reducer = handleActions({
       ...state,
       liveTxs,
       tailBlock: action.payload,
-      totalSupply: divider(action.payload.supply, [10 ** 9]),
+      totalSupply: divider(action.payload.supply.totalSupply, [10 ** 9]),
+      bondedTokens: action.payload.supply.bondedTokens,
       blocks: sorter([...state.blocks, action.payload], 'height')
         .slice(0, 5),
       txsFromBlock: action.payload.transactions ? (

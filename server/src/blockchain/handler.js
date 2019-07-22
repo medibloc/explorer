@@ -14,6 +14,7 @@ import {
 
 import { handleBlocksResponse, getBlocks, getLastBlock } from '../block/handler';
 import { blockConverter } from '../converter';
+import { updateCandidates } from '../candidate/handler';
 
 const { TOPICS, TENDERMINT_URL, MEM_FIELDS } = config.BLOCKCHAIN;
 const WebSocket = websocket.client;
@@ -51,7 +52,10 @@ TOPICS.newTailBlock.onEvent = async (block, onReset) => {
   detailedBlock.txs = await requestTransactionsByHeight(block.height);
 
   return db
-    .transaction(t => handleBlocksResponse([detailedBlock], t))
+    .transaction(async (t) => {
+      await updateCandidates(t);
+      return handleBlocksResponse([detailedBlock], t);
+    })
     .then(dbBlocks => pushEventToClient({
       data: {
         ...dbBlocks[0].dataValues,

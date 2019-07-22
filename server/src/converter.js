@@ -76,3 +76,13 @@ export const stakingConverter = (data) => {
     return null;
   }
 };
+
+export const totalSupplyConverter = (data) => {
+  try {
+    const notBonded = new BigNumber(data.not_bonded_tokens);
+    const bonded = new BigNumber(data.bonded_tokens);
+    return notBonded.plus(bonded).toString();
+  } catch (e) {
+    return null;
+  }
+};

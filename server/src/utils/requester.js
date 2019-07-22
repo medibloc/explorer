@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '../../config';
 import {
   balanceConverter, blockConverter,
-  txConverter, stakingConverter,
+  txConverter, stakingConverter, totalSupplyConverter,
 } from '../converter';
 
 const { URL, TENDERMINT_URL, SERVER_URL } = config.BLOCKCHAIN;
@@ -48,6 +48,11 @@ const requestMedState = () => axios({
   url: `${TENDERMINT_URL.http}/abci_info`,
 }).then(res => res.data.result.response);
 
+const requestTotalSupply = () => axios({
+  method: 'get',
+  url: `${SERVER_URL.http}/staking/pool`,
+}).then(res => totalSupplyConverter(res.data));
+
 export {
   requestBlockByHeight,
   requestTransactionsByHeight,
@@ -56,4 +61,5 @@ export {
   requestCandidate,
   requestCandidates,
   requestMedState,
+  requestTotalSupply,
 };

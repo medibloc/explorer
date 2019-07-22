@@ -9,6 +9,7 @@ import {
   requestBlockByHeight,
   requestMedState,
   requestTransactionsByHeight,
+  requestTotalSupply,
 } from '../utils/requester';
 
 import { handleBlocksResponse, getBlocks, getLastBlock } from '../block/handler';
@@ -43,12 +44,16 @@ TOPICS.newTailBlock.onEvent = async (block, onReset) => {
   if (+lastHeight + 1 < +block.height) return onReset();
 
   const detailedBlock = await requestBlockByHeight(block.height);
+  const totalSupply = await requestTotalSupply();
   detailedBlock.txs = await requestTransactionsByHeight(block.height);
 
   return db
     .transaction(t => handleBlocksResponse([detailedBlock], t))
     .then(dbBlocks => pushEventToClient({
-      data: dbBlocks[0].dataValues,
+      data: {
+        ...dbBlocks[0].dataValues,
+        supply: totalSupply,
+      },
       topic: 'newTailBlock',
     }));
 };

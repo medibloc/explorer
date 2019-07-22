@@ -6,6 +6,7 @@ export const subscriber = (dispatch, actionTypes, ERROR) => {
   const source = new EventSource(`${NODE_ENDPOINT}/subscribe?topics=newTailBlock`);
   source.addEventListener('message', (e) => {
     const data = JSON.parse(e.data);
+    data.data.data.supply = data.data.supply;
     dispatch({
       type: actionTypes.GET_TAIL_BLOCK,
       payload: data.data.data,

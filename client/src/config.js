@@ -57,7 +57,7 @@ export const txSpaceList = {
 export const txTitleList = {
   account: ['Transaction Hash', 'Time Stamp', 'From', 'To', 'Amount'],
   block: ['Transaction Hash', 'From', 'To', 'Amount'],
-  txs: ['Transaction Hash', 'Type', 'Time Stamp', 'From', 'To', 'Amount'],
+  txs: ['Transaction Hash', 'Type', 'Block Height', 'From', 'To', 'Amount'],
 };
 
 export const accountListConfig = {

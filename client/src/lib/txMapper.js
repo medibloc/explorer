@@ -11,7 +11,7 @@ const txMapper = (tx) => {
     Status: tx.executed ? 'Success' : 'Fail',
     From: tx.fromAccount,
     To: tx.toAccount,
-    Type: tx.type.split('/')[1],
+    Type: tx.type ? tx.type.split('/')[1] : '',
     Amount,
     Message: '',
     // Nonce: tx.nonce,

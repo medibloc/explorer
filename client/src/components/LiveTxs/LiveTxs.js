@@ -10,7 +10,7 @@ const Txs = ({ liveTxs, lang, mode }) => (
     lang={lang}
     mode={mode}
     type="tx"
-    data={sorter(liveTxs, 'receipt.timestamp')}
+    data={sorter(liveTxs, 'blockHeight')}
   />
 );
 

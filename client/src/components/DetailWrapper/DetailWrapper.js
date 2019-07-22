@@ -37,7 +37,7 @@ const DetailWrapperValue = ({
             return (
               <span key={title}>
                 {
-                  ['From', 'To'].indexOf(title) !== -1 && (<QrButton modalData={data[title]} />)
+                  (['From', 'To'].indexOf(title) !== -1 && data[title]) && (<QrButton modalData={data[title]} />)
                 }
                 {
                   title === 'url'

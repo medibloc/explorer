@@ -84,7 +84,7 @@ export const bpListConfig = {
 export const detailWrapperConfig = {
   titles: {
     block: ['Block Height', 'Time Stamp', 'Block Hash', 'Prev Hash', 'Amount', 'No.Tx', 'BP'],
-    tx: ['Transaction Hash', 'Block Height', 'Status', 'Time Stamp', 'Type', 'From', 'To', 'Amount', 'Nonce', 'Message'],
+    tx: ['Transaction Hash', 'Block Height', 'Status', 'Type', 'From', 'To', 'Amount'],
     account: ['Account', 'Balance', 'Staking', 'Transactions'],
     bp: ['Collateral', 'url'],
   },

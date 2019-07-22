@@ -18,6 +18,7 @@ export const blockConverter = (data) => {
 export const txConverter = (data) => {
   try {
     return data.tx.value.msg.map((m, i) => {
+      let amount = null;
       let fromAccount = null;
       let toAccount = null;
 
@@ -25,12 +26,17 @@ export const txConverter = (data) => {
         case 'cosmos-sdk/MsgBeginRedelegate':
         case 'cosmos-sdk/MsgUndelegate':
         case 'cosmos-sdk/MsgDelegate':
+          fromAccount = m.value.delegator_address;
+          ({ amount } = m.value.amount);
+          break;
         case 'cosmos-sdk/MsgCreateValidator':
           fromAccount = m.value.delegator_address;
+          ({ amount } = m.value.value);
           break;
         case 'cosmos-sdk/MsgSend':
           fromAccount = m.value.from_address;
           toAccount = m.value.to_address;
+          amount = m.value.amount ? m.value.amount[0].amount : 0;
           break;
         case 'record/SetRecord':
           fromAccount = m.value.Writer;
@@ -47,6 +53,7 @@ export const txConverter = (data) => {
         onChain: true,
         txHash: `${data.txhash}:${i}`,
         type: m.type,
+        amount,
       });
     });
   } catch (e) {

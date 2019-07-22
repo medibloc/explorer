@@ -28,7 +28,7 @@ const requestAccountBalance = address => axios({
 
 const requestAccountStakingBalance = address => axios({
   method: 'get',
-  url: `${SERVER_URL.http}/staking/delegators/${address}`,
+  url: `${SERVER_URL.http}/staking/delegators/${address}/delegations`,
 }).then(({ data }) => stakingConverter(data));
 
 // eslint-disable-next-line camelcase

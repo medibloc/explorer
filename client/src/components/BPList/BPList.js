@@ -17,13 +17,13 @@ import {
 import './BPList.scss';
 
 
-const mappedBPs = (BPs = [], page, totalSupply) => {
+const mappedBPs = (BPs = [], page, totalSupply, bondedTokens) => {
   const BPList = [];
   BPs.forEach((preBP, i) => {
     const BP = bpMapper(preBP);
     BP.Ranking = (page - 1) * bpsInPage + i + 1;
-    BP.voteRate = `${divider(BP.votes, [totalSupply, (10 ** 12) / 100], 4)}%`;
-    BP.votes = `${divider(BP.votes, [10 ** 12]).split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')} MED`;
+    BP.voteRate = `${divider(BP.votes, [bondedTokens / 100], 2)}%`;
+    BP.votes = `${divider(BP.votes, [10 ** 9], 2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} MED`;
     BPList.push(BP);
   });
   return BPList;
@@ -73,6 +73,7 @@ class BPList extends Component {
       mode,
       page,
       totalSupply,
+      bondedTokens,
       lang,
     } = this.props;
 
@@ -81,7 +82,7 @@ class BPList extends Component {
         <ListWrapper
           lang={lang}
           titles={bpListConfig.titles}
-          data={mappedBPs(bpList, page, totalSupply)}
+          data={mappedBPs(bpList, page, totalSupply, bondedTokens)}
           spacing={spaceMapper(bpListConfig.spaces)}
           linkTo={bpListConfig.linkTo}
           centerList={bpListConfig.centerList}
@@ -91,7 +92,7 @@ class BPList extends Component {
         <div className="bpList">
           <TableWithIcon
             type="bp"
-            data={mappedBPs(bpList, page, totalSupply)}
+            data={mappedBPs(bpList, page, totalSupply, bondedTokens)}
             lang={lang}
             mode={mode}
           />
@@ -107,6 +108,7 @@ BPList.propTypes = {
   lang: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
   totalSupply: PropTypes.string.isRequired,
+  bondedTokens: PropTypes.string.isRequired,
   location: PropTypes.object.isRequired,
 };
 

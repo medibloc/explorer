@@ -1,8 +1,7 @@
 import { divider } from './bigNumCalculator';
-import { txTypes } from '../config';
 
 const txMapper = (tx) => {
-  const tempAmount = divider(tx.value, [10 ** 12]).split('.');
+  const tempAmount = divider(tx.amount, [10 ** 9]).split('.');
   tempAmount[0] = tempAmount[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   const Amount = `${tempAmount.join('.')} MED`;
 

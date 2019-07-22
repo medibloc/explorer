@@ -4,18 +4,14 @@ const blockMapper = (block) => {
   let amount = '0';
   if (block.transactions) {
     block.transactions.forEach((tx) => {
-      amount = adder(amount, [tx.value]);
+      amount = adder(amount, [tx.amount]);
     });
   } else {
     // eslint-disable-next-line
     block.transactions = [];
   }
 
-  let noTx = 0;
-  if (block.transactions.length !== 0) noTx = block.transactions.length;
-  else if (block.tx_hashes && block.tx_hashes.length !== 0) noTx = block.tx_hashes.length;
-
-  const tempAmount = divider(amount, [10 ** 12]).split('.');
+  const tempAmount = divider(amount, [10 ** 9]).split('.');
   tempAmount[0] = tempAmount[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   amount = `${tempAmount.join('.')} MED`;
 
@@ -23,8 +19,8 @@ const blockMapper = (block) => {
     'Block Height': block.height,
     'Time Stamp': block.timestamp,
     'Block Hash': block.hash,
-    'Prev Hash': block.parent_hash,
-    'No.Tx': noTx,
+    'Prev Hash': block.prevHash,
+    'No.Tx': block.transactions.length,
     BP: block.validator,
     Amount: amount,
   };

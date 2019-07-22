@@ -4,7 +4,6 @@ import React, { Component, Fragment } from 'react';
 import DetailWrapper from '../DetailWrapper';
 import { bpMapper } from '../../lib';
 import { BlockchainActions, WidgetActions as w } from '../../redux/actionCreators';
-import PageInfo from '../PageInfo';
 
 
 class BP extends Component {
@@ -31,18 +30,14 @@ class BP extends Component {
   }
 
   callBP(nextProps) {
-    let { account, address } = this.props;
+    let { address } = this.props;
     if (nextProps) {
-      ({ account, address } = nextProps);
+      ({ address } = nextProps);
     }
-    if (account === null || account.address !== address) return;
-
-    const { candidateId } = account;
-    if (!candidateId || candidateId.length !== 64) return;
 
     w.loader(
       BlockchainActions
-        .getBP(candidateId),
+        .getBP(address),
     );
   }
 
@@ -52,7 +47,6 @@ class BP extends Component {
     } = this.props;
     return (bp && bp.address === address) && (
       <Fragment>
-        <PageInfo title="bp-detail" />
         <DetailWrapper
           data={bpMapper(bp)}
           lang={language}

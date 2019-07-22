@@ -16,6 +16,7 @@ import Account from './Account';
 import Accounts from './Accounts';
 import Block from './Block';
 import Blocks from './Blocks';
+import BP from './BP';
 import BPs from './BPs';
 import Err404 from './Err404';
 import Home from './Home';
@@ -99,6 +100,7 @@ class Pages extends Component {
                       <Route exact path="/:lang/accounts" component={Accounts} />
                       <Route path="/:lang/block" component={Block} />
                       <Route exact path="/:lang/blocks" component={Blocks} />
+                      <Route path="/:lang/bp" component={BP} />
                       <Route exact path="/:lang/bps" component={BPs} />
                       <Route path="/:lang/tx" component={Tx} />
                       <Route exact path="/:lang/txs" component={Txs} />

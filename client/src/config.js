@@ -75,7 +75,7 @@ export const blockListConfig = {
 
 export const bpListConfig = {
   titles: ['Ranking', 'Alias', 'Account', 'votes', 'voteRate'],
-  linkTo: ['account/account'],
+  linkTo: ['bp/account'],
   centerList: ['Ranking'],
   rightList: ['voteRate'],
   spaces: [10, 10, 65, 20, 15],
@@ -86,7 +86,7 @@ export const detailWrapperConfig = {
     block: ['Block Height', 'Time Stamp', 'Block Hash', 'Prev Hash', 'Amount', 'No.Tx', 'BP'],
     tx: ['Transaction Hash', 'Block Height', 'Status', 'Type', 'From', 'To', 'Amount'],
     account: ['Account', 'Balance', 'Staking', 'Transactions'],
-    bp: ['Collateral', 'url'],
+    bp: ['Address', 'Consensus PublicKey', 'Votes', 'url', 'Alias', 'Details', 'Commission Max Rate', 'Commission Rate', 'Jailed'],
   },
   linkTo: {
     block: ['block/Prev Hash', 'account/BP'],

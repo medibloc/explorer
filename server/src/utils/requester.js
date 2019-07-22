@@ -5,7 +5,7 @@ import {
   txConverter, stakingConverter, totalSupplyConverter,
 } from '../converter';
 
-const { URL, TENDERMINT_URL, SERVER_URL } = config.BLOCKCHAIN;
+const { TENDERMINT_URL, SERVER_URL } = config.BLOCKCHAIN;
 
 
 const requestBlockByHeight = height => axios({
@@ -31,17 +31,10 @@ const requestAccountStakingBalance = address => axios({
   url: `${SERVER_URL.http}/staking/delegators/${address}/delegations`,
 }).then(({ data }) => stakingConverter(data));
 
-// eslint-disable-next-line camelcase
-const requestCandidate = candidate_id => axios({
-  method: 'get',
-  params: { candidate_id },
-  url: `${URL}/v1/candidate`,
-}).then(res => res.data);
-
 const requestCandidates = () => axios({
   method: 'get',
-  url: `${SERVER_URL.http}/validatorsets/latest`,
-}).then(({ data }) => data.validators);
+  url: `${SERVER_URL.http}/staking/validators`,
+}).then(({ data }) => data);
 
 const requestMedState = () => axios({
   method: 'get',
@@ -58,7 +51,6 @@ export {
   requestTransactionsByHeight,
   requestAccountBalance,
   requestAccountStakingBalance,
-  requestCandidate,
   requestCandidates,
   requestMedState,
   requestTotalSupply,

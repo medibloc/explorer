@@ -46,6 +46,7 @@ export const txConverter = (data) => {
         toAccount,
         onChain: true,
         txHash: `${data.txhash}:${i}`,
+        type: m.type,
       });
     });
   } catch (e) {

@@ -99,7 +99,7 @@ export const detailWrapperConfig = {
 export const tableWithIconConfig = {
   titles: {
     block: ['Block Height', 'Block Hash', 'BP', 'Time Stamp'],
-    tx: ['Time Stamp', 'Transaction Hash', 'Type'],
+    tx: ['Block Height', 'Transaction Hash', 'Type'],
     account: ['Account', 'Balance', 'Percentage', 'Transactions'],
     bp: ['Ranking', 'Account', 'Alias', 'votes'],
   },

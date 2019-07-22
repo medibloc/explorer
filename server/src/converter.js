@@ -81,7 +81,11 @@ export const totalSupplyConverter = (data) => {
   try {
     const notBonded = new BigNumber(data.not_bonded_tokens);
     const bonded = new BigNumber(data.bonded_tokens);
-    return notBonded.plus(bonded).toString();
+    return {
+      notBondedTokens: data.not_bonded_tokens,
+      bondedTokens: data.bonded_tokens,
+      totalSupply: notBonded.plus(bonded).toString(),
+    };
   } catch (e) {
     return null;
   }

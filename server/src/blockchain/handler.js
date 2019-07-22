@@ -44,7 +44,10 @@ TOPICS.newTailBlock.onEvent = async (block, onReset) => {
   if (+lastHeight + 1 < +block.height) return onReset();
 
   const detailedBlock = await requestBlockByHeight(block.height);
-  MEM_FIELDS.totalSupply = await requestTotalSupply();
+  const supplyData = await requestTotalSupply();
+  MEM_FIELDS.notBondedTokens = supplyData.notBondedTokens;
+  MEM_FIELDS.bondedTokens = supplyData.bondedTokens;
+  MEM_FIELDS.totalSupply = supplyData.totalSupply;
   detailedBlock.txs = await requestTransactionsByHeight(block.height);
 
   return db

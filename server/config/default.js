@@ -16,6 +16,8 @@ const config = {
       newTailBlock: {},
     },
     MEM_FIELDS: {
+      notBondedTokens: null,
+      bondedTokens: null,
       totalSupply: null,
     },
   },

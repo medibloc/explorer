@@ -127,7 +127,7 @@ const reducer = handleActions({
       ...state,
       liveTxs,
       tailBlock: action.payload,
-      totalSupply: divider(action.payload.supply, [10 ** 12]),
+      totalSupply: divider(action.payload.supply, [10 ** 9]),
       blocks: sorter([...state.blocks, action.payload], 'height')
         .slice(0, 5),
       txsFromBlock: action.payload.transactions ? (

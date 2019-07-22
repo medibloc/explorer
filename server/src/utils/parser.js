@@ -24,8 +24,21 @@ const parseAccount = account => ({
   staking: account.staking,
 });
 
+const parseCandidate = candidate => ({
+  address: candidate.operator_address,
+  consensusPubKey: candidate.consensus_pubkey,
+  jailed: candidate.jailed,
+  votes: candidate.tokens,
+
+  data: {
+    commission: candidate.commission,
+    description: candidate.description,
+  },
+});
+
 export {
   parseBlock,
   parseTx,
   parseAccount,
+  parseCandidate,
 };

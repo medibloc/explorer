@@ -15,6 +15,9 @@ const config = {
     TOPICS: {
       newTailBlock: {},
     },
+    MEM_FIELDS: {
+      totalSupply: null,
+    },
   },
   DB: {
     database: 'medi_explorer',

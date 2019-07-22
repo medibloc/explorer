@@ -77,7 +77,11 @@ const initialState = {
 
 // REDUCER
 const reducer = handleActions({
-  [GET_MED_STATE]: (state, action) => ({ ...state, medState: action.payload }),
+  [GET_MED_STATE]: (state, action) => ({
+    ...state,
+    medState: action.payload,
+    totalSupply: divider(action.payload.totalSupply, [10 ** 9]),
+  }),
 
   [GET_ACCOUNT]: (state, action) => {
     const account = {
@@ -105,7 +109,6 @@ const reducer = handleActions({
     return {
       ...state,
       blocks: sorter(blockList, 'height'),
-      totalSupply: divider(blockList[0].supply, [10 ** 12]),
     };
   },
   [GET_INITIAL_TXS]: (state, action) => {

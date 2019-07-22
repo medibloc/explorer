@@ -15,7 +15,7 @@ import {
 import { handleBlocksResponse, getBlocks, getLastBlock } from '../block/handler';
 import { blockConverter } from '../converter';
 
-const { TOPICS, TENDERMINT_URL } = config.BLOCKCHAIN;
+const { TOPICS, TENDERMINT_URL, MEM_FIELDS } = config.BLOCKCHAIN;
 const WebSocket = websocket.client;
 
 
@@ -44,7 +44,7 @@ TOPICS.newTailBlock.onEvent = async (block, onReset) => {
   if (+lastHeight + 1 < +block.height) return onReset();
 
   const detailedBlock = await requestBlockByHeight(block.height);
-  const totalSupply = await requestTotalSupply();
+  MEM_FIELDS.totalSupply = await requestTotalSupply();
   detailedBlock.txs = await requestTransactionsByHeight(block.height);
 
   return db
@@ -52,7 +52,7 @@ TOPICS.newTailBlock.onEvent = async (block, onReset) => {
     .then(dbBlocks => pushEventToClient({
       data: {
         ...dbBlocks[0].dataValues,
-        supply: totalSupply,
+        supply: MEM_FIELDS.totalSupply,
       },
       topic: 'newTailBlock',
     }));

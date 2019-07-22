@@ -107,7 +107,7 @@ BPList.propTypes = {
   lang: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
   totalSupply: PropTypes.string.isRequired,
-  location: PropTypes.string.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 export default BPList;

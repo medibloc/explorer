@@ -92,7 +92,7 @@ AccountList.propTypes = {
   page: PropTypes.number.isRequired,
   totalSupply: PropTypes.string.isRequired,
   lang: PropTypes.string.isRequired,
-  location: PropTypes.string.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 AccountList.defaultProps = {

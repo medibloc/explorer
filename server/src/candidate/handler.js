@@ -3,6 +3,7 @@ import Candidate from './model';
 import logger from '../logger';
 import { requestCandidates } from '../utils/requester';
 import { parseCandidate } from '../utils/parser';
+import { bechPub2hexAddr } from '../utils/key';
 
 
 const getCandidateFromDB = (address, t) => Candidate
@@ -21,6 +22,7 @@ export const updateCandidates = async (t) => {
     delete parsedCandidate.address;
     return candidate.update({
       consensusPubKey: parsedCandidate.consensusPubKey,
+      consensusAddr: bechPub2hexAddr(parsedCandidate.consensusPubKey),
       jailed: parsedCandidate.jailed,
       votes: parsedCandidate.votes,
       data: parsedCandidate.data,

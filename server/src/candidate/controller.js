@@ -13,6 +13,9 @@ export const get = async (req, res) => {
     candidate = await Candidate.findOne({ where: { address: id } });
   }
   if (!candidate) {
+    candidate = await Candidate.findOne({ where: { consensusAddr: id } });
+  }
+  if (!candidate) {
     throw new BadRequest('candidate not found');
   }
 

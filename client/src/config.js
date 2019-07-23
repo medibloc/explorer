@@ -68,7 +68,7 @@ export const accountListConfig = {
 
 export const blockListConfig = {
   titles: ['Block Height', 'Time Stamp', 'Block Hash', 'No.Tx', 'BP'],
-  linkTo: ['block/height', 'block/hash', 'account/bp'],
+  linkTo: ['block/height', 'block/hash', 'bp/bp'],
   centerList: ['Block Height', 'No.Tx'],
   spaces: [2, 4, 9, 2, 3],
 };

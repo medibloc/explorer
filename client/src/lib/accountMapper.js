@@ -5,7 +5,7 @@ const accountMapper = (account, totalSupply = undefined) => {
   tempAmount[0] = tempAmount[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   const Balance = `${tempAmount.join('.')} MED`;
 
-  const Staking = account.data ? `${divider(account.data.staking, [10 ** 9]).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} MED` : null;
+  const Staking = account.staking ? `${divider(account.staking, [10 ** 9], 2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} MED` : null;
 
   return {
     Account: account.address,

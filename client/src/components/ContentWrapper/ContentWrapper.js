@@ -59,7 +59,7 @@ const ContentWrapper = ({
     if (ti.indexOf('number') !== -1) hash = data[title];
     if (ti.indexOf('account') !== -1) hash = data[title];
   });
-  const url = `/${lang}/${type === 'bp' ? 'account' : type}/${hash}`;
+  const url = `/${lang}/${type}/${hash}`;
 
   const isTopRanker = data.Ranking >= 1 && data.Ranking <= 21;
 

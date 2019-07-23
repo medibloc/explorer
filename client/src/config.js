@@ -86,10 +86,13 @@ export const detailWrapperConfig = {
     block: ['Block Height', 'Time Stamp', 'Block Hash', 'Prev Hash', 'Amount', 'No.Tx', 'BP'],
     tx: ['Transaction Hash', 'Block Height', 'Status', 'Type', 'From', 'To', 'Amount'],
     account: ['Account', 'Balance', 'Staking', 'Transactions'],
-    bp: ['Address', 'Consensus PublicKey', 'Votes', 'url', 'Alias', 'Details', 'Commission Max Rate', 'Commission Rate', 'Jailed'],
+    bp: [
+      'Address', 'Consensus PublicKey', 'Consensus Address', 'Votes', 'url', 'Alias',
+      'Details', 'Commission Max Rate', 'Commission Rate', 'Jailed',
+    ],
   },
   linkTo: {
-    block: ['block/Prev Hash', 'account/BP'],
+    block: ['block/Prev Hash', 'bp/BP'],
     tx: ['account/From', 'account/To'],
     account: [],
     bp: ['url'],

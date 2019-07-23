@@ -45,7 +45,7 @@ class BP extends Component {
     const {
       bp, address, language, mode,
     } = this.props;
-    return (bp && bp.address === address) && (
+    return (bp && (bp.address === address || bp.consensusAddr === address)) && (
       <Fragment>
         <DetailWrapper
           data={bpMapper(bp)}

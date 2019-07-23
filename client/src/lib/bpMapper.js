@@ -24,6 +24,7 @@ const bpMapper = (bp) => {
     votes: bp.votes,
     Votes: `${divider(bp.votes, [10 ** 9], 2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} MED`,
     'Consensus PublicKey': bp.consensusPubKey,
+    'Consensus Address': bp.consensusAddr,
     Jailed: bp.jailed ? 'Yes' : 'No',
     ...additionalInfo,
   };

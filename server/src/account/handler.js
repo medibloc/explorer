@@ -29,7 +29,7 @@ export const updateTxToAccounts = async (rawTx, t) => {
   if (executed && to) {
     const toAccount = await getAccountFromDB(to, t);
     const toAccountBalance = await requestAccountBalance(to);
-    const toAccountStakingBalance = await requestAccountStakingBalance(from);
+    const toAccountStakingBalance = await requestAccountStakingBalance(to);
     plist.push(toAccount.update({
       totalTxs: toAccount.totalTxs + 1,
       balance: new BigNumber(toAccountBalance || 0).toString(),

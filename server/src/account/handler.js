@@ -42,3 +42,11 @@ export const updateTxToAccounts = async (rawTx, t) => {
       logger.error(`failed to update tx to accounts ${rawTx.hash}`);
     });
 };
+
+export const updateGenesisToAccounts = async (addr, amount, t) => {
+  const acc = await getAccountFromDB(addr);
+
+  return acc.update({
+    balance: new BigNumber(amount).toString(),
+  }, { transaction: t });
+};

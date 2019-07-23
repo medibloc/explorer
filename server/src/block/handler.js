@@ -1,11 +1,17 @@
 import Block from './model';
 import db from '../db';
 import { handleTxsInDbBlock } from '../transaction/handler';
-import { requestBlockByHeight, requestTransactionsByHeight } from '../utils/requester';
+import {
+  requestBlockByHeight,
+  requestGenesis,
+  requestTransactionsByHeight,
+} from '../utils/requester';
 import { isIdentical } from '../utils/checker';
 import { parseBlock } from '../utils/parser';
 import config from '../../config';
 import logger from '../logger';
+import { updateGenesisToAccounts } from '../account/handler';
+import { txConverter } from '../converter';
 
 const { REQUEST_STEP } = config.REQUEST;
 
@@ -52,6 +58,30 @@ export const handleBlocksResponse = async (blocks, t) => {
         block.txs = txs;
         return handleBlocksResponse([block], t);
       });
+  }
+
+  // handle genesis
+  if (parentHeight === 0) {
+    const genesis = await requestGenesis();
+
+    // apply genesis coin distribution
+    const promises = genesis.app_state.accounts.map(
+      acc => updateGenesisToAccounts(acc.address, acc.coins[0].amount, t),
+    );
+    await Promise.all(promises);
+
+    // apply genesis transactions
+    const genTxs = genesis.app_state.gentxs
+      .reduce((acc, tx, i) => {
+        const data = {
+          tx,
+          height: 1,
+          logs: [{ success: true }],
+          txhash: '0'.repeat(64).slice(0, -`${i}`.length) + `${i}`, // eslint-disable-line prefer-template
+        };
+        return [...acc, ...txConverter(data)];
+      }, []);
+    blocks[0].txs = genTxs; // eslint-disable-line no-param-reassign
   }
 
   // Check if the block is already saved

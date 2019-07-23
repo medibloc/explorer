@@ -42,14 +42,15 @@ const pushEventToClient = (e) => {
 TOPICS.newTailBlock.onEvent = async (block, onReset) => {
   const { height: lastHeight } = await getLastBlock();
   // if explorer does not have full blocks
-  if (+lastHeight + 1 < +block.height) return onReset();
+  // compare previous block due to Tendermint engine's characteristics
+  if (+lastHeight + 2 < +block.height) return onReset();
 
-  const detailedBlock = await requestBlockByHeight(block.height);
+  const detailedBlock = await requestBlockByHeight(block.height - 1);
   const supplyData = await requestTotalSupply();
   MEM_FIELDS.notBondedTokens = supplyData.notBondedTokens;
   MEM_FIELDS.bondedTokens = supplyData.bondedTokens;
   MEM_FIELDS.totalSupply = supplyData.totalSupply;
-  detailedBlock.txs = await requestTransactionsByHeight(block.height);
+  detailedBlock.txs = await requestTransactionsByHeight(block.height - 1);
 
   return db
     .transaction(async (t) => {

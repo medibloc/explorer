@@ -1,6 +1,7 @@
 const en = {
   address: 'Address',
   consensusPublicKey: 'Consensus Public Key',
+  consensusAddress: 'Consensus Address',
   details: 'Details',
   commissionMax: 'Commission Max Rate',
   commissionRate: 'Commission Rate',

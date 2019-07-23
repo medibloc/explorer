@@ -1,6 +1,7 @@
 const ko = {
   address: '주소',
   consensusPublicKey: '블록 생성자 서명 키',
+  consensusAddress: '블록 생성자 주소',
   details: '상세 정보',
   commissionMax: '최대 보상 비율',
   commissionRate: '보상 비율',

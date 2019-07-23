@@ -1,6 +1,7 @@
 const zh = {
   address: '账户',
   consensusPublicKey: '阻止生成器的签名密钥',
+  consensusAddress: '块生成器的地址',
   details: '细节',
   commissionMax: '最高佣金率',
   commissionRate: '佣金率',

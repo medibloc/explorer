@@ -1,6 +1,7 @@
 const ja = {
   address: 'アカウント',
   consensusPublicKey: 'ブロックジェネレータの署名キー',
+  consensusAddress: 'ブロックジェネレータのアドレス',
   details: '詳細',
   commissionMax: '最大手数料率',
   commissionRate: '手数料率',

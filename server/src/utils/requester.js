@@ -46,6 +46,11 @@ const requestTotalSupply = () => axios({
   url: `${SERVER_URL.http}/staking/pool`,
 }).then(res => totalSupplyConverter(res.data));
 
+const requestGenesis = () => axios({
+  method: 'get',
+  url: `${TENDERMINT_URL.http}/genesis`,
+}).then(res => res.data.result.genesis);
+
 export {
   requestBlockByHeight,
   requestTransactionsByHeight,
@@ -54,4 +59,5 @@ export {
   requestCandidates,
   requestMedState,
   requestTotalSupply,
+  requestGenesis,
 };

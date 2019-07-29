@@ -11,7 +11,7 @@ const blockMapper = (block) => {
     block.transactions = [];
   }
 
-  const tempAmount = divider(amount, [10 ** 9]).split('.');
+  const tempAmount = divider(amount, [10 ** 6]).split('.');
   tempAmount[0] = tempAmount[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   amount = `${tempAmount.join('.')} MED`;
 

@@ -1,11 +1,13 @@
+import dotenv from 'dotenv';
 import Sequelize from 'sequelize';
 import logger from '../logger';
 import config from '../../config';
 
 const { DB } = config;
+const env = dotenv.config().parsed;
 
-const USERNAME = process.env.EXPLORER_DB_USERNAME;
-const PASSWORD = process.env.EXPLORER_DB_PASSWORD;
+const USERNAME = env.EXPLORER_DB_USERNAME;
+const PASSWORD = env.EXPLORER_DB_PASSWORD;
 
 const connect = ({
   database, dialect, host, password, user,

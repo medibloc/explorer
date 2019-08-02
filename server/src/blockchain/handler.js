@@ -6,6 +6,7 @@ import config from '../../config';
 import db from '../db';
 import logger from '../logger';
 import {
+  requestMedXPrice,
   requestBlockByHeight,
   requestMedState,
   requestTransactionsByHeight,
@@ -45,11 +46,13 @@ TOPICS.newTailBlock.onEvent = async (block, onReset) => {
   // compare previous block due to Tendermint engine's characteristics
   if (+lastHeight + 2 < +block.height) return onReset();
 
+  const medxPrice = await requestMedXPrice();
   const detailedBlock = await requestBlockByHeight(block.height - 1);
   const supplyData = await requestTotalSupply();
   MEM_FIELDS.notBondedTokens = supplyData.notBondedTokens;
   MEM_FIELDS.bondedTokens = supplyData.bondedTokens;
   MEM_FIELDS.totalSupply = supplyData.totalSupply;
+  MEM_FIELDS.price = medxPrice;
   detailedBlock.txs = await requestTransactionsByHeight(block.height - 1);
 
   return db

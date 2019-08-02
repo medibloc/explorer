@@ -5,7 +5,12 @@ import {
   txConverter, stakingConverter, totalSupplyConverter,
 } from '../converter';
 
-const { TENDERMINT_URL, SERVER_URL } = config.BLOCKCHAIN;
+const { TENDERMINT_URL, SERVER_URL, COINMARKETCAP_URL } = config.BLOCKCHAIN;
+
+const requestMedXPrice = () => axios({
+  method: 'get',
+  url: COINMARKETCAP_URL,
+}).then(({ data }) => data.data.quotes.USD.price);
 
 const requestBlockByHeightInTendermint = height => axios({
   method: 'get',
@@ -56,6 +61,7 @@ const requestGenesis = () => axios({
 }).then(res => res.data.result.genesis);
 
 export {
+  requestMedXPrice,
   requestBlockByHeightInTendermint,
   requestBlockByHeight,
   requestTransactionsByHeight,

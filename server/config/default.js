@@ -11,6 +11,7 @@ const config = {
     SERVER_URL: {
       http: `http://${endpoint}:1317`,
     },
+    COINMARKETCAP_URL: 'https://api.coinmarketcap.com/v2/ticker/2845/',
     GENESIS_ACCOUNT: '000000000000000000000000000000000000000000000000000000000000000000',
     TOPICS: {
       newTailBlock: {},
@@ -19,6 +20,7 @@ const config = {
       notBondedTokens: null,
       bondedTokens: null,
       totalSupply: null,
+      price: null,
     },
   },
   DB: {

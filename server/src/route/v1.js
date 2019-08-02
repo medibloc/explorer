@@ -12,7 +12,7 @@ export default Router()
   .use('/accounts', account)
   .use('/blocks', block)
   .use('/candidates', candidate)
-  .use('/info', wrap(info))
+  .use('/info', info)
   .use('/transactions', transaction)
   .use('/subscribe', wrap(subscribe))
   .use((req, res) => res.status(404).send('Not Found'));

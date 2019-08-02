@@ -1,19 +1,14 @@
 import { handleActions } from 'redux-actions';
 
-import {
-  medPriceGetter,
-  medxPriceGetter,
-} from '../helpers/ticker';
+import { medxPriceGetter } from '../helpers/ticker';
 
 
 // ACTION TYPES
-const GET_MED_PRICE = 'ticker/GET_MED_PRICE';
 const GET_MEDX_PRICE = 'ticker/GET_MEDX_PRICE';
 
 const ERROR = 'ticker/ERROR';
 
 const initialState = {
-  medPrice: 0,
   medxPrice: 0,
 
   error: null,
@@ -21,12 +16,8 @@ const initialState = {
 
 // REDUCER
 const reducer = handleActions({
-  [GET_MED_PRICE]: (state, action) => {
-    const medPrice = action.payload.data.quotes.USD.price;
-    return { ...state, medPrice };
-  },
   [GET_MEDX_PRICE]: (state, action) => {
-    const medxPrice = action.payload.data.quotes.USD.price;
+    const medxPrice = action.payload.price;
     return { ...state, medxPrice };
   },
 
@@ -34,7 +25,6 @@ const reducer = handleActions({
 }, initialState);
 
 // ACTION CREATORS
-export const getMedPrice = () => dispatch => medPriceGetter(dispatch, GET_MED_PRICE, ERROR);
 export const getMedxPrice = () => dispatch => medxPriceGetter(dispatch, GET_MEDX_PRICE, ERROR);
 
 export default reducer;

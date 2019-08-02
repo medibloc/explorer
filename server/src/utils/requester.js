@@ -7,6 +7,10 @@ import {
 
 const { TENDERMINT_URL, SERVER_URL } = config.BLOCKCHAIN;
 
+const requestBlockByHeightInTendermint = height => axios({
+  method: 'get',
+  url: `${TENDERMINT_URL.http}/block?height=${height}`,
+}).then(({ data }) => blockConverter(data.result));
 
 const requestBlockByHeight = height => axios({
   method: 'get',
@@ -52,6 +56,7 @@ const requestGenesis = () => axios({
 }).then(res => res.data.result.genesis);
 
 export {
+  requestBlockByHeightInTendermint,
   requestBlockByHeight,
   requestTransactionsByHeight,
   requestAccountBalance,

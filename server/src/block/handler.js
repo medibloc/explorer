@@ -5,6 +5,7 @@ import {
   requestBlockByHeight,
   requestGenesis,
   requestTransactionsByHeight,
+  requestBlockByHeightInTendermint,
 } from '../utils/requester';
 import { isIdentical } from '../utils/checker';
 import { parseBlock } from '../utils/parser';
@@ -128,8 +129,11 @@ export const getBlocks = (currentHeight, lastHeight) => db.transaction((t) => {
     heights.push(i);
   }
 
-  return Promise.all(heights.map(requestBlockByHeight))
-    .then(async (blocks) => {
+  return Promise.all(heights.map(height => { 
+	  if (height === 1) return requestBlockByHeightInTendermint(height);
+	  return requestBlockByHeight(height);
+    }))
+    .then(async (blocks) => {      
       const promises = blocks.map(async (block) => {
         if (block.txs && block.txs !== []) {
           const txs = await requestTransactionsByHeight(block.height);
@@ -143,6 +147,7 @@ export const getBlocks = (currentHeight, lastHeight) => db.transaction((t) => {
     .then(blocks => handleBlocksResponse(blocks, t))
     .then(() => to)
     .catch((err) => {
+	   console.log("ERE : ", err);
       throw err;
     });
 });

@@ -1,6 +1,6 @@
 # MediBloc Blockchain Explorer
 
-MediBloc Explorer works with [go-medibloc](https://github.com/medibloc/go-medibloc).
+MediBloc Explorer works with [panacea-core](https://github.com/medibloc/panacea-core).
 
 ## Prerequisites
 

@@ -10,14 +10,12 @@ To run MediBloc Explorer following resources are required.
 
 - Yarn v1.9.2 (<https://yarnpkg.com/en/docs/install>)
 
-- go-medibloc v1.0 (<https://github.com/medibloc/go-medibloc>) - You need to install all required resources written in [go-medibloc](https://github.com/medibloc/go-medibloc).
+- go-medibloc v1.0 (<https://github.com/medibloc/panacea-core>) - You need to follow all instructions in the [document](https://medibloc.gitbook.io/panacea-core/).
 
   ```
-  git clone https://github.com/medibloc/go-medibloc.git
-  cd go-medibloc
-  make dep
-  make build
-  build/medi conf/local/single_node/node.conf
+  git clone https://github.com/medibloc/panacea-core.git
+  cd panacea-core
+  make
   ```
 
 ## Installation
@@ -28,8 +26,7 @@ To run MediBloc Explorer following resources are required.
   git clone https://github.com/medibloc/explorer.git
   cd explorer
   cd client && npm install
-  cd ..
-  cd server && npm install
+  cd ../server && npm install
   ```
 
 ## Start(Server)
@@ -42,7 +39,7 @@ General : https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/
 
 Mac : https://github.com/rajivkanaujia/alphaworks/wiki/Install-MySQL-using-Homebrew
 
-Default database name is "medi_explorer". You can change database name in `server/config/default.js`. Create this database with mysql command-line.
+Default database name is "medi_explorer". You can change database name or host in `server/config/default.js`. Create this database with mysql command-line.
 
 And then, You must configure ENVIRONMNET VARIABLES with your DB username & password
 
@@ -62,11 +59,8 @@ The `server/config/default.js` file contains configuration settings for MediBloc
 
 To connect with custom MediBloc blockchain, blockchain.url should be set.
 ```
-export default {
-  blockchain: {
-    url: 'http://localhost:9921',
-  },
-  ...
+// you can set this endpoint to your blockchain.
+const endpoint = 'localhost';
 ```
 
 ## Start(Client)

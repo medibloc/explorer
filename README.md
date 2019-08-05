@@ -10,7 +10,7 @@ To run MediBloc Explorer following resources are required.
 
 - Yarn v1.9.2 (<https://yarnpkg.com/en/docs/install>)
 
-- go-medibloc v1.0 (<https://github.com/medibloc/panacea-core>) - You need to follow all instructions in the [document](https://medibloc.gitbook.io/panacea-core/).
+- panacea-core v1.0.0 (<https://github.com/medibloc/panacea-core>) - You need to follow all instructions in the [document](https://medibloc.gitbook.io/panacea-core/).
 
   ```
   git clone https://github.com/medibloc/panacea-core.git

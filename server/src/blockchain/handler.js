@@ -1,4 +1,3 @@
-import axios from 'axios';
 import websocket from 'websocket';
 import { URLSearchParams } from 'url';
 
@@ -119,7 +118,7 @@ export const sync = async (stopSync = false) => {
     });
 };
 
-let call = null;
+let isConnected = false;
 export const startSubscribe = (promise) => {
   // eslint-disable-next-line no-param-reassign
   promise = promise.then(async () => {
@@ -129,8 +128,6 @@ export const startSubscribe = (promise) => {
 
   const reset = stopSync => startSubscribe(sync(stopSync));
 
-  if (call) call.cancel('Previous request is canceled');
-  call = axios.CancelToken.source();
   const params = new URLSearchParams();
   for (const t of Object.keys(TOPICS)) { // eslint-disable-line
     params.append('topics', t);
@@ -144,10 +141,15 @@ export const startSubscribe = (promise) => {
     client.on('connect', (conn) => {
       console.log('connected to the blockchain');
       conn.on('error', (err) => {
+        isConnected = false;
         logger.error(err.stack);
         reject(err);
       });
-      conn.on('close', () => logger.debug('close websocket'));
+      conn.on('close', () => {
+        isConnected = false;
+        logger.debug('close websocket');
+        return reset();
+      });
       conn.on('message', ({ utf8Data }) => {
         if (initialResponse) {
           initialResponse = false; // to ignore initial setup response
@@ -163,6 +165,7 @@ export const startSubscribe = (promise) => {
           promise = promise // eslint-disable-line no-param-reassign
             .then(() => TOPICS.newTailBlock.onEvent(block, reset))
             .catch((err) => {
+              conn.close();
               logger.error(err.stack);
               return err;
             });
@@ -178,8 +181,11 @@ export const startSubscribe = (promise) => {
           query: "tm.event='NewBlock'",
         },
       };
-      conn.send(JSON.stringify(subscriptionData));
+      if (!isConnected) {
+        conn.send(JSON.stringify(subscriptionData));
+        isConnected = true;
+      }
     });
-    client.connect(TENDERMINT_URL.ws);
+    if (!isConnected) client.connect(TENDERMINT_URL.ws);
   });
 };

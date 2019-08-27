@@ -29,6 +29,9 @@ export const txConverter = (data) => {
           fromAccount = m.value.delegator_address;
           ({ amount } = m.value.amount);
           break;
+        case 'cosmos-sdk/MsgWithdrawDelegationReward':
+          fromAccount = m.value.delegator_address;
+          break;
         case 'cosmos-sdk/MsgCreateValidator':
           fromAccount = m.value.delegator_address;
           ({ amount } = m.value.value);

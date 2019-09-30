@@ -59,6 +59,7 @@ export const txConverter = (data) => {
         onChain: true,
         txHash: `${data.txhash}:${i}`,
         type: m.type,
+        memo: data.tx.value.memo,
         amount,
       });
     });

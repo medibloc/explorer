@@ -13,7 +13,7 @@ const txMapper = (tx) => {
     To: tx.toAccount,
     Type: tx.type ? tx.type.split('/')[1] : '',
     Amount,
-    Message: '',
+    Message: tx.memo,
     // Nonce: tx.nonce,
     // Signature: tx.sign,
   };

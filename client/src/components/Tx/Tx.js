@@ -25,6 +25,7 @@ class Tx extends Component {
 
   render() {
     const { tx, language, mode } = this.props;
+
     return tx && (
       <DetailWrapper
         data={txMapper(tx)}

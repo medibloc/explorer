@@ -46,9 +46,9 @@ export const maxResult = 15;
 
 // SPACE_LIST (component_page)
 export const txSpaceList = {
-  account: [2, 1, 2, 2, 1],
+  account: [15, 8, 10, 10, 12],
   block: [28, 28, 28, 16],
-  txs: [20, 10, 10, 15, 15, 10],
+  txs: [15, 10, 8, 10, 10, 12],
 };
 
 export const txTitleList = {

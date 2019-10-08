@@ -25,7 +25,7 @@ const supply = async (req, res) => {
   const { notBondedTokens, bondedTokens } = MEM_FIELDS;
   const parsedNotBondedSupply = new BigNumber(notBondedTokens);
   const parsedBondedSupply = new BigNumber(bondedTokens);
-  const totalSupply = parsedNotBondedSupply.plus(parsedBondedSupply).dividedBy(10 ** 8).toString();
+  const totalSupply = parsedNotBondedSupply.plus(parsedBondedSupply).dividedBy(10 ** 6).toString();
   res.send(totalSupply);
 };
 

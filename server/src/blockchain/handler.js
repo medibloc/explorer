@@ -40,32 +40,48 @@ const pushEventToClient = (e) => {
 };
 
 TOPICS.newTailBlock.onEvent = async (block, onReset) => {
+  logger.debug('[T1] start to get last block from DB');
   const { height: lastHeight } = await getLastBlock();
+  logger.debug('[T1] success to get last block from DB');
   // if explorer does not have full blocks
   // compare previous block due to Tendermint engine's characteristics
   if (+lastHeight + 2 < +block.height) return onReset();
 
+  logger.debug('[T1] start to get MED price');
   const medxPrice = await requestMedXPrice();
+  logger.debug('[T1] success to get MED price');
+  logger.debug('[T1] start to get block detail from blockchain');
   const detailedBlock = await requestBlockByHeight(block.height - 1);
+  logger.debug('[T1] success to get block detail from blockchain');
+  logger.debug('[T1] start to get total supply from blockchain');
   const supplyData = await requestTotalSupply();
+  logger.debug('[T1] success to get total supply from blockchain');
   MEM_FIELDS.notBondedTokens = supplyData.notBondedTokens;
   MEM_FIELDS.bondedTokens = supplyData.bondedTokens;
   MEM_FIELDS.totalSupply = supplyData.totalSupply;
   MEM_FIELDS.price = medxPrice;
+  logger.debug('[T1] start to get transactions from blockchain');
   detailedBlock.txs = await requestTransactionsByHeight(block.height - 1);
+  logger.debug('[T1] success to get transactions from blockchain');
 
   return db
     .transaction(async (t) => {
+      logger.debug('[T1] start to get candidates from blockchain');
       await updateCandidates(t);
+      logger.debug('[T1] success to get candidates from blockchain');
+      logger.debug('[T1] start to handle block response from blockchain');
       return handleBlocksResponse([detailedBlock], t);
     })
-    .then(dbBlocks => pushEventToClient({
-      data: {
-        ...dbBlocks[0].dataValues,
-        supply: MEM_FIELDS,
-      },
-      topic: 'newTailBlock',
-    }));
+    .then(dbBlocks => {
+      logger.debug('[T1] success to handle block response from blockchain');
+      return pushEventToClient({
+        data: {
+          ...dbBlocks[0].dataValues,
+          supply: MEM_FIELDS,
+        },
+        topic: 'newTailBlock',
+      })
+    });
 };
 
 export const onSubscribe = (req, res, options) => {

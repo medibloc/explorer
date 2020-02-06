@@ -19,7 +19,7 @@ import { updateCandidates } from '../candidate/handler';
 const { TOPICS, TENDERMINT_URL, MEM_FIELDS } = config.BLOCKCHAIN;
 const WebSocket = websocket.client;
 
-
+let medPrice = 0.004;
 let isSyncing = true;
 
 const clients = Object.keys(TOPICS).reduce((obj, key) => {
@@ -48,7 +48,12 @@ TOPICS.newTailBlock.onEvent = async (block, onReset) => {
   if (+lastHeight + 2 < +block.height) return onReset();
 
   logger.debug('[T1] start to get MED price');
-  const medxPrice = await requestMedXPrice();
+  try {
+    medPrice = await requestMedXPrice();
+  } catch (e) {
+    logger.debug('[T1] coin price api does not work');
+  }
+
   logger.debug('[T1] success to get MED price');
   logger.debug('[T1] start to get block detail from blockchain');
   const detailedBlock = await requestBlockByHeight(block.height - 1);
@@ -59,7 +64,7 @@ TOPICS.newTailBlock.onEvent = async (block, onReset) => {
   MEM_FIELDS.notBondedTokens = supplyData.notBondedTokens;
   MEM_FIELDS.bondedTokens = supplyData.bondedTokens;
   MEM_FIELDS.totalSupply = supplyData.totalSupply;
-  MEM_FIELDS.price = medxPrice;
+  MEM_FIELDS.price = medPrice;
   logger.debug('[T1] start to get transactions from blockchain');
   detailedBlock.txs = await requestTransactionsByHeight(block.height - 1);
   logger.debug('[T1] success to get transactions from blockchain');

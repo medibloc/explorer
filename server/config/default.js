@@ -12,6 +12,7 @@ const config = {
       http: `http://${endpoint}:1317`,
     },
     COINMARKETCAP_URL: 'https://api.coinmarketcap.com/v2/ticker/2845/',
+    COINGECKO_URL: 'https://api.coingecko.com/api/v3/coins/medibloc?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false',
     GENESIS_ACCOUNT: '000000000000000000000000000000000000000000000000000000000000000000',
     TOPICS: {
       newTailBlock: {},

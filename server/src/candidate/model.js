@@ -15,5 +15,5 @@ export default db.define('candidates', {
   votes: { ...value },
 }, {
   unique: true,
-  fields: ['address'],
+  fields: ['address', 'id'],
 });

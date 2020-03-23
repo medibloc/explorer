@@ -17,7 +17,7 @@ export default db.define('accounts', {
   indexes: [
     {
       unique: true,
-      fields: ['address'],
+      fields: ['address', 'id'],
     },
   ],
 });

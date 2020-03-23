@@ -11,7 +11,7 @@ export default db.define('blocks', {
 }, {
   indexes: [
     {
-      fields: ['hash', 'height'],
+      fields: ['hash', 'height', 'id'],
       unique: true,
     }
   ],

@@ -17,6 +17,7 @@ export default db.define('transactions', {
   ...refer(Block),
 }, {
   indexes: [
+    { fields: ['txHash'], unique: true },
     { fields: ['fromAccount'] },
     { fields: ['toAccount'] },
   ],

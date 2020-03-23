@@ -13,4 +13,11 @@ export default db.define('accounts', {
   id,
   totalTxs: { defaultValue: 0, type: Sequelize.INTEGER },
   staking: { ...value },
+}, {
+  indexes: [
+    {
+      unique: true,
+      fields: ['address'],
+    },
+  ],
 });

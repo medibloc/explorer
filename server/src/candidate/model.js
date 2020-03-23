@@ -13,4 +13,7 @@ export default db.define('candidates', {
   data,
   id,
   votes: { ...value },
+}, {
+  unique: true,
+  fields: ['address'],
 });

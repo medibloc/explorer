@@ -8,4 +8,11 @@ export default db.define('blocks', {
   hash: { allowNull: false, type: Sequelize.STRING, unique: true },
   height: { type: Sequelize.INTEGER },
   id,
+}, {
+  indexes: [
+    {
+      fields: ['hash', 'height'],
+      unique: true,
+    }
+  ],
 });

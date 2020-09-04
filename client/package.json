@@ -47,7 +47,7 @@
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.10.0",
-    "node-sass": "^4.9.2",
+    "node-sass": "^4.13.1",
     "proxyquire": "^2.0.1",
     "rewire": "^4.0.1",
     "sass-loader": "^7.0.3"

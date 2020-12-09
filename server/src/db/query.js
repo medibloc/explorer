@@ -64,11 +64,13 @@ export const listQuery = ({
   return params;
 };
 
-export const listQueryWithCount = (model, ...args) => {
+export const listQueryWithCount = async (model, ...args) => {
   const params = listQuery(...args);
   const { offset } = params;
-  return model.findAndCountAll(params).then(({ count, rows }) => ({
+  const count = await model.max('id');
+  const rows = await model.findAll(params);
+  return {
     data: rows,
     pagination: { count: rows.length, offset, total: count },
-  }));
+  };
 };

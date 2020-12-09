@@ -56,6 +56,11 @@ export default () => {
   app.use(sseMiddleware);
   app.use(morgan('tiny', { stream }));
 
+  // HealthCheck Endpoint
+  app.get('/', async (_req, res) => {
+    res.send('OK');
+  });
+
   app.use('/api', route);
   app.use('/', express.static('build'));
   app.use('*', (req, res) => {

@@ -28,22 +28,22 @@ const requestTransactionsByHeight = height => axios({
     'tx.height': height,
   },
   url: `${SERVER_URL.http}/txs`,
-}).then(({ data }) => data.reduce((acc, tx) => [...acc, ...txConverter(tx)], []));
+}).then(({ data }) => data.txs.reduce((acc, tx) => [...acc, ...txConverter(tx)], []));
 
 const requestAccountBalance = address => axios({
   method: 'get',
   url: `${SERVER_URL.http}/bank/balances/${address}`,
-}).then(({ data }) => balanceConverter(data));
+}).then(({ data }) => balanceConverter(data.result));
 
 const requestAccountStakingBalance = address => axios({
   method: 'get',
   url: `${SERVER_URL.http}/staking/delegators/${address}/delegations`,
-}).then(({ data }) => stakingConverter(data));
+}).then(({ data }) => stakingConverter(data.result));
 
 const requestCandidates = () => axios({
   method: 'get',
   url: `${SERVER_URL.http}/staking/validators`,
-}).then(({ data }) => data);
+}).then(({ data }) => data.result);
 
 const requestMedState = () => axios({
   method: 'get',
@@ -53,7 +53,7 @@ const requestMedState = () => axios({
 const requestTotalSupply = () => axios({
   method: 'get',
   url: `${SERVER_URL.http}/staking/pool`,
-}).then(res => totalSupplyConverter(res.data));
+}).then(res => totalSupplyConverter(res.data.result));
 
 const requestGenesis = () => axios({
   method: 'get',

@@ -67,12 +67,12 @@ export const handleBlocksResponse = async (blocks, t) => {
 
     // apply genesis coin distribution
     const promises = genesis.app_state.accounts.map(
-      acc => updateGenesisToAccounts(acc.address, acc.coins[0].amount, t),
+      acc => updateGenesisToAccounts(acc.address, acc.coins.length > 0 ? acc.coins[0].amount : '0', t),
     );
     await Promise.all(promises);
 
     // apply genesis transactions
-    const genTxs = genesis.app_state.gentxs
+    const genTxs = genesis.app_state.genutil.gentxs
       .reduce((acc, tx, i) => {
         const data = {
           tx,
@@ -129,11 +129,11 @@ export const getBlocks = (currentHeight, lastHeight) => db.transaction((t) => {
     heights.push(i);
   }
 
-  return Promise.all(heights.map(height => { 
+  return Promise.all(heights.map(height => {
 	  if (height === 1) return requestBlockByHeightInTendermint(height);
 	  return requestBlockByHeight(height);
     }))
-    .then(async (blocks) => {      
+    .then(async (blocks) => {
       const promises = blocks.map(async (block) => {
         if (block.txs && block.txs !== []) {
           const txs = await requestTransactionsByHeight(block.height);

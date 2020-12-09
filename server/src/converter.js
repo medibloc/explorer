@@ -47,6 +47,14 @@ export const txConverter = (data) => {
         case 'aol/MsgAddRecord':
           fromAccount = m.value.owner_address;
           break;
+        case 'did/MsgCreateDID':
+        case 'did/MsgUpdateDID':
+        case 'did/MsgDeactivateDID':
+          fromAccount = m.value.from_address;
+          break;
+        case 'token/MsgIssueToken':
+          fromAccount = m.value.owner_address;
+          break;
         default:
           break;
       }

@@ -9,9 +9,6 @@ import morgan from 'morgan';
 import route from './route';
 import logger, { stream } from './logger';
 
-
-const ENV = process.env.NODE_ENV;
-
 const sendError = (err, req, res) => {
   logger.error(err.stack);
   const code = err.status || 500;
@@ -52,7 +49,7 @@ export default () => {
   const app = express();
 
   app.use(expressRequestId());
-  if (ENV === 'development') app.use(cors());
+  app.use(cors());
   app.use(compression());
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded());

@@ -72,7 +72,7 @@ export const handleBlocksResponse = async (blocks, t) => {
     await Promise.all(promises);
 
     // apply genesis transactions
-    const genTxs = genesis.app_state.genutil.gentxs
+    const genTxs = []
       .reduce((acc, tx, i) => {
         const data = {
           tx,

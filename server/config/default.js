@@ -1,6 +1,6 @@
 import path from 'path';
 
-const endpoint = 'localhost';
+const endpoint = '10.0.101.112';
 const config = {
   BLOCKCHAIN: {
     URL: 'http://localhost:9921',
@@ -25,15 +25,15 @@ const config = {
     },
   },
   DB: {
-    database: 'medi_explorer',
+    database: 'panacea-2',
     dialect: 'mysql',
-    host: 'localhost',
+    host: 'localhost:3306',
   },
   REQUEST: {
     REQUEST_STEP: 10,
   },
   SERVER: {
-    PORT: 3000,
+    PORT: 8080,
     SECRET: null,
     PASSWORD_HASH: null,
     HASH_ALG: 'sha256',

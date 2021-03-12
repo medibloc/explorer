@@ -4,6 +4,7 @@ import {
   balanceConverter, blockConverter,
   txConverter, stakingConverter, totalSupplyConverter,
 } from '../converter';
+import BigNumber from 'bignumber.js';
 
 const { TENDERMINT_URL, SERVER_URL, COINGECKO_URL } = config.BLOCKCHAIN;
 
@@ -50,10 +51,21 @@ const requestMedState = () => axios({
   url: `${TENDERMINT_URL.http}/abci_info`,
 }).then(res => res.data.result.response);
 
-const requestTotalSupply = () => axios({
-  method: 'get',
-  url: `${SERVER_URL.http}/staking/pool`,
-}).then(res => totalSupplyConverter(res.data.result));
+const requestTotalSupply = async () => {
+  let res = await axios({
+    method: 'get',
+    url: `${SERVER_URL.http}/supply/total`,
+  });
+  const totalSupply = res.data.result[0].amount;
+
+  res = await axios({
+    method: 'get',
+    url: `${SERVER_URL.http}/staking/pool`,
+  });
+  const bondedTokens = new BigNumber(res.data.result.bonded_tokens);
+  const notBondedTokens = new BigNumber(totalSupply) - bondedTokens;
+  return { totalSupply, bondedTokens, notBondedTokens };
+}
 
 const requestGenesis = () => axios({
   method: 'get',

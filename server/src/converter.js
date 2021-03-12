@@ -93,15 +93,9 @@ export const stakingConverter = (data) => {
 };
 
 export const totalSupplyConverter = (data) => {
-  try {
-    const notBonded = new BigNumber(data.not_bonded_tokens);
-    const bonded = new BigNumber(data.bonded_tokens);
-    return {
-      notBondedTokens: data.not_bonded_tokens,
-      bondedTokens: data.bonded_tokens,
-      totalSupply: notBonded.plus(bonded).toString(),
-    };
-  } catch (e) {
-    return null;
-  }
+  return {
+    notBondedTokens: 0,
+    bondedTokens: 0,
+    totalSupply: data[0].amount,
+  };
 };

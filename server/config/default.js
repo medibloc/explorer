@@ -25,7 +25,7 @@ const config = {
     },
   },
   DB: {
-    database: 'medi_explorer',
+    database: 'panacea-2-explorer-txs-merged',
     dialect: 'mysql',
     host: 'localhost',
   },
@@ -33,7 +33,7 @@ const config = {
     REQUEST_STEP: 10,
   },
   SERVER: {
-    PORT: 3000,
+    PORT: 8080,
     SECRET: null,
     PASSWORD_HASH: null,
     HASH_ALG: 'sha256',

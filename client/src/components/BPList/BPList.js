@@ -62,8 +62,7 @@ class BPList extends Component {
     const props = nextProps || this.props;
     const { location: { search } } = props;
     const { page = 1 } = qs.parse(search);
-    const { medState: { numCandidate } } = props;
-    const { from, to } = ranger(page, numCandidate, bpsInPage);
+    const { from, to } = ranger(page, bpsInPage);
     w.loader(BlockchainActions.getBPs({ from, to }));
   }
 

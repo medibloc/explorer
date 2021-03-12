@@ -1,5 +1,4 @@
-const ranger = (page, amount, contentsInPage) => {
-  if (amount < contentsInPage) return { from: 0, to: amount };
+const ranger = (page, contentsInPage) => {
   let from = (page - 1) * contentsInPage;
   let to = (page * contentsInPage) - 1;
   if (from < 0) from = 0;

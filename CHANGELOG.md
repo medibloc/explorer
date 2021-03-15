@@ -4,8 +4,15 @@
 
 TBD
 
+## [v1.0.2](https://github.com/medibloc/explorer/releases/tag/v1.0.2) - 2021-03-15
 
-## [v1.3.1](https://github.com/medibloc/explorer/releases/tag/v1.3.1) - 2021-01-05
+### Bug fixes
+
+- [038a31](https://github.com/medibloc/explorer/commit/038a313621b551c57d80a13a8cbb0c71dfc8a327) Additional fixes for Panacea v1.3.3
+- [\#30](https://github.com/medibloc/explorer/pull/30) fix: Simplify DB paginations (especially for Txs of old chains)
+
+
+## [v1.0.1](https://github.com/medibloc/explorer/releases/tag/v1.0.1) - 2021-01-05
 
 ### Features
 

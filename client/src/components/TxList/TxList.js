@@ -35,14 +35,14 @@ class TxList extends Component {
   }
 
   getTxs() {
-    const { page, medState: { numTx } } = this.props;
-    const { from, to } = ranger(page, numTx, contentsInPage);
+    const { page } = this.props;
+    const { from, to } = ranger(page, contentsInPage);
     w.loader(BlockchainActions.getTxs({ from, to }));
   }
 
   getAccTxs() {
     const { account, page } = this.props;
-    const { from, to } = ranger(page, account.totalTxs, contentsInPage);
+    const { from, to } = ranger(page, contentsInPage);
     w.loader(BlockchainActions.getAccountDetail({
       address: account.address,
       from,
@@ -61,7 +61,7 @@ class TxList extends Component {
     } = this.props;
     const titles = txTitleList[type];
     const spaces = txSpaceList[type];
-    const { from, to } = ranger(page, txs.length, contentsInPage);
+    const { from, to } = ranger(page, contentsInPage);
 
     return (
       <div className="txList">
@@ -119,7 +119,6 @@ class TxList extends Component {
 
 TxList.propTypes = {
   account: PropTypes.object,
-  medState: PropTypes.object,
   txList: PropTypes.array.isRequired,
   txs: PropTypes.array.isRequired,
 
@@ -131,7 +130,6 @@ TxList.propTypes = {
 
 TxList.defaultProps = {
   account: {},
-  medState: {},
 };
 
 export default TxList;

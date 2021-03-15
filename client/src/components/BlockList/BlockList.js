@@ -50,8 +50,7 @@ class BlockList extends Component {
     const props = nextProps || this.props;
     const { location: { search } } = props;
     const { page = 1 } = qs.parse(search);
-    const { medState: { height } } = props;
-    const { from, to } = ranger(page, height, contentsInPage);
+    const { from, to } = ranger(page, contentsInPage);
     w.loader(
       BlockchainActions
         .getBlocks({ from, to }),

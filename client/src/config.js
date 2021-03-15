@@ -1,5 +1,5 @@
 // export const NODE_ENDPOINT = '/api/v1';
-export const NODE_ENDPOINT = 'http://localhost:3000/api/v1';
+export const NODE_ENDPOINT = 'http://localhost:8080/api/v1';
 
 
 

@@ -67,7 +67,7 @@ const endpoint = 'localhost';
 
 MediBloc Explorer Client is using Webpack.
 
-If you want to watch all the changes of the code in real time, run the following command. It will run the MediBloc Explorer on the port 3000(<http://localhost:3000>).
+If you want to watch all the changes of the code in real time, run the following command. It will run the MediBloc Explorer on the port 8080(<http://localhost:8080>).
 
 `yarn start`
 

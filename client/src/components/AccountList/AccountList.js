@@ -49,8 +49,7 @@ class AccountList extends Component {
     const props = nextProps || this.props;
     const { location: { search } } = props;
     const { page = 1 } = qs.parse(search);
-    const { medState: { numAccount } } = props;
-    const { from, to } = ranger(page, numAccount, contentsInPage);
+    const { from, to } = ranger(page, contentsInPage);
     w.loader(BlockchainActions.getAccounts({ from, to }));
   }
 

@@ -40,7 +40,7 @@ const zh = {
   to: '接收人',
   transactionDetailInfo: '交易明显详细信息',
   transactionHash: '交易代码',
-  transactionMsgId: '交易 Msg ID',
+  transactionMsgId: '交易信息ID',
   transactions: '交易明细',
   transactionsInTheBlock: '包含区块的交易明细',
   transactionsList: '交易目录',

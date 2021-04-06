@@ -4,6 +4,13 @@
 
 TBD
 
+## [v1.0.3](https://github.com/medibloc/explorer/releases/tag/v1.0.3) - 2021-04-06
+
+### Features
+
+- [\#33](https://github.com/medibloc/explorer/pull/33) Display Tx Msg ID (instead of the suffix of TxHash)
+
+
 ## [v1.0.2](https://github.com/medibloc/explorer/releases/tag/v1.0.2) - 2021-03-15
 
 ### Bug fixes

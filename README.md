@@ -25,8 +25,8 @@ To run MediBloc Explorer following resources are required.
   ```
   git clone https://github.com/medibloc/explorer.git
   cd explorer
-  cd client && npm install
-  cd ../server && npm install
+  cd client && yarn install
+  cd ../server && yarn install
   ```
 
 ## Start(Server)
@@ -49,7 +49,7 @@ export EXPLORER_DB_PASSWORD={password}
 ```
 
 Then,
-`cd server && npm run syncdb && npm start`
+`cd server && yarn syncdb && yarn start`
 
 ## Configuration(Server)
 

@@ -15,6 +15,12 @@ export const updateTxToAccounts = async (rawTx, t) => {
   const {
     fromAccount: from, toAccount: to, executed,
   } = rawTx;
+
+  // This function must work only for 'panacea*' accounts (not 'panaceavaloper*' and so on).
+  if (!from.startsWith('panacea1')) { // hrp + '1' (separator)
+    return;
+  }
+
   const fromAccount = await getAccountFromDB(from, t);
   const fromAccountBalance = await requestAccountBalance(from);
   const fromAccountStakingBalance = await requestAccountStakingBalance(from);

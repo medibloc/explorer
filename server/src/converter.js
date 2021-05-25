@@ -32,6 +32,9 @@ export const txConverter = (data) => {
         case 'cosmos-sdk/MsgWithdrawDelegationReward':
           fromAccount = m.value.delegator_address;
           break;
+        case 'cosmos-sdk/MsgWithdrawValidatorCommission':
+          fromAccount = m.value.validator_address; // panaceavaloper
+          break;
         case 'cosmos-sdk/MsgCreateValidator':
           fromAccount = m.value.delegator_address;
           ({ amount } = m.value.value);
@@ -43,7 +46,7 @@ export const txConverter = (data) => {
           break;
         case 'cosmos-sdk/MsgUnjail':
         case 'cosmos-sdk/MsgEditValidator':
-          fromAccount = m.value.address;
+          fromAccount = m.value.address; // panaceavaloper
           break;
         case 'aol/MsgCreateTopic':
         case 'aol/MsgAddWriter':

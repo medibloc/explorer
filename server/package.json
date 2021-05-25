@@ -1,6 +1,6 @@
 {
   "name": "explorer_server",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "explorer server",
   "main": "index.js",
   "scripts": {

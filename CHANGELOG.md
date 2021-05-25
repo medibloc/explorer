@@ -4,6 +4,13 @@
 
 TBD
 
+## [v1.0.4](https://github.com/medibloc/explorer/releases/tag/v1.0.4) - 2021-05-25
+
+### Bug fixes
+
+- [\#41](https://github.com/medibloc/explorer/pull/41) fix: Handle MsgUnjail transactions
+
+
 ## [v1.0.3](https://github.com/medibloc/explorer/releases/tag/v1.0.3) - 2021-04-06
 
 ### Features

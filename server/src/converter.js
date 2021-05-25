@@ -42,6 +42,7 @@ export const txConverter = (data) => {
           amount = m.value.amount ? m.value.amount[0].amount : 0;
           break;
         case 'cosmos-sdk/MsgUnjail':
+        case 'cosmos-sdk/MsgEditValidator':
           fromAccount = m.value.address;
           break;
         case 'aol/MsgCreateTopic':

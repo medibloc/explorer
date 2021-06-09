@@ -4,6 +4,14 @@
 
 TBD
 
+## [v1.0.5](https://github.com/medibloc/explorer/releases/tag/v1.0.5) - 2021-06-09
+
+### Bug fixes
+
+- [\#42](https://github.com/medibloc/explorer/pull/42) fix: Handle `MsgEditValidator` and `MsgWithdrawValidatorCommission` transactions
+- [\#45](https://github.com/medibloc/explorer/pull/45) chore: Update logo files
+
+
 ## [v1.0.4](https://github.com/medibloc/explorer/releases/tag/v1.0.4) - 2021-05-25
 
 ### Bug fixes

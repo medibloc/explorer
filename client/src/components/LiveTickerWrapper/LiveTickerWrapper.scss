@@ -11,6 +11,10 @@ $tablet-width: 600px;
     margin-right: 40px;
   }
 
+  &.center {
+    justify-content: center;
+  }
+
   &.right {
     margin-left: 40px;
     justify-content: flex-start;
@@ -32,7 +36,7 @@ $tablet-width: 600px;
     }
 
     .liveTickerWrapperContent {
-      font-size: 50px;
+      font-size: 28px;
 
       display: flex;
       flex-wrap: wrap;
@@ -48,7 +52,7 @@ $tablet-width: 600px;
       }
 
       .liveTickerWrapperContentSuffix {
-        font-size: 30px;
+        font-size: 15px;
         font-weight: 100;
         padding-bottom: 5px;
       }
@@ -86,17 +90,17 @@ $tablet-width: 600px;
 
     .liveTickerWrapperTitle {
       //margin: auto;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 300;
       letter-spacing: -0.4px;
     }
 
     .liveTickerWrapperContent {
       width: 100%;
-      font-size: 30px;
+      font-size: 25px;
 
       .liveTickerWrapperContentSuffix {
-        font-size: 26px;
+        font-size: 18px;
         padding-bottom: 0px;
       }
     }

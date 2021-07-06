@@ -25,6 +25,7 @@ const en = {
   marketCap: 'Market Cap',
   medPrice: 'MED Price',
   medSupply: 'MED Supply',
+  medSupplyExcludingBurned: 'MED Supply (excluding burned)',
   memo: 'Message (Memo)',
   name: 'Name',
   nonce: 'Nonce',

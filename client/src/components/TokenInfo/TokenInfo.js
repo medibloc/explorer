@@ -6,6 +6,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import LiveTickerWrapper from '../LiveTickerWrapper';
 
 import './tokenInfo.scss';
+import { contentType } from "../LiveTickerWrapper/LiveTickerWrapper";
 
 
 const TokenInfo = ({ intl, mode }) => (
@@ -16,14 +17,23 @@ const TokenInfo = ({ intl, mode }) => (
     }
     <LiveTickerWrapper
       title={intl.formatMessage({ id: 'medPrice' })}
+      type={contentType.medxPrice}
       suffix="USD"
       side="left"
     />
     <div className="verticalLine" />
     <LiveTickerWrapper
       title={intl.formatMessage({ id: 'medSupply' })}
+      type={contentType.totalSupply}
       suffix="MED"
-      side="right"
+      side="center"
+    />
+    <div className="verticalLine" />
+    <LiveTickerWrapper
+        title={intl.formatMessage({ id: 'medSupplyExcludingBurned' })}
+        type={contentType.totalSupplyExcludingBurned}
+        suffix="MED"
+        side="right"
     />
   </div>
 );

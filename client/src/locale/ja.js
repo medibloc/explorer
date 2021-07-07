@@ -25,6 +25,7 @@ const ja = {
   marketCap: '市場価格',
   medPrice: 'MED成行値段',
   medSupply: 'MED総数',
+  medSupplyExcludingBurned: 'MED総数 (excluding burned)',
   memo: 'メッセージ (Memo)',
   name: '名前',
   nonce: 'ナンス',

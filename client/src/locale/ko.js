@@ -25,6 +25,7 @@ const ko = {
   marketCap: '시장 가격',
   medPrice: '메디 시장 가격',
   medSupply: '메디 총 개수',
+  medSupplyExcludingBurned: '메디 총 개수 (소각량 제외)',
   memo: '메시지 (메모)',
   name: '이름',
   nonce: '생성한 거래 수',

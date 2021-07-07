@@ -2,9 +2,7 @@ import { connect } from 'react-redux';
 
 import LiveTickerWrapper from './LiveTickerWrapper';
 import BigNumber from "bignumber.js";
-
-// TODO: read this from explorer-server, when it's ready
-const burnedTokens = new BigNumber(268785651.397875);
+import { burnedTokens } from "../../config";
 
 const mapStateToProps = ({ blockchain, global, ticker }) => ({
   medxPrice: ticker.medxPrice,

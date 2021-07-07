@@ -1,7 +1,11 @@
 // export const NODE_ENDPOINT = '/api/v1';
+import BigNumber from "bignumber.js";
+
 export const NODE_ENDPOINT = 'http://localhost:8080/api/v1';
 
-
+// Hard-coded params
+// TODO: Make these values returned from the backend
+export const burnedTokens = new BigNumber(268785651.397875);
 
 // SNS
 export const sns = ['telegram', 'twitter', 'fb', 'medium', 'brunch', 'medi'];

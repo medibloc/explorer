@@ -4,6 +4,14 @@
 
 TBD
 
+## [v1.0.6](https://github.com/medibloc/explorer/releases/tag/v1.0.6) - 2021-07-07
+
+### Features
+
+- [\#48](https://github.com/medibloc/explorer/pull/48) feat: Display MED supply excluding burned
+  - [676b2ac](676b2ac514217f5db0a0d2efe4bf30723a4c18ac) feat: Make burnedTokens configurable
+
+
 ## [v1.0.5](https://github.com/medibloc/explorer/releases/tag/v1.0.5) - 2021-06-09
 
 ### Bug fixes
